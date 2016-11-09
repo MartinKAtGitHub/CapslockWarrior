@@ -1,0 +1,229 @@
+fileFormatVersion: 2
+guid: 972102ce2a2cc154c9c1c20e537bb6f5
+timeCreated: 1469634149
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Hero 3 Coate Anim_0
+    21300002: Hero 3 Coate Anim_1
+    21300004: Hero 3 Coate Anim_2
+    21300006: Hero 3 Coate Anim_3
+    21300008: Hero 3 Coate Anim_4
+    21300010: Hero 3 Coate Anim_5
+    21300012: Hero 3 Coate Anim_6
+    21300014: Hero 3 Coate Anim_7
+    21300016: Hero 3 Coate Anim_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 40
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Hero 3 Coate Anim_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 105
+        width: 43
+        height: 51
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4, y: 51}
+        - {x: 0, y: 44}
+        - {x: 0, y: 1}
+        - {x: 1, y: 0}
+        - {x: 29, y: 0}
+        - {x: 43, y: 29}
+        - {x: 43, y: 51}
+    - name: Hero 3 Coate Anim_1
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 105
+        width: 44
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 25.5}
+        - {x: -22, y: 14.5}
+        - {x: -22, y: -22.5}
+        - {x: -19, y: -25.5}
+        - {x: 9, y: -25.5}
+        - {x: 22, y: -5.5}
+        - {x: 22, y: 18.5}
+        - {x: 13, y: 25.5}
+    - name: Hero 3 Coate Anim_2
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 105
+        width: 41
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20.5, y: 25.5}
+        - {x: -20.5, y: -21.5}
+        - {x: -19.5, y: -23.5}
+        - {x: -12.5, y: -25.5}
+        - {x: 20.5, y: -25.5}
+        - {x: 20.5, y: 25.5}
+    - name: Hero 3 Coate Anim_3
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 53
+        width: 40
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17, y: 25.5}
+        - {x: -20, y: 25.5}
+        - {x: -20, y: -16.5}
+        - {x: -18, y: -25.5}
+        - {x: -3, y: -25.5}
+        - {x: 2, y: -17.5}
+        - {x: 20, y: 1.5}
+        - {x: 20, y: 24.5}
+    - name: Hero 3 Coate Anim_4
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 64
+        width: 29
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.5, y: 25.5}
+        - {x: -20.5, y: 18.5}
+        - {x: -20.5, y: -25.5}
+        - {x: -1.5, y: -25.5}
+        - {x: 2.5, y: -24.5}
+        - {x: 20.5, y: -1.5}
+        - {x: 20.5, y: 22.5}
+        - {x: 6.5, y: 25.5}
+    - name: Hero 3 Coate Anim_5
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 53
+        width: 42
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20, y: 25.5}
+        - {x: -21, y: 23.5}
+        - {x: -21, y: -25.5}
+        - {x: 8, y: -25.5}
+        - {x: 21, y: 2.5}
+        - {x: 21, y: 21.5}
+        - {x: 10, y: 25.5}
+    - name: Hero 3 Coate Anim_6
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1
+        width: 42
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18, y: 25.5}
+        - {x: -21, y: 17.5}
+        - {x: -21, y: -25.5}
+        - {x: 12, y: -25.5}
+        - {x: 21, y: -6.5}
+        - {x: 21, y: 23.5}
+        - {x: 9, y: 25.5}
+    - name: Hero 3 Coate Anim_7
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 1
+        width: 41
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20.5, y: 25.5}
+        - {x: -20.5, y: -25.5}
+        - {x: 3.5, y: -25.5}
+        - {x: 20.5, y: -5.5}
+        - {x: 20.5, y: 21.5}
+        - {x: 13.5, y: 25.5}
+    - name: Hero 3 Coate Anim_8
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 1
+        width: 42
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18, y: 25.5}
+        - {x: -21, y: 15.5}
+        - {x: -21, y: -25.5}
+        - {x: 2, y: -25.5}
+        - {x: 21, y: 8.5}
+        - {x: 21, y: 21.5}
+        - {x: 12, y: 25.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

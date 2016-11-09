@@ -1,0 +1,178 @@
+fileFormatVersion: 2
+guid: 913fe42eb2f03e24fa2a1fd6b9dd7630
+timeCreated: 1471620596
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Options Room Green_6
+    21300002: Options Room Green_7
+    21300004: Options Room Green_8
+    21300006: Options Room Green_9
+    21300008: Options Room Green_10
+    21300010: Options Room Green_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Options Room Green_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 8
+        width: 98
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49, y: 51}
+        - {x: -49, y: -49}
+        - {x: -28, y: -51}
+        - {x: 35, y: -51}
+        - {x: 49, y: -48}
+        - {x: 49, y: 51}
+    - name: Options Room Green_7
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 8
+        width: 98
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -41, y: 51}
+        - {x: -48, y: 50}
+        - {x: -49, y: 45}
+        - {x: -49, y: -47}
+        - {x: -23, y: -51}
+        - {x: 25, y: -51}
+        - {x: 49, y: -47}
+        - {x: 49, y: 43}
+        - {x: 41, y: 51}
+    - name: Options Room Green_8
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 8
+        width: 98
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -44, y: 51}
+        - {x: -48, y: 50}
+        - {x: -49, y: 47}
+        - {x: -49, y: -49}
+        - {x: -28, y: -51}
+        - {x: 36, y: -51}
+        - {x: 49, y: -48}
+        - {x: 49, y: 51}
+    - name: Options Room Green_9
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 8
+        width: 98
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 36, y: 51}
+        - {x: -30, y: 51}
+        - {x: -30, y: 48}
+        - {x: -35, y: 48}
+        - {x: -45, y: 47}
+        - {x: -49, y: 41}
+        - {x: -49, y: -47}
+        - {x: -23, y: -51}
+        - {x: 25, y: -51}
+        - {x: 49, y: -47}
+        - {x: 49, y: 40}
+        - {x: 45, y: 47}
+    - name: Options Room Green_10
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 8
+        width: 98
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -44, y: 51}
+        - {x: -48, y: 50}
+        - {x: -49, y: 47}
+        - {x: -49, y: -49}
+        - {x: -28, y: -51}
+        - {x: 36, y: -51}
+        - {x: 49, y: -48}
+        - {x: 49, y: 51}
+    - name: Options Room Green_11
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 8
+        width: 98
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49, y: 51}
+        - {x: -49, y: -50}
+        - {x: -37, y: -51}
+        - {x: 31, y: -51}
+        - {x: 49, y: -47}
+        - {x: 49, y: 51}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

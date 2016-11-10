@@ -6,11 +6,15 @@ public class ThisIsATestScriptsDeleteWhenDone : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		Debug.Log("I got an error when i started this dont know wtf that was about");
+		Debug.Log("I got an error when i started this dont know wtf that was about LOLllllllllllLLLLLL");
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 	
 	}
+
+
+
 }

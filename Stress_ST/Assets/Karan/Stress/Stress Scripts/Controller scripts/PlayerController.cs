@@ -51,12 +51,11 @@ public class PlayerController : MonoBehaviour {
 			Flip();
 			//cancelMouseMovement = true;
 		}
-
 		if(!cancelMouseMovement)
 		{
 			MovePlayerMouse(mousePos);
 
-			Debug.Log ("INSIDE = " + mousePos );
+			//Debug.Log ("INSIDE = " + mousePos );
 			targetSet = false;
 		}
 

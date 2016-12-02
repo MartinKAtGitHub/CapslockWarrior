@@ -21,9 +21,6 @@ public class Spawner : MonoBehaviour {
 
 // --------------------------------------------- END ---------------------------------------------------
 
-
-
-
 	public GameObject[] SpawnPatterns;
 
 	[Tooltip ("All the enemies you want the spawner to spawn")]
@@ -43,6 +40,9 @@ public class Spawner : MonoBehaviour {
 	void Start () 
 	{
 		spawnPositions = new List<Transform>();
+
+
+
 
 		for (int i = 0; i < SpawnPatterns.Length; i++) 
 		{

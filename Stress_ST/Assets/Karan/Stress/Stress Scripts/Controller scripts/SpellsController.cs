@@ -16,13 +16,14 @@ public class SpellsController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-
 		// Since the agumentet spell is childe of spells this works
-		SpellsOnKeyOne = AgumentedSpellGameObjectKeyOne.GetComponent<Spells>(); 
 
 		if(SpellsOnKeyOne == null)
 		{
 			Debug.Log("NO GAMEOBJ ON SPELL K1");
+		}else
+		{
+			SpellsOnKeyOne = AgumentedSpellGameObjectKeyOne.GetComponent<Spells>(); 
 		}
 		// now here we need to make a test to see what augment the player choose
 		//a = new SplittFire();

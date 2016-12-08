@@ -20,14 +20,14 @@ public class PlayerManager : MonoBehaviour {
 
 	public void TakeDamage(int damageAmount)
 	{
-		HealthPoints =- damageAmount;
+		HealthPoints -= damageAmount;
 	}
 
 	private void isPlayerAlive()
 	{
 		if(HealthPoints <= 0)
 		{
-			Debug.Log("<color=blue>PLAYER IS DEAD/color>");
+			Debug.Log("<color=blue>PLAYER IS DEAD</color>:");
 		}
 	}
 }

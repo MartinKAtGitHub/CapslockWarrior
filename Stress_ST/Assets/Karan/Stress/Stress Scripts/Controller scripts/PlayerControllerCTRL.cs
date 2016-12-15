@@ -24,15 +24,15 @@ public class PlayerControllerCTRL : MonoBehaviour {
 
 		if(Input.GetKey(KeyCode.LeftControl)) // Ctrl + s Trys to Save the game so dosent work in editor
 		{
-			moveX = Input.GetAxis("Horizontal"); 
+			moveX = Input.GetAxis("Horizontal"); // TODO adjust these so HERO dont SLIDE AROUND
 			moveY = Input.GetAxis("Vertical");
 
-
+			//TODO Ctrl release works but when i press ctrl again i stop. Maybe keep him going but give back control
 		}
 			//PlayerOBj.velocity = Vector2.zero;
 			PlayerOBj.velocity = new Vector2(moveX * MaxSpeed, moveY * MaxSpeed);
-			Debug.Log("MoveX  = " + moveX);
-			Debug.Log("MoveY  = " + moveY);
+//			Debug.Log("MoveX  = " + moveX);
+//			Debug.Log("MoveY  = " + moveY);
 		
 
 	}

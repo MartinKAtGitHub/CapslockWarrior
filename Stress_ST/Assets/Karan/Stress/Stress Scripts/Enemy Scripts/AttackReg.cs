@@ -4,11 +4,11 @@ using System.Collections;
 public class AttackReg : MonoBehaviour 
 {
 
+	
+	// TODO Small Bug that if u stand still in range after taking dmg u don't take dmg unless move around.
+	// Migth use Range ditection rather then colliders 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-
-	Debug.Log(other.name);
-
 
 		if(other.tag == transform.parent.GetComponent<EnemyCreep>().HeroTag)
 		{
@@ -19,4 +19,10 @@ public class AttackReg : MonoBehaviour
 	}
 
 
+
+	/*void OnTriggerStay2D(Collider2D other) 
+	{
+       Debug.Log("LOLOLOLOLOLOLOLOl");
+    }
+    */
 }

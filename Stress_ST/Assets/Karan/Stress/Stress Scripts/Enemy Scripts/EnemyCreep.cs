@@ -4,11 +4,12 @@ using System.Collections;
 public class EnemyCreep : MonoBehaviour 
 {
 
+	public float CreepSpeed;
 	public int Damage;
 	[Tooltip("This is the Tag(s) that the enemy detects and starts attack anim Need to adjust this for more players")]
 	public string HeroTag;
 
-	public Animator AnimController;
+	private Animator AnimController;
 
 	private Transform PunchHitBox;
 	private Transform PunchRange;

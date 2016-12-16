@@ -50,7 +50,9 @@ public class SpellsController : MonoBehaviour {
 		Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
 
 		//////////////// Problemetic code //////////////////
-		SpellsOnKeyOne.ProjectileSpawn = transform.FindChild("ProjectileSpawn"); // TODO i need this to spawn spells in the rigth places. but might be to heavy
+		Transform SpellsSpawn = transform.FindChild("ProjectileSpawn");
+		SpellsOnKeyOne.ProjectileSpawn = SpellsSpawn;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
+		SpellsOnKeyTwo.ProjectileSpawn = SpellsSpawn;
 		if(SpellsOnKeyOne.ProjectileSpawn == null)
 		{
 			Debug.Log("Trans Is NULL");

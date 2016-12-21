@@ -1,89 +1,146 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
-public class CreatureOneBehaviour : MonoBehaviour {
+public class CreatureOneBehaviour : DefaultBehaviour {
 
-//	private FSM_Manager MovementFSM, RadarFSM; // dette er Final State Machinene jeg bruker, en for bevegelse av hjulene/beltene og en for radaren. jeg lagde ikke en for kanonen siden den bare hadde en state
-//	public EnemyData Enemy { get; set; }  // denne blir oppdatert i OnScannedRobot, altså når radaren har landet på en fiende. blir Cleared vær gjennomgang av gameloopen når ett target er funner ellers bare fornyet i OnScannedRobot.
-//	double vinkelA = 0, vinkelB = 0, vinkelC = 0, hypotenus = 0;//disse blir bukt til å finne posisjon til fienden, tror bare navnene er forklarende nokk. matten er kanskje feil men det fungerer til linear targeting
-//	double newX = 0, newY = 0, bulletpower = 0;//newX og newY er den nye posisjonen til fienden og bulletpower er hvilke kule man skal skyte med
+	private FSM_Manager MovementFSM, AttackFSM; // dette er Final State Machinene jeg bruker, en for bevegelse av hjulene/beltene og en for radaren. jeg lagde ikke en for kanonen siden den bare hadde en state
+
+	AStarPathfinding_RoomPaths _CreateThePath = new AStarPathfinding_RoomPaths();
+	CreatingObjectNodeMap _PersonalNodeMap;
+
+	Nodes CehckingNOde;
+
+	public bool StartPathfinding = false;
+	public bool RunPathfinding = true;
+	public bool HaveIChangedRoom = false;
+
+	public override void OnDestroyed(){}
+
+	void Awake(){
+
+		myPos [0, 0] = transform.position.x;
+		myPos [0, 1] = transform.position.y;	
+
+		_PersonalNodeMap = new CreatingObjectNodeMap(13,13);//if i do this then the constructor is only called once instead of 4 times......
+		MyNodePosition[0] = new Nodes (myPos,0);
+	}
 
 	void Start(){
-////		RadarFSM = new FSM_Manager( new DefaultState[] { new FindTarget(), } );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
-////		MovementFSM = new FSM_Manager( new DefaultState[] { new FindTarget(), } );
-	
-////		RadarFSM.Init(this);
-////		MovementFSM.Init(this);
-	}
-	
-	void Update(){
-	//	while (true) {//game loop
-			//		if (Enemy.Name != null) {//fyrer av kanonen når en fiende er funnet
-			//			SetFire(bulletpower);
-			//		}
-////			MovementFSM.Update();//oppdaterer fsm'ene
-////			RadarFSM.Update();
-			//		Execute();
-	//	}
-	}
+		_PersonalNodeMap.CreateNodeMap ();
+		_PersonalNodeMap.SetCenterPos (myPos);
+
+		SetTarget (GameObject.FindGameObjectWithTag ("Player1"));
+	//	Debug.Log ("Setting GameObject.FindGameObjectWithTag (\"Player1\") Remember to remove this later");
+
+		if (RunPathfinding == true) {
+
+			MovementFSM = new FSM_Manager( new DefaultState[] { new WalkToTarget(_PersonalNodeMap, _CreateThePath, this), new GolemAttackState(this), } );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
+		MovementFSM.Init(this);
 		
-	//siden jeg ikke lagde en egen FSM for kanonen så la jeg den bare til i OnScannedRobot. de tre første linjene finner informasjonen som er nødvendig for å sette Enemy() og resten er å sette kulekraft og linear targeting
-/*	public override void OnScannedRobot(ScannedRobotEvent scanData) {
-		Vector2D offset = CalculateTargetVector(HeadingRadians, scanData.BearingRadians, scanData.Distance);//disse tre kalkulerer nødvendig data til enemy
-		Point2D position = new Point2D(offset.X + X, offset.Y + Y);
-		Enemy.SetEnemyData(scanData, position);
-
-		if (scanData.Distance <= 350)//denne kan gjøres bedre men følte lengdene var helt greie. setter kulens kraft etter avstanden fra fienden
-			bulletpower = 3;
-		else if (scanData.Distance > 350 && scanData.Distance <= 650)
-			bulletpower = 2;
-		else
-			bulletpower = 1;
-
-		//vinkelA finner den nødvendige vinkelen for å treffe fienden og vinkelB og C er nødvendige for å finne hypotenus og de nye posisjonene
-		vinkelA = Utils.NormalRelativeAngle(Utils.NormalRelativeAngle(Math.Sin(Enemy.HeadingRadians - RadarHeadingRadians)) * Enemy.Velocity / (18 - (3 * bulletpower))); //finner vinkelen som spiller kommer til å ha (linear targeting). denne fungerer alene til linear targeting men ville ha posisjonen så måtte gjøre det andre også
-		vinkelB = (Math.PI - (Math.PI - (Math.PI * 0.5f) - ((Math.PI * 0.5f) - Utils.NormalRelativeAngle(RadarHeadingRadians))) + Utils.NormalRelativeAngle(Enemy.HeadingRadians));//finner vinkelB tror jeg =D testet masse og plutselig fikk jeg det jeg ønsket, kanskje ikke riktig matte messig men det fungerer  
-		vinkelC = (Math.PI + vinkelA - vinkelB); //finner den siste vinkelen i trekanten
-		hypotenus = (Enemy.Distance / Math.Sin(vinkelC)) * Math.Sin(vinkelB);//finner hypotenusen til trekanten
-
-		newY = hypotenus * Math.Cos(RadarHeadingRadians + vinkelA) + Y;//finner den nye Y koordinaten
-		newX = hypotenus * Math.Sin(RadarHeadingRadians + vinkelA) + X;//finner den nye X koordinaten
-
-		if (newX < 18)//hvis den nye X koordinaten er større eller mindre enn kartet +- størrelse av robot setter den til passende størrelse
-			newX = 18;
-		else if (newX > BattleFieldWidth - 18)
-			newX = BattleFieldWidth - 18;
-
-		if (newY < 18)//hvis den nye Y koordinaten er større eller mindre enn kartet +- størrelse av robot setter den til passende størrelse
-			newY = 18;
-		else if (newY > BattleFieldHeight - 18)
-			newY = BattleFieldHeight - 18;
-
-		SetTurnGunRightRadians(Utils.NormalRelativeAngle(Math.Atan2(newX - X, newY - Y) - (GunHeadingRadians)));
-	}*/
-
-	private void InitBot() {//her blir fsmene initialisert og setter ny farge på robot 
-
-	//	SetColors(Color.Black, Color.Gray, Color.Black, Color.Red, Color.Black);
-	//	IsAdjustGunForRobotTurn = true;
-	//	IsAdjustRadarForGunTurn = true;
-	}
-
-	/*private Vector2D CalculateTargetVector(double ownHeadingRadians, double bearingToTargetRadians, double distance) {//denne finner vectoren til fienden
-		double battlefieldRelativeTargetAngleRadians = Utils.NormalRelativeAngle(ownHeadingRadians + bearingToTargetRadians);
-		Vector2D targetVector = new Vector2D(Math.Sin(battlefieldRelativeTargetAngleRadians) * distance, Math.Cos(battlefieldRelativeTargetAngleRadians) * distance);
-		return targetVector;
-	}*/
-
-/*	public override void OnRobotDeath(RobotDeathEvent deadRobot) {//hvis fienden jeg har merket dør blir informasjonen cleared
-		if (deadRobot.Name == Enemy.Name) {
-			Enemy.Clear();
 		}
+
+	}
+	//TODO fix script names
+	//TODO push
+	//TODO make second enemie (rolling enemie, fast, defies gravity!!!! ;-p)
+
+	void Update(){
+	/*	if (gameObject.name == "Golem") {
+			Debug.Log ("Running");
+		}
+	*/
+	
+
+		myPos [0, 0] = transform.position.x;
+		myPos [0, 1] = transform.position.y;
+	
+		if(RunPathfinding == true )
+			MovementFSM.TheUpdate();//oppdaterer fsm'ene
 	}
 
-	public override void OnBulletHit(BulletHitEvent hitData) {//når min kule treffer fienden blir energien til fienden oppdatert
-		if (Enemy.Name == hitData.VictimName) {
-			Enemy.Energy = hitData.VictimEnergy;
+
+	public override void SetTarget(GameObject target){//if you want to change target, use this, TODO make it so that its possible to only send the node
+		_GoAfter = target;
+		UpdateTargetRoomAndNode ();
+	} 
+
+	void UpdateTargetRoomAndNode(){//sending the endpoints to the A*
+		_CreateThePath.SetEndRoomAndNode (_GoAfter.GetComponent<DefaultBehaviour>().NeighbourGroups, _GoAfter.GetComponent<DefaultBehaviour>().GetMyNode());
+	}
+
+	#region Collision functions
+	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
+		NeighbourGroups = neighbours;
+		_CreateThePath.SetStartRoomAndNode (neighbours, MyNodePosition);
+
+		UpdateThePath = true;
+	}
+	const String a = "Wall";
+	const String b = "Enemy";
+
+	void OnTriggerEnter2D(Collider2D coll) {//sends info to the objects personal nodemap (it also trigger on colliders that doesnt have istrigged toggled)
+
+		if (coll.gameObject.CompareTag(a)) {
+			_PersonalNodeMap.AddGameobjectsWithinTrigger (coll.gameObject);
+			UpdateThePath = true;
+		} else if (coll.gameObject.CompareTag(b)) {
+			_PersonalNodeMap.AddEnemyPositions (coll.gameObject);
+		}
+
+	
+
+	}
+
+	void OnTriggerExit2D(Collider2D coll) {//sends info to the objects personal nodemap (it also trigger on colliders that doesnt have istrigged toggled)
+
+		if (coll.gameObject.CompareTag(a)) {
+			_PersonalNodeMap.RemoveGameobjectsWithinTrigger (coll.gameObject);
+		} else if (coll.gameObject.CompareTag(b)) {
+			_PersonalNodeMap.RemoveEnemyPositions (coll.gameObject);
+		}
+
+
+	}
+
+	#endregion
+/*		public bool tru = false;
+
+	void OnDrawGizmos(){
+		if (tru && _ThePath != null) {
+			foreach (RoomNodeCreating s in _ThePath) {
+				Gizmos.color = Color.green;
+				Gizmos.DrawCube (new Vector3 (s.RoomNode.GetID () [0, 0], s.RoomNode.GetID () [0, 1], 0), new Vector3 (0.5f, 0.5f, 0.5f));
+			}
+		}
+
+
+		Nodes[,] mynodes = _PersonalNodeMap.GetNodemap ();
+		if (tru && mynodes != null) {
+			for (int x = 0; x < 6 * 2 + 1; x++) {
+				for (int y = 0; y < 6 * 2 + 1; y++) {
+					if (mynodes [y, x].GetCollision () == 100) {
+						Gizmos.color = Color.blue;
+
+					} else if (mynodes [y, x].GetCollision () == 10) {
+						Gizmos.color = Color.black;
+
+					} else {
+						Gizmos.color = Color.yellow;
+					
+					}
+					Gizmos.DrawCube (new Vector3 ((myPos[0,0] + mynodes [y, x].GetID () [0, 0]),(myPos[0,1] + mynodes [y, x].GetID () [0, 1]), 0), new Vector3 (0.5f, 0.5f, 0.5f));
+				}
+			}
+		}
+		if (tru && _TheNodePath != null) {
+			foreach (Nodes s in _TheNodePath) {
+				Gizmos.color = Color.red;
+				Gizmos.DrawCube (new Vector3 (myPos[0,0] + s.GetID () [0, 0],myPos[0,1] + s.GetID () [0, 1], 0), new Vector3 (0.5f, 0.5f, 0.5f));
+			}
 		}
 	}*/
 }
+

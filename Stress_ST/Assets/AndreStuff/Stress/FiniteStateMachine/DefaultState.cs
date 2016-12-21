@@ -4,7 +4,7 @@ using System.Collections;
 
 	public abstract class DefaultState {
 
-		protected MonoBehaviour CreatureObject;//lar de som arver fra denne bruke Robot. for å forandre på robotens rotasjon,fart,osv
+		protected MonoBehaviour CreatureObject;//lar de som arver fra denne bruke MonoBehaviour, hvis de trenger det. for å forandre på objektets rotasjon,fart,osv
 
 		public string Id { get; set; }//dette blir satt til den nye id'en til staten som arver denne klassen
 
@@ -16,9 +16,9 @@ using System.Collections;
 			CreatureObject = myRobot;
 		}
 
-		public virtual void EnterState() { }//hva som skal skje når man først starter staten
-
-		public virtual void ExitState() { }//hva som skjer når man går ut av staten
+		public abstract string EnterState();//hva som skal skje når man først starter staten
+		
+		public abstract void ExitState ();//hva som skjer når man går ut av staten
 
 		public abstract string ProcessState();//hva som skal skje vær oppdatering av game loopen 
 

@@ -18,7 +18,7 @@ class CaveEnemy1 : EnemyBlueprint {
 	}
 
 	override public RuntimeAnimatorController GetEnemyAnimator (){
-		_Controller = Resources.Load("Andre/Animations/GolemAnimationController", typeof(RuntimeAnimatorController)) as RuntimeAnimatorController;
+		_Controller = Resources.Load("Andre/Animations/Golem", typeof(RuntimeAnimatorController)) as RuntimeAnimatorController;
 		return _Controller;
 	}
 

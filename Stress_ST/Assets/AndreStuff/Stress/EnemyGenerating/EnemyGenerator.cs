@@ -100,7 +100,7 @@ public class EnemyGenerator : ListOfWords {
 						}
 						if (middleMan.GetEnemyHealth () > 0) {//moved this from enemywordchecker because thought it might improve the perfromance, then if objects health is 0 it wont be spawned
 							_EnemyObject.GetComponentInChildren<EnemyWordChecker> ()._EnemyHealth = GetRandomWords (middleMan.GetEnemyHealth ());
-							_EnemyObject.GetComponentInChildren<SpriteRenderer> ().sprite = middleMan.GetEnemySprite ();
+							//_EnemyObject.GetComponentInChildren<SpriteRenderer> ().sprite = middleMan.GetEnemySprite ();
 							_EnemyObject.GetComponentInChildren<Animator> ().runtimeAnimatorController = middleMan.GetEnemyAnimator ();
 							WhereToSpawnEnemies ();
 						} else {
@@ -129,7 +129,7 @@ public class EnemyGenerator : ListOfWords {
 
 		GameObject saver = Instantiate (_EnemyObject, s.position, Quaternion.identity) as GameObject;
 		saver.transform.SetParent (s);
-		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().AddObject(saver);
+//		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().AddObject(saver);
 	}
 
 

@@ -36,7 +36,7 @@ public class EnemyWordChecker : MonoBehaviour {
 			_EnemyHealth = _EnemyHealth.Remove (0, _WordsToRemove);
 			TextElement.text = string.Format("<color=black>{0}</color>", _EnemyHealth);
 			if (_EnemyHealth.Length <= 0) {
-				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().RemoveObject(this.gameObject);
+//				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().RemoveObject(this.gameObject);
 				Destroy (this.gameObject);
 			}
 		}

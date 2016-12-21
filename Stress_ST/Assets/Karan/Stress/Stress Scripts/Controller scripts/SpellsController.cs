@@ -50,9 +50,11 @@ public class SpellsController : MonoBehaviour {
 		Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
 
 		//////////////// Problemetic code //////////////////
-		Transform SpellsSpawn = transform.FindChild("ProjectileSpawn");
+		Transform SpellsSpawn = transform.FindChild("ProjectileSpawn");//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob
 		SpellsOnKeyOne.ProjectileSpawn = SpellsSpawn;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
 		SpellsOnKeyTwo.ProjectileSpawn = SpellsSpawn;
+		SpellsOnKeyThree.ProjectileSpawn = SpellsSpawn;
+		SpellsOnKeyFour.ProjectileSpawn = SpellsSpawn;
 		if(SpellsOnKeyOne.ProjectileSpawn == null)
 		{
 			Debug.Log("Trans Is NULL");

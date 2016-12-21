@@ -5,11 +5,11 @@ public class Fire : Spells {
 
 	public Fire()
 	{
-		MonoBehaviour.print("Fire INI");
+		//MonoBehaviour.print("Fire INI");
 	}
 
 	public override void Cast()
 	{
-		MonoBehaviour.print("Fire Spell ? idk what to cast");
+		//MonoBehaviour.print("Fire Spell ? idk what to cast");
 	}
 }

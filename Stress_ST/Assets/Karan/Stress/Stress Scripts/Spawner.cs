@@ -41,9 +41,6 @@ public class Spawner : MonoBehaviour {
 	{
 		spawnPositions = new List<Transform>();
 
-
-
-
 		for (int i = 0; i < SpawnPatterns.Length; i++) 
 		{
 			if (SpawnPatterns[i] == null)
@@ -51,7 +48,6 @@ public class Spawner : MonoBehaviour {
 				Debug.LogError("SpawnPattern[" + i + "] is NULL" );
 				// Do somthing about it here if this becomes an issue. 
 			}	
-
 		}
 
 		// can use -> int RoundUp = (int)Math.ceiling(precise); || int Rounded = (int) math.round(preicis, 0); -- this will get you to the neares number to use use in yout for loop
@@ -67,7 +63,6 @@ public class Spawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-	
 		WaveTimerCountDown -= Time.deltaTime;
 
 		if(WaveTimerCountDown <= 0 && AmountOfWaves != 0)
@@ -111,7 +106,7 @@ public class Spawner : MonoBehaviour {
 	{	
 		DedicateSpawnPatternAndPosition();
 
-		for (int i = 0; i < EnemyTypes.Length; i++) 
+		for (int i = 0; i < EnemyTypes.Length; i++)
 		{
 			for (int j = 0; j < EnemyTypes[i].GetComponent<Enemy>().SpawnAmount; j++) 
 			{

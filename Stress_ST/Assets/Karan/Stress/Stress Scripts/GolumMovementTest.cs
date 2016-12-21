@@ -8,7 +8,6 @@ public class GolumMovementTest : MonoBehaviour {
 
 
 	private Vector3 OldPos;
-	public Vector2 Force;
 	public bool IsMoving;
 	// Use this for initialization
 	void Start () 
@@ -23,23 +22,6 @@ public class GolumMovementTest : MonoBehaviour {
 	void FixedUpdate () 
 	{
 		
-			//rb.velocity = new Vector2(speed,0.0f);
-
-			// IF old pos == new pos then start moving again.
-			//Logic find vector from center of Forcepush to target, then addForce( new vector * force)
-		/*if(test)
-		{
-			rb.AddForce(new Vector2(-500,500),ForceMode2D.Force);
-
-			test = false;
-		}*/
-
-
-		/*if(Input.GetKeyDown(KeyCode.Space))
-		{
-			rb.AddForce(new Vector2(Force.x, Force.y),ForceMode2D.Force);
-			IsMoving = false;
-		}*/
 
 		if(rb.velocity.magnitude < 0.01f || IsMoving == true)
 		{

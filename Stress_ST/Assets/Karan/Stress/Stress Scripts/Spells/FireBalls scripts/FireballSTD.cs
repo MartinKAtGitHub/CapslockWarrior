@@ -54,7 +54,7 @@ public class FireballSTD : Fire {
 		Instantiate(this, ProjectileSpawn.position,Quaternion.identity);
 	}
 
-	void ScanForClosestTarget()
+	void ScanForClosestTarget()// TODO add if no enemys are in range
 	{
 		enemiesInRange = Physics2D.OverlapCircleAll(ProjectileSpawn.position,DetectionRange,FireBallDetection);
 		if(enemiesInRange != null)

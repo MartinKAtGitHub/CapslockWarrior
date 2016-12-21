@@ -3,11 +3,11 @@ using System.Collections;
 
 public class ForcePush : Wind {
 
-	public Vector2 ForceApplied;
+	public float ForcePushDestroyAfter;
 	// Use this for initialization
-	void Start () 
+	void Start()
 	{
-	
+
 	}
 	
 	// Update is called once per frame
@@ -18,18 +18,19 @@ public class ForcePush : Wind {
 
 	public override void Cast()
 	{
-		Instantiate(this, ProjectileSpawn.position,Quaternion.identity);
+		GameObject ForcePushArea = (GameObject)Instantiate(this.gameObject, ProjectileSpawn.position,Quaternion.identity);
+		Destroy(ForcePushArea,ForcePushDestroyAfter);
 	}
 
-	/*void OnTriggerEnter2D(Collider2D other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
 		if(other.tag == "Enemy")
 		{
-				Debug.Log(other.name);
-				other.GetComponent<GolumMovementTest>().IsMoving = false;
-				other.GetComponent<Rigidbody2D>().AddForce(ForceApplied);
+			Debug.Log(other.name);
+			other.GetComponent<GolumMovementTest>().IsMoving = false;
+
 		}
-	}*/
+	}
 
 
 

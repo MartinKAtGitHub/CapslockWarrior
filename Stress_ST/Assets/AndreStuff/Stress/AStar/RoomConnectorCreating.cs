@@ -36,7 +36,7 @@ public class RoomConnectorCreating : MonoBehaviour {
 		float YStartPos = (float)(Math.Round (Math.Sin (Math.PI / 180 * transform.rotation.eulerAngles.z), 8)) * ((GetComponent<BoxCollider> ().size.x / 2) - DistanceFromNodes / 2);
 
 		for (int i = 0; i < Mathf.CeilToInt (GetComponent<BoxCollider> ().size.x); i++) {//adding all nodes to a list
-			TheNodes.Add (new Nodes (new float[,]{ { (transform.position.x + XStartPos - (XIncrease * i)), transform.position.y + YStartPos - (YIncrease * i) } }, 0));
+			TheNodes.Add (new Nodes (new float[,]{ { (transform.position.x + XStartPos - (XIncrease * i)), transform.position.y + YStartPos - (YIncrease * i) } }, 1));
 			TheNodes [i].SetRooms (GetComponent<RoomConnectorCreating>());
 		}
 

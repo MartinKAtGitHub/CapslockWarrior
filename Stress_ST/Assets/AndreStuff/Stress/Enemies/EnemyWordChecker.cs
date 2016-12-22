@@ -14,15 +14,20 @@ public class EnemyWordChecker : MonoBehaviour {
 	int _CleaveDmg;
 
 	void Start(){//Adding methods to events and setting startvalues
-		_WordsToRemove = 0;
+	
+		if (TextElement != null) {
+			_WordsToRemove = 0;
 
-		TextElement.text = _EnemyHealth;
-		_CleaveDmg = TalentBonusStats.CleaveDmg;
-		_StopChecking = false;
+			TextElement.text = _EnemyHealth;
+			_CleaveDmg = TalentBonusStats.CleaveDmg;
+			_StopChecking = false;
 
-		PlayerTyping.OnCompareStart += CompareStart;
-		PlayerTyping.OnCompareRestart += CompareRestart;
-		PlayerTyping.OnCompareEnd += CompareEnd;
+			PlayerTyping.OnCompareStart += CompareStart;
+			PlayerTyping.OnCompareRestart += CompareRestart;
+			PlayerTyping.OnCompareEnd += CompareEnd;
+		} else {
+			Debug.Log ("imnull");
+		}
 	}
 
 	#region EventMethods

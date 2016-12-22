@@ -47,7 +47,7 @@ public class CreatingObjectNodeMap {
 	public void CreateNodeMap(){
 		for (int x = 0; x < XDimention * 2 + 1; x++) {
 			for (int y = 0; y < YDimention * 2 + 1; y++) {
-				MyNodeMap [y, x] = new Nodes (new float[,]{ { x - XDimention, YDimention - y } }, 0);
+				MyNodeMap [y, x] = new Nodes (new float[,]{ { x - XDimention, YDimention - y } }, 1);
 			}
 		}
 
@@ -187,7 +187,7 @@ public class CreatingObjectNodeMap {
 	public void UpdateNodeMap(){
 		for (int i = 0; i < XDimention * 2 + 1; i++) {//chenges all node collisionid back to 0
 			for (int j = 0; j < YDimention * 2 + 1; j++) {
-				MyNodeMap [i, j].SetCollision (0);
+				MyNodeMap [i, j].SetCollision (1);
 			}
 		}
 	
@@ -223,7 +223,7 @@ public class CreatingObjectNodeMap {
 			//	Debug.Log (_LeftPoint + " | " + _RightPoint + " | " + _HighestPoint + " | " + _LowestPoint + " | " + s.name);
 			for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
 				for (int j = _LeftPoint; j <= _RightPoint; j++) {
-					MyNodeMap [i, j].SetCollision (0);
+					MyNodeMap [i, j].SetCollision (1);
 				}
 			}
 		}

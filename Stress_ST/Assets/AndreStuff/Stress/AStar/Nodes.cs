@@ -62,22 +62,10 @@ public class Nodes {
 
 	public float GetJustMoveGCost(Nodes nodeToCheck) {//Gets how expencive it is to travel to nodetocheck
 
-		if (nodeToCheck.GetCollision () == 0) {
-			noe = 1;
-		} else if (nodeToCheck.GetCollision () == 1) {
-			noe = 10;
-		}else if (nodeToCheck.GetCollision () == 2) {
-			noe = 3;
-		}else if (nodeToCheck.GetCollision () == 10) {
-			noe = 20;
-		} else if (nodeToCheck.GetCollision () == 100) {
-			noe = 100;
-		}
-
 		if (nodeToCheck.GetID () [0, 0] == _NodeID [0, 0] || nodeToCheck.GetID () [0, 1] == _NodeID [0, 1]) {
-			return noe;
+			return nodeToCheck.GetCollision ();
 		} else {
-			return noe + (noe * 0.4f);
+			return (nodeToCheck.GetCollision () * 1.4f);
 		}
 	}
 		
@@ -86,13 +74,47 @@ public class Nodes {
 	}
 
 	public void ClearAll() {// Clears all data to preprair for the next search
+		Used = false;
 		_ParentNode = null;
 		_GCost = 0;
 		_HCost = 0;
 	}
 
+	public void SetParentAndEnd(Nodes theParent, Nodes theEnd) {//setting parent gcost and hcost
+		Used = true;
+		_ParentNode = theParent;
+
+		_XValue = theEnd.GetID () [0, 0] - _NodeID [0, 0];
+		_YValue = theEnd.GetID () [0, 1] - _NodeID [0, 1];
+
+		if (_XValue < 0)
+			_XValue *= -1;
+		if (_YValue < 0)
+			_YValue *= -1;
+
+		_HCost = _XValue + _YValue;
+
+
+		_XValue = theParent.GetID () [0, 0] - _NodeID [0, 0];
+		_YValue = theParent.GetID () [0, 1] - _NodeID [0, 1];
+
+		if (_XValue < 0) {
+			_XValue *= -1;
+		}
+		if (_YValue < 0) {
+			_YValue *= -1;
+		}
+
+		if (_XValue == 1 || _YValue == 1) {//if not at the corners of the 3x3 neighbours
+			_GCost = _MapCollision + _ParentNode.GetGCost ();
+		} else {
+			_GCost = (_MapCollision * 1.4f) + _ParentNode.GetGCost ();
+		}
+	}
+
 	public void SetParent(Nodes theParent, int collision) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
 
+		Used = true;
 		_ParentNode = theParent;
 
 		if (_ParentNode != null) {

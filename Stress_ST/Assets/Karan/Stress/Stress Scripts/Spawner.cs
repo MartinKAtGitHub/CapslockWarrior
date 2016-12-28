@@ -83,21 +83,21 @@ public class Spawner : MonoBehaviour {
 		case Difficulty.EasyMode:
 			Debug.Log("EasyMode =" + EasyModeMultiplier);
 			return EasyModeMultiplier;
-			break;
+			//break;
 
 		case Difficulty.NormalMode:
 			Debug.Log("NormalMode =" + NormalModeMultiplier);
 			return NormalModeMultiplier;
-			break;
+			//break;
 
 		case Difficulty.HardMode:
 			Debug.Log("HardMode =" + HardModeMultiplier);
 			return HardModeMultiplier;
-			break;
+			//break;
 
 		default:
 			return 1;
-			break;
+			//break;
 		}
 	}
 

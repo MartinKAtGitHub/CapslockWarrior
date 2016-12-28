@@ -112,7 +112,7 @@ public class SpellsController : MonoBehaviour {
 			{
 				SpellsOnKeyFour.Cast();
 				spellKeyTwoReady = false;
-				saveTimerKeyFour = saveTimerKeyFour;
+				timerForSpellOnKeyFour = saveTimerKeyFour;
 			}
 		}
 	}

@@ -9,7 +9,7 @@ public class FireballSTD : Fire {
 	public LayerMask FireBallDetection;
 	//private float coolDownTimer; this is comming from the parent ?!??! i can see this in the inspector 
 
-	private Rigidbody2D rb;
+	//private Rigidbody2D rb;
 	private Collider2D[] enemiesInRange;
 	private GameObject fireBallTarget;
 
@@ -21,7 +21,7 @@ public class FireballSTD : Fire {
 
 	void Start () 
 	{
-		rb = GetComponent<Rigidbody2D>();
+		//rb = GetComponent<Rigidbody2D>();
 		ScanForClosestTarget();
 
 	}

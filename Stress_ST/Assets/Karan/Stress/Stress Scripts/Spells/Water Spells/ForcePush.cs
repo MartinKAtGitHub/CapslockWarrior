@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ForcePush : Wind {
+public class ForcePush : Water {
 
 	public float ForcePushDestroyAfter;
 	// Use this for initialization

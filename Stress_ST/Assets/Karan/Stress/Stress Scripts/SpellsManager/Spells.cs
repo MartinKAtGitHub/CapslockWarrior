@@ -6,7 +6,13 @@ public class Spells : MonoBehaviour{
 
 	public float CoolDownTimer;
 
-	public Transform ProjectileSpawn;
+	// This code i feel to be convinent 
+	public Transform SpellSpawnPos;
+	public GameObject PlayerGameObject;
+	//----------
+
+
+
 	/*public virtual float CoolDownTimer{ 
 		get{ return ran;} 
 	 

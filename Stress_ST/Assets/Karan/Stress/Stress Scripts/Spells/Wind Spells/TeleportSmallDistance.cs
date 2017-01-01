@@ -22,6 +22,7 @@ public class TeleportSmallDistance : Wind {
 
 	public override void Cast()
 	{
-		//MonoBehaviour.print("Fire Spell ? idk what to cast");
+		PlayerGameObject.GetComponent<Rigidbody2D>().position = new Vector2(0,0);
+		//hero.rigidbody.position(direction + tele range, same)
 	}
 }

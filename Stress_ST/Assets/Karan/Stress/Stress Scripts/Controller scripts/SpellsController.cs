@@ -31,10 +31,28 @@ public class SpellsController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		if(AgumentedSpellGameObjectKeyOne == null)
+		{
+			Debug.LogError("No spell Set on Key 1, pls add a default spell here to avoid null ref");
+		}
+		if(AgumentedSpellGameObjectKeyTwo == null)
+		{
+			Debug.LogError("No spell Set on Key 2, pls add a default spell here to avoid null ref");
+		}
+		if(AgumentedSpellGameObjectKeyThree == null)
+		{
+			Debug.LogError("No spell Set on Key 3, pls add a default spell here to avoid null ref");
+		}
+		if(AgumentedSpellGameObjectKeyFour == null)
+		{
+			Debug.LogError("No spell Set on Key 4, pls add a default spell here to avoid null ref");
+		}
+
 		SpellsOnKeyOne = AgumentedSpellGameObjectKeyOne.GetComponent<Spells>(); 
 		SpellsOnKeyTwo = AgumentedSpellGameObjectKeyTwo.GetComponent<Spells>();
 		SpellsOnKeyThree = AgumentedSpellGameObjectKeyThree.GetComponent<Spells>();
 		SpellsOnKeyFour = AgumentedSpellGameObjectKeyFour.GetComponent<Spells>();
+
 
 
 		timerForSpellOnKeyOne = SpellsOnKeyOne.CoolDownTimer;
@@ -50,12 +68,15 @@ public class SpellsController : MonoBehaviour {
 		Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
 
 		//////////////// Problemetic code //////////////////
+		// TODO find a smarter solution SpellsController
+		SpellsOnKeyFour.PlayerGameObject = this.gameObject;
+
 		Transform SpellsSpawn = transform.FindChild("ProjectileSpawn");//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob
-		SpellsOnKeyOne.ProjectileSpawn = SpellsSpawn;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
-		SpellsOnKeyTwo.ProjectileSpawn = SpellsSpawn;
-		SpellsOnKeyThree.ProjectileSpawn = SpellsSpawn;
-		SpellsOnKeyFour.ProjectileSpawn = SpellsSpawn;
-		if(SpellsOnKeyOne.ProjectileSpawn == null)
+		SpellsOnKeyOne.SpellSpawnPos = SpellsSpawn;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
+		SpellsOnKeyTwo.SpellSpawnPos = SpellsSpawn;
+		SpellsOnKeyThree.SpellSpawnPos = SpellsSpawn;
+		SpellsOnKeyFour.SpellSpawnPos = SpellsSpawn;
+		if(SpellsOnKeyOne.SpellSpawnPos == null)
 		{
 			Debug.Log("Trans Is NULL");
 		}

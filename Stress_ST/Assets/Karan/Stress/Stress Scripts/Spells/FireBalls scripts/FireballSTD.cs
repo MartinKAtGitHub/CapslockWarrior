@@ -51,12 +51,12 @@ public class FireballSTD : Fire {
 
 	public override void Cast()
 	{
-		Instantiate(this, ProjectileSpawn.position,Quaternion.identity);
+		Instantiate(this, SpellSpawnPos.position,Quaternion.identity);
 	}
 
 	void ScanForClosestTarget()// TODO add if no enemys are in range
 	{
-		enemiesInRange = Physics2D.OverlapCircleAll(ProjectileSpawn.position,DetectionRange,FireBallDetection);
+		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position,DetectionRange,FireBallDetection);
 		if(enemiesInRange != null)
 		{
 			float distance = 0;
@@ -65,7 +65,7 @@ public class FireballSTD : Fire {
 			for (int i = 0; i < enemiesInRange.Length; i++) 
 			{
 				//TODO maybe use Math.abs ww mig have a pro with - valuse
-				distance = Vector3.Distance(enemiesInRange[i].gameObject.transform.position, ProjectileSpawn.position);
+				distance = Vector3.Distance(enemiesInRange[i].gameObject.transform.position, SpellSpawnPos.position);
 				//distance = Mathf.Abs(distance);
 				//Debug.Log("Distance IS = " + distance);
 				if(distance < minDistance)
@@ -85,6 +85,6 @@ public class FireballSTD : Fire {
 	void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.cyan;
-		Gizmos.DrawWireSphere(ProjectileSpawn.position, DetectionRange);
+		Gizmos.DrawWireSphere(SpellSpawnPos.position, DetectionRange);
 	}
 }

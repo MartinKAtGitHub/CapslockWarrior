@@ -18,7 +18,7 @@ public class ForcePush : Water {
 
 	public override void Cast()
 	{
-		GameObject ForcePushArea = (GameObject)Instantiate(this.gameObject, ProjectileSpawn.position,Quaternion.identity);
+		GameObject ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
 		Destroy(ForcePushArea,ForcePushDestroyAfter);
 	}
 

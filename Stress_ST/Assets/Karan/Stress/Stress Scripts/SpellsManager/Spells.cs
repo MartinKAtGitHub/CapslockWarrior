@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spells : MonoBehaviour{
+public abstract class Spells : MonoBehaviour{
 
 
 	public float CoolDownTimer;
@@ -21,14 +21,8 @@ public class Spells : MonoBehaviour{
 
 
 
-	public Spells()
-	{
-			//MonoBehaviour.print("Spells INI");
-			//CoolDownTimer = 5;
-	}
-
-	public virtual void Cast()
-	{
+	public abstract void Cast();
+	//{
 		//MonoBehaviour.print("I dont know what to cast");
-	}
+	//}
 }

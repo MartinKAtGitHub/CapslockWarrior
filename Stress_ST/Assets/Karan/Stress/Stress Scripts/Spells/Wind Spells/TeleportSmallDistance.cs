@@ -4,14 +4,14 @@ using System.Collections;
 public class TeleportSmallDistance : Wind {
 
 
-	public TeleportSmallDistance()
-	{
-		Debug.Log("TELPORTTTTTTTTTTT");
-	}
+	IMovementEngin MoveData;
+	public float TeleportRange;
+	
 	// Use this for initialization
 	void Start () 
 	{
-		
+		Debug.Log(PlayerGameObject.GetComponent<IMovementEngin>().Speed);
+		Debug.Log("HELLOOO");
 	}
 	
 	// Update is called once per frame
@@ -22,7 +22,21 @@ public class TeleportSmallDistance : Wind {
 
 	public override void Cast()
 	{
-		PlayerGameObject.GetComponent<Rigidbody2D>().position = new Vector2(0,0);
-		//hero.rigidbody.position(direction + tele range, same)
+		
+		if(PlayerGameObject.GetComponent<PlayerControllerCTRL>().enabled)
+		{
+			MoveData = PlayerGameObject.GetComponent<PlayerControllerCTRL>();
+		}
+		else
+		{
+			Debug.Log("Other is not activ");
+		}
+		//Hero.position = Hero.position + MoveData.GetDirection() * TeleportRange;
+		//Vector2 HeroPos = PlayerGameObject.GetComponent<Rigidbody2D>().position;
+		PlayerGameObject.GetComponent<Rigidbody2D>().position = 
+			PlayerGameObject.GetComponent<Rigidbody2D>().position+ MoveData.Direction * TeleportRange;
+		Debug.Log(MoveData.Direction);
+		//HeroPos = HeroPos + test.Direction * TeleportRange;
+
 	}
 }

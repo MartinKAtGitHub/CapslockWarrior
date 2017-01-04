@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fire : Spells {
+public abstract class Fire : Spells {
 
-	public Fire()
+	/*public Fire()
 	{
 		//MonoBehaviour.print("Fire INI");
 	}
@@ -11,5 +11,5 @@ public class Fire : Spells {
 	public override void Cast()
 	{
 		//MonoBehaviour.print("Fire Spell ? idk what to cast");
-	}
+	}*/
 }

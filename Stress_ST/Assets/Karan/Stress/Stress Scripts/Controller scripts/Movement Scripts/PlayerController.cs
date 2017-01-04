@@ -22,7 +22,10 @@ public class PlayerController : MonoBehaviour {
 
 		playerRigBdy = GetComponent<Rigidbody2D>();
 		mousePos = Vector3.zero;
+
+		Debug.LogWarning("ADD THE INTERFACE TO PLAYERCONTOLLER MOUSE");
 	}
+
 
 	void FixedUpdate()
 	{
@@ -40,7 +43,7 @@ public class PlayerController : MonoBehaviour {
 			cancelMouseMovement = true;
 		}
 
-
+		// Changing the sprite so the guy is facing the rigth direction acording to movement
 		if(moveX > 0 && !facingRigth)
 		{
 			Flip();
@@ -58,7 +61,6 @@ public class PlayerController : MonoBehaviour {
 			//Debug.Log ("INSIDE = " + mousePos );
 			targetSet = false;
 		}
-
 	}
 
 	// Update is called once per frame
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+		//transform.localScale.x *= -1f;
 	}
 
 	void MovePlayerMouse(Vector3 targetPos)

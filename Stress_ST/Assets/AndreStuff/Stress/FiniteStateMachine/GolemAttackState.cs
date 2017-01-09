@@ -8,12 +8,14 @@ public class GolemAttackState : DefaultState {
 
 	Transform MyTransform;
 
+	Rigidbody2D myrigid;
 
 
 	public GolemAttackState(CreatureOneBehaviour myInfo) {//giving copies of info to this class
 		Id = "AttackState";
 		MyInfo = myInfo;
 		MyTransform = MyInfo.transform;
+		myrigid = MyInfo.GetComponent<Rigidbody2D> ();
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
@@ -31,7 +33,7 @@ public class GolemAttackState : DefaultState {
 	bool removeme = false;
 
 	public override string ProcessState() {//this is called every frame
-
+		myrigid.velocity = new Vector2(0,0);
 		//todo start animation, check distance when done hitting or when the animation hits
 		if(removeme == true){
 			MyTransform.position = MyTransform.position;

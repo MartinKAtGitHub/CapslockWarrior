@@ -51,7 +51,7 @@ public class CreatingObjectNodeMap {
 			}
 		}
 
-		for (int i = 0; i < XDimention * 2 + 1; i++) {
+	/*	for (int i = 0; i < XDimention * 2 + 1; i++) {
 			for (int j = 0; j < YDimention * 2 + 1; j++) {
 				for (int k = -1; k < 2; k++) {
 					for (int h = -1; h < 2; h++) {
@@ -61,7 +61,21 @@ public class CreatingObjectNodeMap {
 					}
 				}
 			}
+		}*/
+
+		for (int i = 0; i < XDimention * 2 + 1; i++) {
+			for (int j = 0; j < YDimention * 2 + 1; j++) {
+				for (int k = -1; k < 2; k++) {
+					for (int h = -1; h < 2; h++) {
+						if ((i + k >= 0 && j + h >= 0) && ((i + k < XDimention * 2 + 1) && j + h < YDimention * 2 + 1) && !(k == 0 && h == 0)) {
+								MyNodeMap [i, j].NeighbourNodes [1 + k,1 + h] = MyNodeMap [i + k, j + h];
+						}
+					}
+				}
+			}
 		}
+
+
 		nodesastar.SetEndStartNode (StartNode, EndNode);
 	}
 
@@ -69,7 +83,15 @@ public class CreatingObjectNodeMap {
 		return CurrentPossition;
 	}
 
-	public List<Nodes> SetInfoAndStartSearch(bool UpdateMapToo){//TODO GET THE NODE LIST OF CONNECTOR NODES THEN ITTERATE THROUGH THEM, might not be the solution 
+	public Nodes[] GetNodeList(){
+		return nodesastar.GetListRef ();
+	}
+
+	public int[] GetNodeindex(){
+		return nodesastar.GetListindexref ();
+	}
+
+	public void SetInfoAndStartSearch(bool UpdateMapToo){//TODO GET THE NODE LIST OF CONNECTOR NODES THEN ITTERATE THROUGH THEM, might not be the solution 
 		if (UpdateMapToo == true) {
 			UpdateNodeMap ();
 		}
@@ -106,6 +128,59 @@ public class CreatingObjectNodeMap {
 
 			while (EndNode [0] == null) {
 
+		/*		if (x > XDimention && y > YDimention) {
+					if (x - incrementing >= 0 && y - incrementing >= 0) {
+						if (MyNodeMap [x, y - incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x, y - incrementing];
+						} else if (MyNodeMap [x - incrementing, y].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x - incrementing, y];
+						} else if (MyNodeMap [x - incrementing, y - incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x - incrementing, y - incrementing];
+						}
+					} else {
+						EndNode [0] = MyNodeMap [XDimention, YDimention];
+					}
+				} else if (x > XDimention && y < YDimention) {
+					if (x - incrementing >= 0 && y + incrementing <= YDimention * 2) {
+						if (MyNodeMap [x, y + incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x, y + incrementing];
+						} else if (MyNodeMap [x - incrementing, y].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x - incrementing, y];
+						} else if (MyNodeMap [x - incrementing, y + incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x - incrementing, y + incrementing];
+						}
+					} else {
+						EndNode [0] = MyNodeMap [XDimention, YDimention];
+					}
+				} else if (x < XDimention && y < YDimention) {
+					if (x + incrementing <= XDimention * 2 && y + incrementing <= YDimention * 2) {
+						if (MyNodeMap [x, y + incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x, y + incrementing];
+						} else if (MyNodeMap [x + incrementing, y].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x + incrementing, y];
+						} else if (MyNodeMap [x + incrementing, y + incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x + incrementing, y + incrementing];
+						}
+					} else {
+						EndNode [0] = MyNodeMap [XDimention, YDimention];
+					}
+				} else if (x < XDimention && y > YDimention) {
+					if (x + incrementing <= XDimention * 2 && y - incrementing >= 0) {
+						if (MyNodeMap [x, y - incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x, y - incrementing];
+						} else if (MyNodeMap [x + incrementing, y].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x + incrementing, y];
+						} else if (MyNodeMap [x + incrementing, y - incrementing].GetCollision () != 100) {
+							EndNode [0] = MyNodeMap [x + incrementing, y - incrementing];
+						}
+					} else {
+						EndNode [0] = MyNodeMap [XDimention, YDimention];
+					}
+				} else {
+					EndNode [0] = MyNodeMap [XDimention, YDimention];
+				}
+				if(EndNode[0] != null)
+					Debug.Log (EndNode[0].GetID()[0,0] + " | " + EndNode[0].GetID()[0,1] );*/
 				if (x + incrementing <= XDimention * 2) {
 					x1 = x + incrementing;
 				} else {
@@ -148,12 +223,12 @@ public class CreatingObjectNodeMap {
 				}
 				incrementing++;
 			}
-		//	Debug.Log (incrementing + " increament " + CenterPos[0,0] + " § "  + CenterPos[0,1]);
 		} else {
 			EndNode [0] = MyNodeMap [Mathf.RoundToInt (ypos), Mathf.RoundToInt (xpos)];
 		}
+		nodesastar.CreatePath ();
 
-		return nodesastar.CreatePath ();
+		return;
 	}
 
 
@@ -197,76 +272,53 @@ public class CreatingObjectNodeMap {
 			upperRightCorner = a.bounds.max;
 			lowerLeftCorner = a.bounds.min;
 
-			if (CenterPos [0, 0] - (XDimention + 0.5f) >= lowerLeftCorner.x) {//getting how far im going in this direction   |      .  <-|
+			_LeftPoint = (int)(lowerLeftCorner.x - (CenterPos [0, 0] - (XDimention + 0.5f)));
+			if (_LeftPoint < 0)
 				_LeftPoint = 0;
-			} else {
-				_LeftPoint = Mathf.FloorToInt (lowerLeftCorner.x - (CenterPos [0, 0] - (XDimention + 0.5f)));
-			}
 
-			if (CenterPos [0, 0] + (XDimention + 0.5f) <= upperRightCorner.x) {//getting how far im going in this direction   |      .  <-|
+			_RightPoint = (XDimention * 2) - (int)((CenterPos [0, 0] + (XDimention + 0.5f)) - upperRightCorner.x);
+			if (_RightPoint > XDimention * 2)
 				_RightPoint = XDimention * 2;
-			} else {
-				_RightPoint = (XDimention * 2) - Mathf.FloorToInt ((CenterPos [0, 0] + (XDimention + 0.5f)) - upperRightCorner.x);
-			}
 
-			if (CenterPos [0, 1] + (YDimention + 0.5f) <= upperRightCorner.y) {//getting how far im going in this direction   |      .  <-|
+			_HighestPoint = (int)((CenterPos [0, 1] + (YDimention + 0.5f)) - upperRightCorner.y);
+			if (_HighestPoint < 0)
 				_HighestPoint = 0;
-			} else {
-				_HighestPoint = Mathf.FloorToInt ((CenterPos [0, 1] + (YDimention + 0.5f)) - upperRightCorner.y);
-			}
 
-			if (CenterPos [0, 1] - (YDimention + 0.5f) >= lowerLeftCorner.y) {//getting how far im going in this direction   |      .  <-|
+			_LowestPoint = (YDimention * 2) - (int)(lowerLeftCorner.y - (CenterPos [0, 1] - (YDimention + 0.5f)));
+			if (_LowestPoint > YDimention * 2)
 				_LowestPoint = YDimention * 2;
-			} else {
-				_LowestPoint = (YDimention * 2) - Mathf.FloorToInt (lowerLeftCorner.y - (CenterPos [0, 1] - (YDimention + 0.5f)));
-			}
-			//	Debug.Log (_LeftPoint + " | " + _RightPoint + " | " + _HighestPoint + " | " + _LowestPoint + " | " + s.name);
+
 			for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
 				for (int j = _LeftPoint; j <= _RightPoint; j++) {
 					MyNodeMap [i, j].SetCollision (1);
 				}
 			}
 		}
-
-
 		for (int k = 0; k < ObjectsWithinNodeMap.Count; k++) {
 			b = ObjectsWithinNodeMap [k];
 
 			upperRightCorner = b.bounds.max;
 			lowerLeftCorner = b.bounds.min;
-				
-			if (CenterPos [0, 0] - (XDimention + 0.5f) > upperRightCorner.x || CenterPos [0, 0] + (XDimention + 0.5f) < lowerLeftCorner.x || CenterPos [0, 1] + (YDimention + 0.5f) < lowerLeftCorner.y || CenterPos [0, 1] - (YDimention + 0.5f) > upperRightCorner.y) {//the collider says that the collider is inside when its not, so needed a check here to see if im inside the collider or not
-				//		Debug.Log ("ColliderNotAccurateEnough " + s.name);
-			} else {
 
-				if (CenterPos [0, 0] - (XDimention + 0.5f) >= lowerLeftCorner.x) {//getting how far im going in this direction   |      .  <-|
-					_LeftPoint = 0;
-				} else {
-					_LeftPoint = Mathf.FloorToInt (lowerLeftCorner.x - (CenterPos [0, 0] - (XDimention + 0.5f)));
-				}
+			_LeftPoint = (int)(lowerLeftCorner.x - (CenterPos [0, 0] - (XDimention + 0.5f)));
+			if (_LeftPoint < 0)
+				_LeftPoint = 0;
 
-				if (CenterPos [0, 0] + (XDimention + 0.5f) <= upperRightCorner.x) {//getting how far im going in this direction   |      .  <-|
-					_RightPoint = XDimention * 2;
-				} else {
-					_RightPoint = (XDimention * 2) - Mathf.FloorToInt ((CenterPos [0, 0] + (XDimention + 0.5f)) - upperRightCorner.x);
-				}
+			_RightPoint = (XDimention * 2) - (int)((CenterPos [0, 0] + (XDimention + 0.5f)) - upperRightCorner.x);
+			if (_RightPoint > XDimention * 2)
+				_RightPoint = XDimention * 2;
 
-				if (CenterPos [0, 1] + (YDimention + 0.5f) <= upperRightCorner.y) {//getting how far im going in this direction   |      .  <-|
-					_HighestPoint = 0;
-				} else {
-					_HighestPoint = Mathf.FloorToInt ((CenterPos [0, 1] + (YDimention + 0.5f)) - upperRightCorner.y);
-				}
+			_HighestPoint = (int)((CenterPos [0, 1] + (YDimention + 0.5f)) - upperRightCorner.y);
+			if (_HighestPoint < 0)
+				_HighestPoint = 0;
 
-				if (CenterPos [0, 1] - (YDimention + 0.5f) >= lowerLeftCorner.y) {//getting how far im going in this direction   |      .  <-|
-					_LowestPoint = YDimention * 2;
-				} else {
-					_LowestPoint = (YDimention * 2) - Mathf.FloorToInt (lowerLeftCorner.y - (CenterPos [0, 1] - (YDimention + 0.5f)));
-				}
-				//	Debug.Log (_LeftPoint + " | " + _RightPoint + " | " + _HighestPoint + " | " + _LowestPoint + " | " + s.name);
-				for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
-					for (int j = _LeftPoint; j <= _RightPoint; j++) {
-						MyNodeMap [i, j].SetCollision (100);
-					}
+			_LowestPoint = (YDimention * 2) - (int)(lowerLeftCorner.y - (CenterPos [0, 1] - (YDimention + 0.5f)));
+			if (_LowestPoint > YDimention * 2)
+				_LowestPoint = YDimention * 2;
+
+			for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
+				for (int j = _LeftPoint; j <= _RightPoint; j++) {
+					MyNodeMap [i, j].SetCollision (100);
 				}
 			}
 		}

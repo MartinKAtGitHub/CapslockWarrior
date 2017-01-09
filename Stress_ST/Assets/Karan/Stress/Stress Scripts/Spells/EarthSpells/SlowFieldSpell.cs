@@ -20,7 +20,7 @@ public class SlowFieldSpell : Earth {
 
 	public override void Cast()
 	{
-		Instantiate(this, ProjectileSpawn.position,Quaternion.identity);
+		Instantiate(this, SpellSpawnPos.position,Quaternion.identity);
 	}
 
 	// TODO Ask how this works little confused dose how the trigger retains info on what speeds to give back to the enemy

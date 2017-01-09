@@ -7,14 +7,14 @@ public class GolumMovementTest : MonoBehaviour {
 	private Rigidbody2D rb;
 
 
-	private Vector3 OldPos;
+	//private Vector3 OldPos;
 	public bool IsMoving;
 	// Use this for initialization
 	void Start () 
 	{
 		rb = GetComponent<Rigidbody2D>();
 		speed = GetComponent<EnemyCreep>().CreepSpeed;
-		 OldPos = Vector3.zero;
+		// OldPos = Vector3.zero;
 		IsMoving = true;
 	}
 	

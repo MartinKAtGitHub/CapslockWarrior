@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ForcePush : Wind {
+public class ForcePush : Water {
 
 	public float ForcePushDestroyAfter;
 	// Use this for initialization
@@ -18,7 +18,7 @@ public class ForcePush : Wind {
 
 	public override void Cast()
 	{
-		GameObject ForcePushArea = (GameObject)Instantiate(this.gameObject, ProjectileSpawn.position,Quaternion.identity);
+		GameObject ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
 		Destroy(ForcePushArea,ForcePushDestroyAfter);
 	}
 

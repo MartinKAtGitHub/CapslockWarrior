@@ -12,14 +12,14 @@ public class EnemyCreep : MonoBehaviour
 	private Animator AnimController;
 
 	private Transform PunchHitBox;
-	private Transform PunchRange;
+//	private Transform PunchRange;
 
 	// Use this for initialization
 	void Start () 
 	{
 		AnimController = GetComponent<Animator>();
 		PunchHitBox = transform.Find("Punch");  // TODO check this out beacuse i have also read that foreach is also expensiv
-		PunchRange = transform.Find("PunchRange");
+		//PunchRange = transform.Find("PunchRange");
 		if(PunchHitBox == null)
 		{
 			Debug.LogError("DID NOT FIND = PUNCH");

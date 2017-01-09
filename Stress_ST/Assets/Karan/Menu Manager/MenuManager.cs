@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour {
     public string[] pageNames; // the ID of a menu page.
 
     GameObject currentPage;
-    private bool enterScreen = false; // this can be used for pause.
+    //private bool enterScreen = false; // this can be used for pause.
 
 	// Use this for initialization
 	void Start ()
@@ -38,7 +38,7 @@ public class MenuManager : MonoBehaviour {
 		//p.transform.SetParent(transform); // Original
         
         RectTransform rt = p.GetComponent<RectTransform>();
-        Transition t = p.GetComponent<Transition>(); //  each page is going to have a transition page on it
+        //Transition t = p.GetComponent<Transition>(); //  each page is going to have a transition page on it
 
 
         //rt.offsetMax = new Vector2(t.spawnPosition.x, t.spawnPosition.y); // original
@@ -92,7 +92,7 @@ public class MenuManager : MonoBehaviour {
         // set the currentPage to the page that is comming in
         currentPage = t.InitializeTransitionPage(pages[index]);
         // position the page based on the page offset
-        RectTransform rt = currentPage.GetComponent<RectTransform>();
+       // RectTransform rt = currentPage.GetComponent<RectTransform>();
         t = currentPage.GetComponent<Transition>();
 
         //rt.offsetMax = new Vector2(t.spawnPosition.x, t.spawnPosition.y); // original

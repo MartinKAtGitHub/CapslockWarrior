@@ -12,6 +12,7 @@ public class FireballSTD : Fire {
 	//private Rigidbody2D rb;
 	private Collider2D[] enemiesInRange;
 	private GameObject fireBallTarget;
+	private bool inRange;
 
 
 	/*FireballSTD()
@@ -23,6 +24,11 @@ public class FireballSTD : Fire {
 	{
 		//rb = GetComponent<Rigidbody2D>();
 		ScanForClosestTarget();
+		if(inRange == false)
+		{
+			Destroy(this.gameObject);
+			// TODO we need a way to reset Timers on this
+		}
 
 	}
 	void FixedUpdate () 
@@ -32,6 +38,11 @@ public class FireballSTD : Fire {
 	void Update()
 	{
 		transform.position = Vector3.MoveTowards(transform.position,fireBallTarget.transform.position, speed*Time.deltaTime);
+		//transform.LookAt();
+		// TODO This is heavy i think Check this out
+		Vector3 dir = fireBallTarget.transform.position - transform.position;
+ 		float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+ 		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) 
@@ -57,8 +68,9 @@ public class FireballSTD : Fire {
 	void ScanForClosestTarget()// TODO add if no enemys are in range
 	{
 		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position,DetectionRange,FireBallDetection);
-		if(enemiesInRange != null)
+		if(enemiesInRange.Length > 0)
 		{
+			
 			float distance = 0;
 			float minDistance = DetectionRange; // i need a value that is higher then the distance that can be detected
 			//Debug.Log(ProjectileSpawn.position + "CENTER OF RANGE");
@@ -73,12 +85,14 @@ public class FireballSTD : Fire {
 					minDistance = distance;
 					fireBallTarget = enemiesInRange[i].gameObject;
 					Debug.Log(enemiesInRange[i].gameObject.name);
+					inRange = true;
 				}
 			}
 		}
 		else
 		{
-			Debug.LogError("ENEMIS IN RANGE NULL --> create GUI to notify player");
+			Debug.LogError("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
+			inRange = false;
 		}
 	}
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IMovementEngin {
 
 
 	public float maxSpeed = 10f;
@@ -9,9 +9,58 @@ public class PlayerController : MonoBehaviour {
 	bool cancelMouseMovement;
 	bool targetSet;
 	Vector2 deltaTargetCurrentPos; // ugly solution
+	Vector2 facing;
 	Rigidbody2D playerRigBdy;
 
 	Vector3 mousePos;
+
+
+	public float Speed
+	{
+		get
+		{
+			return maxSpeed;	
+		}
+		set
+		{
+			maxSpeed = value;		
+		}
+	}
+
+	public Rigidbody2D PlayerRigBdy
+	{
+		get
+		{
+			return playerRigBdy;
+		}
+		set
+		{
+			playerRigBdy = value;
+		}
+	}
+	public Vector2 Direction
+	{
+		get
+		{
+			return facing;
+		}
+		set
+		{
+			facing = value;
+		}
+	}
+	public bool SpriteFacingRigth
+	{
+		get
+		{
+			return facingRigth;
+		}
+		set
+		{
+			facingRigth = value;
+		}
+	}
+
 	// Use this for initialization
 	void Awake () 
 	{
@@ -29,38 +78,19 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		float moveX = Input.GetAxis("MouseAndArrowsX"); // remove AD keys in input Manager
-		float moveY = Input.GetAxis("MouseAndArrowsY");	// Remove WS keys in input Manager
-
-		playerRigBdy.velocity = new Vector2 (moveX * maxSpeed, moveY * maxSpeed);
-
-		if(Mathf.Abs(moveX) > 0) // Might be better WITHOUT .abs()
-		{
-			cancelMouseMovement = true;
-		}
-		if(Mathf.Abs(moveY) > 0)// Might be better WITHOUT .abs()
-		{
-			cancelMouseMovement = true;
-		}
-
+		MovementLogic();
 		// Changing the sprite so the guy is facing the rigth direction acording to movement
-		if(moveX > 0 && !facingRigth)
+		if(facing.x > 0 && !facingRigth)
 		{
 			Flip();
 			//cancelMouseMovement = true;
 		}
-		else if(moveX < 0 && facingRigth)
+		else if(facing.x < 0 && facingRigth)
 		{
 			Flip();
 			//cancelMouseMovement = true;
 		}
-		if(!cancelMouseMovement)
-		{
-			MovePlayerMouse(mousePos);
 
-			//Debug.Log ("INSIDE = " + mousePos );
-			targetSet = false;
-		}
 	}
 
 	// Update is called once per frame
@@ -74,7 +104,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void Flip()
+	public void Flip()
 	{
 		facingRigth = !facingRigth;
 		Vector3 theScale = transform.localScale;
@@ -99,11 +129,35 @@ public class PlayerController : MonoBehaviour {
 		playerRigBdy.velocity = deltaTargetCurrentPos.normalized * maxSpeed; // this speed needs to be the same as 1 * maxSpeed
 
 
-		Debug.Log("DELTA Is = " + deltaTargetCurrentPos);
+		//Debug.Log("DELTA Is = " + deltaTargetCurrentPos);
 
 		//playerRigBdy.velocity = (targetPos - transform.position).normalized * maxSpeed;
 		//playerRigBdy.velocity = new Vector2(targetPos.x ,targetPos.y);
 
 		Debug.DrawLine( transform.position, targetPos, Color.cyan);
+	}
+
+	public void  MovementLogic()
+	{
+		facing.x = Input.GetAxisRaw("MouseAndArrowsX"); // remove AD keys in input Manager
+		facing.y = Input.GetAxisRaw("MouseAndArrowsY");	// Remove WS keys in input Manager
+
+		playerRigBdy.velocity = new Vector2 (facing.x * maxSpeed, facing.y * maxSpeed);
+
+		if(Mathf.Abs(facing.x) > 0) // Might be better WITHOUT .abs()
+		{
+			cancelMouseMovement = true;
+		}
+		if(Mathf.Abs(facing.y) > 0)// Might be better WITHOUT .abs()
+		{
+			cancelMouseMovement = true;
+		}
+		if(!cancelMouseMovement)
+		{
+			MovePlayerMouse(mousePos);
+
+			//Debug.Log ("INSIDE = " + mousePos );
+			targetSet = false;
+		}
 	}
 }

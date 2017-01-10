@@ -13,12 +13,6 @@ public class TeleportSmallDistance : Wind {
 		Debug.Log(PlayerGameObject.GetComponent<IMovementEngin>().Speed);
 		Debug.Log("HELLOOO");
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
 
 	public override void Cast()
 	{
@@ -26,6 +20,11 @@ public class TeleportSmallDistance : Wind {
 		if(PlayerGameObject.GetComponent<PlayerControllerCTRL>().enabled)
 		{
 			MoveData = PlayerGameObject.GetComponent<PlayerControllerCTRL>();
+		}
+		else if(PlayerGameObject.GetComponent<PlayerController>().enabled)
+		{
+			MoveData = PlayerGameObject.GetComponent<PlayerController>();
+			Debug.Log("LOLOLOLOLOL");
 		}
 		else
 		{

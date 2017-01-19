@@ -123,9 +123,12 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		if(targetSet == true)
 		{
 			deltaTargetCurrentPos = targetPos - transform.position;
-			Debug.Log("TargetSet");
+		//	Debug.Log("TargetSet");
 		}
+		facing.x = deltaTargetCurrentPos.normalized.x;
+		facing.y = deltaTargetCurrentPos.normalized.y;
 
+		//Debug.Log("Mouse Directions (" + facing.x + ", " + facing.y + ")");
 		playerRigBdy.velocity = deltaTargetCurrentPos.normalized * maxSpeed; // this speed needs to be the same as 1 * maxSpeed
 
 

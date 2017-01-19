@@ -6,6 +6,8 @@ using System.Linq;
 public class Nodes {
 
 	//node info
+	public int[] _PathfindingNodeID;
+
 
 	public bool Used = false;
 
@@ -24,7 +26,7 @@ public class Nodes {
 
 	public Nodes[,] NeighbourNodes = new Nodes[3, 3]; 
 
-
+	float[,] getidsaver;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Nodes"/> class.
@@ -34,6 +36,12 @@ public class Nodes {
 	public Nodes(float[,] ID, int collision) {
 		_NodeID = ID;
 		_MapCollision = collision;
+	}
+
+	public Nodes(float[,] ID, int collision, int[] pathnodeid) {
+		_NodeID = ID;
+		_MapCollision = collision;
+		_PathfindingNodeID = pathnodeid;
 	}
 
 	public void SetRooms(RoomConnectorCreating room){
@@ -46,7 +54,7 @@ public class Nodes {
 
 
 	public int GetCollision() {
-		return _MapCollision;
+		return _PathfindingNodeID[_MapCollision];
 	}
 
 	public float[,] GetID() {
@@ -68,18 +76,19 @@ public class Nodes {
 	public float GetJustMoveGCost(Nodes nodeToCheck) {//Gets how expencive it is to travel to nodetocheck
 
 		if (nodeToCheck.GetID () [0, 0] == _NodeID [0, 0] || nodeToCheck.GetID () [0, 1] == _NodeID [0, 1]) {
-			return nodeToCheck.GetCollision ();
+			return nodeToCheck._PathfindingNodeID[_MapCollision];
 		} else {
-			return (nodeToCheck.GetCollision () * 1.4f);
+			return ( nodeToCheck._PathfindingNodeID[_MapCollision] * 1.4f);
 		}
 	}
 
 	public void SetParentAndEndCorners(Nodes theParent, Nodes theEnd) {//setting parent gcost and hcost
 		Used = true;
 		_ParentNode = theParent;
+		getidsaver = theEnd.GetID ();
 
-		_XValue = theEnd.GetID () [0, 0] - _NodeID [0, 0];
-		_YValue = theEnd.GetID () [0, 1] - _NodeID [0, 1];
+		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
+		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0)
 			_XValue *= -1;
@@ -87,16 +96,17 @@ public class Nodes {
 			_YValue *= -1;
 
 		_HCost = _XValue + _YValue;
-		_GCost = (_MapCollision * 1.4f) + _ParentNode._GCost;
+		_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
 		_FCost = _HCost + _GCost;
 	}
 
 	public void SetParentAndEndMiddle(Nodes theParent, Nodes theEnd) {//setting parent gcost and hcost
 		Used = true;
 		_ParentNode = theParent;
+		getidsaver = theEnd.GetID ();
 
-		_XValue = theEnd.GetID () [0, 0] - _NodeID [0, 0];
-		_YValue = theEnd.GetID () [0, 1] - _NodeID [0, 1];
+		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
+		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0)
 			_XValue *= -1;
@@ -104,7 +114,7 @@ public class Nodes {
 			_YValue *= -1;
 
 		_HCost = _XValue + _YValue;
-		_GCost = _MapCollision + _ParentNode._GCost;
+		_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
 		_FCost = _HCost + _GCost;
 	}
 
@@ -119,14 +129,15 @@ public class Nodes {
 		_ParentNode = null;
 		_GCost = 0;
 		_HCost = 0;
+		_FCost = 0;
 	}
 
 	public void SetParentAndEnd(Nodes theParent, Nodes theEnd) {//setting parent gcost and hcost
 		Used = true;
 		_ParentNode = theParent;
 
-		_XValue = theEnd.GetID () [0, 0] - _NodeID [0, 0];
-		_YValue = theEnd.GetID () [0, 1] - _NodeID [0, 1];
+		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
+		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0)
 			_XValue *= -1;
@@ -134,10 +145,10 @@ public class Nodes {
 			_YValue *= -1;
 
 		_HCost = _XValue + _YValue;
+		getidsaver = theParent.GetID ();
 
-
-		_XValue = theParent.GetID () [0, 0] - _NodeID [0, 0];
-		_YValue = theParent.GetID () [0, 1] - _NodeID [0, 1];
+		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
+		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0) {
 			_XValue *= -1;
@@ -147,9 +158,9 @@ public class Nodes {
 		}
 
 		if (_XValue == 0 || _YValue == 0) {//if not at the corners of the 3x3 neighbours
-			_GCost = _MapCollision + _ParentNode._GCost;
+			_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
 		} else {
-			_GCost = (_MapCollision * 1.4f) + _ParentNode._GCost;
+			_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
 		}
 		_FCost = _HCost + _GCost;
 	}
@@ -159,23 +170,23 @@ public class Nodes {
 		_ParentNode = theParent;
 
 		if (theParent.GetID () [0, 0] == _NodeID [0, 0] || theParent.GetID () [0, 1] == _NodeID [0, 1]) {
-			_GCost = _MapCollision + _ParentNode._GCost;
+			_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
 		} else {
-			_GCost = (_MapCollision * 1.4f) + _ParentNode._GCost;
+			_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
 		}
 		_FCost = _HCost + _GCost;
 	}
 	public void SetParentCorner(Nodes theParent) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
 
 		_ParentNode = theParent;
-		_GCost = (_MapCollision * 1.4f) + _ParentNode._GCost;
+		_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
 		_FCost = _HCost + _GCost;
 	}
 
 	public void SetParentMiddle(Nodes theParent) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
 
 		_ParentNode = theParent;
-		_GCost = _MapCollision + _ParentNode._GCost;
+		_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
 		_FCost = _HCost + _GCost;
 	}
 	public void SetHCost(Nodes endNode) {//Distance from this node and end node
@@ -200,8 +211,10 @@ public class Nodes {
 	}
 
 	public float GetJustWorldSpaceDistance(Nodes theothernode){
-		_XValue = theothernode.GetID()[0, 0] - _NodeID[0, 0];
-		_YValue = theothernode.GetID()[0, 1] - _NodeID[0, 1];
+		getidsaver = theothernode.GetID ();
+	
+		_XValue = getidsaver[0, 0] - _NodeID[0, 0];
+		_YValue = getidsaver[0, 1] - _NodeID[0, 1];
 
 		if(_XValue < 0){
 			_XValue *= -1;
@@ -209,16 +222,17 @@ public class Nodes {
 		if(_YValue < 0){
 			_YValue *= -1;
 		}
-
+		//Debug.Log (_XValue + " | " + _YValue);
 		return (_XValue + _YValue);
 	}
 
 	public void SetParentAndEndRoom(Nodes theParent, Nodes endNode) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
 		Used = true;
 		_ParentNode = theParent;
+		getidsaver = endNode.GetID ();
 
-		_XValue = _ParentNode.GetID () [0, 0] - _NodeID [0, 0];
-		_YValue = _ParentNode.GetID () [0, 1] - _NodeID [0, 1];
+		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
+		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
 
 
 		if (_XValue < 0) {
@@ -229,9 +243,10 @@ public class Nodes {
 		}
 
 		_HCost = _XValue + _YValue;
+		getidsaver = theParent.GetID ();
 
-		_XValue = theParent.GetID () [0, 0] - _NodeID [0, 0];
-		_YValue = theParent.GetID () [0, 1] - _NodeID [0, 1];
+		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
+		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0) {
 			_XValue *= -1;

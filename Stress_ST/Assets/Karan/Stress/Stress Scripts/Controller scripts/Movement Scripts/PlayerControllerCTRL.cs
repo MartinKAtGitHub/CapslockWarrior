@@ -9,7 +9,7 @@ public class PlayerControllerCTRL : MonoBehaviour, IMovementEngin{
 	float moveY;
 	Rigidbody2D PlayerOBj;*/
 	public float  _speed;
-	public Rigidbody2D PlayerOBj;
+	public Rigidbody2D PlayerOBJ;
 
 	private Vector2 Faceing;
 	private bool spriteFacingRigth;
@@ -31,11 +31,11 @@ public class PlayerControllerCTRL : MonoBehaviour, IMovementEngin{
 	{
 		get
 		{
-			return PlayerOBj;
+			return PlayerOBJ;
 		}
 		set
 		{
-			PlayerOBj = value;
+			PlayerOBJ = value;
 		}
 	}
 	public Vector2 Direction

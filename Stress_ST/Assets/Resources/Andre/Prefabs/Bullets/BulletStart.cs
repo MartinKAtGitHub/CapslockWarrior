@@ -6,9 +6,12 @@ public class BulletStart : MonoBehaviour {
 	Vector3 MyShootingDirection;
 	float direction = 0;
 	Rigidbody2D testing;
+	GameObject testin;
+	public float bulletspeed;
 	void Start () {
+		testin = GameObject.FindWithTag ("Player1");
 	
-		Vector3 TargetPosiiton = GameObject.FindWithTag ("Player1").transform.position;
+		Vector3 TargetPosiiton = testin.transform.position;
 		MyShootingDirection = TargetPosiiton - transform.position;
 
 		if (TargetPosiiton.y < transform.position.y) {
@@ -30,18 +33,15 @@ public class BulletStart : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		testing.velocity = MyShootingDirection * 10;
+		testing.velocity = MyShootingDirection * bulletspeed;
 	//	transform.position = new Vector3((MyShootingDirection.x * Time.smoothDeltaTime * walkingSpeed) + transform.position.x , (MyShootingDirection.y * Time.smoothDeltaTime * walkingSpeed) + transform.position.y , transform.position.z);
 	}
 	string a = "Wall";
 	void OnTriggerEnter2D(Collider2D coll){
-		Debug.Log ("ENTERED " + coll.gameObject.CompareTag(a));
 		if (coll.gameObject.CompareTag(a)) {
-			Debug.Log ("ENTERED WALL");
 			Destroy (this.gameObject);
-		} else if (coll.gameObject != s) {
-			Debug.Log ("ENTERED enemy");
-			coll.transform.parent.GetComponent<DefaultBehaviour> ().RecievedDmg ();
+		} else if (coll.gameObject ==  testin) {
+			coll.transform.GetComponent<DefaultBehaviour> ().RecievedDmg ();
 			Destroy (this.gameObject);
 			//this.gameObject.SetActive (false);
 		}

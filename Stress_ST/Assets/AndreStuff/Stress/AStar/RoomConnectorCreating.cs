@@ -65,8 +65,9 @@ public class RoomConnectorCreating : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D coll){//when a gameobject is inside the collider with tag == wall, then update the nodemap and recalculate the pathlist  TODO expand this to other sources of colliding objects?
-		coll.transform.parent.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (MyRoom);
-	//		coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (MyRoom);
+	//	coll.transform.parent.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (MyRoom);
+		if(coll.transform.GetComponent<DefaultBehaviour> () != null)//TODO RemoveTHIS when AI is fully implemented(not fully but corretly) on everything
+			coll.transform.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (MyRoom);
 
 
 	}
@@ -75,35 +76,36 @@ public class RoomConnectorCreating : MonoBehaviour {
 	float MaxAngleDifference = 0.0f;
 	float ObjectsAngleDifference = 0.0f;
 
-	void OnTriggerExit2D(Collider2D coll) {//when a gameobject is removed from the collider with tag == wall, then update the nodemap and recalculate the pathlist  TODO expand this to other sources of colliding objects?
+	void OnTriggerExit2D (Collider2D coll){//when a gameobject is removed from the collider with tag == wall, then update the nodemap and recalculate the pathlist  TODO expand this to other sources of colliding objects?
 		//0,01745329251 == math.pi / 180
-	//	if (coll.gameObject.tag == "CreatureCollider") {//this might be abit heavy, or not. 
-		RoomConnectorDirection.x = Mathf.Cos (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
-		RoomConnectorDirection.y = Mathf.Sin (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
-		ObjectFromRoomConnectorDirection.x = coll.transform.position.x - transform.position.x;//calculating the vector the object has when exiting the collider
-		ObjectFromRoomConnectorDirection.y = coll.transform.position.y - transform.position.y;//calculating the vector the object has when exiting the collider
+		//	if (coll.gameObject.tag == "CreatureCollider") {//this might be abit heavy, or not. 
+		if (coll.transform.GetComponent<DefaultBehaviour> () != null) {
+			RoomConnectorDirection.x = Mathf.Cos (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
+			RoomConnectorDirection.y = Mathf.Sin (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
+			ObjectFromRoomConnectorDirection.x = coll.transform.position.x - transform.position.x;//calculating the vector the object has when exiting the collider
+			ObjectFromRoomConnectorDirection.y = coll.transform.position.y - transform.position.y;//calculating the vector the object has when exiting the collider
 
-		MaxAngleDifference = Vector2.Angle (RoomConnectorDirection, Quaternion.Euler (0, 0, transform.rotation.eulerAngles.z) * new Vector2 (GetComponent<BoxCollider2D> ().size.x / 2, GetComponent<BoxCollider2D> ().size.y / 2));//calculating where the top right corner is (border.max (if object is rotated)) depending on boxcollider rotation 
+			MaxAngleDifference = Vector2.Angle (RoomConnectorDirection, Quaternion.Euler (0, 0, transform.rotation.eulerAngles.z) * new Vector2 (GetComponent<BoxCollider2D> ().size.x / 2, GetComponent<BoxCollider2D> ().size.y / 2));//calculating where the top right corner is (border.max (if object is rotated)) depending on boxcollider rotation 
 			ObjectsAngleDifference = Vector2.Angle (RoomConnectorDirection, ObjectFromRoomConnectorDirection);
 
-		if (LeftOrRight == true) {//checking if the object exited the collider inside of a specifik angle
-			if (ObjectsAngleDifference > -MaxAngleDifference && ObjectsAngleDifference < MaxAngleDifference) {
-				coll.transform.parent.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
-				//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+			if (LeftOrRight == true) {//checking if the object exited the collider inside of a specifik angle
+				if (ObjectsAngleDifference > -MaxAngleDifference && ObjectsAngleDifference < MaxAngleDifference) {
+					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+					//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+				} else {
+					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+					//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+				}
 			} else {
-				coll.transform.parent.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
-				//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
-			}
-		} else {
-			if (!(ObjectsAngleDifference > -MaxAngleDifference && ObjectsAngleDifference < MaxAngleDifference)) {
-				coll.transform.parent.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
-				//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
-			} else {
-				coll.transform.parent.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
-				//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+				if (!(ObjectsAngleDifference > -MaxAngleDifference && ObjectsAngleDifference < MaxAngleDifference)) {
+					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+					//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+				} else {
+					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+					//coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+				}
 			}
 		}
-	//	}
 	}
 
 	 

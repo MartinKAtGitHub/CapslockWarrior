@@ -66,7 +66,7 @@ public class WalkToTarget : DefaultState {
 
 
 
-	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureOneBehaviour myInfo, float theRange) {//giving copies of info to this class
+	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureOneBehaviour myInfo, float theRange, float movementspeed) {//giving copies of info to this class
 		Id = "WalkToTargetState";
 		PersonalNodeMap = personalNodeMap;
 		CreateThePath = createThePath;
@@ -84,6 +84,7 @@ public class WalkToTarget : DefaultState {
 
 		CreatureAnimator = myInfo.GetComponent<Animator> ();
 		range = theRange;
+		MovementSpeed = movementspeed;
 		//TODO SET MOVEMENT SPEED
 	}
 

@@ -17,7 +17,6 @@ public class GolemAttackState : DefaultState {
 
 	LayerMask LineOfSight;
 	float range = 1;
-
 	public GolemAttackState(CreatureOneBehaviour myInfo, bool[] canIRanged, float theRange) {//giving copies of info to this class
 		Id = "AttackState";
 		MyInfo = myInfo;
@@ -35,6 +34,7 @@ public class GolemAttackState : DefaultState {
 				
 		}*/
 		range = theRange;
+
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called

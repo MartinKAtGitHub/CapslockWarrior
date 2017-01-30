@@ -24,6 +24,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 	public EnemyType thetype;
 
 	public float CreatureRange = 1;
+	public float MovementSpeed;
 
 	public bool[] CanIRanged = new bool[1];
 	public GameObject Bullet;
@@ -50,10 +51,10 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 
 		if (RunPathfinding == true) {
 			if (thetype == EnemyType.Rangd) {//makes it possible to add different states to the targets if that is needed
-				MovementFSM = new FSM_Manager( new DefaultState[] { new WalkToTarget(_PersonalNodeMap, _CreateThePath, this, CreatureRange), new GolemAttackState(this,CanIRanged, CreatureRange),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
+				MovementFSM = new FSM_Manager( new DefaultState[] { new WalkToTarget(_PersonalNodeMap, _CreateThePath, this, CreatureRange, MovementSpeed), new GolemAttackState(this,CanIRanged, CreatureRange),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
 				MovementFSM.Init(this);
 			}else if(thetype == EnemyType.Melle){
-				MovementFSM = new FSM_Manager( new DefaultState[] { new WalkToTarget(_PersonalNodeMap, _CreateThePath, this, CreatureRange), new GolemAttackState(this,CanIRanged, CreatureRange),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
+				MovementFSM = new FSM_Manager( new DefaultState[] { new WalkToTarget(_PersonalNodeMap, _CreateThePath, this, CreatureRange, MovementSpeed), new GolemAttackState(this,CanIRanged, CreatureRange),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
 				MovementFSM.Init(this);
 			}
 		}
@@ -126,7 +127,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 	public override void AttackTarget(){
 		if (thetype == EnemyType.Rangd) {
 			GetComponent<BoxCollider2D> ().enabled = false;
-			(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y - 0.25f, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.GetChild(0).gameObject);
+			(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.GetChild(0).gameObject);
 			GetComponent<BoxCollider2D> ().enabled = true;
 		} else if(thetype == EnemyType.Melle){
 			_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();

@@ -24,7 +24,6 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 	public EnemyType thetype;
 
 	public float CreatureRange = 1;
-	public float MovementSpeed;
 
 	public bool[] CanIRanged = new bool[1];
 	public GameObject Bullet;
@@ -42,6 +41,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 	}
 
 	void Start(){
+		GetComponent<Rigidbody2D> ().drag = 0;
 
 		_PersonalNodeMap.CreateNodeMap ();
 		_PersonalNodeMap.SetCenterPos (myPos);
@@ -58,24 +58,52 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 				MovementFSM.Init(this);
 			}
 		}
+		Turnoffwithforcestuff = false;
 	}
 
 	bool testing = false;
+	bool once = false;
+
+
+
 	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders
 		testing = true;
 		myPos [0, 0] = transform.position.x;
 		myPos [0, 1] = transform.position.y;
-	}
+		if (RunPathfinding == true) {
+			if (Turnoffwithforcestuff == true) {
+				if (GetComponent<Rigidbody2D> ().velocity.magnitude < 0.01f) {
+					Turnoffwithforcestuff = false;
+					GetComponent<Rigidbody2D> ().drag = 0;
+					MovementFSM.TheUpdate ();//oppdaterer fsm'ene
+				}else{
+					GetComponent<Rigidbody2D> ().drag = 10;
+				}
+			} else {
+				MovementFSM.TheUpdate ();//oppdaterer fsm'ene
+			}
+		}
 
-	void Update(){
+		if (once == false) {
+			once = true;
+		}
+
+	}
+	/*void Update(){
 		if (RunPathfinding == true && testing == true) {
 			testing = false;
 		}else if(RunPathfinding == true && testing == false){
-			MovementFSM.TheUpdate();//oppdaterer fsm'ene
+			if (Turnoffwithforcestuff == true) {
+				if(GetComponent<Rigidbody2D>().velocity.magnitude < 0.01f)
+				{
+					Turnoffwithforcestuff = false;
+				}
+			} else {
+				Debug.Log ("HERERERERERERE");
+			}
 		}
-		
 	}
-
+*/
 	public override void SetTarget(GameObject target){//if you want to change target, use this, TODO make it so that its possible to only send the node
 		_GoAfter = target;
 		UpdateTargetRoomAndNode ();
@@ -126,9 +154,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 
 	public override void AttackTarget(){
 		if (thetype == EnemyType.Rangd) {
-			GetComponent<BoxCollider2D> ().enabled = false;
 			(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.GetChild(0).gameObject);
-			GetComponent<BoxCollider2D> ().enabled = true;
 		} else if(thetype == EnemyType.Melle){
 			_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();
 		}

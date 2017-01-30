@@ -15,6 +15,8 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	Vector2 MyPositionVector2;
 
 	public enum EnemyType {Rangd, Melle, Heeeeels, Spilling};
+	public bool Turnoffwithforcestuff = false;
+	public float[] MovementSpeed = new float[1];
 
 //	public virtual List<RoomNodeCreating> GetNeighbourGroups(){
 //		return NeighbourGroups;
@@ -55,5 +57,13 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 
 	public virtual void AttackTarget(){}
 	public virtual void RecievedDmg(){}
+
+	public void ChangeMovementMuliply(float a){
+		MovementSpeed [0] *= a;
+	}
+
+	public void ChangeMovementAdd(float a){
+		MovementSpeed [0] += a;
+	}
 
 }

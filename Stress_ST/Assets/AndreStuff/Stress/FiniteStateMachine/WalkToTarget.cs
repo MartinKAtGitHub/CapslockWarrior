@@ -29,7 +29,7 @@ public class WalkToTarget : DefaultState {
 	float DistanceFromNode = 0.5f;//radius that desides if the player is on the node or not. (if 0.5 then if this object is within 0.5 from the center in any direction xy. _Nodeindex++)
 	int SearchAgainIndex = 1;//when this object reaches the node in the path, search again (if 1, when the object is at the second index in _TheNodePath search again)
 
-	float MovementSpeed = 3.5f;//enemy speed
+	float[] MovementSpeed;//enemy speed
 	string ReturnState = "";//used for the statemachine to see which state to switch to
 
 	int _Nodeindex = 0;//index _TheNodePath 
@@ -66,7 +66,7 @@ public class WalkToTarget : DefaultState {
 
 
 
-	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureOneBehaviour myInfo, float theRange, float movementspeed) {//giving copies of info to this class
+	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureOneBehaviour myInfo, float theRange, float[] movementspeed) {//giving copies of info to this class
 		Id = "WalkToTargetState";
 		PersonalNodeMap = personalNodeMap;
 		CreateThePath = createThePath;
@@ -283,8 +283,7 @@ public class WalkToTarget : DefaultState {
 						movemen.x = IdHolder [0, 0];
 						movemen.y = IdHolder [0, 1];
 					}
-
-					myrigid.velocity = (movemen * MovementSpeed);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
+					myrigid.velocity = (movemen * MovementSpeed[0]);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
 				}
 
 				if (MyTransform.position.x < GoalPosition.x - 0.075f) {
@@ -307,7 +306,7 @@ public class WalkToTarget : DefaultState {
 
 				#endregion
 
-				if (_Nodeindex > SearchAgainIndex) {
+				if (_Nodeindex > SearchAgainIndex + 1) {
 					HaveSearched = false;
 					NodeMapUpdated = false;
 					MyInfo.UpdateThePath = true;
@@ -341,8 +340,7 @@ public class WalkToTarget : DefaultState {
 						movemen.x = IdHolder [0, 0];
 						movemen.y = IdHolder [0, 1];
 					}
-
-					myrigid.velocity = (movemen * MovementSpeed);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
+					myrigid.velocity = (movemen * MovementSpeed[0]);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
 				}
 
 				if (MyTransform.position.x < GoalPosition.x - 0.075f) {
@@ -370,6 +368,8 @@ public class WalkToTarget : DefaultState {
 	//		Debug.Log ("Could Not Find What I Needed");
 			myrigid.velocity = Vector2.zero;
 		}
+
+
 
 
 	/*	if (_TheNodePath != null) {

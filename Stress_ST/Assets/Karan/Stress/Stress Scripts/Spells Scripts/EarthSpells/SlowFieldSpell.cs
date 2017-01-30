@@ -29,8 +29,12 @@ public class SlowFieldSpell : Earth {
 		if(other.tag == "Enemy")
 		{
 			//TODO we must replace ENEMYCREEP with a class hierarchy so every ENEMY is effected by the slow
-			other.GetComponent<GolumMovementTest>().speed *= SlowRate; 
-			Debug.Log("Enemy name STAY -> "+ other.name);
+			if(other.GetComponent<DefaultBehaviour>() != null){
+			//	other.GetComponent<DefaultBehaviour>().Turnoffwithforcestuff = true;
+				other.GetComponent<DefaultBehaviour>().ChangeMovementAdd(-SlowRate);
+			}
+			//other.GetComponent<GolumMovementTest>().speed *= SlowRate; 
+	//		Debug.Log("Enemy name STAY -> "+ other.name);
 		}
 	}
 
@@ -39,7 +43,13 @@ public class SlowFieldSpell : Earth {
 		if(other.tag == "Enemy")
 		{
 			//TODO this is not good yo sould cache this i think somhow ..
-			other.GetComponent<GolumMovementTest>().speed = other.GetComponent<EnemyCreep>().CreepSpeed;
+			if(other.GetComponent<DefaultBehaviour>() != null){
+		//		other.GetComponent<DefaultBehaviour>().Turnoffwithforcestuff = true;
+				other.GetComponent<DefaultBehaviour>().ChangeMovementAdd(SlowRate);
+
+			//	other.GetComponent<GolumMovementTest> ().speed = other.GetComponent<EnemyCreep> ().CreepSpeed;
+			}
+			//other.GetComponent<GolumMovementTest>().speed = other.GetComponent<EnemyCreep>().CreepSpeed;
 		//	Debug.Log("Enemy name EXIT -> "+ other.name);
 		}
 	}

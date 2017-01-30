@@ -33,7 +33,9 @@ public class ForcePush : Water {
 		if(other.tag == "Enemy")
 		{
 			//Debug.Log(other.name);
-			other.GetComponent<GolumMovementTest>().IsMoving = false;
+			if(other.GetComponent<DefaultBehaviour>() != null)
+				other.GetComponent<DefaultBehaviour>().Turnoffwithforcestuff = true;
+		//	other.GetComponent<GolumMovementTest>().IsMoving = false;
 
 		}
 	}

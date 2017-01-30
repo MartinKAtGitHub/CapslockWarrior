@@ -9,7 +9,11 @@ public class CameraFollow : MonoBehaviour {
 	public float ZoomSpeed = 20f;
 
 	void Start () {
+		if (MainCamera == null) {
+			Destroy (this);
+		} else {
 		MainCamera.GetComponent<Camera> ().orthographicSize = 12.5f;
+		}
 	}
 		
 	void Update () {

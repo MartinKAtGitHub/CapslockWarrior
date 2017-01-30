@@ -136,14 +136,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 	public override void RecievedDmg(){
 	//	Debug.Log ("I Got Hit :" + name);
 	}
-
-
-
-
-
-}
-
-/*public bool ShowGizmos = false;
+	/*public bool ShowGizmos = false;
 	void OnDrawGizmos(){
 
 		if (ShowGizmos) {
@@ -156,7 +149,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 						Gizmos.color = Color.blue;
 					} else {
 						Gizmos.color = Color.yellow;
-					
+
 					}
 					Gizmos.DrawCube (new Vector3 ((mynodes [x, y].GetID () [0, 0]) + 20, (mynodes [x, y].GetID () [0, 1]) + 20, 0), new Vector3 (0.5f, 0.5f, 0.5f));
 				}
@@ -167,7 +160,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 			Gizmos.DrawCube (new Vector3 ((mynodes [0, 1].GetID () [0, 0]) + 20, (mynodes [0, 1].GetID () [0, 1]) + 20, 0), new Vector3 (0.5f, 0.5f, 0.5f));
 
 
-		
+
 
 			Nodes[] mynodess = _PersonalNodeMap.GetNodeList();
 			int[] count = _PersonalNodeMap.GetNodeindex ();
@@ -179,3 +172,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 			mynodes = _PersonalNodeMap.GetNodemap ();
 		}
 	}*/
+
+
+}
+

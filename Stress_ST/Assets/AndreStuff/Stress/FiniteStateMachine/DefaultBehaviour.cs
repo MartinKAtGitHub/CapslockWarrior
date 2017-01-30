@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public abstract class DefaultBehaviour : MonoBehaviour {
 
-	[HideInInspector] public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();
+	/*[HideInInspector]*/ public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();
 	public Nodes[] MyNodePosition = new Nodes[1];
 
 	[HideInInspector] public GameObject _GoAfter = null;

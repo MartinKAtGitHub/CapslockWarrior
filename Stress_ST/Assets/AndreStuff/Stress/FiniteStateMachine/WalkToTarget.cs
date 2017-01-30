@@ -306,9 +306,12 @@ public class WalkToTarget : DefaultState {
 
 				#endregion
 
-				/*	if (_Nodeindex > SearchAgainIndex) {
+				if (_Nodeindex > SearchAgainIndex) {
+					HaveSearched = false;
+					NodeMapUpdated = false;
 					MyInfo.UpdateThePath = true;
-				}*/
+					FirstMovementAfterSearch = false;
+				}
 
 
 				if (_Nodeindex >= _TheNodePath.Length) {

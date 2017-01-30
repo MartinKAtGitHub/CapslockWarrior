@@ -42,7 +42,7 @@ public class EnemyCreep : MonoBehaviour
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if(other.tag == "Player")
+		if(other.tag == "Player1")
 		{
 			AnimController.SetBool("MeleeRange",false);
 		}

@@ -65,7 +65,6 @@ public class RoomConnectorCreating : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D coll){//when a gameobject is inside the collider with tag == wall, then update the nodemap and recalculate the pathlist  TODO expand this to other sources of colliding objects?
-
 		coll.transform.parent.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (MyRoom);
 	//		coll.transform.parent.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (MyRoom);
 

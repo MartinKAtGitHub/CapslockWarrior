@@ -4,14 +4,17 @@ using System.Collections.Generic;
 
 public abstract class DefaultBehaviour : MonoBehaviour {
 
-	public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();
+	[HideInInspector] public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();
 	public Nodes[] MyNodePosition = new Nodes[1];
 
-	public GameObject _GoAfter = null;
+	[HideInInspector] public GameObject _GoAfter = null;
 
 	public float[,] myPos = new float[1,2];
-	public bool UpdateThePath = false;
+	[HideInInspector]  public bool UpdateThePath = false;
 
+	Vector2 MyPositionVector2;
+
+	public enum EnemyType {Rangd, Melle, Heeeeels, Spilling};
 
 //	public virtual List<RoomNodeCreating> GetNeighbourGroups(){
 //		return NeighbourGroups;
@@ -23,6 +26,12 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 		
 	public virtual float[,] GetMyPosition(){
 		return myPos;
+	}
+
+	public virtual Vector2 GetMyPositionVector2(){
+		MyPositionVector2.x = myPos [0,0];
+		MyPositionVector2.y = myPos [0,1];
+		return MyPositionVector2;
 	}
 
 	public virtual GameObject GetTraget(){
@@ -44,5 +53,7 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 
 	public virtual void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){}
 
+	public virtual void AttackTarget(){}
+	public virtual void RecievedDmg(){}
 
 }

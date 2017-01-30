@@ -6,6 +6,7 @@ public class Wall_ID : MonoBehaviour {//this class is placed on walls so that wh
 	/// <param name="NOE">is the parameterID in XY coordinates,</param>
 	[Tooltip("HEllo")]
 	public int TheCollisionID;
+
 	public List<RoomConnectorCreating> Connectors;
 
 }

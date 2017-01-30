@@ -19,7 +19,7 @@ public class CreatingObjectNodeMap {
 	float[,] WhereToGo;
 	float[,] CurrentPossition = new float[1,2];
 
-	List<BoxCollider> EnemyPositions = new List<BoxCollider>(); 
+	List<BoxCollider2D> EnemyPositions = new List<BoxCollider2D>(); 
 
 	int XDimention = 6;//x2+1
 	int YDimention = 6;
@@ -31,9 +31,11 @@ public class CreatingObjectNodeMap {
 	int	_LeftPoint = 0;
 	int	_HighestPoint = 0;
 	int	_LowestPoint = 0;
+	int[] _PathNodeID;
 
-	public CreatingObjectNodeMap (int x, int y){
+	public CreatingObjectNodeMap (int x, int y, int[] pathnodeid){
 		MyNodeMap = new Nodes[y, x];
+		_PathNodeID = pathnodeid;
 	}
 
 	public void SetCenterPos(float[,] pos){
@@ -47,21 +49,10 @@ public class CreatingObjectNodeMap {
 	public void CreateNodeMap(){
 		for (int x = 0; x < XDimention * 2 + 1; x++) {
 			for (int y = 0; y < YDimention * 2 + 1; y++) {
-				MyNodeMap [y, x] = new Nodes (new float[,]{ { x - XDimention, YDimention - y } }, 1);
+				//		MyNodeMap [y, x] = new Nodes (new float[,]{ { x - XDimention, YDimention - y } }, 1, _PathNodeID);
+				MyNodeMap [y, x] = new Nodes (new float[,]{ { x - XDimention, YDimention - y } }, 0, _PathNodeID);
 			}
 		}
-
-	/*	for (int i = 0; i < XDimention * 2 + 1; i++) {
-			for (int j = 0; j < YDimention * 2 + 1; j++) {
-				for (int k = -1; k < 2; k++) {
-					for (int h = -1; h < 2; h++) {
-						if ((i + k >= 0 && j + h >= 0) && ((i + k < XDimention * 2 + 1) && j + h < YDimention * 2 + 1) && !(k == 0 && h == 0)) {
-							MyNodeMap [j, i].SetNeighbors (MyNodeMap [j + h, i + k]);
-						}
-					}
-				}
-			}
-		}*/
 
 		for (int i = 0; i < XDimention * 2 + 1; i++) {
 			for (int j = 0; j < YDimention * 2 + 1; j++) {
@@ -127,6 +118,20 @@ public class CreatingObjectNodeMap {
 			EndNode [0] = null;
 
 			while (EndNode [0] == null) {
+		//		Debug.Log ("here");
+				//MyNodeMap [6, 0];//this is 6 down from the top, and 0 from the left (if the gizmo is turned on in creaturonebehaviour)
+				//MyNodeMap [6, 12];//this is 6 down from the top, and 12 from the left (if the gizmo is turned on in creaturonebehaviour)
+
+				//MyNodeMap [0, 6];//this is 0 down from the top, and 6 from the left (if the gizmo is turned on in creaturonebehaviour)
+				//MyNodeMap [12, 6];//this is 12 down from the top, and 6 from the left (if the gizmo is turned on in creaturonebehaviour)
+		//		Debug.Log(x + " | " + y + " | " + WhereToGo [0, 0] + " | " + WhereToGo [0, 1]);
+			/*	if (x == XDimention + 1 || y == YDimention + 1) {
+					Debug.Log ("same");
+
+				} else {
+					Debug.Log ("not");
+				
+				}*/
 
 		/*		if (x > XDimention && y > YDimention) {
 					if (x - incrementing >= 0 && y - incrementing >= 0) {
@@ -237,15 +242,15 @@ public class CreatingObjectNodeMap {
 	}*/
 
 	public void AddGameobjectsWithinTrigger(GameObject NewObject){
-		ObjectsWithinNodeMap.Add (NewObject.GetComponent<BoxCollider2D>());
+	ObjectsWithinNodeMap.Add (NewObject.GetComponent<BoxCollider2D>());
 	}
 
 	public void AddEnemyPositions(GameObject pos){
-		EnemyPositions.Add (pos.transform.GetChild (0).GetComponent<BoxCollider> ());
+		EnemyPositions.Add (pos.transform.GetChild (0).GetComponent<BoxCollider2D> ());
 	}
 
 	public void RemoveEnemyPositions(GameObject pos){
-		EnemyPositions.Remove (pos.transform.GetChild (0).GetComponent<BoxCollider> ());
+		EnemyPositions.Remove (pos.transform.GetChild (0).GetComponent<BoxCollider2D> ());
 	}
 
 
@@ -256,21 +261,22 @@ public class CreatingObjectNodeMap {
 	public void RemoveGameobjectsWithinTrigger(GameObject OldObject){
 		ObjectsWithinNodeMap.Remove (OldObject.GetComponent<BoxCollider2D>());
 	}
-	BoxCollider a;
-	BoxCollider2D b;
-
+	Bounds a;
+	Bounds b;
+int listlength = 0;
 	public void UpdateNodeMap(){
 		for (int i = 0; i < XDimention * 2 + 1; i++) {//chenges all node collisionid back to 0
 			for (int j = 0; j < YDimention * 2 + 1; j++) {
-				MyNodeMap [i, j].SetCollision (1);
+			//MyNodeMap [i, j].SetCollision (1);
+			MyNodeMap [i, j]._MapCollision = 0;
 			}
 		}
-	
-		for (int k = 0; k < EnemyPositions.Count; k++) {
-			a = EnemyPositions [k];
+		listlength = EnemyPositions.Count;
+	for (int k = 0; k < listlength; k++) {
+			a = EnemyPositions [k].bounds;
 
-			upperRightCorner = a.bounds.max;
-			lowerLeftCorner = a.bounds.min;
+			upperRightCorner = a.max;
+			lowerLeftCorner = a.min;
 
 			_LeftPoint = (int)(lowerLeftCorner.x - (CenterPos [0, 0] - (XDimention + 0.5f)));
 			if (_LeftPoint < 0)
@@ -290,15 +296,19 @@ public class CreatingObjectNodeMap {
 
 			for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
 				for (int j = _LeftPoint; j <= _RightPoint; j++) {
-					MyNodeMap [i, j].SetCollision (1);
+					//MyNodeMap [i, j].SetCollision (1);
+					MyNodeMap [i, j]._MapCollision = 2;
 				}
 			}
 		}
-		for (int k = 0; k < ObjectsWithinNodeMap.Count; k++) {
-			b = ObjectsWithinNodeMap [k];
 
-			upperRightCorner = b.bounds.max;
-			lowerLeftCorner = b.bounds.min;
+	listlength = ObjectsWithinNodeMap.Count;
+	for (int k = 0; k < listlength; k++) {
+
+			b = ObjectsWithinNodeMap [k].bounds;
+
+			upperRightCorner = b.max;
+			lowerLeftCorner = b.min;
 
 			_LeftPoint = (int)(lowerLeftCorner.x - (CenterPos [0, 0] - (XDimention + 0.5f)));
 			if (_LeftPoint < 0)
@@ -318,7 +328,8 @@ public class CreatingObjectNodeMap {
 
 			for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
 				for (int j = _LeftPoint; j <= _RightPoint; j++) {
-					MyNodeMap [i, j].SetCollision (100);
+					//MyNodeMap [i, j].SetCollision (100);
+					MyNodeMap [i, j]._MapCollision = 1;
 				}
 			}
 		}

@@ -12,7 +12,7 @@ public class AStarPathFinding_Nodes {
 	Nodes _NodeSaver; //just to hold some nodes while searching
 
 	float _LowerstFScore = 100000; //This is just a value to get the "best" path to the target, if there is an enormous amount of nodes then this value must be increased
-
+	int collisioncost = 0;
 	Nodes[] OpenList;
 	Nodes[] ClosedList;
 
@@ -68,6 +68,7 @@ public class AStarPathFinding_Nodes {
 		b = 0;
 		c = 0;
 		remakeIndex = 0;
+		_StartNode [0].ClearAll (); 
 
 		AStartAlgorithm();
 
@@ -113,19 +114,19 @@ public class AStarPathFinding_Nodes {
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 3; j++) {
 					Saver = niegh [i,j];
-					if (Saver != null && Saver._MapCollision != 100) {
+					if (Saver != null && (collisioncost = Saver.GetCollision ()) != 100) {
 						if (i != 1 && j != 1) {
 							if (Saver.Used == false) {//if n dont have a parent and n isnt the starting node (starts must be there else it will cause an FATAL error ;-P, your warned :D)
 								Saver.SetParentAndEndCorners (_NodeSaver, _EndNode [0]);
 								OpenList [b++] = Saver;
-							} else if (Saver._GCost > _NodeSaver._GCost + (Saver._MapCollision * 1.4f)) {//calculates best route through these values
+							} else if (Saver._GCost > _NodeSaver._GCost + (collisioncost * 1.4f)) {//calculates best route through these values
 								Saver.SetParentCorner (_NodeSaver);
 							}
 						} else {
 							if (Saver.Used == false) {//if n dont have a parent and n isnt the starting node (starts must be there else it will cause an FATAL error ;-P, your warned :D)
 								Saver.SetParentAndEndMiddle (_NodeSaver, _EndNode [0]);
 								OpenList [b++] = Saver;
-							} else if (Saver._GCost > _NodeSaver._GCost + Saver._MapCollision) {//calculates best route through these values
+							} else if (Saver._GCost > _NodeSaver._GCost + collisioncost) {//calculates best route through these values
 								Saver.SetParentMiddle (_NodeSaver);
 							}
 						}

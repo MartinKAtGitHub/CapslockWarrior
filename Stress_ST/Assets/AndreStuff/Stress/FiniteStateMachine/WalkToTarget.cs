@@ -106,6 +106,7 @@ public class WalkToTarget : DefaultState {
 	#region Makeing Path and going to nodes
 
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
+	
 		if (MyInfo.UpdateThePath == true) {//this is true if something have entered the boxcollider
 			MyInfo.UpdateThePath = false;
 
@@ -139,7 +140,7 @@ public class WalkToTarget : DefaultState {
 					_Nodeindex = nodesindex [0];
 
 				} else {
-					WhichNodeToGOTO (_TheRoomPath [_Roomindex + 1].GetComponent<RoomConnectorCreating> ().GettheNodes ()); 
+					WhichNodeToGOTO (_TheRoomPath [_Roomindex].GetComponent<RoomConnectorCreating> ().GettheNodes ()); 
 					PersonalNodeMap.SetInfoAndStartSearch (true);
 					_Nodeindex = nodesindex [0];
 

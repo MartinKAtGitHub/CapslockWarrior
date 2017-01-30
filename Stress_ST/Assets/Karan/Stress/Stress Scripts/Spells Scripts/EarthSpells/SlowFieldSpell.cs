@@ -40,7 +40,7 @@ public class SlowFieldSpell : Earth {
 		{
 			//TODO this is not good yo sould cache this i think somhow ..
 			other.GetComponent<GolumMovementTest>().speed = other.GetComponent<EnemyCreep>().CreepSpeed;
-			Debug.Log("Enemy name EXIT -> "+ other.name);
+		//	Debug.Log("Enemy name EXIT -> "+ other.name);
 		}
 	}
 

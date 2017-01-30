@@ -47,12 +47,26 @@ public class WalkToTarget : DefaultState {
 	int[] roomsindex;
 	int _Roomindex = 0;
 
-	bool once = false;
 	Vector2 movemen = Vector2.zero;
+	float range = 10;
 
 	Rigidbody2D myrigid;
+	RaycastHit2D[] collisions;
+	LayerMask CollisionLayer;
 
-	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureOneBehaviour myInfo) {//giving copies of info to this class
+	Animator CreatureAnimator;
+	Vector3 RotateCharacter = Vector3.zero;
+
+
+
+	Vector2 GoalPosition = Vector2.zero;
+	float[,] IdHolder, NextIdHolder;
+	bool FirstMovementAfterSearch = false;
+
+
+
+
+	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureOneBehaviour myInfo, float theRange) {//giving copies of info to this class
 		Id = "WalkToTargetState";
 		PersonalNodeMap = personalNodeMap;
 		CreateThePath = createThePath;
@@ -66,11 +80,14 @@ public class WalkToTarget : DefaultState {
 		roomsindex = CreateThePath.GetListindexref ();
 
 		myrigid = myInfo.GetComponent<Rigidbody2D> ();
+		CollisionLayer = 1 << LayerMask.NameToLayer ("Walls");
+
+		CreatureAnimator = myInfo.GetComponent<Animator> ();
+		range = theRange;
 		//TODO SET MOVEMENT SPEED
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
-		once = false;
 
 		if (MyInfo.GetTraget () == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
 			return ""; //TODO TODO "TargetSearch";
@@ -80,22 +97,26 @@ public class WalkToTarget : DefaultState {
 			}
 			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 		}
-
+		CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+		ReturnState = "";
+	
+		HaveSearched = false;
+		NodeMapUpdated = false;
+		MyInfo.UpdateThePath = true;
+		FirstMovementAfterSearch = false;
 		return "";
 	}
 
 
 	public override string ProcessState() {//this is called every frame
+
+		ReturnState = "";//denne er enten null eller den staten som den skal forandres til
+
 		if (TargetInfo != null) {
 			UpdatePaths ();
 			GoToDestination ();
 		}
 
-		ReturnState = "";//denne er enten null eller den staten som den skal forandres til
-
-		if (once == true) {
-			ReturnState = "AttackState";
-		}
 		return ReturnState;
 	}
 
@@ -105,9 +126,61 @@ public class WalkToTarget : DefaultState {
 
 	#region Makeing Path and going to nodes
 
+	bool NodeMapUpdated = false;
+	bool HaveSearched = false;
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
+		//TODO GO OVER THIS 
 	
-		if (MyInfo.UpdateThePath == true) {//this is true if something have entered the boxcollider
+		if (MyInfo.UpdateThePath == true) {
+
+			if (NodeMapUpdated == true) {
+				MyInfo.UpdateThePath = false;
+
+				NeighbourGroups = MyInfo.NeighbourGroups;
+				TargetNeighbourGroups = TargetInfo.NeighbourGroups;
+
+				if (NeighbourGroups == TargetNeighbourGroups) {//if true then this object and the target is in the same room
+					_Roomindex = _TheRoomPath.Length;
+
+					PersonalNodeMap.SetTargetPos (TargetInfo.GetMyPosition ());
+					PersonalNodeMap.SetInfoAndStartSearch (true);
+					_Nodeindex = nodesindex [0];
+
+				} else {
+					CreateThePath.SetEndRoom (TargetNeighbourGroups);  
+					CreateThePath.CreatePath (); 
+					_Roomindex = roomsindex [0];
+					if ((_Roomindex) - _TheRoomPath.Length < 0) {
+
+						if (NeighbourGroups.Count == 1) {//TODO an errer might occur if this object is within a room that only has one connector. (so atleast in the scene, make it so that the room that only have one roomconnector, have neighbour connectors that are higher or lower in the exiting side (if that happends an infinite loop might possibly occur))
+							WhichNodeToGOTO (_TheRoomPath [_Roomindex].GetComponent<RoomConnectorCreating> ().GettheNodes ()); 
+							PersonalNodeMap.SetInfoAndStartSearch (true);
+							_Nodeindex = nodesindex [0];
+
+						} else {
+							WhichNodeToGOTO (_TheRoomPath [_Roomindex].GetComponent<RoomConnectorCreating> ().GettheNodes ()); 
+							PersonalNodeMap.SetInfoAndStartSearch (true);
+							_Nodeindex = nodesindex [0];
+						}
+
+					} else {
+						PersonalNodeMap.SetTargetPos (TargetInfo.GetMyPosition ());
+						PersonalNodeMap.SetInfoAndStartSearch (true);
+						_Nodeindex = nodesindex [0];
+					}
+				}
+
+				HaveSearched = true;
+				NodeMapUpdated = false;
+				MyInfo.UpdateThePath = false;
+				FirstMovementAfterSearch = false;
+			} else {
+				PersonalNodeMap.UpdateNodeMap ();
+				NodeMapUpdated = true;
+			}
+		}
+	
+/*		if (MyInfo.UpdateThePath == true) {//this is true if something have entered the boxcollider
 			MyInfo.UpdateThePath = false;
 
 			PersonalNodeMap.UpdateNodeMap ();
@@ -124,9 +197,10 @@ public class WalkToTarget : DefaultState {
 					_Roomindex = roomsindex [0];
 				}
 			}
-	
+
+			//	if (Vector2.Distance ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 ()) <= ChargeTargetDistance) {
 			if (((MyTransform.position.x - TargetInfo.GetMyPosition () [0, 0] <= ChargeTargetDistance) && (MyTransform.position.x - TargetInfo.GetMyPosition () [0, 0] >= -ChargeTargetDistance)) &&
-			     ((MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] <= ChargeTargetDistance) && (MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] >= -ChargeTargetDistance))) {//instead of using vector2.distance dont know it this is cheaper or not. 
+				((MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] <= ChargeTargetDistance) && (MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] >= -ChargeTargetDistance))) {//instead of using vector2.distance dont know it this is cheaper or not. 
 
 				PersonalNodeMap.SetTargetPos (TargetInfo.GetMyPosition ());
 				PersonalNodeMap.SetInfoAndStartSearch (true);
@@ -135,7 +209,7 @@ public class WalkToTarget : DefaultState {
 			} else if (NeighbourGroups.Count == 1) {
 				if (_TheRoomPath.Length - _Roomindex <= 1) {
 					PersonalNodeMap.SetTargetPos (TargetInfo.GetMyPosition ());
-				
+
 					PersonalNodeMap.SetInfoAndStartSearch (true);
 					_Nodeindex = nodesindex [0];
 
@@ -152,57 +226,228 @@ public class WalkToTarget : DefaultState {
 					_Nodeindex = nodesindex [0];
 
 				} else {
-
-					WhichNodeToGOTO (_TheRoomPath [_Roomindex].GetComponent<RoomConnectorCreating> ().GettheNodes ());
-					PersonalNodeMap.SetInfoAndStartSearch (true);
+					PersonalNodeMap.SetTargetPos (TargetInfo.GetMyPosition ());
+					PersonalNodeMap.SetInfoAndStartSearch (false);
 					_Nodeindex = nodesindex [0];
-
 				}
 			}
+			SearchAgainIndex = _Nodeindex;
+			FirstMovementAfterSearch = false;
 		} else {//if updatethepath havent triggered then this will run, and check if im close to the target. if not continue the given path
+			//if (Vector2.Distance ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 ()) <= ChargeTargetDistance) {
 			if (((MyTransform.position.x - TargetInfo.GetMyPosition () [0, 0] <= ChargeTargetDistance) && (MyTransform.position.x - TargetInfo.GetMyPosition () [0, 0] >= -ChargeTargetDistance)) &&
-			     ((MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] <= ChargeTargetDistance) && (MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] >= -ChargeTargetDistance))) {//instead of using vector2.distance dont know it this is cheaper or not. 
+				((MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] <= ChargeTargetDistance) && (MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] >= -ChargeTargetDistance))) {//instead of using vector2.distance dont know it this is cheaper or not. 
 
 				PersonalNodeMap.SetTargetPos (TargetInfo.GetMyPosition ());
-				 PersonalNodeMap.SetInfoAndStartSearch (false);
+				PersonalNodeMap.SetInfoAndStartSearch (false);
 				_Nodeindex = nodesindex [0];
 			}
-		}
-
+			SearchAgainIndex = _Nodeindex;
+			FirstMovementAfterSearch = false;
+		}*/
 	}
 
 	void GoToDestination() {//going through the pathlist and moves the objects
 
-		if (((MyTransform.position.x - TargetInfo.GetMyPosition () [0, 0] <= 1) && (MyTransform.position.x - TargetInfo.GetMyPosition () [0, 0] >= -1)) &&
-		    ((MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] <= 1) && (MyTransform.position.y - TargetInfo.GetMyPosition () [0, 1] >= -1))) {
-			once = true;
-		}
-		if (_TheNodePath != null) {
-			//	Debug.Log ();
-			if (_Nodeindex < _TheNodePath.Length && _TheNodePath[_Nodeindex] != null) {
+		//if (_Nodeindex < _TheNodePath.Length && _TheNodePath [_Nodeindex] != null) {//if this is false then the search failed or never happened or an error :D
+		if (HaveSearched == true) {//if this is false then the search failed or never happened or an error :D
+		//	Debug.Log (_Nodeindex + " | " + _TheNodePath.Length);
+				
+			GoalPosition.x = MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0];
+			GoalPosition.y = MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1];
 
-			if (nodesindex [0] < _Nodeindex) {
+			if (Vector2.Distance (GoalPosition, (Vector2)MyTransform.position) <= DistanceFromNode) {//if im inside the node im going to 
+				_Nodeindex++;
+
+				if (Vector2.Distance ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 ()) <= range) {//checking if im withing range of the target 
+					if (Physics2D.Linecast ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 (), CollisionLayer).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
+						ReturnState = "AttackState";
+						return;
+					} 
+				}
+
+				#region Calculating Direction/speed
+
+				if (_Nodeindex < _TheNodePath.Length) {
+					IdHolder = _TheNodePath [_Nodeindex].GetID ();
+
+					if (nodesindex [0] < _Nodeindex) {
+						NextIdHolder = _TheNodePath [_Nodeindex - 1].GetID ();
+
+						movemen.x = IdHolder [0, 0] - NextIdHolder [0, 0];
+						movemen.y = IdHolder [0, 1] - NextIdHolder [0, 1];
+					} else {
+						IdHolder = _TheNodePath [_Nodeindex].GetID ();
+
+						movemen.x = IdHolder [0, 0];
+						movemen.y = IdHolder [0, 1];
+					}
+
+					myrigid.velocity = (movemen * MovementSpeed);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
+				}
+
+				if (MyTransform.position.x < GoalPosition.x - 0.075f) {
+					if (MyTransform.localScale.x > 0) {
+						CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+						RotateCharacter.x = MyTransform.localScale.x * -1;
+						RotateCharacter.y = MyTransform.localScale.y;
+						RotateCharacter.z = 0;
+						MyTransform.localScale = RotateCharacter;
+					}
+				} else if (MyTransform.position.x > GoalPosition.x + 0.075f) {
+					if (MyTransform.localScale.x < 0) {
+						CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+						RotateCharacter.x = MyTransform.localScale.x * -1;
+						RotateCharacter.y = MyTransform.localScale.y;
+						RotateCharacter.z = 0;
+						MyTransform.localScale = RotateCharacter;
+					}
+				}
+
+				#endregion
+
+				/*	if (_Nodeindex > SearchAgainIndex) {
+					MyInfo.UpdateThePath = true;
+				}*/
+
+
+				if (_Nodeindex >= _TheNodePath.Length) {
+					HaveSearched = false;
+					NodeMapUpdated = false;
+					MyInfo.UpdateThePath = true;
+					FirstMovementAfterSearch = false;
+				}
+
+			} else {
+				if (FirstMovementAfterSearch == false) {
+
+					#region Calculating Direction/speed
+
+					FirstMovementAfterSearch = true;
+					IdHolder = _TheNodePath [_Nodeindex].GetID ();
+
+					if (nodesindex [0] < _Nodeindex) {
+						NextIdHolder = _TheNodePath [_Nodeindex - 1].GetID ();
+
+						movemen.x = IdHolder [0, 0] - NextIdHolder [0, 0];
+						movemen.y = IdHolder [0, 1] - NextIdHolder [0, 1];
+					} else {
+						IdHolder = _TheNodePath [_Nodeindex].GetID ();
+
+						movemen.x = IdHolder [0, 0];
+						movemen.y = IdHolder [0, 1];
+					}
+
+					myrigid.velocity = (movemen * MovementSpeed);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
+				}
+
+				if (MyTransform.position.x < GoalPosition.x - 0.075f) {
+					if (MyTransform.localScale.x > 0) {
+						CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+						RotateCharacter.x = MyTransform.localScale.x * -1;
+						RotateCharacter.y = MyTransform.localScale.y;
+						RotateCharacter.z = 0;
+						MyTransform.localScale = RotateCharacter;
+					}
+				} else if (MyTransform.position.x > GoalPosition.x + 0.075f) {
+					if (MyTransform.localScale.x < 0) {
+						CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+						RotateCharacter.x = MyTransform.localScale.x * -1;
+						RotateCharacter.y = MyTransform.localScale.y;
+						RotateCharacter.z = 0;
+						MyTransform.localScale = RotateCharacter;
+					}
+				}
+
+				#endregion
+			}
+
+		} else {
+	//		Debug.Log ("Could Not Find What I Needed");
+			myrigid.velocity = Vector2.zero;
+		}
+
+
+	/*	if (_TheNodePath != null) {
+
+			if (_Nodeindex < _TheNodePath.Length) {
+
+
+
+				if (nodesindex [0] < _Nodeindex) {
 					movemen.x = _TheNodePath [_Nodeindex].GetID () [0, 0] - _TheNodePath [_Nodeindex - 1].GetID () [0, 0];
 					movemen.y = _TheNodePath [_Nodeindex].GetID () [0, 1] - _TheNodePath [_Nodeindex - 1].GetID () [0, 1];
-				}else{
+				} else {
 					movemen.x = _TheNodePath [_Nodeindex].GetID () [0, 0];
 					movemen.y = _TheNodePath [_Nodeindex].GetID () [0, 1];
 				}
 
-				//movement with velocity and position =
 				myrigid.velocity = (movemen * MovementSpeed);
-				//	MyTransform.position = Vector3.MoveTowards (MyTransform.position, new Vector3 ((MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0]), (MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1]), MyTransform.position.z), Time.smoothDeltaTime * MovementSpeed);
-	
-				if ((((MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0]) - DistanceFromNode) < MyTransform.position.x) && (((MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0]) + DistanceFromNode) > MyTransform.position.x) && (((MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1]) - DistanceFromNode) < MyTransform.position.y) && (((MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1]) + DistanceFromNode) > MyTransform.position.y)) {
-					_Nodeindex += 1;
-					if (_Nodeindex >= _TheNodePath.Length) {//every time nodeindex == 1. so if im at the first node search again
-						MyInfo.UpdateThePath = true;
-						return;
+
+
+				GoalPosition.x = MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0];
+				GoalPosition.y = MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1];
+
+				if (Vector2.Distance (GoalPosition, MyTransform.position) <= DistanceFromNode) {
+			//	if ((((MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0]) - DistanceFromNode) < MyTransform.position.x) && (((MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0]) + DistanceFromNode) > MyTransform.position.x) && (((MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1]) - DistanceFromNode) < MyTransform.position.y) && (((MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1]) + DistanceFromNode) > MyTransform.position.y)) {
+					if (Vector2.Distance ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 ()) <= range) {//checking if im withing range of the target 
+						if (_Nodeindex >= _TheNodePath.Length) {//every time nodeindex == 1. so if im at the first node search again
+							MyInfo.UpdateThePath = true;
+							return;
+						}
+
+						if (Physics2D.Linecast ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 (), LineOfSight).transform != null) {//if im in range do a raycast and see if there is an obsacle in the way
+							_Nodeindex += 1;
+							if (MyTransform.position.x < MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0]) {
+								if (MyTransform.localScale.x > 0) {
+									RotateCharacter.x = MyTransform.localScale.x * -1;
+									RotateCharacter.y = MyTransform.localScale.y;
+									RotateCharacter.z = 0;
+									MyTransform.localScale = RotateCharacter;
+								}
+								CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+							} else {
+								if (MyTransform.localScale.x < 0) {
+									RotateCharacter.x = MyTransform.localScale.x * -1;
+									RotateCharacter.y = MyTransform.localScale.y;
+									RotateCharacter.z = 0;
+									MyTransform.localScale = RotateCharacter;
+								}
+								CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+							}
+						} else {
+							Debug.Log ("CHANGE TO ATTACK STATE");
+							ReturnState = "AttackState";
+						}
+					} else {
+						if (MyTransform.position.x < MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0] - 0.075f) {
+							if (MyTransform.localScale.x > 0) {
+								CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+								RotateCharacter.x = MyTransform.localScale.x * -1;
+								RotateCharacter.y = MyTransform.localScale.y;
+								RotateCharacter.z = 0;
+								MyTransform.localScale = RotateCharacter;
+							}
+						} else if (MyTransform.position.x > MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0] + 0.075f) {
+							if (MyTransform.localScale.x < 0) {
+								CreatureAnimator.SetFloat ("ChangeAnimation", 1);
+								RotateCharacter.x = MyTransform.localScale.x * -1;
+								RotateCharacter.y = MyTransform.localScale.y;
+								RotateCharacter.z = 0;
+								MyTransform.localScale = RotateCharacter;
+							}
+						}
+						_Nodeindex += 1;
+						if (_Nodeindex > SearchAgainIndex)
+							MyInfo.UpdateThePath = true;
 					}
+
+
+				} else {
 				}
 
 			}
-		}
+		}*/
 	}
 
 
@@ -216,7 +461,7 @@ public class WalkToTarget : DefaultState {
 		for (int i = 0; i < ListOfNodes.Count; i++) {
 			ObjectVector.x = ListOfNodes [i].GetID () [0, 0];
 			ObjectVector.y = ListOfNodes [i].GetID () [0, 1];
-		
+
 			Counter++;
 			a = Vector2.Distance (TargetVector, ObjectVector);
 

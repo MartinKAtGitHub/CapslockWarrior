@@ -11,7 +11,6 @@ public class Nodes {
 
 	public bool Used = false;
 
-	float noe = 0;
 	public int _MapCollision = 1;//this is what decides what object the player is on(a wall, water ....)
 	float[,] _NodeID = new float[1, 2];//Node ID, which is the nodes coordinates in the collision map
 	Nodes _ParentNode = null;

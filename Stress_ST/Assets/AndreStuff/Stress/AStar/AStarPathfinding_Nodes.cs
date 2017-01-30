@@ -5,8 +5,6 @@ using System.Linq;
 
 public class AStarPathFinding_Nodes {
 	 
-	List<Nodes> _ThePath = new List<Nodes>();//
-
 	Nodes[] _StartNode; //This is the node that this object is an and starts searching from
 	Nodes[] _EndNode; //end node, destination node
 	Nodes _NodeSaver; //just to hold some nodes while searching
@@ -34,7 +32,7 @@ public class AStarPathFinding_Nodes {
 		OpenList = new Nodes[size];
 		ClosedList = new Nodes[size]; 
 		ThePath = new Nodes[size];
-		remakeindexlist [0] = remakeIndex;
+		remakeindexlist [0] = size;
 	}
 
 	public void SetEndStartNode(Nodes[] start, Nodes[] end){
@@ -69,21 +67,26 @@ public class AStarPathFinding_Nodes {
 		c = 0;
 		remakeIndex = 0;
 		_StartNode [0].ClearAll (); 
-
-		AStartAlgorithm();
-
-		remakeindexlist [0] = theSize - remakeIndex;
-
+		_EndNode [0].ClearAll (); 
+		if (AStartAlgorithm () == true) {
+			remakeindexlist [0] = theSize - remakeIndex;
+		} else {
+			remakeindexlist [0] = theSize;
+		}
+		_StartNode [0].ClearAll (); 
+		_EndNode [0].ClearAll (); 
 		for (int i = 0; i < b; i++) {
+			OpenList [i].ClearAll (); 
 			OpenList [i].Used = false;
 		}
 
 		for (int i = 0; i < c; i++) {
+			ClosedList [i].ClearAll (); 
 			ClosedList [i].Used = false;
 		}
 	}
 
-	void AStartAlgorithm() {//A*. 
+	bool AStartAlgorithm() {//A*. 
 
 		_NodeSaver = null;//Holds the current node that im searching with
 		_StartNode [0].Used = true;
@@ -104,7 +107,7 @@ public class AStarPathFinding_Nodes {
 	
 			if (_NodeSaver == _EndNode [0]) {//If _NodeSaver == ends then the search is complete and sending _closedlist to calculate the path from start to end
 				RemakePath ();
-				return;
+				return true;
 			}
 
 			ClosedList [c++] = _NodeSaver;
@@ -135,7 +138,7 @@ public class AStarPathFinding_Nodes {
 			}
 		}
 		Debug.Log ("Could not find the end");
-		return;
+		return false;
 	}
 
 	void RemakePath() {//Makes the path by going to the end node and get the parent, then parent of the parent ....... until your at the start node

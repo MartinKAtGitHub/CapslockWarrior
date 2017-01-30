@@ -10,12 +10,9 @@ public class AStarPathfinding_RoomPaths{
 	RoomConnectorCreating[] ClosedList = new RoomConnectorCreating[54];
 	RoomConnectorCreating[] ThePath = new RoomConnectorCreating[54];
 
-	Wall_ID[] TheConnectors = new Wall_ID[48];
-
 	int a = 0; //holding previous nodesaver which now is null 
 	int b = 0; //holds the length of the array, optimalization reasons :D
 	int c = 0; //closed list index holder
-	int d = 0; //closed list index holder
 	int remakeIndex = 0;
 	int[] remakeindexlist = new int[1];
 	int theSize = 0;
@@ -27,15 +24,11 @@ public class AStarPathfinding_RoomPaths{
 	List<RoomConnectorCreating> PreviousEndRoom;
 
 	List<RoomConnectorCreating> StartRoom;
-	Nodes[] StartNode ;
 
 	List<RoomConnectorCreating> EndRoom;
 	Nodes[] EndNode ;
 
-	List<RoomConnectorCreating> _NodesToSeeThrough = new List<RoomConnectorCreating>(); 
-	List<RoomConnectorCreating> _NodesHaveSeenThrough = new List<RoomConnectorCreating>(); 
 
-	List<RoomConnectorCreating> _ThePaths = new List<RoomConnectorCreating>();//contains the path to the target if not null
 	RoomConnectorCreating _NodSaver;
 	float _LowerstFScore = 100000; 
 
@@ -46,7 +39,6 @@ public class AStarPathfinding_RoomPaths{
 
 	public void SetStartRoomAndNode(List<RoomConnectorCreating> startRooms, Nodes[] startNode ){
 		StartRoom = startRooms;
-		StartNode = startNode;
 	}
 	public void SetStartRoom(List<RoomConnectorCreating> startRooms){
 		StartRoom = startRooms;
@@ -76,7 +68,6 @@ public class AStarPathfinding_RoomPaths{
 		a = 0;
 		b = 0;
 		c = 0;
-		d = 0;
 		remakeIndex = 0;
 
 		for (int i = 0; i < StartRoom.Count; i++) {
@@ -87,7 +78,6 @@ public class AStarPathfinding_RoomPaths{
 		AStartAlgorithm ();
 
 		remakeindexlist [0] = theSize - remakeIndex;
-
 
 		for (int i = 0; i < b; i++) {
 		//	OpenList [i].RoomNode.ClearAll ();
@@ -213,8 +203,11 @@ public class AStarPathfinding_RoomPaths{
 
 
 	public void RemakePath (RoomConnectorCreating checkedNodes){//going backwards and getting the path that led to this node, then on that node im getting the path that led to that and going further back 
-
+		if (checkedNodes == StartRoom [0]) {
+			return;
+		} else {
 		ThePath [theSize - (++remakeIndex)] = checkedNodes;
+		}
 
 		if (checkedNodes.RoomNode.GetParent () == null) {
 			return;

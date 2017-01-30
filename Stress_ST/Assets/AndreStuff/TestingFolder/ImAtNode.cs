@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ImAtNode : MonoBehaviour {
 
-	Nodes[] NodeImAt = new Nodes[1];
+/*	Nodes[] NodeImAt = new Nodes[1];
 
 	public bool GoToTarget = false;
 	AStarPathFinding_Nodes StarTest = new AStarPathFinding_Nodes (11025);
@@ -75,7 +75,7 @@ public class ImAtNode : MonoBehaviour {
 				}
 			}
 		}*/
-	}
+/*	}
 
 	public bool tru = false;
 
@@ -112,5 +112,5 @@ public class ImAtNode : MonoBehaviour {
 				}
 			}
 		}
-	}
+	}*/
 }

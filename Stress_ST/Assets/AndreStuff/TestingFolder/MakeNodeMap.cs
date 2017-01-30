@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MakeNodeMap : MonoBehaviour {
 
-	Nodes[,] MyNodeMap = new Nodes[105,105];
+	/*Nodes[,] MyNodeMap = new Nodes[105,105];
 	int _HighestPoint = 0;
 	int _LeftPoint = 0;
 	int _RightPoint = 0;
@@ -107,7 +107,7 @@ public class MakeNodeMap : MonoBehaviour {
 
 			theObject.SetNode (MyNodeMap[xPos,yPos]);
 		}
-	}
+	}*/
 
 
 

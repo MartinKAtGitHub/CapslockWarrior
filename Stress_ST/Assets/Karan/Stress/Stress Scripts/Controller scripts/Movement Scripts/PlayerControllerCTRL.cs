@@ -13,7 +13,7 @@ public class PlayerControllerCTRL : MonoBehaviour, IMovementEngin{
 
 	private Vector2 Faceing;
 	private bool spriteFacingRigth;
-
+	Transform heroGraphics;
 
 
 	public float Speed
@@ -71,9 +71,8 @@ public class PlayerControllerCTRL : MonoBehaviour, IMovementEngin{
 
 		PlayerRigBdy = GetComponent<Rigidbody2D>();
 		spriteFacingRigth = true;
-		/*moveX = 0;
-		moveY = 0;	
-		*/
+		heroGraphics = transform.FindChild("GFX");
+
 	}
 	
 
@@ -112,9 +111,9 @@ public class PlayerControllerCTRL : MonoBehaviour, IMovementEngin{
 	public void Flip()
 	{
 		spriteFacingRigth = !spriteFacingRigth;
-		Vector3 theScale = transform.localScale;
+		Vector3 theScale = heroGraphics.localScale;
 		theScale.x *= -1;
-		transform.localScale = theScale;
+		heroGraphics.localScale = theScale;
 		//transform.localScale.x *= -1f;
 	}
 }

@@ -6,54 +6,49 @@ using System.Linq;
 public class Nodes {
 
 	//node info
-	public int[] _PathfindingNodeID;
+	public int[] PathfindingNodeID;//this array holds the move cost to each tile (wall , water, sand .....)
+	public int MapCollision = 1;//this is used to set the correct id for the tile (wall, water, sand .....)
 
+	public bool NodeSearchedThrough = false;//if bool is used to check if the node have been searched through
 
-	public bool Used = false;
-
-	public int _MapCollision = 1;//this is what decides what object the player is on(a wall, water ....)
-	float[,] _NodeID = new float[1, 2];//Node ID, which is the nodes coordinates in the collision map
-	Nodes _ParentNode = null;
-	List<Nodes> _Neighbours = new List<Nodes>();
-	public float _GCost = 0;//GCost is the cost that have been used to get to this node
+	public float GCost = 0;//GCost is the cost that have been used to get to this node
+	public float FCost = 0;//Gcost+Hcost
 	float _HCost = 0;//HCost is how far away the end node is from this node
-	public float _FCost = 0;
 
-	float _XValue = 0, _YValue = 0; //just some values
 
-	RoomConnectorCreating _MyRooms;
+	float[,] _NodeID = new float[1, 2];//Node ID, which is the nodes coordinates in the collision map
 
-	public Nodes[,] NeighbourNodes = new Nodes[3, 3]; 
+	Nodes _ParentNode = null;
+	public Nodes[,] NeighbourNodes = new Nodes[3, 3];//neighbours for the nodes
 
-	float[,] getidsaver;
+	float _XValue = 0, _YValue = 0; //just some values that im using
+	float[,] _GetIDSaver;//just an empty array that im using
+
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="Nodes"/> class.
+	/// 1. Initializes a new instance of the <see cref="Nodes"/> class.
 	/// </summary>
 	/// <param name="ID">is the parameterID in XY coordinates,</param>
 	/// <param name="collision">is the collisionid the node will have, so when someone collides with it then we know what to apply</param>
 	public Nodes(float[,] ID, int collision) {
 		_NodeID = ID;
-		_MapCollision = collision;
+		MapCollision = collision;
 	}
 
+	/// <summary>
+	/// 2. Initializes a new instance of the <see cref="Nodes"/> class.
+	/// </summary>
+	/// <param name="ID">is the parameterID in XY coordinates,</param>
+	/// <param name="collision">is the collisionid the node will have, so when someone collides with it then we know what to apply</param>
+	/// <param name="pathnodeid">this is the array that holds the movecost to each tile</param>
 	public Nodes(float[,] ID, int collision, int[] pathnodeid) {
 		_NodeID = ID;
-		_MapCollision = collision;
-		_PathfindingNodeID = pathnodeid;
+		MapCollision = collision;
+		PathfindingNodeID = pathnodeid;
 	}
-
-	public void SetRooms(RoomConnectorCreating room){
-		_MyRooms = room;
-	}
-
-	public RoomConnectorCreating GetRooms(){
-		return _MyRooms;
-	}
-
-
+		
 	public int GetCollision() {
-		return _PathfindingNodeID[_MapCollision];
+		return PathfindingNodeID[MapCollision];
 	}
 
 	public float[,] GetID() {
@@ -64,30 +59,13 @@ public class Nodes {
 		return _ParentNode;
 	}
 
-	public List<Nodes> GetNeighbours() {
-		return _Neighbours;
-	}
-
-	public float GetGCost() {
-		return _GCost;
-	}
-
-	public float GetJustMoveGCost(Nodes nodeToCheck) {//Gets how expencive it is to travel to nodetocheck
-
-		if (nodeToCheck.GetID () [0, 0] == _NodeID [0, 0] || nodeToCheck.GetID () [0, 1] == _NodeID [0, 1]) {
-			return nodeToCheck._PathfindingNodeID[_MapCollision];
-		} else {
-			return ( nodeToCheck._PathfindingNodeID[_MapCollision] * 1.4f);
-		}
-	}
-
 	public void SetParentAndEndCorners(Nodes theParent, Nodes theEnd) {//setting parent gcost and hcost
-		Used = true;
+		NodeSearchedThrough = true;
 		_ParentNode = theParent;
-		getidsaver = theEnd.GetID ();
+		_GetIDSaver = theEnd.GetID ();
 
-		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
-		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
+		_XValue = _GetIDSaver [0, 0] - _NodeID [0, 0];
+		_YValue = _GetIDSaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0)
 			_XValue *= -1;
@@ -95,17 +73,17 @@ public class Nodes {
 			_YValue *= -1;
 
 		_HCost = _XValue + _YValue;
-		_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
-		_FCost = _HCost + _GCost;
+		GCost = (PathfindingNodeID[MapCollision] * 1.4f) + _ParentNode.GCost;
+		FCost = _HCost + GCost;
 	}
 
 	public void SetParentAndEndMiddle(Nodes theParent, Nodes theEnd) {//setting parent gcost and hcost
-		Used = true;
+		NodeSearchedThrough = true;
 		_ParentNode = theParent;
-		getidsaver = theEnd.GetID ();
+		_GetIDSaver = theEnd.GetID ();
 
-		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
-		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
+		_XValue = _GetIDSaver [0, 0] - _NodeID [0, 0];
+		_YValue = _GetIDSaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0)
 			_XValue *= -1;
@@ -113,107 +91,55 @@ public class Nodes {
 			_YValue *= -1;
 
 		_HCost = _XValue + _YValue;
-		_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
-		_FCost = _HCost + _GCost;
-	}
-
-
-		
-	public float GetFValue() {//This is the total cost to move for the parent which is the F value
-		return _FCost;
+		GCost = PathfindingNodeID[MapCollision] + _ParentNode.GCost;
+		FCost = _HCost + GCost;
 	}
 
 	public void ClearAll() {// Clears all data to preprair for the next search
-		Used = false;
+		NodeSearchedThrough = false;
 		_ParentNode = null;
-		_GCost = 0;
+		GCost = 0;
 		_HCost = 0;
-		_FCost = 0;
+		FCost = 0;
 	}
 
-	public void SetParentAndEnd(Nodes theParent, Nodes theEnd) {//setting parent gcost and hcost
-		Used = true;
-		_ParentNode = theParent;
-
-		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
-		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
-
-		if (_XValue < 0)
-			_XValue *= -1;
-		if (_YValue < 0)
-			_YValue *= -1;
-
-		_HCost = _XValue + _YValue;
-		getidsaver = theParent.GetID ();
-
-		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
-		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
-
-		if (_XValue < 0) {
-			_XValue *= -1;
-		}
-		if (_YValue < 0) {
-			_YValue *= -1;
-		}
-
-		if (_XValue == 0 || _YValue == 0) {//if not at the corners of the 3x3 neighbours
-			_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
-		} else {
-			_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
-		}
-		_FCost = _HCost + _GCost;
-	}
-
-	public void SetParent(Nodes theParent) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
-
-		_ParentNode = theParent;
-
-		if (theParent.GetID () [0, 0] == _NodeID [0, 0] || theParent.GetID () [0, 1] == _NodeID [0, 1]) {
-			_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
-		} else {
-			_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
-		}
-		_FCost = _HCost + _GCost;
-	}
 	public void SetParentCorner(Nodes theParent) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
 
 		_ParentNode = theParent;
-		_GCost = (_PathfindingNodeID[_MapCollision] * 1.4f) + _ParentNode._GCost;
-		_FCost = _HCost + _GCost;
+		GCost = (PathfindingNodeID[MapCollision] * 1.4f) + _ParentNode.GCost;
+		FCost = _HCost + GCost;
 	}
 
 	public void SetParentMiddle(Nodes theParent) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
 
 		_ParentNode = theParent;
-		_GCost = _PathfindingNodeID[_MapCollision] + _ParentNode._GCost;
-		_FCost = _HCost + _GCost;
-	}
-	public void SetHCost(Nodes endNode) {//Distance from this node and end node
-		_XValue = endNode.GetID () [0, 0] - _NodeID [0, 0];
-		_YValue = endNode.GetID () [0, 1] - _NodeID [0, 1];
-		
-		if (_XValue < 0)
-			_XValue *= -1;
-		if (_YValue < 0)
-			_YValue *= -1;
-		
-		_HCost = _XValue + _YValue;
-		_FCost = _HCost + _GCost;
+		GCost = PathfindingNodeID[MapCollision] + _ParentNode.GCost;
+		FCost = _HCost + GCost;
 	}
 
-	public void SetNeighbors(Nodes theNeighbor) {
-		_Neighbours.Add(theNeighbor);
+	#region RoomConnector
+
+	RoomConnectorCreating _MyRooms;
+	List<Nodes> _NeighboursRooms = new List<Nodes>();//neighbours for the roompath  (could also be public)
+
+
+	public void SetRooms(RoomConnectorCreating room){
+		_MyRooms = room;
+	}
+
+	public RoomConnectorCreating GetRooms(){
+		return _MyRooms;
+	}
+
+	public void SetRoomNeighbours(Nodes theNeighbor) {
+		_NeighboursRooms.Add(theNeighbor);
 	}	
 
-	public void SetCollision(int collision){
-		_MapCollision = collision;
-	}
-
 	public float GetJustWorldSpaceDistance(Nodes theothernode){
-		getidsaver = theothernode.GetID ();
-	
-		_XValue = getidsaver[0, 0] - _NodeID[0, 0];
-		_YValue = getidsaver[0, 1] - _NodeID[0, 1];
+		_GetIDSaver = theothernode.GetID ();
+
+		_XValue = _GetIDSaver[0, 0] - _NodeID[0, 0];
+		_YValue = _GetIDSaver[0, 1] - _NodeID[0, 1];
 
 		if(_XValue < 0){
 			_XValue *= -1;
@@ -226,12 +152,12 @@ public class Nodes {
 	}
 
 	public void SetParentAndEndRoom(Nodes theParent, Nodes endNode) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
-		Used = true;
+		NodeSearchedThrough = true;
 		_ParentNode = theParent;
-		getidsaver = endNode.GetID ();
+		_GetIDSaver = endNode.GetID ();
 
-		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
-		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
+		_XValue = _GetIDSaver [0, 0] - _NodeID [0, 0];
+		_YValue = _GetIDSaver [0, 1] - _NodeID [0, 1];
 
 
 		if (_XValue < 0) {
@@ -242,10 +168,10 @@ public class Nodes {
 		}
 
 		_HCost = _XValue + _YValue;
-		getidsaver = theParent.GetID ();
+		_GetIDSaver = theParent.GetID ();
 
-		_XValue = getidsaver [0, 0] - _NodeID [0, 0];
-		_YValue = getidsaver [0, 1] - _NodeID [0, 1];
+		_XValue = _GetIDSaver [0, 0] - _NodeID [0, 0];
+		_YValue = _GetIDSaver [0, 1] - _NodeID [0, 1];
 
 		if (_XValue < 0) {
 			_XValue *= -1;
@@ -254,12 +180,12 @@ public class Nodes {
 			_YValue *= -1;
 		}
 
-		_GCost = _ParentNode._GCost + _XValue + _YValue;
-		_FCost = _HCost + _GCost;
+		GCost = _ParentNode.GCost + _XValue + _YValue;
+		FCost = _HCost + GCost;
 	}
 
 	public void SetParentRoom(Nodes theParent) {//Adding the parent GCost to this nodes gcost and adding the distance the parent had to travel to this node gcost
-		Used = true;
+		NodeSearchedThrough = true;
 		_ParentNode = theParent;
 
 		if (_ParentNode != null) {
@@ -273,8 +199,10 @@ public class Nodes {
 				_YValue *= -1;
 			}
 
-			_GCost =  _ParentNode._GCost + _XValue + _YValue;
-			_FCost = _HCost + _GCost;
+			GCost =  _ParentNode.GCost + _XValue + _YValue;
+			FCost = _HCost + GCost;
 		}
 	}
+	#endregion
+
 }

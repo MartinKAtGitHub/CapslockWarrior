@@ -55,7 +55,7 @@ public class SlowFieldSpell : Earth {
 	{
 		if(other.tag == "Enemy")
 		{
-			//TODO this is not good yo sould cache this i think somhow ..
+			//TODO this is not good yo sould cache this i think somhow .. yup
 			if(other.GetComponent<DefaultBehaviour>() != null){
 		//		other.GetComponent<DefaultBehaviour>().Turnoffwithforcestuff = true;
 				other.GetComponent<DefaultBehaviour>().ChangeMovementAdd(SlowRate);

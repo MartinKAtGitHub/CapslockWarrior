@@ -96,7 +96,7 @@ public class FireballSTD : Fire {
 		}
 		else
 		{
-			Debug.LogError("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
+			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
 			Destroy(this.gameObject);
 		}
 	}

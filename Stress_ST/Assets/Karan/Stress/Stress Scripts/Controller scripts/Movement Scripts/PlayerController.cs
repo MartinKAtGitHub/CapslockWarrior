@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 	Vector2 deltaTargetCurrentPos; // ugly solution
 	Vector2 facing;
 	Rigidbody2D playerRigBdy;
-
+	Transform heroGraphics;
 	Vector3 mousePos;
 
 
@@ -72,7 +72,8 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		playerRigBdy = GetComponent<Rigidbody2D>();
 		mousePos = Vector3.zero;
 
-		Debug.LogWarning("ADD THE INTERFACE TO PLAYERCONTOLLER MOUSE");
+		 heroGraphics = transform.FindChild("GFX");
+		//Debug.LogWarning("ADD THE INTERFACE TO PLAYERCONTOLLER MOUSE");
 	}
 
 
@@ -107,9 +108,10 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 	public void Flip()
 	{
 		facingRigth = !facingRigth;
-		Vector3 theScale = transform.localScale;
+		Vector3 theScale = heroGraphics.localScale;
 		theScale.x *= -1;
-		transform.localScale = theScale;
+		heroGraphics.localScale = theScale;
+
 		//transform.localScale.x *= -1f;
 	}
 

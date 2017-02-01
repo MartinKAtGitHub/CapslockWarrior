@@ -98,20 +98,14 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 		UpdateThePath = true;
 	}
 
-	void OnTriggerEnter2D(Collider2D coll){//sends info to the objects personal nodemap (it also trigger on colliders that doesnt have istrigged toggled)
-
-		if (coll.gameObject.CompareTag (EnemyString)) {
-			_PersonalNodeMap.AddEnemyPositions (coll.gameObject);
-		} 
+	public override void AddEnemyWithTrigger (GameObject collidingwithobject){
+		_PersonalNodeMap.AddEnemyPositions (collidingwithobject.gameObject);
+		UpdateThePath = true;
 	}
 
-	void OnTriggerExit2D(Collider2D coll) {//sends info to the objects personal nodemap (it also trigger on colliders that doesnt have istrigged toggled)
-
-		if (coll.gameObject.CompareTag(EnemyString)) {
-			_PersonalNodeMap.RemoveEnemyPositions (coll.gameObject);
-		}
-
-
+	public override void RemoveEnemyWithTrigger (GameObject collidingwithobject){
+		_PersonalNodeMap.RemoveEnemyPositions (collidingwithobject.gameObject);
+		UpdateThePath = true;
 	}
 
 	#endregion

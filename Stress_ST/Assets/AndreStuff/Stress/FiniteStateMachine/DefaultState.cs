@@ -7,6 +7,9 @@ using System.Collections;
 		protected MonoBehaviour CreatureObject;//lar de som arver fra denne bruke MonoBehaviour, hvis de trenger det. for å forandre på objektets rotasjon,fart,osv
 
 		public string Id { get; set; }//dette blir satt til den nye id'en til staten som arver denne klassen
+		public string _ReturnState = "";
+		public LayerMask _LineOfSight;
+		public float _Range = 1;
 
 		public DefaultState() {
 			Id = "";
@@ -22,11 +25,4 @@ using System.Collections;
 
 		public abstract string ProcessState();//hva som skal skje vær oppdatering av game loopen 
 
-		public float distanceToTurn = 50; //distanceToTurn er avstanden fra veggen som roboten skal begynne å snu på
-
-		public bool AvoidTheWall() {//denne skjekker om robotens posisjon er mindre eller større enn ønsket posisjon, hvis det så skal avoidthewall kjøres
-	//		if (CreatureObject.Y > CreatureObject.BattleFieldHeight - distanceToTurn || CreatureObject.Y < distanceToTurn || CreatureObject.X > CreatureObject.BattleFieldWidth - distanceToTurn || CreatureObject.X < distanceToTurn)
-	//			return true;
-			return false;
-		}
 }

@@ -6,195 +6,194 @@ using System;
 
 public class AStarPathfinding_RoomPaths{
 
-	RoomConnectorCreating[] OpenList = new RoomConnectorCreating[54];
-	RoomConnectorCreating[] ClosedList = new RoomConnectorCreating[54];
-	RoomConnectorCreating[] ThePath = new RoomConnectorCreating[54];
+	RoomConnectorCreating[] _OpenList = new RoomConnectorCreating[54];//list that holds rooms that i havent searched through
+	RoomConnectorCreating[] _ClosedList = new RoomConnectorCreating[54];//list that have been searched through
+	RoomConnectorCreating[] _ThePath = new RoomConnectorCreating[54];//the information to avoid absolute death
 
-	int a = 0; //holding previous nodesaver which now is null 
-	int b = 0; //holds the length of the array, optimalization reasons :D
-	int c = 0; //closed list index holder
-	int remakeIndex = 0;
-	int[] remakeindexlist = new int[1];
-	int theSize = 0;
+	int _RoomIndexSaved = 0; //holding previous objectholder which now is null 
+	int _OpenListAtIndex = 0; //this holds the next position which to add the next element
+	int _ClosedListAtIndex = 0; //closed list index holder
 
-	RoomConnectorCreating _NodsSaver;
+	int _RemakeIndex = 0;//used to calculate which index the room is stored at, when im reversing the path
+	int[] _ListStartingPosition = new int[1];//this holds the index on which index the AI should start at
+	int _TheSize = 0;//size of lists
 
+	RoomConnectorCreating _CurrentRoom;//room im searching with
 
-	List<RoomConnectorCreating> PreviousStartRoom;
-	List<RoomConnectorCreating> PreviousEndRoom;
+	List<RoomConnectorCreating> _StartRoom;
+	List<RoomConnectorCreating> _EndRoom;
+	Nodes[] _EndNode ;//used to set roomconnector closest to the target
 
-	List<RoomConnectorCreating> StartRoom;
-
-	List<RoomConnectorCreating> EndRoom;
-	Nodes[] EndNode ;
-
-
-	RoomConnectorCreating _NodSaver;
 	float _LowerstFScore = 100000; 
 
-	List<RoomConnectorCreating> SaverList = null;
-	RoomConnectorCreating SavedObject;
-	RoomConnectorCreating[] ThePath2;
+	List<RoomConnectorCreating> _ListHoler = null;
+	RoomConnectorCreating _ObjectHolder;
+	Wall_ID _ConnectorHub; //is used to know which side of the pathconnector i have searched
 
+	public AStarPathfinding_RoomPaths(int size){
+		_TheSize = size;
+		_OpenList = new RoomConnectorCreating[size];
+		_ClosedList = new RoomConnectorCreating[size]; 
+		_ThePath = new RoomConnectorCreating[size];
+		_ListStartingPosition [0] = size;
+	}
 
 	public void SetStartRoomAndNode(List<RoomConnectorCreating> startRooms, Nodes[] startNode ){
-		StartRoom = startRooms;
+		_StartRoom = startRooms;
 	}
 	public void SetStartRoom(List<RoomConnectorCreating> startRooms){
-		StartRoom = startRooms;
+		_StartRoom = startRooms;
 	}
 	public void SetEndRoomAndNode(List<RoomConnectorCreating> endRoom, Nodes[] endNode){
-		EndRoom = endRoom;
-		EndNode = endNode;
+		_EndRoom = endRoom;
+		_EndNode = endNode;
 	}
 	public void SetEndRoom(List<RoomConnectorCreating> endRoom){
-		EndRoom = endRoom;
+		_EndRoom = endRoom;
 	}
 
 	public RoomConnectorCreating[] GetListRef(){
-		return ThePath;
+		return _ThePath;
 	}
 	public int[] GetListindexref(){
-		return remakeindexlist;
+		return _ListStartingPosition;
 	}
-
-
 
 	#region A* For paths
 
-	public void CreatePath() {//Starts A* and clears all the nodes so that they are rdy for the next search
+	public bool CreatePath() {//Starts A* and clears all the nodes so that they are rdy for the next search
 
-		theSize = 54;
-		a = 0;
-		b = 0;
-		c = 0;
-		remakeIndex = 0;
+		_RoomIndexSaved = 0;
+		_OpenListAtIndex = 0;
+		_ClosedListAtIndex = 0;
+		_RemakeIndex = 0;
 
-		for (int i = 0; i < StartRoom.Count; i++) {
-			StartRoom [i].RoomNode.ClearAll ();
-		//	StartRoom [i].GetLeftOrRight = null;
+		if (_StartRoom == null || _EndRoom == null) {
+			return false;
+		}
+
+		for (int i = 0; i < _StartRoom.Count; i++) {
+			_StartRoom [i].RoomNode.ClearAll ();
 		}
 
 		AStartAlgorithm ();
 
-		remakeindexlist [0] = theSize - remakeIndex;
+		_ListStartingPosition [0] = _TheSize - _RemakeIndex;
 
-		for (int i = 0; i < b; i++) {
-		//	OpenList [i].RoomNode.ClearAll ();
-		//	OpenList [i].GetLeftOrRight = null;
-			OpenList [i].RoomNode.Used = false;
+		for (int i = 0; i < _OpenListAtIndex; i++) {
+			_OpenList [i].RoomNode.NodeSearchedThrough = false;
 		}
 
-		for (int i = 0; i < c; i++) {
-		//	ClosedList [i].RoomNode.ClearAll ();
-//ClosedList [i].GetLeftOrRight = null;
-			ClosedList [i].RoomNode.Used = false;
+		for (int i = 0; i < _ClosedListAtIndex; i++) {
+			_ClosedList [i].RoomNode.NodeSearchedThrough = false;
 		}
 
+		return true;
 	}
 
-	Wall_ID connectorhub;
 
 	public void AStartAlgorithm()  {//A*. 
 		
-		SaverList = StartRoom;
+		_ListHoler = _StartRoom;
 
-		if (SaverList.Count == 1) {//if im standing on the roomconnector, then this is true (and if im inside a room with only 1 roomconnector)
-			_NodSaver = SaverList [0];
-			_NodSaver.RoomNode.Used = true;//adding the roomconnector im currently standing on
-			OpenList [b++] = _NodSaver;
+		#region PreSearch
 
-			SaverList = _NodSaver.ConnectorHubOne.Connectors;//one of the rooms connectorhubs connected to this roomconnector o_O
-			if (SaverList != null) {
-				for (int i = 0; i < SaverList.Count; i++) {
-					SavedObject = SaverList [i];
-					if (SavedObject.RoomNode.Used == false) {
-						SavedObject.RoomNode.SetParentAndEndRoom (_NodSaver.RoomNode, EndNode [0]);
-						SavedObject.GetLeftOrRight = _NodSaver.ConnectorHubOne;//this tells me that when im going through this room im going to search on the other side of the room (1 roomconnector have 2 sides)
-					//	SavedObject.RoomNode.Used = true;//this tells me that this room have been searched through (which means that it has a parent and has been put in the search)
-						OpenList [b++] = SavedObject;//adding the roomconnector to an array
+		if (_ListHoler.Count == 1) {//if im standing on the roomconnector, then this is true (and if im inside a room with only 1 roomconnector)
+			_CurrentRoom = _ListHoler [0];
+			_CurrentRoom.RoomNode.NodeSearchedThrough = true;
+			_OpenList [_OpenListAtIndex++] = _CurrentRoom;//adding the only roomconnector
+
+			_ListHoler = _CurrentRoom.ConnectorHubOne.Connectors;//one of the rooms connectorhubs connected to this roomconnector o_O		
+			if (_ListHoler != null) {
+				for (int i = 0; i < _ListHoler.Count; i++) {
+					_ObjectHolder = _ListHoler [i];
+					if (_ObjectHolder.RoomNode.NodeSearchedThrough == false) {
+						_ObjectHolder.RoomNode.SetParentAndEndRoom (_CurrentRoom.RoomNode, _EndNode [0]);
+						_ObjectHolder.GetLeftOrRight = _CurrentRoom.ConnectorHubOne;//this tells me that when im going through this room im going to search on the other side of the room (1 roomconnector have 2 sides)
+						_OpenList [_OpenListAtIndex++] = _ObjectHolder;//adding the roomconnector to an array
 					}
 				}
 			}
 
-			SaverList = _NodSaver.ConnectorHubTwo.Connectors;
-			if (SaverList != null) {
-				for (int i = 0; i < SaverList.Count; i++) {
-					SavedObject = SaverList [i];
-					if (SavedObject.RoomNode.Used == false) {
-						SavedObject.RoomNode.SetParentAndEndRoom (_NodSaver.RoomNode, EndNode [0]);
-						SavedObject.GetLeftOrRight = _NodSaver.ConnectorHubTwo;
-					//	SavedObject.RoomNode.Used = true;
-						OpenList [b++] = SavedObject;
+			_ListHoler = _CurrentRoom.ConnectorHubTwo.Connectors;
+			if (_ListHoler != null) {
+				for (int i = 0; i < _ListHoler.Count; i++) {
+					_ObjectHolder = _ListHoler [i];
+					if (_ObjectHolder.RoomNode.NodeSearchedThrough == false) {
+						_ObjectHolder.RoomNode.SetParentAndEndRoom (_CurrentRoom.RoomNode, _EndNode [0]);
+						_ObjectHolder.GetLeftOrRight = _CurrentRoom.ConnectorHubTwo;
+						_OpenList [_OpenListAtIndex++] = _ObjectHolder;
 					}
 				}
 			}
 		} else {//if true then im inside a room which means that i must add all roomconnectors connected to this room
 
-			if (SaverList == SaverList [0].ConnectorHubOne.Connectors) {
-				connectorhub = SaverList [0].ConnectorHubOne;
-				for (int i = 0; i < SaverList.Count; i++) {
-					SaverList [i].RoomNode.Used = true;
-					SaverList [i].GetLeftOrRight = connectorhub;
-					OpenList [b++] = SaverList [i];
+			if (_ListHoler == _ListHoler [0].ConnectorHubOne.Connectors) {
+				_ConnectorHub = _ListHoler [0].ConnectorHubOne;
+				for (int i = 0; i < _ListHoler.Count; i++) {
+					_ListHoler [i].RoomNode.NodeSearchedThrough = true;
+					_ListHoler [i].GetLeftOrRight = _ConnectorHub;
+					_OpenList [_OpenListAtIndex++] = _ListHoler [i];
 				}
 			} else {
-				connectorhub = SaverList [0].ConnectorHubTwo;
-				for (int i = 0; i < SaverList.Count; i++) {
-					SaverList [i].RoomNode.Used = true;
-					SaverList [i].GetLeftOrRight = connectorhub;
-					OpenList [b++] = SaverList [i];
+				_ConnectorHub = _ListHoler [0].ConnectorHubTwo;
+				for (int i = 0; i < _ListHoler.Count; i++) {
+					_ListHoler [i].RoomNode.NodeSearchedThrough = true;
+					_ListHoler [i].GetLeftOrRight = _ConnectorHub;
+					_OpenList [_OpenListAtIndex++] = _ListHoler [i];
 				}
 			}
 		}
 
-		while (b > 0) {//if the loop has itterated enough times to fill the array then stop
+		#endregion
+
+		while (_OpenListAtIndex > 0) {//if the loop has itterated enough times to fill the array then stop
 
 			_LowerstFScore = 100000;
 
-			for (int i = 0; i < b; i++) {//searching through the array to find the room closest to the end
-				SavedObject = OpenList[i];
-				if (SavedObject.RoomNode._FCost < _LowerstFScore) {//it was faster to make fcost public and just get the variable then go through a getmethod
-					_NodSaver = SavedObject;
-					a = i;
-					_LowerstFScore = SavedObject.RoomNode._FCost;
+			for (int i = 0; i < _OpenListAtIndex; i++) {//searching through the array to find the room closest to the end
+				_ObjectHolder = _OpenList[i];
+				if (_ObjectHolder.RoomNode.FCost < _LowerstFScore) {//it was faster to make fcost public and just get the variable then go through a getmethod
+					_CurrentRoom = _ObjectHolder;
+					_RoomIndexSaved = i;
+					_LowerstFScore = _ObjectHolder.RoomNode.FCost;
 				}
 			}
 		
-			ClosedList [c++] = _NodSaver;
-			OpenList [a] = OpenList [--b];//works just fine :D
+			_ClosedList [_ClosedListAtIndex++] = _CurrentRoom;//adding room to list
+			_OpenList [_RoomIndexSaved] = _OpenList [--_OpenListAtIndex];//moving the last room in openlist to the index currentroom were at
 
-			SaverList = EndRoom;
-			for (int i = 0; i < SaverList.Count; i++) {
-				if (_NodSaver != SaverList [i]) {
+			_ListHoler = _EndRoom;
+			for (int i = 0; i < _ListHoler.Count; i++) {//checking if the room im in is connected to the end room
+				if (_CurrentRoom != _ListHoler [i]) {
 				} else {
-					RemakePath (_NodSaver);
+					RemakePath (_CurrentRoom);
 					return;
 				}
 			}
 
-			if (_NodSaver.GetLeftOrRight != _NodSaver.ConnectorHubOne) {
-				SaverList = _NodSaver.ConnectorHubOne.Connectors;
-				for (int i = 0; i < SaverList.Count; i++) {
-					SavedObject = SaverList [i];
-					if (SavedObject.RoomNode.Used != true) {//if n dont have a parent and n isnt the starting node (starts must be there else it will cause an FATAL error ;-P, your warned :D)
-						SavedObject.RoomNode.SetParentAndEndRoom (_NodSaver.RoomNode, EndNode [0]);
-						SavedObject.GetLeftOrRight =  _NodSaver.ConnectorHubOne;
-						OpenList [b++] = SavedObject;
-					} else if (SavedObject.RoomNode._GCost > _NodSaver.RoomNode._GCost + _NodSaver.RoomNode.GetJustWorldSpaceDistance (SavedObject.RoomNode)) {
-						SavedObject.RoomNode.SetParentRoom (_NodSaver.RoomNode);
+			if (_CurrentRoom.GetLeftOrRight != _CurrentRoom.ConnectorHubOne) {//checking which side of the pathconnector that have been searched, then go through its neighbours and see if something is closer to the target
+				_ListHoler = _CurrentRoom.ConnectorHubOne.Connectors;
+				for (int i = 0; i < _ListHoler.Count; i++) {
+					_ObjectHolder = _ListHoler [i];
+					if (_ObjectHolder.RoomNode.NodeSearchedThrough != true) {//if true then this object have been searched through , if not set info
+						_ObjectHolder.RoomNode.SetParentAndEndRoom (_CurrentRoom.RoomNode, _EndNode [0]);
+						_ObjectHolder.GetLeftOrRight = _CurrentRoom.ConnectorHubOne;
+						_OpenList [_OpenListAtIndex++] = _ObjectHolder;
+					} else if (_ObjectHolder.RoomNode.GCost > _CurrentRoom.RoomNode.GCost + _CurrentRoom.RoomNode.GetJustWorldSpaceDistance (_ObjectHolder.RoomNode)) {//checking if currentroom is closer to the objectholder then its parent is
+						_ObjectHolder.RoomNode.SetParentRoom (_CurrentRoom.RoomNode);
 					}
 				}
-			} else {
-				SaverList = _NodSaver.ConnectorHubTwo.Connectors;
-				for (int i = 0; i < SaverList.Count; i++) {
-					SavedObject = SaverList [i];
-					if (SavedObject.RoomNode.Used != true) {//if n dont have a parent and n isnt the starting node (starts must be there else it will cause an FATAL error ;-P, your warned :D)
-						SavedObject.RoomNode.SetParentAndEndRoom (_NodSaver.RoomNode, EndNode [0]);
-						SavedObject.GetLeftOrRight =  _NodSaver.ConnectorHubTwo;
-						OpenList [b++] = SavedObject;
-					} else if (SavedObject.RoomNode._GCost > _NodSaver.RoomNode._GCost + _NodSaver.RoomNode.GetJustWorldSpaceDistance (SavedObject.RoomNode)) {
-						SavedObject.RoomNode.SetParentRoom (_NodSaver.RoomNode);
+			} else {//same logic just different side of the room
+				_ListHoler = _CurrentRoom.ConnectorHubTwo.Connectors;
+				for (int i = 0; i < _ListHoler.Count; i++) {
+					_ObjectHolder = _ListHoler [i];
+					if (_ObjectHolder.RoomNode.NodeSearchedThrough != true) {//if n dont have a parent and n isnt the starting node (starts must be there else it will cause an FATAL error ;-P, your warned :D)
+						_ObjectHolder.RoomNode.SetParentAndEndRoom (_CurrentRoom.RoomNode, _EndNode [0]);
+						_ObjectHolder.GetLeftOrRight =  _CurrentRoom.ConnectorHubTwo;
+						_OpenList [_OpenListAtIndex++] = _ObjectHolder;
+					} else if (_ObjectHolder.RoomNode.GCost > _CurrentRoom.RoomNode.GCost + _CurrentRoom.RoomNode.GetJustWorldSpaceDistance (_ObjectHolder.RoomNode)) {
+						_ObjectHolder.RoomNode.SetParentRoom (_CurrentRoom.RoomNode);
 					}
 				}
 			}
@@ -203,25 +202,26 @@ public class AStarPathfinding_RoomPaths{
 
 
 	public void RemakePath (RoomConnectorCreating checkedNodes){//going backwards and getting the path that led to this node, then on that node im getting the path that led to that and going further back 
-		if (checkedNodes == StartRoom [0]) {
+
+		if (checkedNodes == _StartRoom [0]) {
 			return;
 		} else {
-		ThePath [theSize - (++remakeIndex)] = checkedNodes;
+			_ThePath [_TheSize - (++_RemakeIndex)] = checkedNodes;
 		}
 
 		if (checkedNodes.RoomNode.GetParent () == null) {
 			return;
 		} else {
-			_NodsSaver = checkedNodes.RoomNode.GetParent ().GetRooms ();
+			_CurrentRoom = checkedNodes.RoomNode.GetParent ().GetRooms ();
 		}
 
 		while (true) {
-			if (_NodsSaver.RoomNode.GetParent() != null) {
-				ThePath [theSize - (++remakeIndex)] = _NodsSaver;
-				_NodsSaver = _NodsSaver.RoomNode.GetParent().GetRooms();
+			if (_CurrentRoom.RoomNode.GetParent() != null) {
+				_ThePath [_TheSize - (++_RemakeIndex)] = _CurrentRoom;
+				_CurrentRoom = _CurrentRoom.RoomNode.GetParent().GetRooms();
 			} else {
-				if(StartRoom.Count != 1)
-					ThePath [theSize - (++remakeIndex)] = _NodsSaver;
+				if(_StartRoom.Count != 1)
+					_ThePath [_TheSize - (++_RemakeIndex)] = _CurrentRoom;
 				return;
 			}
 		}
@@ -231,156 +231,3 @@ public class AStarPathfinding_RoomPaths{
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/*
-	List<RoomConnectorCreating> PreviousStartRoom;
-	List<RoomConnectorCreating> PreviousEndRoom;
-
-	List<RoomConnectorCreating> StartRoom;
-	Nodes[] StartNode ;
-
-	List<RoomConnectorCreating> EndRoom;
-	Nodes[] EndNode ;
-
-	List<RoomConnectorCreating> _NodesToSeeThrough = new List<RoomConnectorCreating>(); 
-	List<RoomConnectorCreating> _NodesHaveSeenThrough = new List<RoomConnectorCreating>(); 
-
-	List<RoomConnectorCreating> _ThePaths = new List<RoomConnectorCreating>();//contains the path to the target if not null
-	RoomConnectorCreating _NodSaver;
-	float _LowerstFScore = 100000; 
-
-	public void SetStartRoomAndNode(List<RoomConnectorCreating> startRooms, Nodes[] startNode ){
-		StartRoom = startRooms;
-		StartNode = startNode;
-	}
-	public void SetStartRoom(List<RoomConnectorCreating> startRooms){
-		StartRoom = startRooms;
-	}
-	public void SetEndRoomAndNode(List<RoomConnectorCreating> endRoom, Nodes[] endNode){
-		EndRoom = endRoom;
-		EndNode = endNode;
-	}
-	public void SetEndRoom(List<RoomConnectorCreating> endRoom){
-		EndRoom = endRoom;
-	}
-	#region A* For paths
-
-	public List<RoomConnectorCreating> CreatePath() {//Starts A* and clears all the nodes so that they are rdy for the next search
-
-		_ThePaths = new List<RoomConnectorCreating> ();
-
-		AStartAlgorithm ();
-
-		foreach (RoomConnectorCreating n in _NodesToSeeThrough) {
-			n.RoomNode.ClearAll();
-		}
-		foreach (RoomConnectorCreating n in _NodesHaveSeenThrough) {
-			n.RoomNode.ClearAll();
-		}
-
-		_NodesToSeeThrough = new List<RoomConnectorCreating> ();
-		_NodesHaveSeenThrough = new List<RoomConnectorCreating> ();
-		return _ThePaths;
-	}
-
-
-	public void AStartAlgorithm()  {//A*. 
-
-		foreach (RoomConnectorCreating s in StartRoom) {//doing a presearch to add the lenght from this object to the first nodes in the path
-			s.RoomNode.setParent (StartNode[0]);
-			s.RoomNode.SetHCost (EndNode[0]);
-			_NodesToSeeThrough.Add (s);
-		}
-
-
-		while (_NodesToSeeThrough.Count > 0) {
-
-			_LowerstFScore = 100000;
-
-			foreach (RoomConnectorCreating n in _NodesToSeeThrough) {//getting the node with the lowest FScore
-
-				if (n.RoomNode.GetFValue () < _LowerstFScore) {
-					_NodSaver = n;
-					_LowerstFScore = n.RoomNode.GetFValue ();
-				}
-			}
-
-			_NodesToSeeThrough.Remove (_NodSaver);
-			_NodesHaveSeenThrough.Add (_NodSaver);
-
-			foreach(RoomConnectorCreating n in EndRoom){
-				if (_NodSaver == n) {
-					EndNode[0].setParent (_NodSaver.RoomNode);
-					RemakePath (_NodesHaveSeenThrough.Last ());
-					return;
-				}
-			}
-		
-
-			foreach (RoomConnectorCreating a in _NodSaver.GetNeighbourGroupOne()) {//adding all neighbours to this node if they are not added
-				if (a != _NodSaver) {
-					
-					if (a.RoomNode.GetParent () == null) {
-						a.RoomNode.setParent (_NodSaver.RoomNode);
-						a.RoomNode.SetHCost (EndNode [0]);
-						_NodesToSeeThrough.Add (a);
-					} else if (a.RoomNode.GetGCost () > _NodSaver.RoomNode.GetGCost () + _NodSaver.RoomNode.GetJustWorldSpaceDistance (a.RoomNode)) {
-						a.RoomNode.setParent (_NodSaver.RoomNode);
-					}
-				}
-			}
-
-			foreach (RoomConnectorCreating a in _NodSaver.GetNeighbourGroupTwo()) {//adding all neighbours to this node if they are not added
-				if (a != _NodSaver) {
-					if (a.RoomNode.GetParent () == null) {
-						a.RoomNode.setParent (_NodSaver.RoomNode);
-						a.RoomNode.SetHCost (EndNode [0]);
-						_NodesToSeeThrough.Add (a);
-					} else if (a.RoomNode.GetGCost () > _NodSaver.RoomNode.GetGCost () + _NodSaver.RoomNode.GetJustWorldSpaceDistance (a.RoomNode)) {
-						a.RoomNode.setParent (_NodSaver.RoomNode);
-					}
-				}
-			}
-		}
-	}
-
-	RoomConnectorCreating _NodsSaver;
-
-	public void RemakePath (RoomConnectorCreating checkedNodes){//going backwards and getting the path that led to this node, then on that node im getting the path that led to that and going further back 
-
-		_ThePaths.Add (checkedNodes);
-		_NodsSaver = checkedNodes.RoomNode.GetParent().GetRooms();
-
-		while (true) {
-			if (_NodsSaver != null && _NodsSaver.RoomNode.GetParent() != null) {
-
-				_ThePaths.Add (_NodsSaver);
-				_NodsSaver = _NodsSaver.RoomNode.GetParent().GetRooms();
-			
-			} else {
-				_ThePaths.Reverse ();
-				return;
-			}
-		}
-
-	}
-	#endregion
-
-
-}*/

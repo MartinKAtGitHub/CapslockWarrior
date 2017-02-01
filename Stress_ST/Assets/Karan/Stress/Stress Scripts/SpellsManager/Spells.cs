@@ -9,20 +9,12 @@ public abstract class Spells : MonoBehaviour{
 	// This code i feel to be convinent 
 	public Transform SpellSpawnPos;
 	public GameObject PlayerGameObject;
+	public abstract bool IsSpellCasted {get;set;}
 	//----------
 
-
-
-	/*public virtual float CoolDownTimer{ 
-		get{ return ran;} 
-	 
-		set{ ran = value;}
-	}*/
-
-
-
+	/// <summary>
+	/// Use this to cast the spell
+	/// </summary>
 	public abstract void Cast();
-	//{
-		//MonoBehaviour.print("I dont know what to cast");
-	//}
+
 }

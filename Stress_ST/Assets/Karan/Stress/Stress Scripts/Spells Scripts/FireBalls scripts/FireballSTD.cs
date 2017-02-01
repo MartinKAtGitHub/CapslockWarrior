@@ -17,6 +17,21 @@ public class FireballSTD : Fire {
 	private GameObject graphics;
 	private BoxCollider2D hotShotHitBox;
 
+	private bool isSpellCasted;
+
+	public override bool IsSpellCasted 
+	{
+		get
+		{
+			return isSpellCasted;
+		} 
+		set
+		{
+			isSpellCasted = value;
+		}
+	}
+
+
 	void Start () 
 	{
 		//rb = GetComponent<Rigidbody2D>();

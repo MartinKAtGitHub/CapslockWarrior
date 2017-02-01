@@ -8,7 +8,23 @@ public class TeleportSmallDistance : Wind {
 	public float TeleportRange;
 	private Vector2 StadingStill = new Vector2(0,0);
 	private ParticleSystem TPParticalSystem;
+
+	private bool isSpellCasted;
+
+	public override bool IsSpellCasted 
+	{
+		get
+		{
+			return isSpellCasted;
+		} 
+		set
+		{
+			isSpellCasted = value;
+		}
+
+	}
 	// Use this for initialization
+
 	void Start () 
 	{
 		//Debug.Log(PlayerGameObject.GetComponent<IMovementEngin>().Speed);
@@ -51,6 +67,10 @@ public class TeleportSmallDistance : Wind {
 			ChildeToHero.transform.SetParent(SpellSpawnPos.transform.parent);
 			ChildeToHero.gameObject.transform.localScale = new Vector3(1,1); // Need this so the smoke effect flys in the right direction
 			//SmokeTrailEffect();
+		}
+		else
+		{
+			Debug.LogWarning("TELEPORT IS NOT USED YOU ARE STANDING STILL");
 		}
 	}
 

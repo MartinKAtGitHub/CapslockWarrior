@@ -54,16 +54,26 @@ public class SpellsController : MonoBehaviour {
 		SpellsOnKeyFour = AgumentedSpellGameObjectKeyFour.GetComponent<Spells>();
 
 
-
+		/*
 		timerForSpellOnKeyOne = SpellsOnKeyOne.CoolDownTimer;
 		timerForSpellOnKeyTwo = SpellsOnKeyTwo.CoolDownTimer;
 		timerForSpellOnKeyThree = SpellsOnKeyThree.CoolDownTimer;
 		timerForSpellOnKeyFour = SpellsOnKeyFour.CoolDownTimer;
-
+		*/
+		timerForSpellOnKeyOne = 0;
+		timerForSpellOnKeyTwo = 0;
+		timerForSpellOnKeyThree = 0;
+		timerForSpellOnKeyFour = 0;
+		/*
 		saveTimerKeyOne = timerForSpellOnKeyOne;
 		saveTimerKeyTwo = timerForSpellOnKeyTwo;
 		saveTimerKeyThree = timerForSpellOnKeyThree;
 		saveTimerKeyFour = timerForSpellOnKeyFour;
+		*/
+		saveTimerKeyOne = SpellsOnKeyOne.CoolDownTimer;
+		saveTimerKeyTwo = SpellsOnKeyTwo.CoolDownTimer;
+		saveTimerKeyThree = SpellsOnKeyThree.CoolDownTimer;
+		saveTimerKeyFour = SpellsOnKeyFour.CoolDownTimer;
 
 		Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
 
@@ -107,6 +117,10 @@ public class SpellsController : MonoBehaviour {
 				spellKeyOneReady = false;
 				timerForSpellOnKeyOne = saveTimerKeyOne;
 				//Debug.Log("Timerk1 -> " + timerForSpellOnKeyOne);
+			}
+			else
+			{
+				Debug.LogWarning(AgumentedSpellGameObjectKeyOne.gameObject.name + " IS NOT READY");
 			}
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha2))
@@ -163,7 +177,6 @@ public class SpellsController : MonoBehaviour {
 		{
 			spellKeyFourReady = true;
 		}
-				
 	}
 }
 

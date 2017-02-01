@@ -6,6 +6,19 @@ public class SlowFieldSpell : Earth {
 
 	private float OriginalSpeed;
 	public float SlowRate;
+	private bool isSpellCasted;
+
+	public override bool IsSpellCasted 
+	{
+		get
+		{
+			return isSpellCasted;
+		} 
+		set
+		{
+			isSpellCasted = value;
+		}
+	}
 	// Use this for initialization
 	void Start () 
 	{

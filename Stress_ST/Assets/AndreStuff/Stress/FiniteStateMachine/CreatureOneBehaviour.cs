@@ -28,7 +28,7 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 		myPos [0, 1] = transform.position.y;	
 
 		_CreateThePath = new AStarPathfinding_RoomPaths (54);//TODO make 54 and 13 gamemanagervariables so that i get them and put them here
-		_PersonalNodeMap = new CreatingObjectNodeMap(13,13, PathfindingNodeID);//if i do this then the constructor is only called once instead of 4 times......
+		_PersonalNodeMap = new CreatingObjectNodeMap(7,7, PathfindingNodeID);//if i do this then the constructor is only called once instead of 4 times......
 		MyNodePosition[0] = new Nodes (myPos,0);
 	//	LineOfSight = 1 << LayerMask.NameToLayer ("Walls");
 	}

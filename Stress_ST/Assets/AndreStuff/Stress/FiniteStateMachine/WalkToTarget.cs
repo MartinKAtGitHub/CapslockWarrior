@@ -51,6 +51,7 @@ public class WalkToTarget : DefaultState {
 
 	Animator _CreatureAnimator;
 	Vector3 _RotateCharacter = Vector3.zero;
+	Transform GFX;
 
 	Vector2 _GoalPosition = Vector2.zero;
 	float[,] _IdHolder, _NextIdHolder;
@@ -74,9 +75,11 @@ public class WalkToTarget : DefaultState {
 		_Roomsindex = CreateThePath.GetListindexref ();
 
 		_MyRigidbody2D = myInfo.GetComponent<Rigidbody2D> ();
+
+		GFX = myInfo.transform.FindChild ("GFX");
+		_CreatureAnimator = GFX.GetComponent<Animator> ();
 		_LineOfSight = 1 << LayerMask.NameToLayer ("Walls");
 
-		_CreatureAnimator = myInfo.GetComponent<Animator> ();
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
 	}
@@ -198,21 +201,21 @@ public class WalkToTarget : DefaultState {
 					_MyRigidbody2D.velocity = (_MovementDirection * _MovementSpeed [0]);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
 				}
 
-				if (MyTransform.position.x < _GoalPosition.x - 0.075f) {
-					if (MyTransform.localScale.x > 0) {
+				if (GFX.position.x < _GoalPosition.x - 0.075f) {
+					if (GFX.localScale.x > 0) {
 						_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
-						_RotateCharacter.x = MyTransform.localScale.x * -1;
-						_RotateCharacter.y = MyTransform.localScale.y;
+						_RotateCharacter.x = GFX.localScale.x * -1;
+						_RotateCharacter.y = GFX.localScale.y;
 						_RotateCharacter.z = 0;
-						MyTransform.localScale = _RotateCharacter;
+						GFX.localScale = _RotateCharacter;
 					}
-				} else if (MyTransform.position.x > _GoalPosition.x + 0.075f) {
-					if (MyTransform.localScale.x < 0) {
+				} else if (GFX.position.x > _GoalPosition.x + 0.075f) {
+					if (GFX.localScale.x < 0) {
 						_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
-						_RotateCharacter.x = MyTransform.localScale.x * -1;
-						_RotateCharacter.y = MyTransform.localScale.y;
+						_RotateCharacter.x = GFX.localScale.x * -1;
+						_RotateCharacter.y = GFX.localScale.y;
 						_RotateCharacter.z = 0;
-						MyTransform.localScale = _RotateCharacter;
+						GFX.localScale = _RotateCharacter;
 					}
 				}
 
@@ -249,21 +252,21 @@ public class WalkToTarget : DefaultState {
 					_MyRigidbody2D.velocity = (_MovementDirection * _MovementSpeed [0]);//speed through velocity. currently it can eather go straight or 45degrees.   currently [1,0] || [0,1] || [1,1]
 				}
 
-				if (MyTransform.position.x < _GoalPosition.x - 0.075f) {
-					if (MyTransform.localScale.x > 0) {
+				if (GFX.position.x < _GoalPosition.x - 0.075f) {
+					if (GFX.localScale.x > 0) {
 						_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
-						_RotateCharacter.x = MyTransform.localScale.x * -1;
-						_RotateCharacter.y = MyTransform.localScale.y;
+						_RotateCharacter.x = GFX.localScale.x * -1;
+						_RotateCharacter.y = GFX.localScale.y;
 						_RotateCharacter.z = 0;
-						MyTransform.localScale = _RotateCharacter;
+						GFX.localScale = _RotateCharacter;
 					}
-				} else if (MyTransform.position.x > _GoalPosition.x + 0.075f) {
-					if (MyTransform.localScale.x < 0) {
+				} else if (GFX.position.x > _GoalPosition.x + 0.075f) {
+					if (GFX.localScale.x < 0) {
 						_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
-						_RotateCharacter.x = MyTransform.localScale.x * -1;
-						_RotateCharacter.y = MyTransform.localScale.y;
+						_RotateCharacter.x = GFX.localScale.x * -1;
+						_RotateCharacter.y = GFX.localScale.y;
 						_RotateCharacter.z = 0;
-						MyTransform.localScale = _RotateCharacter;
+						GFX.localScale = _RotateCharacter;
 					}
 				}
 

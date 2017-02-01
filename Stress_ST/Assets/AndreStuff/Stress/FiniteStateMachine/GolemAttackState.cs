@@ -21,15 +21,16 @@ public class GolemAttackState : DefaultState {
 		_MyTransform = _MyInfo.transform;
 		_MyRigidbody2D = _MyInfo.GetComponent<Rigidbody2D> ();
 		//		CanIRanged = canIRanged;//TODO DONT DELETE
-		_MyAnimator = myInfo.GetComponent<Animator> ();
+
+		_MyAnimator = myInfo.transform.FindChild("GFX").GetComponent<Animator> ();
+		_EndOfShootingAnimation = _MyAnimator.GetBehaviour<ShootingAfterAnimation> ();
 
 		_LineOfSight = 1 << LayerMask.NameToLayer ("Walls");
 
-		_EndOfShootingAnimation = _MyAnimator.GetBehaviour<ShootingAfterAnimation> ();
 	
 		_Range = theRange;
 
-	}
+	}//for liten scale
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
 

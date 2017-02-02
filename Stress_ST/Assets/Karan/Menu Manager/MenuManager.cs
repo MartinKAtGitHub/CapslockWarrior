@@ -50,8 +50,8 @@ public class MenuManager : MonoBehaviour {
         //rt.sizeDelta = new Vector2(400f, 400f);
 
 
-        Debug.Log("WIDTH =" + rt.sizeDelta.x);
-        Debug.Log("HEIGHT =" + rt.sizeDelta.y);
+        //Debug.Log("WIDTH =" + rt.sizeDelta.x);
+      //  Debug.Log("HEIGHT =" + rt.sizeDelta.y);
         
         currentPage = p;
     }

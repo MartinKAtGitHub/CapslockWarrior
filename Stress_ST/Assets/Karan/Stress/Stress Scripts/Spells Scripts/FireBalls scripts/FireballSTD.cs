@@ -16,6 +16,7 @@ public class FireballSTD : Fire {
 	private ParticleSystem ImpactGM;
 	private GameObject graphics;
 	private BoxCollider2D hotShotHitBox;
+	GameObject TestGM;
 
 	private bool isSpellCasted;
 
@@ -34,14 +35,15 @@ public class FireballSTD : Fire {
 
 	void Start () 
 	{
+		
 		//rb = GetComponent<Rigidbody2D>();
 		HSParticleSystem = this.gameObject.GetComponentInChildren<ParticleSystem>(); // I can do this to the Top/ first child but nt second
 		ImpactGM = this.gameObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>(); // This is not Code firednly as i am manually telling where the child is. 
 		graphics = this.gameObject.transform.GetChild(0).gameObject;
 		hotShotHitBox = this.gameObject.GetComponent<BoxCollider2D>();
 		ScanForClosestTarget();
-
-
+	
+		//Debug.LogError(this.gameObject.name + " ->" + IsSpellCasted);
 	}
 	/*void FixedUpdate () 
 	{
@@ -82,8 +84,8 @@ public class FireballSTD : Fire {
 	{
 		//TODO Can change the HotShot Code to ScanForClosestTarget() then instanciate if enemy range
 		 //ScanForClosestTarget();
-
-		Instantiate(this, SpellSpawnPos.position,Quaternion.identity);
+		TestGM = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
+		//isSpellCasted = TestGM.GetComponent<Spells>().IsSpellCasted;
 	}
 
 	void ScanForClosestTarget()// TODO add if no enemys are in range
@@ -108,10 +110,15 @@ public class FireballSTD : Fire {
 					//Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity); Wont spawn GM
 				}
 			}
+
+			isSpellCasted = true;
+			//Debug.LogWarning(" SPELL IS TRUE LOLOLOLOL");
 		}
 		else
 		{
 			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
+			isSpellCasted = false;
+			//Debug.LogWarning(" SPELL IS FASLE LOLOLOLOL");
 			Destroy(this.gameObject);
 		}
 	}

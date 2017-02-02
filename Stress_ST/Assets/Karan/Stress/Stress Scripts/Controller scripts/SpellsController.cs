@@ -75,6 +75,7 @@ public class SpellsController : MonoBehaviour {
 		saveTimerKeyThree = SpellsOnKeyThree.CoolDownTimer;
 		saveTimerKeyFour = SpellsOnKeyFour.CoolDownTimer;
 
+
 		Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
 
 		//////////////// Problemetic code //////////////////
@@ -86,6 +87,7 @@ public class SpellsController : MonoBehaviour {
 		SpellsOnKeyTwo.SpellSpawnPos = SpellsSpawn;
 		SpellsOnKeyThree.SpellSpawnPos = SpellsSpawn;
 		SpellsOnKeyFour.SpellSpawnPos = SpellsSpawn;
+
 		if(SpellsOnKeyOne.SpellSpawnPos == null)
 		{
 			Debug.Log("Trans Is NULL");
@@ -101,7 +103,6 @@ public class SpellsController : MonoBehaviour {
 
 		// TODO Make a default spell if no spell is slected by player.
 		// TODO Find a way so this can be used on multiable players, MULTIPLAYER style
-
 	}
 	
 	// Update is called once per frame
@@ -155,15 +156,19 @@ public class SpellsController : MonoBehaviour {
 
 	void CheckCoolDowns()
 	{
-		timerForSpellOnKeyOne -= Time.deltaTime;
-		timerForSpellOnKeyTwo -= Time.deltaTime;
-		timerForSpellOnKeyThree -= Time.deltaTime;
-		timerForSpellOnKeyFour -= Time.deltaTime;
 
+		//CheckForSpellIsUSed();
+
+		NoCheckForSpellIsUsed();
+
+		////////////////////////////////////////////
 		if(timerForSpellOnKeyOne <= 0)
 		{
 			spellKeyOneReady = true;
-			//Debug.Log("Spells ready k1");
+			Debug.LogWarning("Spells ready k1");
+		}else
+		{
+			Debug.LogWarning(" SPELL 1 NOT READY");
 		}
 		if(timerForSpellOnKeyTwo <=0)
 		{
@@ -177,6 +182,44 @@ public class SpellsController : MonoBehaviour {
 		{
 			spellKeyFourReady = true;
 		}
+	}
+
+	void CheckForSpellIsUSed()
+	{
+		//Debug.Log(SpellsOnKeyOne.gameObject.name);
+
+		if(SpellsOnKeyOne.IsSpellCasted == true && timerForSpellOnKeyOne >= 0)
+		{
+			timerForSpellOnKeyOne -= Time.deltaTime;
+			//Debug.LogWarning(" SPELL 1  IS COOLDOWN -- > " + timerForSpellOnKeyOne);
+			//Debug.LogWarning(" SPELL 1  IS COOLDOWN -- > ");
+			//Debug.LogWarning(SpellsOnKeyOne.IsSpellCasted);
+		}else
+		{
+			//Debug.LogWarning(" SPELL 1  NOT COOLDOWN");
+			//Debug.LogWarning(SpellsOnKeyOne.IsSpellCasted);
+		}
+
+		if(SpellsOnKeyTwo.IsSpellCasted == true)
+		{
+			timerForSpellOnKeyTwo -= Time.deltaTime;
+		}
+		if(SpellsOnKeyThree.IsSpellCasted == true)
+		{
+			timerForSpellOnKeyThree -= Time.deltaTime;
+		}
+		if(SpellsOnKeyFour.IsSpellCasted == true)
+		{
+			timerForSpellOnKeyFour -= Time.deltaTime;
+		}
+	}
+
+	void NoCheckForSpellIsUsed()
+	{
+		timerForSpellOnKeyOne -= Time.deltaTime;
+		timerForSpellOnKeyTwo -= Time.deltaTime;
+		timerForSpellOnKeyThree -= Time.deltaTime;
+		timerForSpellOnKeyFour -= Time.deltaTime;
 	}
 }
 

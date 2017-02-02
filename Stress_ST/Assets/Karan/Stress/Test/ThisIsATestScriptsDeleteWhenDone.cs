@@ -6,8 +6,6 @@ public class ThisIsATestScriptsDeleteWhenDone : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		Debug.Log("I got ");
-		Debug.Log("I got ");
 
 	}
 	

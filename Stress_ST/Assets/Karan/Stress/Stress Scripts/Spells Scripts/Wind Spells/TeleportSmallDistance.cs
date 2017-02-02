@@ -67,10 +67,12 @@ public class TeleportSmallDistance : Wind {
 			ChildeToHero.transform.SetParent(SpellSpawnPos.transform.parent);
 			ChildeToHero.gameObject.transform.localScale = new Vector3(1,1); // Need this so the smoke effect flys in the right direction
 			//SmokeTrailEffect();
+			IsSpellCasted = true;
 		}
 		else
 		{
 			Debug.LogWarning("TELEPORT IS NOT USED YOU ARE STANDING STILL");
+			IsSpellCasted = false;
 		}
 	}
 

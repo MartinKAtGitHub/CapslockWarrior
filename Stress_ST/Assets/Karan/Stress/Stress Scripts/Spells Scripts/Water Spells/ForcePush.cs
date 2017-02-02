@@ -6,6 +6,21 @@ public class ForcePush : Water {
 	public float ForcePushDestroyAfter;
 	GameObject ForcePushArea;
 	private ParticleSystem ForceParticalSystem;
+
+	private bool isSpellCasted;
+
+	public override bool IsSpellCasted 
+	{
+		get
+		{
+			return isSpellCasted;
+		} 
+		set
+		{
+			isSpellCasted = value;
+		}
+	}
+
 	// Use this for initialization
 	void Start()
 	{
@@ -24,8 +39,8 @@ public class ForcePush : Water {
 
 	public override void Cast()
 	{
+		// Why did i do this, saving the GM
 		ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
-
 	}
 
 	void OnTriggerEnter2D(Collider2D other)

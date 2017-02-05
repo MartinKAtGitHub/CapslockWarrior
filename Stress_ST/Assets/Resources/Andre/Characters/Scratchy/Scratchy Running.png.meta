@@ -1,15 +1,14 @@
 fileFormatVersion: 2
-guid: 03a0860f5f9819b4683cf620df3fcb89
-timeCreated: 1486166153
+guid: 38b2efc7f7e6ec144b88d63a46317fce
+timeCreated: 1486222032
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Fast creature 1 Idle_0
-    21300002: Fast creature 1 Idle_1
-    21300004: Fast creature 1 Idle_2
-    21300006: Fast creature 1 Idle_3
-    21300008: Fast creature 1 Idle_4
-    21300010: Fast creature 1 Idle_5
+    21300000: Scratchy Running_0
+    21300002: Scratchy Running_1
+    21300004: Scratchy Running_2
+    21300006: Scratchy Running_3
+    21300008: Scratchy Running_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -59,7 +58,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fast creature 1 Idle_0
+      name: Scratchy Running_0
       rect:
         serializedVersion: 2
         x: 1
@@ -72,7 +71,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Fast creature 1 Idle_1
+      name: Scratchy Running_1
       rect:
         serializedVersion: 2
         x: 51
@@ -85,7 +84,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Fast creature 1 Idle_2
+      name: Scratchy Running_2
       rect:
         serializedVersion: 2
         x: 1
@@ -98,12 +97,12 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Fast creature 1 Idle_3
+      name: Scratchy Running_3
       rect:
         serializedVersion: 2
         x: 51
         y: 40
-        width: 48
+        width: 49
         height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -111,23 +110,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Fast creature 1 Idle_4
+      name: Scratchy Running_4
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
-        width: 48
-        height: 37
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Fast creature 1 Idle_5
-      rect:
-        serializedVersion: 2
-        x: 51
         y: 1
         width: 48
         height: 37

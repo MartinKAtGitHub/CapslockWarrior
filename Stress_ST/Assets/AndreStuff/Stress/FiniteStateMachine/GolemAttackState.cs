@@ -65,6 +65,7 @@ public class GolemAttackState : DefaultState {
 						_ReturnState = "WalkToTargetState";
 					}
 				} else {
+					//TODO Movement Delay
 					_ReturnState = "WalkToTargetState";
 				}
 			}

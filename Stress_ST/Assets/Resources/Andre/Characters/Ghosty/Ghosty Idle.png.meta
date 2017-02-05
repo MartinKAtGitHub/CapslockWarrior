@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 3cbfe10b5f814854cadef0544aa6e9a0
-timeCreated: 1485273063
+guid: eba99d5cfde2fc8498dfc7f414bf965c
+timeCreated: 1486254790
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Ghosty white Shooting clone_0
-    21300002: Ghosty white Shooting clone_1
-    21300004: Ghosty white Shooting clone_2
-    21300006: Ghosty white Shooting clone_3
-    21300008: Ghosty white Shooting clone_4
-    21300010: Ghosty white Shooting clone_5
-    21300012: Ghosty white Shooting clone_6
-    21300014: Ghosty white Shooting clone_7
+    21300000: Ghosty Idle_0
+    21300002: Ghosty Idle_1
+    21300004: Ghosty Idle_2
+    21300006: Ghosty Idle_3
+    21300008: Ghosty Idle_4
+    21300010: Ghosty Idle_5
+    21300012: Ghosty Idle_6
+    21300014: Ghosty Idle_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -61,104 +61,104 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ghosty white Shooting clone_0
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 173
-        width: 66
-        height: 84
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ghosty white Shooting clone_1
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 173
-        width: 66
-        height: 84
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ghosty white Shooting clone_2
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 173
-        width: 66
-        height: 84
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ghosty white Shooting clone_3
+      name: Ghosty Idle_0
       rect:
         serializedVersion: 2
         x: 1
         y: 87
-        width: 66
-        height: 84
+        width: 32
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Shooting clone_4
+      name: Ghosty Idle_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 87
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Ghosty Idle_2
       rect:
         serializedVersion: 2
         x: 69
         y: 87
-        width: 66
-        height: 84
+        width: 32
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Shooting clone_5
+      name: Ghosty Idle_3
       rect:
         serializedVersion: 2
-        x: 137
-        y: 87
-        width: 66
-        height: 84
+        x: 1
+        y: 44
+        width: 32
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Shooting clone_6
+      name: Ghosty Idle_4
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 44
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Ghosty Idle_5
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 44
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Ghosty Idle_6
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 66
-        height: 84
+        width: 32
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Shooting clone_7
+      name: Ghosty Idle_7
       rect:
         serializedVersion: 2
-        x: 69
+        x: 35
         y: 1
-        width: 66
-        height: 84
+        width: 32
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

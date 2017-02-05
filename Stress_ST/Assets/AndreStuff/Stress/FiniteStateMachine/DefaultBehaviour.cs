@@ -32,6 +32,7 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	public abstract void RemoveWallWithTrigger (GameObject collidingwithobject);
 	public abstract void AddEnemyWithTrigger (GameObject collidingwithobject);
 	public abstract void RemoveEnemyWithTrigger (GameObject collidingwithobject);
+	public abstract void RemoveFromOthers ();
 
 
 	public void ChangeMovementAdd(float a){

@@ -108,6 +108,10 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 		UpdateThePath = true;
 	}
 
+	public override void RemoveFromOthers(){
+		_PersonalNodeMap.RemoveMyselfFromOthers (gameObject);
+	}
+
 	#endregion
 
 	public override void AttackTarget(){

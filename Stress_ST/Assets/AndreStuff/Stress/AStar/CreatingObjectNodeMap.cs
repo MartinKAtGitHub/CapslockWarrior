@@ -256,6 +256,13 @@ public class CreatingObjectNodeMap {
 		_EnemyColliders.Remove (pos.GetComponent<BoxCollider2D> ());
 	}
 
+	public void RemoveMyselfFromOthers(GameObject myself){
+		for (int j = 0; j < _EnemyColliders.Count; j++) {
+			_EnemyColliders [j].GetComponent<DefaultBehaviour> ().RemoveEnemyWithTrigger (myself);
+		}
+	}
+
+
 	public int GetListCount(){
 		return _WallColliders.Count;
 	}

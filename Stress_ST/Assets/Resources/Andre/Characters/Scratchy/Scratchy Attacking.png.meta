@@ -1,17 +1,15 @@
 fileFormatVersion: 2
-guid: 9d2204fda2295f34a94d66f89e663f1a
-timeCreated: 1485272893
+guid: 15f81b9e2db60874c9750c9817f6f794
+timeCreated: 1486253227
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Ghosty white Running _0
-    21300002: Ghosty white Running _1
-    21300004: Ghosty white Running _2
-    21300006: Ghosty white Running _3
-    21300008: Ghosty white Running _4
-    21300010: Ghosty white Running _5
-    21300012: Ghosty white Running _6
-    21300014: Ghosty white Running _7
+    21300000: Scratchy Attacking_0
+    21300002: Scratchy Attacking_1
+    21300004: Scratchy Attacking_2
+    21300006: Scratchy Attacking_3
+    21300008: Scratchy Attacking_4
+    21300010: Scratchy Attacking_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -61,104 +59,78 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ghosty white Running _0
+      name: Scratchy Attacking_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 87
-        width: 32
-        height: 41
+        y: 79
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Running _1
+      name: Scratchy Attacking_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 87
-        width: 32
-        height: 41
+        x: 51
+        y: 79
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Running _2
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 87
-        width: 32
-        height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ghosty white Running _3
+      name: Scratchy Attacking_2
       rect:
         serializedVersion: 2
         x: 1
-        y: 44
-        width: 32
-        height: 41
+        y: 40
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Running _4
+      name: Scratchy Attacking_3
       rect:
         serializedVersion: 2
-        x: 35
-        y: 44
-        width: 32
-        height: 41
+        x: 51
+        y: 40
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Running _5
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 44
-        width: 32
-        height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ghosty white Running _6
+      name: Scratchy Attacking_4
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 32
-        height: 41
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Running _7
+      name: Scratchy Attacking_5
       rect:
         serializedVersion: 2
-        x: 35
+        x: 51
         y: 1
-        width: 32
-        height: 41
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

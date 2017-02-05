@@ -1,17 +1,15 @@
 fileFormatVersion: 2
-guid: eba99d5cfde2fc8498dfc7f414bf965c
-timeCreated: 1485281004
+guid: 03a0860f5f9819b4683cf620df3fcb89
+timeCreated: 1486254630
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Ghosty white Idle_0
-    21300002: Ghosty white Idle_1
-    21300004: Ghosty white Idle_2
-    21300006: Ghosty white Idle_3
-    21300008: Ghosty white Idle_4
-    21300010: Ghosty white Idle_5
-    21300012: Ghosty white Idle_6
-    21300014: Ghosty white Idle_7
+    21300000: Scratchy Idle_0
+    21300002: Scratchy Idle_1
+    21300004: Scratchy Idle_2
+    21300006: Scratchy Idle_3
+    21300008: Scratchy Idle_4
+    21300010: Scratchy Idle_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -61,104 +59,78 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ghosty white Idle_0
+      name: Scratchy Idle_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 87
-        width: 32
-        height: 41
+        y: 79
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Idle_1
+      name: Scratchy Idle_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 87
-        width: 32
-        height: 41
+        x: 51
+        y: 79
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Idle_2
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 87
-        width: 32
-        height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ghosty white Idle_3
+      name: Scratchy Idle_2
       rect:
         serializedVersion: 2
         x: 1
-        y: 44
-        width: 32
-        height: 41
+        y: 40
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Idle_4
+      name: Scratchy Idle_3
       rect:
         serializedVersion: 2
-        x: 35
-        y: 44
-        width: 32
-        height: 41
+        x: 51
+        y: 40
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Idle_5
-      rect:
-        serializedVersion: 2
-        x: 69
-        y: 44
-        width: 32
-        height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Ghosty white Idle_6
+      name: Scratchy Idle_4
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 32
-        height: 41
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Ghosty white Idle_7
+      name: Scratchy Idle_5
       rect:
         serializedVersion: 2
-        x: 35
+        x: 51
         y: 1
-        width: 32
-        height: 41
+        width: 48
+        height: 37
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

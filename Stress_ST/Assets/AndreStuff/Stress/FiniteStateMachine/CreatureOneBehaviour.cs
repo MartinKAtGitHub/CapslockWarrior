@@ -40,10 +40,10 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 		SetTarget (GameObject.FindGameObjectWithTag ("Player1"));
 
 		if (RunPathfinding == true) {
-			if (thetype == EnemyType.Rangd) {//makes it possible to add different states to the targets if that is needed
+			if (thetype == EnemyType.Ranged) {//makes it possible to add different states to the targets if that is needed
 				MovementFSM = new FSM_Manager( new DefaultState[] { new WalkToTarget(_PersonalNodeMap, _CreateThePath, this, CreatureRange, MovementSpeed), new GolemAttackState(this,CanIRanged, CreatureRange),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
 				MovementFSM.Init(this);
-			}else if(thetype == EnemyType.Melle){
+			}else if(thetype == EnemyType.Meele){
 				MovementFSM = new FSM_Manager( new DefaultState[] { new WalkToTarget(_PersonalNodeMap, _CreateThePath, this, CreatureRange, MovementSpeed), new GolemAttackState(this,CanIRanged, CreatureRange),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
 				MovementFSM.Init(this);
 			}
@@ -115,10 +115,10 @@ public class CreatureOneBehaviour : DefaultBehaviour {
 	#endregion
 
 	public override void AttackTarget(){
-		if (thetype == EnemyType.Rangd) {
+		if (thetype == EnemyType.Ranged) {
 			if(CanIRanged[0] == true)
 				(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, _GoAfter);
-		} else if(thetype == EnemyType.Melle){
+		} else if(thetype == EnemyType.Meele){
 			_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();
 		}
 	}

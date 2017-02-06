@@ -10,15 +10,17 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	[HideInInspector] public bool StopMoveLogic = false;
 	public bool RunPathfinding = true;
 
-	public enum EnemyType {Rangd, Melle, Heeeeels, Spilling};
+	public enum EnemyType {Ranged, Meele, Fast, Tank};
 	public EnemyType thetype;
 
 	public Nodes[] MyNodePosition = new Nodes[1];
 	public float[,] myPos = new float[1,2];
-	public float[] MovementSpeed = new float[1];
 
 	Vector2 _MyPositionVector2;
 
+	public float[] MovementSpeed = new float[1];
+	public int[] HealthPoints = new int[1];
+	public float[] Damage= new float[1];
 
 
 	public abstract void OnDestroyed ();

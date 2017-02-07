@@ -5,15 +5,12 @@ using System.Collections.Generic;
 public class Spawnmanaging : MonoBehaviour {
 
 	public GameObject[] SpawnPoints;
+	GameObject SpawnedObject;
 
 	public bool StartSpawn = false;
-	public bool NextWave = false;
-	public bool SpawnAllAtOnce = false;
 
 	public int SpawnRate;
 	int WaveNumber = 0;	
-	int whichWave = 0;
-	int whichSmallWave = 0;
 	int spawnspot = 0;
 
 	public SpawnerWave[] TheWaves;
@@ -23,45 +20,19 @@ public class Spawnmanaging : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		WaveNumber = TheWaves.Length;
-
 	}
 
 	// Update is called once per frame
 	void Update () {
 
 		if (StartSpawn == true) {
-		
-			if (SpawnAllAtOnce == true || NextWave == true) {
-				NextWave = false;
+			StartSpawn = false;
 			
-				StartCoroutine("SpawnWave");
-				/*if (whichWave < WaveNumber) {
-					TheSmallWaves = TheWaves [whichWave].MiniWaves;//getting the current wave
-
-					if (whichSmallWave < TheSmallWaves.Length) {
-						ObjectsToSpawn = TheSmallWaves [whichSmallWave].Wave;//getting the current miniwave
-
-						for (int k = 0; k < ObjectsToSpawn.Length; k++) {//spawning the miniwave
-							for (int l = 0; l < ObjectsToSpawn [k].SpawnAmount; l++) {
-								if (spawnspot >= SpawnPoints.Length) {
-									spawnspot = 0;
-								}
-
-								Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot++].transform);
-							}
-						}
-						whichSmallWave++;
-						if (whichSmallWave == TheSmallWaves.Length) {//if the miniwave amount is bigge then the length of the list, go to the next wave and reset the miniwavecounter
-							whichSmallWave = 0;
-							whichWave++;
-						}
-					} 
-				}*/
-			}
+			StartCoroutine ("SpawnWave");
+			
 		}
 	}
 
-	GameObject SpawnedObject;
 	private IEnumerator SpawnWave()
 	{
 
@@ -83,7 +54,15 @@ public class Spawnmanaging : MonoBehaviour {
 			}
 		}
 
-	/*	if (whichWave < WaveNumber) {
+
+		yield break;
+	}
+}
+//Spawn miniwave after miniwave
+//int whichWave = 0;
+//int whichSmallWave = 0;
+
+/*	if (whichWave < WaveNumber) {
 			TheSmallWaves = TheWaves [whichWave].MiniWaves;//getting the current wave
 
 			if (whichSmallWave < TheSmallWaves.Length) {
@@ -108,32 +87,3 @@ public class Spawnmanaging : MonoBehaviour {
 
 
 		}*/
-		yield break;
-	}
-}
-
-
-/*
- 		for (int i = 0; i < WaveNumber; i++) {
-					TheSmappWaves = TheWaves [i].MiniWaves;//henter wave 1.
-					for (int j = 0; j < TheSmappWaves.Length; j++) {
-						tes = TheSmappWaves [j].Wave;//finner miniwave 1.
-					
-
-
-						for (int k = 0; k < tes.Length; k++) {
-							for (int l = 0; l < tes [k].SpawnAmount; l++) {
-								if (spawnspot >= SpawnPoints.Length) {
-									spawnspot = 0;
-								}
-
-								Instantiate (tes [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot++].transform);
-							}
-						}
-
-
-
-
-					}
-				}
-*/

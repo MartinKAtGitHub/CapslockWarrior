@@ -80,7 +80,7 @@ public class CreatureBehaviour : MovingCreatures {
 		UpdateThePath = true;
 	}
 
-	public override void RemoveFromOthers(){
+	public override void RemoveMyselfFromOthers(){
 		List<BoxCollider2D> enemyinside = _PersonalNodeMap.GetEnemyColliders ();
 
 		for (int i = 0; i < enemyinside.Count; i++) {

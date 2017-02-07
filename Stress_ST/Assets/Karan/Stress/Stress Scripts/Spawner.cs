@@ -21,6 +21,8 @@ public class Spawner : MonoBehaviour {
 
 // --------------------------------------------- END ---------------------------------------------------
 
+	private IEnumerator Test;
+
 	public GameObject[] SpawnPatterns;
 
 	[Tooltip ("All the enemies you want the spawner to spawn")]
@@ -39,6 +41,8 @@ public class Spawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		Test = SpawnEnemyMiniWaves();
+
 		spawnPositions = new List<Transform>();
 
 		for (int i = 0; i < SpawnPatterns.Length; i++) 
@@ -69,8 +73,9 @@ public class Spawner : MonoBehaviour {
 		{
 			Debug.Log("Spawn wave on the spawn pos");
 
-			SpawnEnemy();
+			//SpawnEnemy();
 
+			StartCoroutine("SpawnEnemyMiniWaves");
 			WaveTimerCountDown = WaveTimer;
 			 AmountOfWaves -= 1;
 		}
@@ -101,6 +106,28 @@ public class Spawner : MonoBehaviour {
 		}
 	}
 
+
+	private IEnumerator SpawnEnemyMiniWaves()
+	{
+		DedicateSpawnPatternAndPosition();
+		for (int i = 0; i < EnemyTypes.Length; i++)
+		{
+			for (int j = 0; j < EnemyTypes[i].GetComponent<Enemy>().SpawnAmount; j++) 
+			{
+				Instantiate(EnemyTypes[i], spawnPositions[Random.Range(0, spawnPositions.Count)].position, Quaternion.identity);
+				Debug.LogWarning(EnemyTypes[i].name + " ----->");
+				yield return new WaitForSeconds(1.0f);
+			}	
+		}
+		spawnPositions.Clear();
+		/*for(int i = 0; i < 5; i++)
+		{	
+			Debug.LogWarning("NOOOOOOOOOO" + i+i);
+			yield return new WaitForSeconds(1f);
+		}*/
+
+		yield break;
+	}
 
 	private void SpawnEnemy()
 	{	

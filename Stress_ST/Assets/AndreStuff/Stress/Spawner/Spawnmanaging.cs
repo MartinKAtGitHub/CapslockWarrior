@@ -10,6 +10,7 @@ public class Spawnmanaging : MonoBehaviour {
 	public bool NextWave = false;
 	public bool SpawnAllAtOnce = false;
 
+	public int SpawnRate;
 	int WaveNumber = 0;	
 	int whichWave = 0;
 	int whichSmallWave = 0;
@@ -33,8 +34,8 @@ public class Spawnmanaging : MonoBehaviour {
 			if (SpawnAllAtOnce == true || NextWave == true) {
 				NextWave = false;
 			
-
-				if (whichWave < WaveNumber) {
+				StartCoroutine("SpawnWave");
+				/*if (whichWave < WaveNumber) {
 					TheSmallWaves = TheWaves [whichWave].MiniWaves;//getting the current wave
 
 					if (whichSmallWave < TheSmallWaves.Length) {
@@ -55,11 +56,45 @@ public class Spawnmanaging : MonoBehaviour {
 							whichWave++;
 						}
 					} 
-				}
+				}*/
 			}
 		}
 	}
+
+
+	private IEnumerator SpawnWave()
+	{
+
+		if (whichWave < WaveNumber) {
+			TheSmallWaves = TheWaves [whichWave].MiniWaves;//getting the current wave
+
+			if (whichSmallWave < TheSmallWaves.Length) {
+				ObjectsToSpawn = TheSmallWaves [whichSmallWave].Wave;//getting the current miniwave
+
+				for (int k = 0; k < ObjectsToSpawn.Length; k++) {//spawning the miniwave
+					for (int l = 0; l < ObjectsToSpawn [k].SpawnAmount; l++) {
+						if (spawnspot >= SpawnPoints.Length) {
+							spawnspot = 0;
+						}
+
+						Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot++].transform);
+						yield return new WaitForSeconds(SpawnRate);
+					}
+				}
+				whichSmallWave++;
+				if (whichSmallWave == TheSmallWaves.Length) {//if the miniwave amount is bigge then the length of the list, go to the next wave and reset the miniwavecounter
+					whichSmallWave = 0;
+					whichWave++;
+				}
+			} 
+
+
+		}
+		yield break;
+	}
 }
+
+
 /*
  		for (int i = 0; i < WaveNumber; i++) {
 					TheSmappWaves = TheWaves [i].MiniWaves;//henter wave 1.

@@ -21,7 +21,6 @@ public class TeleportSmallDistance : Wind {
 		{
 			isSpellCasted = value;
 		}
-
 	}
 	// Use this for initialization
 
@@ -85,4 +84,5 @@ public class TeleportSmallDistance : Wind {
 		SmokeFollow.x = MoveData.Direction.x ;
 		SmokeFollow.y = MoveData.Direction.y ;
 	}
+
 }

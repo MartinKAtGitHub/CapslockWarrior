@@ -65,7 +65,25 @@ public class Spawnmanaging : MonoBehaviour {
 	private IEnumerator SpawnWave()
 	{
 
-		if (whichWave < WaveNumber) {
+
+		for (int i = 0; i < WaveNumber; i++) {
+			TheSmallWaves = TheWaves [i].MiniWaves;//henter wave 1.
+			for (int j = 0; j < TheSmallWaves.Length; j++) {
+				ObjectsToSpawn = TheSmallWaves [j].Wave;//finner miniwave 1.
+				for (int k = 0; k < ObjectsToSpawn.Length; k++) {
+					for (int l = 0; l < ObjectsToSpawn [k].SpawnAmount; l++) {
+						if (spawnspot >= SpawnPoints.Length) {
+							spawnspot = 0;
+						}
+
+						Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot++].transform);
+					}
+				}
+				yield return new WaitForSeconds(SpawnRate);
+			}
+		}
+
+	/*	if (whichWave < WaveNumber) {
 			TheSmallWaves = TheWaves [whichWave].MiniWaves;//getting the current wave
 
 			if (whichSmallWave < TheSmallWaves.Length) {
@@ -89,7 +107,7 @@ public class Spawnmanaging : MonoBehaviour {
 			} 
 
 
-		}
+		}*/
 		yield break;
 	}
 }

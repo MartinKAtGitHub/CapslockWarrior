@@ -12,8 +12,9 @@ public class CreatureBehaviour : MovingCreatures {
 		
 		myPos [0, 0] = transform.position.x;
 		myPos [0, 1] = transform.position.y;	
+		MyNode [0] = new Nodes (myPos, 0);
 
-		_CreateThePath = new AStarPathfinding_RoomPaths (54, (new Nodes (myPos,0)));//TODO make 54 and 13 gamemanagervariables so that i get them and put them here
+		_CreateThePath = new AStarPathfinding_RoomPaths (54, MyNode[0]);//TODO make 54 and 13 gamemanagervariables so that i get them and put them here
 		_PersonalNodeMap = new CreatingObjectNodeMap(7,7, PathfindingNodeID);//if i do this then the constructor is only called once instead of 4 times......
 	}
 
@@ -54,42 +55,6 @@ public class CreatureBehaviour : MovingCreatures {
 			}
 		}
 	}
-
-
-	#region Collision functions
-	//TODO look over these
-	public override void AddWallWithTrigger(GameObject collidingwithobject){
-		_PersonalNodeMap.AddGameobjectsWithinTrigger (collidingwithobject);
-		UpdateThePath = true;
-	}
-
-	public override void RemoveWallWithTrigger(GameObject collidingwithobject){
-		_PersonalNodeMap.AddGameobjectsWithinTrigger (collidingwithobject);
-		UpdateThePath = true;
-	}
-
-	public override void AddEnemyWithTrigger (GameObject collidingwithobject){
-		if (collidingwithobject != gameObject) {
-			_PersonalNodeMap.AddEnemyPositions (collidingwithobject.gameObject);
-			UpdateThePath = true;
-		}
-	}
-
-	public override void RemoveEnemyWithTrigger (GameObject collidingwithobject){
-		_PersonalNodeMap.RemoveEnemyPositions (collidingwithobject.gameObject);
-		UpdateThePath = true;
-	}
-
-	public override void RemoveMyselfFromOthers(){
-		List<BoxCollider2D> enemyinside = _PersonalNodeMap.GetEnemyColliders ();
-
-		for (int i = 0; i < enemyinside.Count; i++) {
-			enemyinside [i].GetComponent<MovingCreatures> ().RemoveEnemyWithTrigger (gameObject);
-		}
-	}
-
-	#endregion
-
 
 	public override void OnDestroyed(){
 		Debug.Log ("GYAAAAAAA");

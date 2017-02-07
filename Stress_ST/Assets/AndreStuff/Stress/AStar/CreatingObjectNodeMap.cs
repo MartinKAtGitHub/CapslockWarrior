@@ -248,7 +248,7 @@ public class CreatingObjectNodeMap {
 		return;
 	}
 
-	public void AddGameobjectsWithinTrigger(GameObject NewObject){
+	public void AddWalls(GameObject NewObject){
 		_WallColliders.Add (NewObject.GetComponent<BoxCollider2D>());
 	}
 
@@ -271,7 +271,7 @@ public class CreatingObjectNodeMap {
 		return _WallColliders.Count;
 	}
 
-	public void RemoveGameobjectsWithinTrigger(GameObject OldObject){
+	public void RemoveWalls(GameObject OldObject){
 		_WallColliders.Remove (OldObject.GetComponent<BoxCollider2D>());
 	}
 	

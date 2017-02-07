@@ -8,9 +8,7 @@ public abstract class MovingCreatures : DefaultBehaviour {
 	public AStarPathfinding_RoomPaths _CreateThePath;// Needed for AI
 	public CreatingObjectNodeMap _PersonalNodeMap;// Needed for AI
 
-	[HideInInspector] public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();//all objects that are moving need to know in which room they are
 	[HideInInspector] public GameObject _GoAfter = null;//the target
-
 
 	[HideInInspector] public bool UpdateThePath = false;//when this is true the pathfinding will run
 	public bool RunPathfinding = true;//if true then the target is using the pathfining
@@ -18,10 +16,7 @@ public abstract class MovingCreatures : DefaultBehaviour {
 	public enum EnemyType {Ranged, Meele, Fast, Tank};//the state define what the object does when attacking(mainly)
 	public EnemyType thetype;
 
-	public float[,] myPos = new float[1,2];//used to update the position for the Objects node position 
-
-
-	[Tooltip("PathfindingNodeID is the cost to move to the different nodes //// 0 = normal nodes //// 1 = undestructable walls //// 2 = other units")]
+	[Tooltip("PathfindingNodeID is the cost to move to the different nodes //// 0 = normal nodes(1) //// 1 = undestructable walls(100) //// 2 = other units(3)")]
 	public int[] PathfindingNodeID = new int[3];//when going through the nodemap the this is the value for the different tiles when navigating
 
 	public float AttackRange = 1;
@@ -38,32 +33,54 @@ public abstract class MovingCreatures : DefaultBehaviour {
 		return null;
 	}
 
-	public virtual void SetTarget(GameObject target){
+	public void SetTarget(GameObject target){
 		_GoAfter = target;
-		Debug.Log (_GoAfter.GetComponent<MovingCreatures>().NeighbourGroups);
-		_CreateThePath.SetEndRoomAndNode (_GoAfter.GetComponent<MovingCreatures>().NeighbourGroups, _GoAfter.GetComponent<MovingCreatures>()._CreateThePath.GetPosNode());
+		_CreateThePath.SetEndRoomAndNode (_GoAfter.GetComponent<DefaultBehaviour>().NeighbourGroups, _GoAfter.GetComponent<DefaultBehaviour>().GetMyNode());
 	}
 
-	public virtual void SetAiRoom(Wall_ID room){//just called once, and that is when spawning an object
-		NeighbourGroups = room.Connectors;
+	public override void SetAiRoom(Wall_ID room){//just called once, and that is when spawning an object
+		base.SetAiRoom(room);
 		_CreateThePath.SetStartRoom (room.Connectors);
 	}
 
-	public virtual void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
+	public void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
 		NeighbourGroups = neighbours;
 		_CreateThePath.SetStartRoom (neighbours);
 	}
 
+	#region What to do when colliding with objects  
+	//TODO improve this so that i only have to call one method for all objects
 
+	public void AddWallWithTrigger(GameObject collidingwithobject){
+		_PersonalNodeMap.AddWalls (collidingwithobject);
+		UpdateThePath = true;
+	}
 
+	public void RemoveWallWithTrigger(GameObject collidingwithobject){
+		_PersonalNodeMap.RemoveWalls (collidingwithobject);
+		UpdateThePath = true;
+	}
 
-	public abstract void AddWallWithTrigger (GameObject collidingwithobject);//TODO
-	public abstract void RemoveWallWithTrigger (GameObject collidingwithobject);//TODO
-	public abstract void AddEnemyWithTrigger (GameObject collidingwithobject);//TODO
-	public abstract void RemoveEnemyWithTrigger (GameObject collidingwithobject);//TODO
-	public abstract void RemoveMyselfFromOthers ();
+	public void AddEnemy (GameObject collidingwithobject){
+		if (collidingwithobject != gameObject) {
+			_PersonalNodeMap.AddEnemyPositions (collidingwithobject.gameObject);
+			UpdateThePath = true;
+		}
+	}
 
+	public void RemoveEnemy (GameObject collidingwithobject){
+		_PersonalNodeMap.RemoveEnemyPositions (collidingwithobject.gameObject);
+		UpdateThePath = true;
+	}
 
+	public void RemoveMyselfFromOthers(){
+		List<BoxCollider2D> enemyinside = _PersonalNodeMap.GetEnemyColliders ();
 
+		for (int i = 0; i < enemyinside.Count; i++) {
+			enemyinside [i].GetComponent<MovingCreatures> ().RemoveEnemy (gameObject);
+		}
+	}
+
+	#endregion
 
 }

@@ -17,7 +17,7 @@ public class NodeMapCollision : MonoBehaviour {
 			_ParentBehaviour.AddWallWithTrigger (coll.gameObject);
 		}else if (coll.gameObject.CompareTag (Enemy)) {
 			if (coll.GetComponent<MovingCreatures> () != null) {
-			_ParentBehaviour.AddEnemyWithTrigger (coll.gameObject);
+			_ParentBehaviour.AddEnemy (coll.gameObject);
 			}
 		}
 	}

@@ -61,7 +61,7 @@ public abstract class MovingCreatures : DefaultBehaviour {
 	public abstract void RemoveWallWithTrigger (GameObject collidingwithobject);//TODO
 	public abstract void AddEnemyWithTrigger (GameObject collidingwithobject);//TODO
 	public abstract void RemoveEnemyWithTrigger (GameObject collidingwithobject);//TODO
-	public abstract void RemoveFromOthers ();
+	public abstract void RemoveMyselfFromOthers ();
 
 
 

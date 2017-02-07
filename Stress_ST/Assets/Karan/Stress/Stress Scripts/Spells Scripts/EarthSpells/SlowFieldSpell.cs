@@ -42,9 +42,9 @@ public class SlowFieldSpell : Earth {
 		if(other.tag == "Enemy")
 		{
 			//TODO we must replace ENEMYCREEP with a class hierarchy so every ENEMY is effected by the slow
-			if(other.GetComponent<MovingCreatures>() != null){
+			if(other.GetComponent<DefaultBehaviour>() != null){
 			//	other.GetComponent<DefaultBehaviour>().Turnoffwithforcestuff = true;
-				other.GetComponent<MovingCreatures>().ChangeMovementAdd(-SlowRate);
+				other.GetComponent<DefaultBehaviour>().ChangeMovementAdd(-SlowRate);
 			}
 			//other.GetComponent<GolumMovementTest>().speed *= SlowRate; 
 	//		Debug.Log("Enemy name STAY -> "+ other.name);

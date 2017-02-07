@@ -224,7 +224,7 @@ public class WalkToTarget : DefaultState {
 
 				#endregion
 
-				if (_Nodeindex > _SearchAgainIndex + 1) {
+				if (_Nodeindex > _SearchAgainIndex) {
 					HaveSearched = false;
 					MyInfo.UpdateThePath = true;
 				}

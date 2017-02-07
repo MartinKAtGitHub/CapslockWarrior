@@ -283,30 +283,33 @@ public class CreatingObjectNodeMap {
 		}
 		_ListLength = _EnemyColliders.Count;
 		for (int k = 0; k < _ListLength; k++) {//setting the collisionID for the enemys
-			_ColliderBounds = _EnemyColliders [k].bounds;
+			if (_EnemyColliders [k] != null) {
+			
+				_ColliderBounds = _EnemyColliders [k].bounds;
 
-			_UpperRightCorner = _ColliderBounds.max;
-			_LowerLeftCorner = _ColliderBounds.min;
+				_UpperRightCorner = _ColliderBounds.max;
+				_LowerLeftCorner = _ColliderBounds.min;
 
-			_LeftPoint = (int)(_LowerLeftCorner.x - (_CenterPos [0, 0] - (_XDimention + 0.5f)));
-			if (_LeftPoint < 0)
-				_LeftPoint = 0;
+				_LeftPoint = (int)(_LowerLeftCorner.x - (_CenterPos [0, 0] - (_XDimention + 0.5f)));
+				if (_LeftPoint < 0)
+					_LeftPoint = 0;
 
-			_RightPoint = (_XDimention * 2) - (int)((_CenterPos [0, 0] + (_XDimention + 0.5f)) - _UpperRightCorner.x);
-			if (_RightPoint > _XDimention * 2)
-				_RightPoint = _XDimention * 2;
+				_RightPoint = (_XDimention * 2) - (int)((_CenterPos [0, 0] + (_XDimention + 0.5f)) - _UpperRightCorner.x);
+				if (_RightPoint > _XDimention * 2)
+					_RightPoint = _XDimention * 2;
 
-			_HighestPoint = (int)((_CenterPos [0, 1] + (_YDimention + 0.5f)) - _UpperRightCorner.y);
-			if (_HighestPoint < 0)
-				_HighestPoint = 0;
+				_HighestPoint = (int)((_CenterPos [0, 1] + (_YDimention + 0.5f)) - _UpperRightCorner.y);
+				if (_HighestPoint < 0)
+					_HighestPoint = 0;
 
-			_LowestPoint = (_YDimention * 2) - (int)(_LowerLeftCorner.y - (_CenterPos [0, 1] - (_YDimention + 0.5f)));
-			if (_LowestPoint > _YDimention * 2)
-				_LowestPoint = _YDimention * 2;
+				_LowestPoint = (_YDimention * 2) - (int)(_LowerLeftCorner.y - (_CenterPos [0, 1] - (_YDimention + 0.5f)));
+				if (_LowestPoint > _YDimention * 2)
+					_LowestPoint = _YDimention * 2;
 
-			for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
-				for (int j = _LeftPoint; j <= _RightPoint; j++) {
-					_NodeMap [i, j].MapCollision = 2;
+				for (int i = _HighestPoint; i <= _LowestPoint; i++) {//changing the nodes inside the coordinates i found to collisionID
+					for (int j = _LeftPoint; j <= _RightPoint; j++) {
+						_NodeMap [i, j].MapCollision = 2;
+					}
 				}
 			}
 		}

@@ -77,7 +77,8 @@ public abstract class MovingCreatures : DefaultBehaviour {
 		List<BoxCollider2D> enemyinside = _PersonalNodeMap.GetEnemyColliders ();
 
 		for (int i = 0; i < enemyinside.Count; i++) {
-			enemyinside [i].GetComponent<MovingCreatures> ().RemoveEnemy (gameObject);
+			if(enemyinside [i] != null)
+				enemyinside [i].GetComponent<MovingCreatures> ().RemoveEnemy (gameObject);
 		}
 	}
 

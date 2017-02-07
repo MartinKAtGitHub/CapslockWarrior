@@ -61,7 +61,7 @@ public class Spawnmanaging : MonoBehaviour {
 		}
 	}
 
-
+	GameObject SpawnedObject;
 	private IEnumerator SpawnWave()
 	{
 
@@ -75,8 +75,8 @@ public class Spawnmanaging : MonoBehaviour {
 						if (spawnspot >= SpawnPoints.Length) {
 							spawnspot = 0;
 						}
-
-						Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot++].transform);
+						SpawnedObject = Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot].transform) as GameObject;
+						SpawnedObject.GetComponent<MovingCreatures> ().SetAiRoom (SpawnPoints [spawnspot++].GetComponent<SpawningPointLocation> ().PointPlacement);
 					}
 				}
 				yield return new WaitForSeconds(SpawnRate);

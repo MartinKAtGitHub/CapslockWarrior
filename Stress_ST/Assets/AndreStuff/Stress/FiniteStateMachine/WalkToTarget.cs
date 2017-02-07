@@ -7,8 +7,8 @@ public class WalkToTarget : DefaultState {
 
 	#region Refrenceholders
 
-	DefaultBehaviour TargetInfo;
-	DefaultBehaviour MyInfo;
+	MovingCreatures TargetInfo;
+	MovingCreatures MyInfo;
 
 	CreatingObjectNodeMap PersonalNodeMap;
 	AStarPathfinding_RoomPaths CreateThePath;
@@ -61,7 +61,7 @@ public class WalkToTarget : DefaultState {
 	bool HaveSearched = false; 
 
 
-	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureOneBehaviour myInfo, float theRange, float[] movementspeed) {//giving copies of info to this class
+	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "WalkToTargetState";
 		PersonalNodeMap = personalNodeMap;
 		CreateThePath = createThePath;
@@ -78,7 +78,7 @@ public class WalkToTarget : DefaultState {
 
 		GFX = myInfo.transform.FindChild ("GFX");
 		_CreatureAnimator = GFX.GetComponent<Animator> ();
-		_LineOfSight = 1 << LayerMask.NameToLayer ("Walls");
+		_LineOfSight = lineOfSight;
 
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
@@ -175,8 +175,11 @@ public class WalkToTarget : DefaultState {
 			if (Vector2.Distance (_GoalPosition, (Vector2)MyTransform.position) <= _DistanceFromNode) {//if im inside the node im going to 
 				_Nodeindex++;
 
-				if (Vector2.Distance ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 ()) <= _Range) {//checking if im withing range of the target 
-					if (Physics2D.Linecast ((Vector2)MyTransform.position, TargetInfo.GetMyPositionVector2 (), _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
+				_MovementDirection.x = TargetInfo.myPos[0,0];
+				_MovementDirection.y = TargetInfo.myPos[0,1];
+
+				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
+					if (Physics2D.Linecast ((Vector2)MyTransform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
 						_ReturnState = "AttackState";
 						return;
 					} 

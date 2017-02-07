@@ -34,8 +34,8 @@ public class BulletStart : MonoBehaviour {
 		if (coll.gameObject.CompareTag(Wall)) {
 			Destroy (this.gameObject);
 		} else if(coll.gameObject != ImTheShooter) {//if im colliding with anything but myself(sender) make it recievedmg
-			if (coll.transform.GetComponent<DefaultBehaviour> () != null) {
-				coll.transform.GetComponent<DefaultBehaviour> ().RecievedDmg ();
+			if (coll.transform.GetComponent<MovingCreatures> () != null) {
+				coll.transform.GetComponent<MovingCreatures> ().RecievedDmg ();
 				Destroy (this.gameObject);
 			}
 		}

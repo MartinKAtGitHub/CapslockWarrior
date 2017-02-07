@@ -49,7 +49,7 @@ public class ForcePush : Water {
 		{
 			//Debug.Log(other.name);
 			if(other.GetComponent<DefaultBehaviour>() != null)//TODO
-				other.GetComponent<DefaultBehaviour>().StopMoveLogic = true;
+				other.GetComponent<DefaultBehaviour>().FreezeCharacter = true;
 		//	other.GetComponent<GolumMovementTest>().IsMoving = false;
 
 		}

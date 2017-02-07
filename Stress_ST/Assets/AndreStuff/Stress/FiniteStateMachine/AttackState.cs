@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GolemAttackState : DefaultState {
-	DefaultBehaviour _TargetInfo;
-	DefaultBehaviour _MyInfo;
+public class AttackState : DefaultState {
+	MovingCreatures _TargetInfo;
+	MovingCreatures _MyInfo;
 
 	Transform _MyTransform;
 
@@ -14,8 +14,9 @@ public class GolemAttackState : DefaultState {
 	ShootingAfterAnimation _EndOfShootingAnimation;
 
 	bool AnimationStarted = false;
+	Vector2 targetPos = Vector2.zero;
 
-	public GolemAttackState(CreatureOneBehaviour myInfo, bool[] canIRanged, float theRange) {//giving copies of info to this class
+	public AttackState(CreatureBehaviour myInfo, bool[] canIRanged, float theRange, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "AttackState";
 		_MyInfo = myInfo;
 		_MyTransform = _MyInfo.transform;
@@ -25,7 +26,7 @@ public class GolemAttackState : DefaultState {
 		_MyAnimator = myInfo.transform.FindChild("GFX").GetComponent<Animator> ();
 		_EndOfShootingAnimation = _MyAnimator.GetBehaviour<ShootingAfterAnimation> ();
 
-		_LineOfSight = 1 << LayerMask.NameToLayer ("Walls");
+		_LineOfSight = lineOfSight;
 
 	
 		_Range = theRange;
@@ -56,10 +57,13 @@ public class GolemAttackState : DefaultState {
 				_EndOfShootingAnimation.ShootingAnimationFinished = false;
 				_MyAnimator.SetFloat ("ChangeAnimation", 0);
 				AnimationStarted = false;
-				if (Vector2.Distance ((Vector2)_MyTransform.position, _TargetInfo.GetMyPositionVector2 ()) < _Range) {//checking if im withing range of the target 
+				targetPos.x = _TargetInfo.myPos [0, 0];
+				targetPos.y = _TargetInfo.myPos [0, 1];
+
+				if (Vector2.Distance ((Vector2)_MyTransform.position, targetPos) < _Range) {//checking if im withing range of the target 
 					//ReturnState = "WalkToTargetState";
 				 
-					if (Physics2D.Linecast ((Vector2)_MyTransform.position, _TargetInfo.GetMyPositionVector2 (), _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way
+					if (Physics2D.Linecast ((Vector2)_MyTransform.position, targetPos, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way
 						_MyInfo.AttackTarget ();
 					} else {
 						_ReturnState = "WalkToTargetState";

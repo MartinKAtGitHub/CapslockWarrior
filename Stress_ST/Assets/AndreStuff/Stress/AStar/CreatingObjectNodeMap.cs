@@ -54,6 +54,10 @@ public class CreatingObjectNodeMap {
 		_WhereToGo = target; 
 	}
 
+	public List<BoxCollider2D> GetEnemyColliders(){
+		return _EnemyColliders;
+	}
+
 	public void CreateNodeMap(){//creating the node map and adding neighbours to the nodes
 		for (int x = 0; x < _XDimention * 2 + 1; x++) {
 			for (int y = 0; y < _YDimention * 2 + 1; y++) {
@@ -257,9 +261,9 @@ public class CreatingObjectNodeMap {
 	}
 
 	public void RemoveMyselfFromOthers(GameObject myself){
-		for (int j = 0; j < _EnemyColliders.Count; j++) {
-			_EnemyColliders [j].GetComponent<DefaultBehaviour> ().RemoveEnemyWithTrigger (myself);
-		}
+	//	for (int j = 0; j < _EnemyColliders.Count; j++) {
+	//		_EnemyColliders [j].GetComponent<DefaultBehaviour> ().RemoveEnemyWithTrigger (myself);
+	//	}
 	}
 
 

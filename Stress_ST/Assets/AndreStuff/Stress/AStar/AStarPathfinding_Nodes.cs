@@ -18,7 +18,7 @@ public class AStarPathFinding_Nodes {
 	Nodes[,] _NeighbourSaver; //holds the refrence of the nodes neighbours that im searching through
 	int[] _ListStartingPosition = new int[1];//this holds the index on which index the AI should start at
 
-	int _MapCollisionCost = 0;//this is used to calculate the movecost to the searching through node
+	float _MapCollisionCost = 0;//this is used to calculate the movecost to the searching through node
 	Nodes _NodeHolder = null; //just to hold a node
 	Nodes _CurrentNode; //Holds the node im currently searching with
 	float _LowerstFScore = 100000; //This is just a value to get the "best" path to the target, if there is an enormous amount of nodes then this value must be increased
@@ -64,6 +64,7 @@ public class AStarPathFinding_Nodes {
 		for (int i = 0; i < _ClosedListAtIndex; i++) {
 			_ClosedList [i].NodeSearchedThrough = false;
 		}
+
 	}
 
 	bool AStartAlgorithm() {//A*. 
@@ -82,7 +83,6 @@ public class AStarPathFinding_Nodes {
 					_LowerstFScore = _CurrentNode.FCost;
 				}
 			} 
-	
 		
 
 			_ClosedList [_ClosedListAtIndex++] = _CurrentNode;//adding to closedlist
@@ -109,7 +109,7 @@ public class AStarPathFinding_Nodes {
 							if (_NodeHolder.NodeSearchedThrough == false) {//if true then i have not searched through this node
 								_NodeHolder.SetParentAndEndMiddle (_CurrentNode, _EndNode [0]);
 								_OpenList [_OpenListAtIndex++] = _NodeHolder;
-							} else if (_NodeHolder.GCost > _CurrentNode.GCost + _MapCollisionCost) {//if true then im setting currentnode to the nodes parent 
+							} else if (_NodeHolder.GCost > _CurrentNode.GCost + _MapCollisionCost ) {//if true then im setting currentnode to the nodes parent 
 								_NodeHolder.SetParentMiddle (_CurrentNode);
 							}
 						}

@@ -13,11 +13,9 @@ public abstract class MovingCreatures : DefaultBehaviour {
 	[HideInInspector] public bool UpdateThePath = false;//when this is true the pathfinding will run
 	public bool RunPathfinding = true;//if true then the target is using the pathfining
 
-	public enum EnemyType {Ranged, Meele, Fast, Tank};//the state define what the object does when attacking(mainly)
-	public EnemyType thetype;
 
 	[Tooltip("PathfindingNodeID is the cost to move to the different nodes //// 0 = normal nodes(1) //// 1 = undestructable walls(100) //// 2 = other units(3)")]
-	public int[] PathfindingNodeID = new int[3];//when going through the nodemap the this is the value for the different tiles when navigating
+	public float[] PathfindingNodeID = new float[3];//when going through the nodemap the this is the value for the different tiles when navigating
 
 	public float AttackRange = 1;
 
@@ -28,7 +26,7 @@ public abstract class MovingCreatures : DefaultBehaviour {
 
 	public virtual MovingCreatures GetTargetBehaviour(){
 		if (_GoAfter != null)
-			return _GoAfter.GetComponent<MovingCreatures>();
+			return _GoAfter.GetComponent<MovingCreatures>(); 
 
 		return null;
 	}

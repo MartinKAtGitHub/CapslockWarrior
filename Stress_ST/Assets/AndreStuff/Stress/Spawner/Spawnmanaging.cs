@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class Spawnmanaging : MonoBehaviour {
 
 	public GameObject[] SpawnPoints;
-	GameObject SpawnedObject;
+	GameObject _SpawnedObject;
 
 	public bool StartSpawn = false;
 
 	public int SpawnRate;
-	int WaveNumber = 0;	
-	int spawnspot = 0;
+	int _WaveNumber = 0;	
+	int _SpawnSpot = 0;
 
 	public SpawnerWave[] TheWaves;
 	MiniWaves[] TheSmallWaves;
@@ -19,7 +19,7 @@ public class Spawnmanaging : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		WaveNumber = TheWaves.Length;
+		_WaveNumber = TheWaves.Length;
 	}
 
 	// Update is called once per frame
@@ -37,17 +37,17 @@ public class Spawnmanaging : MonoBehaviour {
 	{
 
 
-		for (int i = 0; i < WaveNumber; i++) {
+		for (int i = 0; i < _WaveNumber; i++) {
 			TheSmallWaves = TheWaves [i].MiniWaves;//henter wave 1.
 			for (int j = 0; j < TheSmallWaves.Length; j++) {
 				ObjectsToSpawn = TheSmallWaves [j].Wave;//finner miniwave 1.
 				for (int k = 0; k < ObjectsToSpawn.Length; k++) {
 					for (int l = 0; l < ObjectsToSpawn [k].SpawnAmount; l++) {
-						if (spawnspot >= SpawnPoints.Length) {
-							spawnspot = 0;
+						if (_SpawnSpot >= SpawnPoints.Length) {
+							_SpawnSpot = 0;
 						}
-						SpawnedObject = Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot].transform) as GameObject;
-						SpawnedObject.GetComponent<MovingCreatures> ().SetAiRoom (SpawnPoints [spawnspot++].GetComponent<SpawningPointLocation> ().PointPlacement);
+						_SpawnedObject = Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [_SpawnSpot].transform.position, Quaternion.identity, SpawnPoints [_SpawnSpot].transform) as GameObject;
+						_SpawnedObject.GetComponent<MovingCreatures> ().SetAiRoom (SpawnPoints [_SpawnSpot++].GetComponent<SpawningPointLocation> ().PointPlacement);
 					}
 				}
 				yield return new WaitForSeconds(SpawnRate);
@@ -75,7 +75,6 @@ public class Spawnmanaging : MonoBehaviour {
 						}
 
 						Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [spawnspot].transform.position, Quaternion.identity, SpawnPoints [spawnspot++].transform);
-						yield return new WaitForSeconds(SpawnRate);
 					}
 				}
 				whichSmallWave++;

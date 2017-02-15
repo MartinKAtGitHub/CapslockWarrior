@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
-public class WalkToTarget : DefaultState {
+public class MeeleWalkToTarget : DefaultState {
 
 	#region Refrenceholders
 
@@ -25,7 +24,7 @@ public class WalkToTarget : DefaultState {
 
 	#endregion
 
-	float _DistanceFromNode = 0.5f;//radius that desides if the player is on the node or not. (if 0.5 then if this object is within 0.5 from the center in any direction xy. _Nodeindex++)
+	float _DistanceFromNode = 1f;//radius that desides if the player is on the node or not. (if 0.5 then if this object is within 0.5 from the center in any direction xy. _Nodeindex++)
 	int _SearchAgainIndex = 1;//when this object reaches the node in the path, search again (if 1, when the object is at the second index in _TheNodePath search again)
 
 	float[] _MovementSpeed;//enemy speed
@@ -61,7 +60,7 @@ public class WalkToTarget : DefaultState {
 	bool HaveSearched = false; 
 
 
-	public WalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
+	public MeeleWalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "WalkToTargetState";
 		PersonalNodeMap = personalNodeMap;
 		CreateThePath = createThePath;
@@ -82,6 +81,8 @@ public class WalkToTarget : DefaultState {
 
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
+
+		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 3;
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
@@ -96,7 +97,7 @@ public class WalkToTarget : DefaultState {
 		}
 		_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
 		_ReturnState = "";
-	
+
 		HaveSearched = false;
 		MyInfo.UpdateThePath = true;
 		return "";
@@ -122,7 +123,7 @@ public class WalkToTarget : DefaultState {
 	#region Makeing Path and going to nodes
 
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
-	
+
 		if (MyInfo.UpdateThePath == true) {
 
 			MyInfo.UpdateThePath = false;
@@ -164,11 +165,11 @@ public class WalkToTarget : DefaultState {
 			HaveSearched = true;
 		}
 	}
-		
+
 	void GoToDestination() {//going through the pathlist and moves the objects
 
 		if (HaveSearched == true) {//if this is false then the search failed or never happened or an error :D
-				
+
 			_GoalPosition.x = MyPreviousePosition [0, 0] + _TheNodePath [_Nodeindex].GetID () [0, 0];
 			_GoalPosition.y = MyPreviousePosition [0, 1] + _TheNodePath [_Nodeindex].GetID () [0, 1];
 
@@ -337,7 +338,6 @@ public class WalkToTarget : DefaultState {
 
 			CehckingNOde = ListOfNodes [_DistanceGap];
 		}
-
 		PersonalNodeMap.SetTargetPos (CehckingNOde.GetID ());
 	}
 	#endregion

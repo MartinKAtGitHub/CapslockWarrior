@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[System.Serializable]
 public abstract class DefaultBehaviour : MonoBehaviour {
 
 	[HideInInspector] public bool FreezeCharacter = false;
+	public StressEnums.EnemyType CreatureType;
+
 
 	//----------------------- needed to know where this object is.
 	public float[,] myPos = new float[1,2];//used to update the position for the Objects node position 

@@ -6,7 +6,7 @@ using System.Linq;
 public class Nodes {
 
 	//node info
-	public int[] PathfindingNodeID;//this array holds the move cost to each tile (wall , water, sand .....)
+	public float[] PathfindingNodeID;//this array holds the move cost to each tile (wall , water, sand .....)
 	public int MapCollision = 1;//this is used to set the correct id for the tile (wall, water, sand .....)
 
 	public bool NodeSearchedThrough = false;//if bool is used to check if the node have been searched through
@@ -41,13 +41,13 @@ public class Nodes {
 	/// <param name="ID">is the parameterID in XY coordinates,</param>
 	/// <param name="collision">is the collisionid the node will have, so when someone collides with it then we know what to apply</param>
 	/// <param name="pathnodeid">this is the array that holds the movecost to each tile</param>
-	public Nodes(float[,] ID, int collision, int[] pathnodeid) {
+	public Nodes(float[,] ID, int collision, float[] pathnodeid) {
 		_NodeID = ID;
 		MapCollision = collision;
 		PathfindingNodeID = pathnodeid;
 	}
 		
-	public int GetCollision() {
+	public float GetCollision() {
 		return PathfindingNodeID[MapCollision];
 	}
 

@@ -58,7 +58,8 @@ public class MeeleWalkToTarget : DefaultState {
 	float a = 0;
 
 	bool HaveSearched = false; 
-
+	float height = 0;
+	float width = 0;
 
 	public MeeleWalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "WalkToTargetState";
@@ -83,6 +84,9 @@ public class MeeleWalkToTarget : DefaultState {
 		_MovementSpeed = movementspeed;
 
 		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 3;
+
+		width = (myInfo.GetComponent<BoxCollider2D> ().size.x / 2) * 1.75f;//TODO quickfix
+		height = (myInfo.GetComponent<BoxCollider2D> ().size.y / 2) * 1.75f;//TODO quickfix
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
@@ -176,15 +180,25 @@ public class MeeleWalkToTarget : DefaultState {
 			if (Vector2.Distance (_GoalPosition, (Vector2)MyTransform.position) <= _DistanceFromNode) {//if im inside the node im going to 
 				_Nodeindex++;
 
-				_MovementDirection.x = TargetInfo.myPos[0,0];
-				_MovementDirection.y = TargetInfo.myPos[0,1];
-
-				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
+				_MovementDirection.x = TargetInfo.myPos[0,0] ;
+				_MovementDirection.y = TargetInfo.myPos[0,1] ;
+			
+			
+				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//TODO quickfix
+					_MovementDirection = (new Vector2 (TargetInfo.myPos [0, 0], TargetInfo.myPos [0, 1]) - new Vector2 (MyInfo.myPos [0, 0], MyInfo.myPos [0, 1]));
+						if (_MovementDirection.x < width && _MovementDirection.x > -width && _MovementDirection.y < height && _MovementDirection.y > -height) {
+						_ReturnState = "AttackState";
+						return;
+					}
+				}
+				_MovementDirection.x = TargetInfo.myPos[0,0] ;
+				_MovementDirection.y = TargetInfo.myPos[0,1] ;
+				/*if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
 					if (Physics2D.Linecast ((Vector2)MyTransform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
 						_ReturnState = "AttackState";
 						return;
 					} 
-				}
+				}*/
 
 				#region Calculating Direction/speed
 

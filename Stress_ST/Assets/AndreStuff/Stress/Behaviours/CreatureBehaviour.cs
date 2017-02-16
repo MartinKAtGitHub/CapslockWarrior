@@ -55,7 +55,9 @@ public class CreatureBehaviour : MovingCreatures {
 		}
 	}
 
-	public override void OnDestroyed(){
+	public override void OnDestroyed(){//TODO implement deathstuff here, its just a method so call this to cancel the update and gg wp hf
+		
+
 		Debug.Log ("GYAAAAAAA");
 	}
 

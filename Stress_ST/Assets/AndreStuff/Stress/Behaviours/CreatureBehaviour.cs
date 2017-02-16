@@ -37,8 +37,6 @@ public class CreatureBehaviour : MovingCreatures {
 		}
 	}
 
-
-
 	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders
 		myPos [0, 0] = transform.position.x;
 		myPos [0, 1] = transform.position.y;
@@ -56,9 +54,10 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 	public override void OnDestroyed(){//TODO implement deathstuff here, its just a method so call this to cancel the update and gg wp hf
-		
 
-		Debug.Log ("GYAAAAAAA");
+		Instantiate (Resources.Load ("Andre/Prefabs/Creatures/DeadObject") as GameObject, transform.position, Quaternion.identity);
+		Destroy (this.gameObject);
+
 	}
 
 	public override void AttackTarget(){
@@ -71,6 +70,7 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 	 
 	public override void RecievedDmg(){
+		OnDestroyed ();
 	//	Debug.Log ("I Got Hit :" + name);
 	}
 

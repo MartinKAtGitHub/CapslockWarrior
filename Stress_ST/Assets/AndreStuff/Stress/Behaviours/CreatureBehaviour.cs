@@ -21,7 +21,8 @@ public class CreatureBehaviour : MovingCreatures {
 		_PersonalNodeMap.CreateNodeMap ();
 		_PersonalNodeMap.SetCenterPos (myPos);
 
-		SetTarget (GameObject.FindGameObjectWithTag ("Player1"));
+		if(GameObject.FindGameObjectWithTag ("Player1") != null)//TODO make target hierarchy. then iterate on it an take the first one alive
+			SetTarget (GameObject.FindGameObjectWithTag ("Player1"));
 
 		if (RunPathfinding == true) {
 			if (CreatureType == StressEnums.EnemyType.Ranged) {//makes it possible to add different states to the targets if that is needed
@@ -36,8 +37,6 @@ public class CreatureBehaviour : MovingCreatures {
 			}
 		}
 	}
-
-
 
 	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders
 		myPos [0, 0] = transform.position.x;
@@ -55,20 +54,26 @@ public class CreatureBehaviour : MovingCreatures {
 		}
 	}
 
-	public override void OnDestroyed(){
-		Debug.Log ("GYAAAAAAA");
+	public override void OnDestroyed(){//TODO implement deathstuff here, its just a method so call this to cancel the update and gg wp hf
+
+		Instantiate (Resources.Load ("Andre/Prefabs/Creatures/DeadObject") as GameObject, transform.position, Quaternion.identity);
+		Destroy (this.gameObject);
+
 	}
 
 	public override void AttackTarget(){
-		if (CreatureType == StressEnums.EnemyType.Ranged) {
-			if(CanIRanged[0] == true)
-				(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, _GoAfter);
-		} else if(CreatureType == StressEnums.EnemyType.Meele){
-			_GoAfter.GetComponent<MovingCreatures> ().RecievedDmg ();
+		if (_GoAfter != null) {
+			if (CreatureType == StressEnums.EnemyType.Ranged) {
+				if (CanIRanged [0] == true)
+					(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, _GoAfter);
+			} else if (CreatureType == StressEnums.EnemyType.Meele) {
+				_GoAfter.GetComponent<MovingCreatures> ().RecievedDmg ();
+			}
 		}
 	}
 	 
 	public override void RecievedDmg(){
+		OnDestroyed ();
 	//	Debug.Log ("I Got Hit :" + name);
 	}
 

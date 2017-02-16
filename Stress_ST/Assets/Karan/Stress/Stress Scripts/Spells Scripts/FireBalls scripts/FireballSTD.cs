@@ -71,6 +71,7 @@ public class FireballSTD : Fire {
 		{
 			Debug.Log("HotShot HIT ->" + other.name);
 			if (other.GetComponent<MovingCreatures> () != null) {
+				other.GetComponent<MovingCreatures> ().RecievedDmg ();
 				other.GetComponent<MovingCreatures> ().RemoveMyselfFromOthers ();
 			}
 			Destroy(other.gameObject); //  TODO this needs to be some logic on enemy death;

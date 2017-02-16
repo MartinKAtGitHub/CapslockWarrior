@@ -42,7 +42,7 @@ public class EnemyWordChecker : MonoBehaviour {
 			TextElement.text = string.Format("<color=black>{0}</color>", _EnemyHealth);
 			if (_EnemyHealth.Length <= 0) {
 //				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().RemoveObject(this.gameObject);
-				Destroy (this.gameObject);
+				GetComponent<DefaultBehaviour>().OnDestroyed();
 			}
 		}
 	}

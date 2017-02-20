@@ -15,7 +15,7 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	[HideInInspector] public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();//all objects that are moving need to know in which room they are
 	//-----------------------
 
-	public int[] HealthPoints = new int[1];
+	public int[] MyHealthPoints = new int[1];
 	public float[] Damage= new float[1];
 	public float[] MovementSpeed = new float[1];
 

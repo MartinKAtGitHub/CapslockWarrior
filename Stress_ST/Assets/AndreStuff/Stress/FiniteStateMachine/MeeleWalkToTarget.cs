@@ -6,8 +6,8 @@ public class MeeleWalkToTarget : DefaultState {
 
 	#region Refrenceholders
 
-	MovingCreatures TargetInfo;
-	MovingCreatures MyInfo;
+	DefaultBehaviour TargetInfo;
+	CreatureBehaviour MyInfo;
 
 	CreatingObjectNodeMap PersonalNodeMap;
 	AStarPathfinding_RoomPaths CreateThePath;

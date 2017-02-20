@@ -7,7 +7,7 @@ public class RangedWalkToTarget : DefaultState {
 
 	#region Refrenceholders
 
-	MovingCreatures TargetInfo;
+	DefaultBehaviour TargetInfo;
 	MovingCreatures MyInfo;
 
 	CreatingObjectNodeMap PersonalNodeMap;

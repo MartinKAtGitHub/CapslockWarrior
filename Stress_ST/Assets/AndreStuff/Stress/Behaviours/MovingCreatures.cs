@@ -24,9 +24,9 @@ public abstract class MovingCreatures : DefaultBehaviour {
 
 	public LayerMask LineOfSight;//this is what the physics2d.linecast cant hit. if it does move closer
 
-	public virtual MovingCreatures GetTargetBehaviour(){
+	public virtual DefaultBehaviour GetTargetBehaviour(){
 		if (_GoAfter != null)
-			return _GoAfter.GetComponent<MovingCreatures>(); 
+			return _GoAfter.GetComponent<DefaultBehaviour>(); 
 
 		return null;
 	}

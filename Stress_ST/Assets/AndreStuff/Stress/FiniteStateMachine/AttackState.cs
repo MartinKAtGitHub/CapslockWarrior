@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class AttackState : DefaultState {
-	MovingCreatures _TargetInfo;
-	MovingCreatures _MyInfo;
+	DefaultBehaviour _TargetInfo;
+	CreatureBehaviour _MyInfo;
 
 	Transform _MyTransform;
 

@@ -67,7 +67,7 @@ public class CreatureBehaviour : MovingCreatures {
 				if (CanIRanged [0] == true)
 					(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, _GoAfter);
 			} else if (CreatureType == StressEnums.EnemyType.Meele) {
-				_GoAfter.GetComponent<MovingCreatures> ().RecievedDmg ();
+				_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();
 			}
 		}
 	}

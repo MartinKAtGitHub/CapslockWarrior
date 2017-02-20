@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-
+		
 	}
 	
 	// Update is called once per frame
@@ -30,4 +30,5 @@ public class PlayerManager : MonoBehaviour {
 			Debug.Log("<color=blue>PLAYER IS DEAD</color>:");
 		}
 	}
+
 }

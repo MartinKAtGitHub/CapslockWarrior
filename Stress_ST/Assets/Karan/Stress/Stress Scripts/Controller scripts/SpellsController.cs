@@ -76,7 +76,7 @@ public class SpellsController : MonoBehaviour {
 		saveTimerKeyFour = SpellsOnKeyFour.CoolDownTimer;
 
 
-		Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
+		//Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
 
 		//////////////// Problemetic code //////////////////
 		// TODO find a smarter solution SpellsController
@@ -121,7 +121,7 @@ public class SpellsController : MonoBehaviour {
 			}
 			else
 			{
-				Debug.LogWarning(AgumentedSpellGameObjectKeyOne.gameObject.name + " IS NOT READY");
+				//Debug.LogWarning(AgumentedSpellGameObjectKeyOne.gameObject.name + " IS NOT READY");
 			}
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha2))
@@ -165,10 +165,10 @@ public class SpellsController : MonoBehaviour {
 		if(timerForSpellOnKeyOne <= 0)
 		{
 			spellKeyOneReady = true;
-			Debug.LogWarning("Spells ready k1");
+			//Debug.LogWarning("Spells ready k1");
 		}else
 		{
-			Debug.LogWarning(" SPELL 1 NOT READY");
+			//Debug.LogWarning(" SPELL 1 NOT READY");
 		}
 		if(timerForSpellOnKeyTwo <=0)
 		{

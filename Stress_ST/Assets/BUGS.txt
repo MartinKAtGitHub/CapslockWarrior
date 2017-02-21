@@ -15,3 +15,8 @@ random words make -> engelsk, norsk
 enemy word change at spawn
 
 Enemy dont collider with walls
+
+
+
+//Questionable changes
+Wolf behaviour change? -> walking at normal speed but when in range of the target(player) it starts to charge and runs fast until his stamina is empty. then if he doesnt reach the target in time he lays down to sleep or something? (like irl lions n stuff)

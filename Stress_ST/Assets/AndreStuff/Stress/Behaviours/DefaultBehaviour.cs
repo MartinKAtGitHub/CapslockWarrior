@@ -32,4 +32,5 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 		NeighbourGroups = room.Connectors;
 	}
 
+	public abstract void SetNeighbourGroup (List<RoomConnectorCreating> neighbours);
 }

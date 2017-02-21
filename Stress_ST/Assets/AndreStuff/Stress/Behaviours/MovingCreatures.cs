@@ -41,10 +41,11 @@ public abstract class MovingCreatures : DefaultBehaviour {
 		_CreateThePath.SetStartRoom (room.Connectors);
 	}
 
-	public void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
+	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
 		NeighbourGroups = neighbours;
 		_CreateThePath.SetStartRoom (neighbours);
 	}
+
 
 	#region What to do when colliding with objects  
 	//TODO improve this so that i only have to call one method for all objects

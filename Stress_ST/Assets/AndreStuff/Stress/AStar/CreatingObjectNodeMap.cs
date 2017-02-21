@@ -264,9 +264,11 @@ public class CreatingObjectNodeMap {
 				
 			//	_EndNode [0] = _NodeMap [Mathf.RoundToInt (0), Mathf.RoundToInt ((_XYDimentions - 1) / 2)];
 				if (x1 == _XYDimentions && x2 == 0 && y1 == _XYDimentions && y2 == 0 && _EndNode [0] == null) {
-					Debug.Log ("IM SRRY MASTER.... BUT THERE WAS A DEAD END");
+					_EndNode [0] = _StartNode [0];
+					return;
+				//		Debug.Log ("IM SRRY MASTER.... BUT THERE WAS A DEAD END");
 				} else {
-					Debug.Log ("inside");
+				//	Debug.Log ("inside zer loop");
 				}
 			}
 		} else {

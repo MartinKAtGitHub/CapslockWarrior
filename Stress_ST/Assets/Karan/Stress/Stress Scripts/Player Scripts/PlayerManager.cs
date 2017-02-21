@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerManager : DefaultBehaviour {
 
@@ -60,5 +61,8 @@ public class PlayerManager : DefaultBehaviour {
 
 	}
 
+	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
+		NeighbourGroups = neighbours;
+	}
 
 }

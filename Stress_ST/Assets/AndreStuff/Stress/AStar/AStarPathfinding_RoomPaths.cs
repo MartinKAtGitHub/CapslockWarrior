@@ -71,7 +71,6 @@ public class AStarPathfinding_RoomPaths{
 		_OpenListAtIndex = 0;
 		_ClosedListAtIndex = 0;
 		_RemakeIndex = 0;
-
 		if (_StartRoom == null || _EndRoom == null) {
 			return false;
 		}

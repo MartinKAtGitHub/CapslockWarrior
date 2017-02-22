@@ -1,30 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
+
+[RequireComponent(typeof(AudioSource))]
 
 public class PlayerManager : DefaultBehaviour {
 
 
 	public int HealthPoints;
 
+	public Text HealtPoints_Txt;
+	public Text ManaPoints_Txt;
+
 	void Awake(){
 		myPos [0, 0] = transform.position.x;
 		myPos [0, 1] = transform.position.y;	
 		MyNode [0] = new Nodes (myPos, 0);
 	}
-
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
-
-
-
-
-
-
-
 
 	// Update is called once per frame
 	void Update () 
@@ -37,7 +31,10 @@ public class PlayerManager : DefaultBehaviour {
 
 	public void TakeDamage(int damageAmount)
 	{
+		Debug.Log("HP REMAINING =" + (damageAmount / HealthPoints) * 100);
+
 		HealthPoints -= damageAmount;
+
 	}
 
 	private void isPlayerAlive()
@@ -55,7 +52,7 @@ public class PlayerManager : DefaultBehaviour {
 
 	}
 	public override void RecievedDmg(){
-
+		Debug.Log("LOLOLOLOLOLOLO");
 	}
 	public override void ChangeMovementAdd(float a){
 

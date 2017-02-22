@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GMDontDestroy : MonoBehaviour {
 
@@ -11,6 +12,11 @@ public class GMDontDestroy : MonoBehaviour {
 		{
 			Destroy(gameObject);
 		}
+
+		SceneManager.sceneLoaded += delegate {
+			Debug.Log("Level Loaded");
+     	
+		};
 	}
 
 }

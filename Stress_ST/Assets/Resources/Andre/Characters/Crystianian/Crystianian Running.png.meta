@@ -1,14 +1,15 @@
 fileFormatVersion: 2
-guid: b2a6c08a7b347ee46bebe05514b08207
-timeCreated: 1487704121
+guid: d63e89e9b08561e4cb7b826c722d1216
+timeCreated: 1487791931
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Crystianian walk test (1)_0
-    21300002: Crystianian walk test (1)_1
-    21300004: Crystianian walk test (1)_2
-    21300006: Crystianian walk test (1)_3
-    21300008: Crystianian walk test (1)_4
+    21300000: Crystianian Running_0
+    21300002: Crystianian Running_1
+    21300004: Crystianian Running_2
+    21300006: Crystianian Running_3
+    21300008: Crystianian Running_4
+    21300010: Crystianian Running_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -58,7 +59,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Crystianian walk test (1)_0
+      name: Crystianian Running_0
       rect:
         serializedVersion: 2
         x: 1
@@ -71,7 +72,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Crystianian walk test (1)_1
+      name: Crystianian Running_1
       rect:
         serializedVersion: 2
         x: 61
@@ -84,7 +85,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Crystianian walk test (1)_2
+      name: Crystianian Running_2
       rect:
         serializedVersion: 2
         x: 1
@@ -97,7 +98,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Crystianian walk test (1)_3
+      name: Crystianian Running_3
       rect:
         serializedVersion: 2
         x: 61
@@ -110,10 +111,23 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Crystianian walk test (1)_4
+      name: Crystianian Running_4
       rect:
         serializedVersion: 2
         x: 1
+        y: 1
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Running_5
+      rect:
+        serializedVersion: 2
+        x: 61
         y: 1
         width: 58
         height: 58

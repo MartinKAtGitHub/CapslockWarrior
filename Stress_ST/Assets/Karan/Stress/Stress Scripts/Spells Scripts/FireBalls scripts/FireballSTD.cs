@@ -120,7 +120,7 @@ public class FireballSTD : Fire {
 		}
 		else
 		{
-			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
+//			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
 			isSpellCasted = false;
 			//Debug.LogWarning(" SPELL IS FASLE LOLOLOLOL");
 			Destroy(this.gameObject);

@@ -9,10 +9,11 @@ using UnityEngine.UI;
 public class PlayerManager : DefaultBehaviour {
 
 
-	public int HealthPoints;
+	public float HealthPoints = 100;
 
-	public Text HealtPoints_Txt;
-	public Text ManaPoints_Txt;
+	// TODO ask andrew about prefab and ang drag and drop GM 
+	public Text HealtPoints_Txt; // I HAVE DRAGED AND DROPED THE TXT OBJECT
+	public Text ManaPoints_Txt; // I HAVE DRAGED AND DROPED THE TXT OBJECT
 
 	void Awake(){
 		myPos [0, 0] = transform.position.x;
@@ -31,7 +32,7 @@ public class PlayerManager : DefaultBehaviour {
 
 	public void TakeDamage(int damageAmount)
 	{
-		Debug.Log("HP REMAINING =" + (damageAmount / HealthPoints) * 100);
+		;
 
 		HealthPoints -= damageAmount;
 
@@ -45,16 +46,29 @@ public class PlayerManager : DefaultBehaviour {
 		}
 	}
 
-	public override void OnDestroyed(){
-
+	public override void OnDestroyed()
+	{
+		Debug.Log("DEAD OMG");
 	}
 	public override void AttackTarget(){
 
 	}
-	public override void RecievedDmg(int _damage){
-		Debug.Log("LOLOLOLOLOLOLO = " + _damage);
+	public override void RecievedDmg(int _damage)
+	{
+		float PercentageDmg;
+		float Total;
+
+		PercentageDmg = _damage / HealthPoints * 100;
+		Total = float.Parse(HealtPoints_Txt.text) -  PercentageDmg;
+		HealtPoints_Txt.text = Total.ToString();
+
+		if(PercentageDmg == 0)
+		{
+			OnDestroyed();
+		}
 	}
-	public override void ChangeMovementAdd(float a){
+	public override void ChangeMovementAdd(float a)
+	{
 
 	}
 

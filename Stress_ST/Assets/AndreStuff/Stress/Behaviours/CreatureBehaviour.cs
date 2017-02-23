@@ -36,8 +36,6 @@ public class CreatureBehaviour : MovingCreatures {
 				MovementFSM.Init(this);
 			}
 		}
-
-
 	}
 
 	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders

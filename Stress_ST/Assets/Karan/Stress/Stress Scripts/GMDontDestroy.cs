@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class GMDontDestroy : MonoBehaviour {
 
+
 	void Awake()// singleton for the game master.
 	{
 		DontDestroyOnLoad(this);

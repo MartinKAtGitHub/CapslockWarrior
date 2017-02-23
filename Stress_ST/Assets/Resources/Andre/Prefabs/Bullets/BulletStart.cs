@@ -35,7 +35,7 @@ public class BulletStart : MonoBehaviour {
 			Destroy (this.gameObject);
 		} else if(coll.gameObject != ImTheShooter) {//if im colliding with anything but myself(sender) make it recievedmg
 			if (coll.transform.GetComponent<DefaultBehaviour> () != null) {
-				coll.transform.GetComponent<DefaultBehaviour> ().RecievedDmg ();
+				coll.transform.GetComponent<DefaultBehaviour> ().RecievedDmg (1);
 				Destroy (this.gameObject);
 			}
 		}

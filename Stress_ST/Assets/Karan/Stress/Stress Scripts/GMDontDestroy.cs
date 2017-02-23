@@ -15,8 +15,6 @@ public class GMDontDestroy : MonoBehaviour {
 
 		SceneManager.sceneLoaded += delegate {
 			Debug.Log("Level Loaded");
-     	
 		};
 	}
-
 }

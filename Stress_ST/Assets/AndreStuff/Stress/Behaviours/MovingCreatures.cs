@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public abstract class MovingCreatures : DefaultBehaviour {
 
+
+	// Added
+	public DefaultBehaviour DefaultBehaviourTarget;
+	//-------
 	public FSM_Manager MovementFSM; // Needed for AI
 	public AStarPathfinding_RoomPaths _CreateThePath;// Needed for AI
 	public CreatingObjectNodeMap _PersonalNodeMap;// Needed for AI
@@ -33,7 +37,10 @@ public abstract class MovingCreatures : DefaultBehaviour {
 
 	public void SetTarget(GameObject target){
 		_GoAfter = target;
-		_CreateThePath.SetEndRoomAndNode (_GoAfter.GetComponent<DefaultBehaviour>().NeighbourGroups, _GoAfter.GetComponent<DefaultBehaviour>().GetMyNode());
+		// Added ----------------
+		DefaultBehaviourTarget = _GoAfter.GetComponent<DefaultBehaviour>();
+		// -----------
+		_CreateThePath.SetEndRoomAndNode (DefaultBehaviourTarget.NeighbourGroups, DefaultBehaviourTarget.GetMyNode());
 	}
 
 	public override void SetAiRoom(Wall_ID room){//just called once, and that is when spawning an object

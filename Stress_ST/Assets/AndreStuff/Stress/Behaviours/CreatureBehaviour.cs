@@ -36,6 +36,8 @@ public class CreatureBehaviour : MovingCreatures {
 				MovementFSM.Init(this);
 			}
 		}
+
+
 	}
 
 	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders
@@ -58,7 +60,6 @@ public class CreatureBehaviour : MovingCreatures {
 
 		Instantiate (Resources.Load ("Andre/Prefabs/Creatures/DeadObject") as GameObject, transform.position, Quaternion.identity);
 		Destroy (this.gameObject);
-
 	}
 
 	public override void AttackTarget(){
@@ -67,12 +68,13 @@ public class CreatureBehaviour : MovingCreatures {
 				if (CanIRanged [0] == true)
 					(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, _GoAfter);
 			} else if (CreatureType == StressEnums.EnemyType.Meele) {
-				_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();
+				//_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();
+				DefaultBehaviourTarget.RecievedDmg(2);
 			}
 		}
 	}
 	 
-	public override void RecievedDmg(){
+	public override void RecievedDmg(int _damage){
 		OnDestroyed ();
 	//	Debug.Log ("I Got Hit :" + name);
 	}

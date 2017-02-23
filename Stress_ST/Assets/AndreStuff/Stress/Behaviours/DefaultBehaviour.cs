@@ -21,7 +21,7 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 
 	public abstract void OnDestroyed ();
 	public abstract void AttackTarget ();
-	public abstract void RecievedDmg ();
+	public abstract void RecievedDmg (int _damage);
 	public abstract void ChangeMovementAdd(float a);
 
 	public virtual Nodes[] GetMyNode(){

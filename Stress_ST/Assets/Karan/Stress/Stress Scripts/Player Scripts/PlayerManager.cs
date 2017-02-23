@@ -51,8 +51,8 @@ public class PlayerManager : DefaultBehaviour {
 	public override void AttackTarget(){
 
 	}
-	public override void RecievedDmg(){
-		Debug.Log("LOLOLOLOLOLOLO");
+	public override void RecievedDmg(int _damage){
+		Debug.Log("LOLOLOLOLOLOLO = " + _damage);
 	}
 	public override void ChangeMovementAdd(float a){
 

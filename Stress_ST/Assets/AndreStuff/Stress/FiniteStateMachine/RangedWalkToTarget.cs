@@ -8,7 +8,7 @@ public class RangedWalkToTarget : DefaultState {
 	#region Refrenceholders
 
 	DefaultBehaviour TargetInfo;
-	MovingCreatures MyInfo;
+	CreatureBehaviour MyInfo;
 
 	CreatingObjectNodeMap PersonalNodeMap;
 	AStarPathfinding_RoomPaths CreateThePath;
@@ -67,7 +67,8 @@ public class RangedWalkToTarget : DefaultState {
 		CreateThePath = createThePath;
 
 		MyInfo = myInfo;
-		MyTransform = MyInfo.transform;
+		MyTransform = MyInfo.WalkColliderPoint.transform;
+	
 		_TheNodePath = PersonalNodeMap.GetNodeList ();
 		_Nodesindex = PersonalNodeMap.GetNodeindex ();
 

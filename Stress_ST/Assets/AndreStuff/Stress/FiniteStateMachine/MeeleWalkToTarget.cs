@@ -67,7 +67,7 @@ public class MeeleWalkToTarget : DefaultState {
 		CreateThePath = createThePath;
 
 		MyInfo = myInfo;
-		MyTransform = MyInfo.transform;
+		MyTransform = MyInfo.WalkColliderPoint.transform;
 		_TheNodePath = PersonalNodeMap.GetNodeList ();
 		_Nodesindex = PersonalNodeMap.GetNodeindex ();
 
@@ -129,7 +129,6 @@ public class MeeleWalkToTarget : DefaultState {
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
 
 		if (MyInfo.UpdateThePath == true) {
-
 			MyInfo.UpdateThePath = false;
 			NeighbourGroups = MyInfo.NeighbourGroups;
 			TargetNeighbourGroups = TargetInfo.NeighbourGroups;

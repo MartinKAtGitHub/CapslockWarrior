@@ -10,20 +10,28 @@ public class BulletStart : MonoBehaviour {
 	const string Wall = "Wall";
 
 	public float BulletSpeed;
+	public bool DoIHaveUpdate = true;
+	public bool DoIBehaviourHave = true;
+	public Vector3 XOffset = Vector3.zero;
 
 	void Start () {
 		MyRigidbody2D = GetComponent<Rigidbody2D> ();
 	}
 
-	public void SetParent(GameObject sender, GameObject target){
+	public void SetParent(GameObject sender, Vector3 target){
 		ImTheShooter = sender;
-		_MyShootingDirection = (target.transform.position - transform.position).normalized;
+		_MyShootingDirection = (target - transform.position).normalized;
 
-		if (target.transform.position.y < transform.position.y) {//this desides which way im rotating
-	/*unity -> obsolete so change this TODO*/		transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle(Vector3.right, _MyShootingDirection) * -1));//vec3.ang returns a deg value so changing it to rad
-		} else {
-	/*unity -> obsolete so change this TODO*/		transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle(Vector3.right, _MyShootingDirection) * 1));
-		}
+			if (target.y < transform.position.y) {//this desides which way im rotating
+				/*unity -> obsolete so change this TODO*/
+				transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle (Vector3.right, _MyShootingDirection) * -1));//vec3.ang returns a deg value so changing it to rad
+			} else {
+				/*unity -> obsolete so change this TODO*/
+				transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle (Vector3.right, _MyShootingDirection) * 1));
+			}
+
+		if (DoIHaveUpdate == false)
+			enabled = false;
 	}
 
 	void Update () {

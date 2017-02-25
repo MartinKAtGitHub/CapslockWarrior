@@ -11,8 +11,6 @@ public class BulletStart : MonoBehaviour {
 
 	public float BulletSpeed;
 	public bool DoIHaveUpdate = true;
-	public bool DoIBehaviourHave = true;
-	public Vector3 XOffset = Vector3.zero;
 
 	void Start () {
 		MyRigidbody2D = GetComponent<Rigidbody2D> ();

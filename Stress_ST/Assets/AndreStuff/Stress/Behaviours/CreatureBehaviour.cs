@@ -7,7 +7,6 @@ using System;
 public class CreatureBehaviour : MovingCreatures {
 
 	public StressEnums.NodeSizes NodeSizess = StressEnums.NodeSizes.One;
-	public float TheOffset = 0f;
 	public Transform HitPoint;
 
 	void Awake(){
@@ -71,23 +70,10 @@ public class CreatureBehaviour : MovingCreatures {
 
 					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, targetPos);;
 				}
-				/*if (transform.FindChild ("GFX").transform.localScale.x < 0) {
-					//saved = (Instantiate (Bullet, new Vector3 (transform.position.x + (TheOffset * -1), transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, targetPos);
-					(Instantiate (Bullet, new Vector3 (HitPoint.transform.GetChild(0).transform.position.x, HitPoint.transform.GetChild(0).transform.position.y, HitPoint.transform.GetChild(0).transform.position.z), Quaternion.identity) as GameObject)
-					//(Instantiate (Bullet, new Vector3 (HitPoint.transform.GetChild(0).transform.position.x, HitPoint.transform.GetChild(0).transform.position.y, HitPoint.transform.GetChild(0).transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, targetPos);
-				} else {
-					Debug.Log ("here");
-					saved = (Instantiate (Bullet, new Vector3 (HitPoint.transform.GetChild(0).transform.position.x, HitPoint.transform.GetChild(0).transform.position.y, HitPoint.transform.GetChild(0).transform.position.z), Quaternion.identity) as GameObject);
-					saved.GetComponent<BulletStart> ().SetParent (transform.gameObject, targetPos);
-					saved.transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle (Vector3.right, (HitPoint.transform.position - targetPos)) * -1));//vec3.ang returns a deg value so changing it to rad
-				
-				//	saved.transform.rotation = new Quaternion Vector3.Scale(saved.transform.localScale, new Vector3(-1,-1,1));
-				}*/
 			} else if (CreatureType == StressEnums.EnemyType.Meele) {
 				if (CanIRanged [0] == true) {
 					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, targetPos);;
 				} else {
-					//_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();
 					DefaultBehaviourTarget.RecievedDmg(2);
 				}
 			}

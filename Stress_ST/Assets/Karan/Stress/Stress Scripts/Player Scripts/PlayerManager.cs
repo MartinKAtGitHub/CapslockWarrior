@@ -55,7 +55,7 @@ public class PlayerManager : DefaultBehaviour {
 	}
 	public override void RecievedDmg(int _damage)
 	{
-	/*	float PercentageDmg;
+		float PercentageDmg;
 		float Total;
 
 		PercentageDmg = _damage / HealthPoints * 100;
@@ -65,7 +65,7 @@ public class PlayerManager : DefaultBehaviour {
 		if(PercentageDmg == 0)
 		{
 			OnDestroyed();
-		}*/
+		}
 	}
 	public override void ChangeMovementAdd(float a)
 	{

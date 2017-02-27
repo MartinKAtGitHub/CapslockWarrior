@@ -50,6 +50,7 @@ public class AttackState : DefaultState {
 		_MyRigidbody2D.velocity = new Vector2 (0, 0);
 		_MyAnimator.SetFloat ("ChangeAnimation", 5);
 		targetPoss = _TargetInfo.transform.position;
+
 		ShootingAnimation.Shoot = false;
 		QuittingAnimation.ImQuitting = false;
 	

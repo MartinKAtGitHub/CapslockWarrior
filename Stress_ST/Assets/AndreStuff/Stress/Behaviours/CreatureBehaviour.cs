@@ -9,6 +9,7 @@ public class CreatureBehaviour : MovingCreatures {
 	public StressEnums.NodeSizes NodeSizess = StressEnums.NodeSizes.One;
 	public Transform HitPoint;
 	public Transform WalkColliderPoint;
+
 	void Awake(){
 		if (WalkColliderPoint == null)
 			WalkColliderPoint = this.transform;
@@ -71,11 +72,11 @@ public class CreatureBehaviour : MovingCreatures {
 			if (CreatureType == StressEnums.EnemyType.Ranged) {
 				if (CanIRanged [0] == true) {
 
-					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, targetPos);;
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos);;
 				}
 			} else if (CreatureType == StressEnums.EnemyType.Meele) {
 				if (CanIRanged [0] == true) {
-					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, targetPos);;
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos);;
 				} else {
 					DefaultBehaviourTarget.RecievedDmg(2);
 				}

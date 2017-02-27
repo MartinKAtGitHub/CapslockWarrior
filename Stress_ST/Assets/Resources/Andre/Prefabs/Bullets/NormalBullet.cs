@@ -1,22 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletStart : MonoBehaviour {
+public class NormalBullet : BulletBehaviour {
 
-	GameObject ImTheShooter;
-	Rigidbody2D MyRigidbody2D;
-
-	Vector3 _MyShootingDirection;
-	const string Wall = "Wall";
-
-	public float BulletSpeed;
-	public bool DoIHaveUpdate = true;
 
 	void Start () {
 		MyRigidbody2D = GetComponent<Rigidbody2D> ();
 	}
 
-	public void SetParent(GameObject sender, Vector3 target){
+	public override void SetObjectDirection(GameObject sender, Vector3 target){
 		ImTheShooter = sender;
 		_MyShootingDirection = (target - transform.position).normalized;
 
@@ -27,12 +19,9 @@ public class BulletStart : MonoBehaviour {
 				/*unity -> obsolete so change this TODO*/
 				transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle (Vector3.right, _MyShootingDirection) * 1));
 			}
-
-		if (DoIHaveUpdate == false)
-			enabled = false;
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		MyRigidbody2D.velocity = _MyShootingDirection * BulletSpeed;
 	}
 

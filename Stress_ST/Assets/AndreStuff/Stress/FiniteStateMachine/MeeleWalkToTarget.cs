@@ -183,7 +183,7 @@ public class MeeleWalkToTarget : DefaultState {
 				_MovementDirection.y = TargetInfo.myPos[0,1] ;
 			
 			
-				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//TODO quickfix
+				if (Vector2.Distance ((Vector2)MyInfo.transform.position, _MovementDirection) <= _Range) {//TODO quickfix
 					_MovementDirection = (new Vector2 (TargetInfo.myPos [0, 0], TargetInfo.myPos [0, 1]) - new Vector2 (MyInfo.myPos [0, 0], MyInfo.myPos [0, 1]));
 						if (_MovementDirection.x < width && _MovementDirection.x > -width && _MovementDirection.y < height && _MovementDirection.y > -height) {
 						_ReturnState = "AttackState";

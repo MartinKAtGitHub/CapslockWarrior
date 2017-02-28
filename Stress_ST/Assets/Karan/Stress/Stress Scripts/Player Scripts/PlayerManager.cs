@@ -66,6 +66,7 @@ public class PlayerManager : DefaultBehaviour {
 		{
 			OnDestroyed();
 		}
+
 	}
 	public override void ChangeMovementAdd(float a)
 	{

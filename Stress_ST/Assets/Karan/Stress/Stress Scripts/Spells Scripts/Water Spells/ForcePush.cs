@@ -43,6 +43,10 @@ public class ForcePush : Water {
 		ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
 	}
 
+	public override bool CastBoolienReturn ()
+	{
+		throw new System.NotImplementedException ();
+	}
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if(other.tag == "Enemy")

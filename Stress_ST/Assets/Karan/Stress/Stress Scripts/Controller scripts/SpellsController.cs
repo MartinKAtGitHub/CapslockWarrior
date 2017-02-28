@@ -108,20 +108,90 @@ public class SpellsController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		CheckKeyPress();
+		//CheckKeyPressSecondVersion();
+	
+	}
+
+	void CheckKeyPressSecondVersion()
+	{
+		Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
+		NoCheckForSpellIsUsed();
+		//if(SpellsOnKeyOne.InGameSpellRef != null)
+		//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name + " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer);
+
+		if(Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			if(timerForSpellOnKeyOne <= 0)
+			{
+				SpellsOnKeyOne.Cast();
+				spellKeyOneReady = false;
+				//timerForSpellOnKeyOne = SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer; // dont think we can cache this yet. leav it for now
+				//timerForSpellOnKeyOne = saveTimerKeyOne;
+				//Debug.Log("olololololololol");
+			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer);
+			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.CoolDownTimer);
+			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().IsSpellCasted);
+			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.IsSpellCasted);
+			}
+			else
+			{
+			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer);
+			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.CoolDownTimer);
+			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().IsSpellCasted);
+			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.IsSpellCasted);
+			}
+		}
+		if(Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			if(timerForSpellOnKeyTwo < 0)
+			{
+				SpellsOnKeyTwo.Cast();
+				spellKeyTwoReady = false;
+				timerForSpellOnKeyTwo = saveTimerKeyTwo;
+			}
+		}
+		if(Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			if(timerForSpellOnKeyThree < 0)
+			{
+				SpellsOnKeyThree.Cast();
+				spellKeyThreeReady = false;
+				timerForSpellOnKeyThree = saveTimerKeyThree;
+			}
+		}
+		if(Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			if(timerForSpellOnKeyFour < 0)
+			{
+				SpellsOnKeyFour.Cast();
+				spellKeyTwoReady = false;
+				timerForSpellOnKeyFour = saveTimerKeyFour;
+			}
+		}
+	}
+
+	void CheckKeyPress()
+	{
+		Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
+		//Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyFour);
 		CheckCoolDowns();
 		
 		if(Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			if(spellKeyOneReady == true)
 			{
-				SpellsOnKeyOne.Cast();
+				//SpellsOnKeyOne.Cast();
 				spellKeyOneReady = false;
-				timerForSpellOnKeyOne = saveTimerKeyOne;
-				//Debug.Log("Timerk1 -> " + timerForSpellOnKeyOne);
-			}
-			else
-			{
-				//Debug.LogWarning(AgumentedSpellGameObjectKeyOne.gameObject.name + " IS NOT READY");
+				 if(SpellsOnKeyOne.CastBoolienReturn())
+				 {
+					timerForSpellOnKeyOne = saveTimerKeyOne;
+					Debug.Log("START TIMER AGAIN");
+				 }
+				 else
+				 {
+					Debug.Log("DONT START TIMER AGAIN");
+				 }
 			}
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha2))
@@ -153,13 +223,12 @@ public class SpellsController : MonoBehaviour {
 		}
 	}
 
-
 	void CheckCoolDowns()
 	{
 
-		//CheckForSpellIsUSed();
+		CheckForSpellIsUSed();
 
-		NoCheckForSpellIsUsed();
+		//NoCheckForSpellIsUsed();
 
 		////////////////////////////////////////////
 		if(timerForSpellOnKeyOne <= 0)
@@ -190,14 +259,15 @@ public class SpellsController : MonoBehaviour {
 
 		if(SpellsOnKeyOne.IsSpellCasted == true && timerForSpellOnKeyOne >= 0)
 		{
+
 			timerForSpellOnKeyOne -= Time.deltaTime;
 			//Debug.LogWarning(" SPELL 1  IS COOLDOWN -- > " + timerForSpellOnKeyOne);
 			//Debug.LogWarning(" SPELL 1  IS COOLDOWN -- > ");
-			//Debug.LogWarning(SpellsOnKeyOne.IsSpellCasted);
+			Debug.LogWarning("Succses" +SpellsOnKeyOne.IsSpellCasted);
 		}else
 		{
 			//Debug.LogWarning(" SPELL 1  NOT COOLDOWN");
-			//Debug.LogWarning(SpellsOnKeyOne.IsSpellCasted);
+			Debug.LogWarning( "FAILED " + SpellsOnKeyOne.IsSpellCasted);
 		}
 
 		if(SpellsOnKeyTwo.IsSpellCasted == true)

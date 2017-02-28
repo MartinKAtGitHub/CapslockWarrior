@@ -16,7 +16,8 @@ public class FireballSTD : Fire {
 	private ParticleSystem ImpactGM;
 	private GameObject graphics;
 	private BoxCollider2D hotShotHitBox;
-	GameObject TestGM;
+	private float SaveCoolDownTimer;
+	//public float SaveCoolDownTimer;
 
 	private bool isSpellCasted;
 
@@ -35,14 +36,15 @@ public class FireballSTD : Fire {
 
 	void Start () 
 	{
-		
+		SaveCoolDownTimer = CoolDownTimer;
+		Debug.Log(SaveCoolDownTimer + "<----SAVED");
 		//rb = GetComponent<Rigidbody2D>();
 		HSParticleSystem = this.gameObject.GetComponentInChildren<ParticleSystem>(); // I can do this to the Top/ first child but nt second
 		ImpactGM = this.gameObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>(); // This is not Code firednly as i am manually telling where the child is. 
 		graphics = this.gameObject.transform.GetChild(0).gameObject;
 		hotShotHitBox = this.gameObject.GetComponent<BoxCollider2D>();
-		ScanForClosestTarget();
-	
+		//ScanForClosestTarget();
+		Debug.Log("Fire ball target =" + fireBallTarget.name);
 		//Debug.LogError(this.gameObject.name + " ->" + IsSpellCasted);
 	}
 	/*void FixedUpdate () 
@@ -59,6 +61,10 @@ public class FireballSTD : Fire {
 			Vector3 dir = fireBallTarget.transform.position - transform.position;
 			float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+		}
+		else
+		{
+			//Debug.Log("Target is null");
 		}
 	}
 
@@ -87,9 +93,16 @@ public class FireballSTD : Fire {
 	public override void Cast()
 	{
 		//TODO Can change the HotShot Code to ScanForClosestTarget() then instanciate if enemy range
-		 //ScanForClosestTarget();
-		TestGM = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
-		//isSpellCasted = TestGM.GetComponent<Spells>().IsSpellCasted;
+		//ScanForClosestTarget();
+		ScanForClosestTarget();
+		//InGameSpellRef.GetComponent<FireballSTD>().CoolDownTimer = CoolDownTimer;
+
+	}
+
+	public override bool CastBoolienReturn()
+	{
+		return ScanForClosesTargetBoolienCheck();
+
 	}
 
 	void ScanForClosestTarget()// TODO add if no enemys are in range
@@ -108,25 +121,62 @@ public class FireballSTD : Fire {
 				//Debug.Log("Distance IS = " + distance);
 				if(distance < minDistance)
 				{
+					InGameSpellRef = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
 					minDistance = distance;
-					fireBallTarget = enemiesInRange[i].gameObject;
+					InGameSpellRef.GetComponent<FireballSTD>().fireBallTarget = enemiesInRange[i].gameObject;
+
 					Debug.Log(enemiesInRange[i].gameObject.name);
-					//Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity); Wont spawn GM
+					IsSpellCasted = true;
 				}
 			}
-
-			isSpellCasted = true;
+			//isSpellCasted = true;
 			//Debug.LogWarning(" SPELL IS TRUE LOLOLOLOL");
 		}
 		else
 		{
-//			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
-			isSpellCasted = false;
-			//Debug.LogWarning(" SPELL IS FASLE LOLOLOLOL");
-			Destroy(this.gameObject);
+			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
+			//InGameSpellRef = this.gameObject;
+			//isSpellCasted = false;
+			//IsSpellCasted = false;
+			//CoolDownTimer = 0;
+			//Destroy(this.gameObject);
 		}
 	}
 
+	bool ScanForClosesTargetBoolienCheck()
+	{
+		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position,DetectionRange,FireBallDetection);
+		if(enemiesInRange.Length > 0) // I get back an array of targets if in range, so if > 0 then i got someone in range
+		{
+			float distance = 0;
+			float minDistance = DetectionRange; // i need a value that is higher then the distance that can be detected
+			//Debug.Log(ProjectileSpawn.position + "CENTER OF RANGE");
+			for (int i = 0; i < enemiesInRange.Length; i++) 
+			{
+				//TODO maybe use Math.abs
+				distance = Vector3.Distance(enemiesInRange[i].gameObject.transform.position, SpellSpawnPos.position);
+				//distance = Mathf.Abs(distance);
+				//Debug.Log("Distance IS = " + distance);
+				if(distance < minDistance)
+				{
+					InGameSpellRef = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
+					minDistance = distance;
+					InGameSpellRef.GetComponent<FireballSTD>().fireBallTarget = enemiesInRange[i].gameObject;
+
+					Debug.Log(enemiesInRange[i].gameObject.name);
+					IsSpellCasted = true;
+				}
+			}
+			return true;
+			//isSpellCasted = true;
+			//Debug.LogWarning(" SPELL IS TRUE LOLOLOLOL");
+		}
+		else
+		{
+			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
+			return false;
+		}
+	}
 	void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.cyan;

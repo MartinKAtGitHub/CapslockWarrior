@@ -68,5 +68,8 @@ public class SlowFieldSpell : Earth {
 	}
 
 
-
+	public override bool CastBoolienReturn()
+	{
+		return true;
+	}
 }

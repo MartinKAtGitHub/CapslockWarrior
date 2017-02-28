@@ -75,6 +75,11 @@ public class TeleportSmallDistance : Wind {
 		}
 	}
 
+	public override bool CastBoolienReturn ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
 	private void SmokeTrailEffect()
 	{
 		// Buggy dosent fully follow

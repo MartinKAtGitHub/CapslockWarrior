@@ -10,11 +10,12 @@ public abstract class Spells : MonoBehaviour{
 	public Transform SpellSpawnPos;
 	public GameObject PlayerGameObject;
 	public abstract bool IsSpellCasted {get;set;}
+	public GameObject InGameSpellRef;
 	//----------
 
 	/// <summary>
 	/// Use this to cast the spell
 	/// </summary>
 	public abstract void Cast();
-
+	public abstract bool CastBoolienReturn();
 }

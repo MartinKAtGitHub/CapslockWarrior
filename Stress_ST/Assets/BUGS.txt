@@ -1,3 +1,6 @@
+//Tips
+animatorcontroller animaitons using StateMachineBehaviour -> if object is a prefab then the refrences placed on the prefab is a direct refrence to the prefab itself, not the newly instantiated object. so if you need something from the prefab you need to attach it at runtime, not through public variables
+
 
 
 
@@ -10,13 +13,20 @@ Ui - NullPoint Page reset, Select another Page before prevois page has faded out
 
 
 
+
+
+
+
+
+
+
 // Andrew Bugs
 random words make -> engelsk, norsk
 enemy word change at spawn
-
 Enemy dont collider with walls
-
-
 
 //Questionable changes
 Wolf behaviour change? -> walking at normal speed but when in range of the target(player) it starts to charge and runs fast until his stamina is empty. then if he doesnt reach the target in time he lays down to sleep or something? (like irl lions n stuff)
+
+//TODOS
+AI improvement -> a wall need to have an additional size added to it depending on creature boxcolider. so if wall is 10x  and the creature is 2x then the wall in the nodemap should be 12x.. + y axis to  

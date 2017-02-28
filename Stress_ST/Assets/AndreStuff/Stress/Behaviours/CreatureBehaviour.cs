@@ -7,19 +7,24 @@ using System;
 public class CreatureBehaviour : MovingCreatures {
 
 	public StressEnums.NodeSizes NodeSizess = StressEnums.NodeSizes.One;
+	public Transform HitPoint;
+	public Transform WalkColliderPoint;
 
 	void Awake(){
-		
-		myPos [0, 0] = transform.position.x;
-		myPos [0, 1] = transform.position.y;	
+		if (WalkColliderPoint == null)
+			WalkColliderPoint = this.transform;
+		myPos [0, 0] = WalkColliderPoint.position.x;
+		myPos [0, 1] = WalkColliderPoint.position.y;	
 		MyNode [0] = new Nodes (myPos, 0);
 		_CreateThePath = new AStarPathfinding_RoomPaths (54, MyNode[0]);//TODO make 54 and 13 gamemanagervariables so that i get them and put them here
-		_PersonalNodeMap = new CreatingObjectNodeMap( transform.FindChild ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2, NodeSizess, PathfindingNodeID);//if i do this then the constructor is only called once instead of 4 times......
+		_PersonalNodeMap = new CreatingObjectNodeMap(transform.FindChild("FeetCollider").GetComponent<BoxCollider2D>().size, transform.FindChild ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2, NodeSizess, PathfindingNodeID);//if i do this then the constructor is only called once instead of 4 times......
 	}
 
 	void Start(){
 		_PersonalNodeMap.CreateNodeMap ();
 		_PersonalNodeMap.SetCenterPos (myPos);
+	
+
 
 		if(GameObject.FindGameObjectWithTag ("Player1") != null)//TODO make target hierarchy. then iterate on it an take the first one alive
 			SetTarget (GameObject.FindGameObjectWithTag ("Player1"));
@@ -39,8 +44,8 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders
-		myPos [0, 0] = transform.position.x;
-		myPos [0, 1] = transform.position.y;
+		myPos [0, 0] = WalkColliderPoint.position.x;
+		myPos [0, 1] = WalkColliderPoint.position.y;
 
 		if (RunPathfinding == true) {
 			if (FreezeCharacter == true) {
@@ -60,14 +65,21 @@ public class CreatureBehaviour : MovingCreatures {
 		Destroy (this.gameObject);
 	}
 
-	public override void AttackTarget(){
+	GameObject saved;
+	public override void AttackTarget(Vector3 targetPos){
+		
 		if (_GoAfter != null) {
 			if (CreatureType == StressEnums.EnemyType.Ranged) {
-				if (CanIRanged [0] == true)
-					(Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletStart> ().SetParent (transform.gameObject, _GoAfter);
+				if (CanIRanged [0] == true) {
+
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos);;
+				}
 			} else if (CreatureType == StressEnums.EnemyType.Meele) {
-				//_GoAfter.GetComponent<DefaultBehaviour> ().RecievedDmg ();
-				DefaultBehaviourTarget.RecievedDmg(2);
+				if (CanIRanged [0] == true) {
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos);;
+				} else {
+					DefaultBehaviourTarget.RecievedDmg(2);
+				}
 			}
 		}
 	}
@@ -101,13 +113,13 @@ public class CreatureBehaviour : MovingCreatures {
 						Gizmos.color = Color.yellow;
 					
 					}
-					Gizmos.DrawCube (new Vector3 ((mynodes [x, y].GetID () [0, 0]) + transform.position.x, (mynodes [x, y].GetID () [0, 1]) + transform.position.y, 0), new Vector3 (size, size, size));
+					Gizmos.DrawCube (new Vector3 ((mynodes [x, y].GetID () [0, 0]) + WalkColliderPoint.position.x, (mynodes [x, y].GetID () [0, 1]) + WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
 				}
 			}
 			Gizmos.color = Color.white;
-			Gizmos.DrawCube (new Vector3 ((mynodes [0, 0].GetID () [0, 0])  + transform.position.x, (mynodes [0, 0].GetID () [0, 1]) + transform.position.y, 0), new Vector3 (size, size, size));
+			Gizmos.DrawCube (new Vector3 ((mynodes [0, 0].GetID () [0, 0])  + WalkColliderPoint.position.x, (mynodes [0, 0].GetID () [0, 1]) + WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
 			Gizmos.color = Color.yellow;
-			Gizmos.DrawCube (new Vector3 ((mynodes [0, 1].GetID () [0, 0]) + transform.position.x, (mynodes [0, 1].GetID () [0, 1])+ transform.position.y, 0), new Vector3 (size, size, size));
+			Gizmos.DrawCube (new Vector3 ((mynodes [0, 1].GetID () [0, 0]) + WalkColliderPoint.position.x, (mynodes [0, 1].GetID () [0, 1])+ WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
 
 
 		
@@ -116,7 +128,7 @@ public class CreatureBehaviour : MovingCreatures {
 			int[] count = _PersonalNodeMap.GetNodeindex ();
 			for(int sas = count[0]; sas < mynodess.Length; sas++){
 				Gizmos.color = Color.red;
-				Gizmos.DrawCube (new Vector3 (mynodess[sas].GetID()[0,0] + transform.position.x, mynodess[sas].GetID()[0,1] + transform.position.y, 0), new Vector3 (size, size, size));
+				Gizmos.DrawCube (new Vector3 (mynodess[sas].GetID()[0,0] + WalkColliderPoint.position.x, mynodess[sas].GetID()[0,1] + WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
 			}
 
 			mynodes = _PersonalNodeMap.GetNodemap ();

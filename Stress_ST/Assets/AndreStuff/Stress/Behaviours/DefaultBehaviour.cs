@@ -20,7 +20,7 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	public float[] MovementSpeed = new float[1];
 
 	public abstract void OnDestroyed ();
-	public abstract void AttackTarget ();
+	public abstract void AttackTarget (Vector3 targetPos);
 	public abstract void RecievedDmg (int _damage);
 	public abstract void ChangeMovementAdd(float a);
 

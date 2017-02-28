@@ -41,12 +41,16 @@ public class CreatingObjectNodeMap {
 	int _ListLength = 0; //used to store the length of the list of the colliders
 	int x = 0;
 	int y = 0;
+	Vector3 WallOffset = Vector3.zero;
 
-	public CreatingObjectNodeMap (float XYDimentions, StressEnums.NodeSizes NodeSize, float[] pathnodeid){
+
+	public CreatingObjectNodeMap (Vector2 FeetCollider, float XYDimentions, StressEnums.NodeSizes NodeSize, float[] pathnodeid){
 		_NodeSize = 1 / (float)NodeSize;
 
 		_XYDimentions =  Mathf.FloorToInt(XYDimentions / _NodeSize * 2) + 1; 
 		_HalfDimention = Mathf.FloorToInt(XYDimentions);
+		WallOffset = (Vector3)FeetCollider / 2.5f;
+
 
 		_PathNodeIDStorer = pathnodeid;
 		_NodeMap = new Nodes[_XYDimentions, _XYDimentions];
@@ -319,8 +323,8 @@ public class CreatingObjectNodeMap {
 			
 				_ColliderBounds = _EnemyColliders [k].bounds;
 
-				_UpperRightCorner = _ColliderBounds.max;
-				_LowerLeftCorner = _ColliderBounds.min;
+			_UpperRightCorner = _ColliderBounds.max + WallOffset;
+			_LowerLeftCorner = _ColliderBounds.min - WallOffset;
 
 				_LeftPoint = (int)(_LowerLeftCorner.x - (_CenterPos [0, 0] - (_XDimention + 0.5f)));
 				if (_LeftPoint < 0)
@@ -354,8 +358,8 @@ public class CreatingObjectNodeMap {
 
 
 
-			_UpperRightCorner = _ColliderBounds.max;
-			_LowerLeftCorner = _ColliderBounds.min;
+		_UpperRightCorner = _ColliderBounds.max + WallOffset;
+		_LowerLeftCorner = _ColliderBounds.min - WallOffset;
 
 	
 		if (_LowerLeftCorner.x < _CenterPos [0, 0] - _HalfDimention) {//same just with y

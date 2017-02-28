@@ -68,8 +68,8 @@ public class RoomConnectorCreating : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D coll){//when a gameobject is inside the collider with tag == wall, then update the nodemap and recalculate the pathlist 
-		if (coll.transform.GetComponent<DefaultBehaviour> () != null) {//TODO RemoveTHIS when AI is fully implemented(not fully but corretly) on everything
-			coll.transform.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (_MyRoom);
+		if (coll.transform.parent != null && coll.transform.parent.transform.GetComponent<DefaultBehaviour> () != null) {//TODO RemoveTHIS when AI is fully implemented(not fully but corretly) on everything
+			coll.transform.parent.transform.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (_MyRoom);
 		}
 	}
 
@@ -86,15 +86,15 @@ public class RoomConnectorCreating : MonoBehaviour {
 
 			if (LeftOrRight == true) {//checking if the object exited the collider inside of a specifik angle
 				if (_ObjectsAngleDifference > -_MaxAngleDifference && _ObjectsAngleDifference < _MaxAngleDifference) {
-					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
 				} else {
-					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
 				}
 			} else {
 				if (!(_ObjectsAngleDifference > -_MaxAngleDifference && _ObjectsAngleDifference < _MaxAngleDifference)) {
-					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
 				} else {
-					coll.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
 				}
 			}
 		}

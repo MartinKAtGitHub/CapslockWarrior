@@ -1,24 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShootingAfterAnimation : StateMachineBehaviour {
-	public bool ShootingAnimationFinished = false;
-	public int AnimationStages = 1;
+public class DeactivateColliders : StateMachineBehaviour {
 
-	//OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-	//	ShootingAnimationFinished = false;
+	BoxCollider2D[] Colliders;
+	public int startpoint = 0;
+	public int endpoint = 0;
+
+	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+	//override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	//
-	}
+	//}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	//override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	//
 	//}
 
-	//OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		ShootingAnimationFinished = true;
+		Colliders = animator.GetComponents<BoxCollider2D> ();
+
+
+
+		for (int i = startpoint; i <= endpoint ; i++) {
+			Colliders [i].enabled = false;
+		}
+
+
+		Destroy (animator.transform.parent.gameObject);
+
+		//
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

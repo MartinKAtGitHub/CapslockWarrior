@@ -67,7 +67,7 @@ public class MeeleWalkToTarget : DefaultState {
 		CreateThePath = createThePath;
 
 		MyInfo = myInfo;
-		MyTransform = MyInfo.transform;
+		MyTransform = MyInfo.WalkColliderPoint.transform;
 		_TheNodePath = PersonalNodeMap.GetNodeList ();
 		_Nodesindex = PersonalNodeMap.GetNodeindex ();
 
@@ -129,7 +129,6 @@ public class MeeleWalkToTarget : DefaultState {
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
 
 		if (MyInfo.UpdateThePath == true) {
-
 			MyInfo.UpdateThePath = false;
 			NeighbourGroups = MyInfo.NeighbourGroups;
 			TargetNeighbourGroups = TargetInfo.NeighbourGroups;
@@ -184,7 +183,7 @@ public class MeeleWalkToTarget : DefaultState {
 				_MovementDirection.y = TargetInfo.myPos[0,1] ;
 			
 			
-				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//TODO quickfix
+				if (Vector2.Distance ((Vector2)MyInfo.transform.position, _MovementDirection) <= _Range) {//TODO quickfix
 					_MovementDirection = (new Vector2 (TargetInfo.myPos [0, 0], TargetInfo.myPos [0, 1]) - new Vector2 (MyInfo.myPos [0, 0], MyInfo.myPos [0, 1]));
 						if (_MovementDirection.x < width && _MovementDirection.x > -width && _MovementDirection.y < height && _MovementDirection.y > -height) {
 						_ReturnState = "AttackState";

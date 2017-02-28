@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: 8c4b1c2fe7473d841aedc0b3f7e7e1c5
+timeCreated: 1487862581
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Crystianian Attacking Punch_0
+    21300002: Crystianian Attacking Punch_1
+    21300004: Crystianian Attacking Punch_2
+    21300006: Crystianian Attacking Punch_3
+    21300008: Crystianian Attacking Punch_4
+    21300010: Crystianian Attacking Punch_5
+    21300012: Crystianian Attacking Punch_6
+    21300014: Crystianian Attacking Punch_7
+    21300016: Crystianian Attacking Punch_8
+    21300018: Crystianian Attacking Punch_9
+    21300020: Crystianian Attacking Punch_10
+    21300022: Crystianian Attacking Punch_11
+    21300024: Crystianian Attacking Punch_12
+    21300026: Crystianian Attacking Punch_13
+    21300028: Crystianian Attacking Punch_14
+    21300030: Crystianian Attacking Punch_15
+    21300032: Crystianian Attacking Punch_16
+    21300034: Crystianian Attacking Punch_17
+    21300036: Crystianian Attacking Punch_18
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 241
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_1
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 241
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_2
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 241
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_3
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 241
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 181
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_5
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 181
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_6
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 181
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_7
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 181
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 121
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_9
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 121
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_10
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 121
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_11
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 121
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 61
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_13
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 61
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_14
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 61
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_15
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 61
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_17
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 1
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Crystianian Attacking Punch_18
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 1
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

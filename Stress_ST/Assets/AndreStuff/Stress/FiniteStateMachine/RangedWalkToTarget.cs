@@ -8,7 +8,7 @@ public class RangedWalkToTarget : DefaultState {
 	#region Refrenceholders
 
 	DefaultBehaviour TargetInfo;
-	MovingCreatures MyInfo;
+	CreatureBehaviour MyInfo;
 
 	CreatingObjectNodeMap PersonalNodeMap;
 	AStarPathfinding_RoomPaths CreateThePath;
@@ -67,7 +67,8 @@ public class RangedWalkToTarget : DefaultState {
 		CreateThePath = createThePath;
 
 		MyInfo = myInfo;
-		MyTransform = MyInfo.transform;
+		MyTransform = MyInfo.WalkColliderPoint.transform;
+	
 		_TheNodePath = PersonalNodeMap.GetNodeList ();
 		_Nodesindex = PersonalNodeMap.GetNodeindex ();
 
@@ -180,8 +181,8 @@ public class RangedWalkToTarget : DefaultState {
 				_MovementDirection.x = TargetInfo.myPos[0,0];
 				_MovementDirection.y = TargetInfo.myPos[0,1];
 
-				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
-					if (Physics2D.Linecast ((Vector2)MyTransform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
+				if (Vector2.Distance ((Vector2)MyInfo.transform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
+					if (Physics2D.Linecast ((Vector2)MyInfo.transform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
 						_ReturnState = "AttackState";
 						return;
 					} 

@@ -173,7 +173,7 @@ public class SpellsController : MonoBehaviour {
 
 	void CheckKeyPress()
 	{
-		Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
+	//	Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
 		//Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyFour);
 		CheckCoolDowns();
 		
@@ -267,7 +267,7 @@ public class SpellsController : MonoBehaviour {
 		}else
 		{
 			//Debug.LogWarning(" SPELL 1  NOT COOLDOWN");
-			Debug.LogWarning( "FAILED " + SpellsOnKeyOne.IsSpellCasted);
+		//	Debug.LogWarning( "FAILED " + SpellsOnKeyOne.IsSpellCasted);
 		}
 
 		if(SpellsOnKeyTwo.IsSpellCasted == true)

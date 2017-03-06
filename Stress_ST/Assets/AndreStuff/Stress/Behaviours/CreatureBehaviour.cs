@@ -44,8 +44,37 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders
+
 		myPos [0, 0] = WalkColliderPoint.position.x;
 		myPos [0, 1] = WalkColliderPoint.position.y;
+
+		if (myPos [0, 0] < 0) {
+			if ((myPos [0, 0] % 0.25f) < -0.125f) {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) - 0.25f;
+			} else {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
+			}
+		} else {
+			if ((myPos [0, 0] % 0.25f) < 0.125f) {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
+			} else {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) + 0.25f;
+			}
+		}
+
+		if (myPos [0, 1] < 0) {
+			if ((myPos [0, 1] % 0.25f) < -0.125f) {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) - 0.25f;
+			} else {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
+			}
+		} else {
+			if ((myPos [0, 1] % 0.25f) < 0.125f) {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
+			} else {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) + 0.25f;
+			}
+		}
 
 		if (RunPathfinding == true) {
 			if (FreezeCharacter == true) {
@@ -112,14 +141,14 @@ public class CreatureBehaviour : MovingCreatures {
 					} else {
 						Gizmos.color = Color.yellow;
 					
-					}
-					Gizmos.DrawCube (new Vector3 ((mynodes [x, y].GetID () [0, 0]) + WalkColliderPoint.position.x, (mynodes [x, y].GetID () [0, 1]) + WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
+					} 
+					Gizmos.DrawCube (new Vector3 ((mynodes [x, y].GetID () [0, 0]) + myPos [0, 0], (mynodes [x, y].GetID () [0, 1]) + myPos [0, 1], 0), new Vector3 (size, size, size));
 				}
 			}
 			Gizmos.color = Color.white;
-			Gizmos.DrawCube (new Vector3 ((mynodes [0, 0].GetID () [0, 0])  + WalkColliderPoint.position.x, (mynodes [0, 0].GetID () [0, 1]) + WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
+			Gizmos.DrawCube (new Vector3 ((mynodes [0, 0].GetID () [0, 0])  + myPos [0, 0], (mynodes [0, 0].GetID () [0, 1]) + myPos [0, 1], 0), new Vector3 (size, size, size));
 			Gizmos.color = Color.yellow;
-			Gizmos.DrawCube (new Vector3 ((mynodes [0, 1].GetID () [0, 0]) + WalkColliderPoint.position.x, (mynodes [0, 1].GetID () [0, 1])+ WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
+			Gizmos.DrawCube (new Vector3 ((mynodes [0, 1].GetID () [0, 0]) + myPos [0, 0], (mynodes [0, 1].GetID () [0, 1])+ myPos [0, 1], 0), new Vector3 (size, size, size));
 
 
 		
@@ -128,10 +157,40 @@ public class CreatureBehaviour : MovingCreatures {
 			int[] count = _PersonalNodeMap.GetNodeindex ();
 			for(int sas = count[0]; sas < mynodess.Length; sas++){
 				Gizmos.color = Color.red;
-				Gizmos.DrawCube (new Vector3 (mynodess[sas].GetID()[0,0] + WalkColliderPoint.position.x, mynodess[sas].GetID()[0,1] + WalkColliderPoint.position.y, 0), new Vector3 (size, size, size));
+				Gizmos.DrawCube (new Vector3 (mynodess[sas].GetID()[0,0] + myPos [0, 0], mynodess[sas].GetID()[0,1] + myPos [0, 1], 0), new Vector3 (size, size, size));
 			}
 
 			mynodes = _PersonalNodeMap.GetNodemap ();
+
+			/*for (int x = 0; x < Mathf.FloorToInt((transform.FindChild ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2) / (1 / (float)NodeSizess) * 2) + 1; x++) {
+				for (int y = 0; y <  Mathf.FloorToInt((transform.FindChild ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2) / (1 / (float)NodeSizess) * 2) + 1; y++) {
+					if (mynodes [x, y].GetCollision () == PathfindingNodeID[0]) {
+						Gizmos.color = Color.black;
+					} else if (mynodes [x, y].GetCollision () == PathfindingNodeID[1]) {
+						Gizmos.color = Color.blue;
+					} else {
+						Gizmos.color = Color.yellow;
+
+					} 
+					Gizmos.DrawCube (new Vector3 ((mynodes [x, y].GetID () [0, 0]) , (mynodes [x, y].GetID () [0, 1])  , 0), new Vector3 (size, size, size));
+				}
+			}
+			Gizmos.color = Color.white;
+			Gizmos.DrawCube (new Vector3 ((mynodes [0, 0].GetID () [0, 0]) , (mynodes [0, 0].GetID () [0, 1]) , 0), new Vector3 (size, size, size));
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawCube (new Vector3 ((mynodes [0, 1].GetID () [0, 0]) , (mynodes [0, 1].GetID () [0, 1]), 0), new Vector3 (size, size, size));
+
+
+
+
+			Nodes[] mynodess = _PersonalNodeMap.GetNodeList();
+			int[] count = _PersonalNodeMap.GetNodeindex ();
+			for(int sas = count[0]; sas < mynodess.Length; sas++){
+				Gizmos.color = Color.red;
+				Gizmos.DrawCube (new Vector3 (mynodess[sas].GetID()[0,0] , mynodess[sas].GetID()[0,1] , 0), new Vector3 (size, size, size));
+			}
+
+			mynodes = _PersonalNodeMap.GetNodemap ();*/
 		}
 	}
 

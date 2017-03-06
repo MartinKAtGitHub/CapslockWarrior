@@ -84,7 +84,7 @@ public class RangedWalkToTarget : DefaultState {
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
 
-		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 3;
+		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 2;
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called

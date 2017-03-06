@@ -83,7 +83,7 @@ public class MeeleWalkToTarget : DefaultState {
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
 
-		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 3;
+		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 2;
 
 		width = (myInfo.GetComponent<BoxCollider2D> ().size.x / 2) * 1.75f;//TODO quickfix
 		height = (myInfo.GetComponent<BoxCollider2D> ().size.y / 2) * 1.75f;//TODO quickfix
@@ -190,8 +190,8 @@ public class MeeleWalkToTarget : DefaultState {
 						return;
 					}
 				}
-				_MovementDirection.x = TargetInfo.myPos[0,0] ;
-				_MovementDirection.y = TargetInfo.myPos[0,1] ;
+				_MovementDirection.x = TargetInfo.myPos[0,0];
+				_MovementDirection.y = TargetInfo.myPos[0,1];
 				/*if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
 					if (Physics2D.Linecast ((Vector2)MyTransform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
 						_ReturnState = "AttackState";

@@ -59,9 +59,9 @@ public class RangedWalkToTarget : DefaultState {
 	float a = 0;
 
 	bool HaveSearched = false; 
+	TargetHierarchy TheTargetHiearchy;
 
-
-	public RangedWalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
+	public RangedWalkToTarget(TargetHierarchy theTargetHierarchy, CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "WalkToTargetState";
 		PersonalNodeMap = personalNodeMap;
 		CreateThePath = createThePath;
@@ -84,19 +84,24 @@ public class RangedWalkToTarget : DefaultState {
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
 
-		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 2;
+		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 1f;
+		TheTargetHiearchy = theTargetHierarchy;
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
 
-		if (MyInfo._GoAfter == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
-			return ""; //TODO TODO "TargetSearch";
-		}else{
+		if (MyInfo._GoAfter == null) {//if i enter this state and i dont have a target, search after one.
+			TheTargetHiearchy.SearchAfterNewTargets ();
+			TheTargetHiearchy.CheckIfICanSwitchTarget ();//setting new target here
+			TargetInfo = MyInfo.GetTargetBehaviour ();
+		} else {
 			if (TargetInfo != MyInfo.GetTargetBehaviour ()) {//if this target isnt the same as what im after, change it
 				TargetInfo = MyInfo.GetTargetBehaviour ();
 			}
-			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 		}
+
+		MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
+
 		_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
 		_ReturnState = "";
 	
@@ -113,6 +118,13 @@ public class RangedWalkToTarget : DefaultState {
 		if (TargetInfo != null) {
 			UpdatePaths ();
 			GoToDestination ();
+		} else {
+			TheTargetHiearchy.SearchAfterNewTargets ();
+			TheTargetHiearchy.CheckIfICanSwitchTarget ();
+			TargetInfo = MyInfo.GetTargetBehaviour ();
+			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
+			UpdatePaths ();
+			GoToDestination ();
 		}
 
 		return _ReturnState;
@@ -127,27 +139,28 @@ public class RangedWalkToTarget : DefaultState {
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
 	
 		if (MyInfo.UpdateThePath == true) {
-
 			MyInfo.UpdateThePath = false;
 			NeighbourGroups = MyInfo.NeighbourGroups;
 			TargetNeighbourGroups = TargetInfo.NeighbourGroups;
 
 			if (NeighbourGroups == TargetNeighbourGroups) {//if in the same room go straight to the target
+				
 				_Roomindex = _TheRoomPath.Length;
 
 				PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
 				PersonalNodeMap.SetInfoAndStartSearch (true);
 				_Nodeindex = _Nodesindex [0];
+				HaveSearched = true;
 
 			} else {
 				CreateThePath.SetEndRoom (TargetNeighbourGroups);  
 
 				if (CreateThePath.CreatePath () == false) {//if eather of us dont have a room connected yet, go straight to the target
-					PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
-					PersonalNodeMap.SetInfoAndStartSearch (true);
-					_Nodeindex = _Nodesindex [0];
-					HaveSearched = true;
+					HaveSearched = false;
+					MyInfo.UpdateThePath = true;
 					return;
+				} else {
+					HaveSearched = true;
 				}
 
 				_Roomindex = _Roomsindex [0];
@@ -164,7 +177,7 @@ public class RangedWalkToTarget : DefaultState {
 					_Nodeindex = _Nodesindex [0];
 				}
 			}
-			HaveSearched = true;
+			_SearchAgainIndex = _Nodeindex;
 		}
 	}
 		
@@ -280,7 +293,6 @@ public class RangedWalkToTarget : DefaultState {
 			}
 
 		} else {
-			Debug.Log ("Could Not Find What I Needed");
 			_MyRigidbody2D.velocity = Vector2.zero;
 		}
 	}

@@ -58,10 +58,11 @@ public class MeeleWalkToTarget : DefaultState {
 	float a = 0;
 
 	bool HaveSearched = false; 
+	TargetHierarchy TheTargetHiearchy;
 	float height = 0;
 	float width = 0;
 
-	public MeeleWalkToTarget(CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
+	public MeeleWalkToTarget(TargetHierarchy theTargetHierarchy, CreatingObjectNodeMap personalNodeMap, AStarPathfinding_RoomPaths createThePath, CreatureBehaviour myInfo, float theRange, float[] movementspeed, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "WalkToTargetState";
 		PersonalNodeMap = personalNodeMap;
 		CreateThePath = createThePath;
@@ -83,7 +84,8 @@ public class MeeleWalkToTarget : DefaultState {
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
 
-		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 2;
+		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 1f;//TODO check this out, if the value is to small then character will turn around and walk backwards(was 2 changed to 1f)
+		TheTargetHiearchy = theTargetHierarchy;
 
 		width = (myInfo.GetComponent<BoxCollider2D> ().size.x / 2) * 1.75f;//TODO quickfix
 		height = (myInfo.GetComponent<BoxCollider2D> ().size.y / 2) * 1.75f;//TODO quickfix
@@ -92,13 +94,16 @@ public class MeeleWalkToTarget : DefaultState {
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
 
 		if (MyInfo._GoAfter == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
-			return ""; //TODO TODO "TargetSearch";
+			TheTargetHiearchy.SearchAfterNewTargets ();
+			TheTargetHiearchy.CheckIfICanSwitchTarget ();//setting new target here
+			TargetInfo = MyInfo.GetTargetBehaviour ();
 		}else{
 			if (TargetInfo != MyInfo.GetTargetBehaviour ()) {//if this target isnt the same as what im after, change it
 				TargetInfo = MyInfo.GetTargetBehaviour ();
 			}
-			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 		}
+		MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
+
 		_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
 		_ReturnState = "";
 
@@ -113,6 +118,13 @@ public class MeeleWalkToTarget : DefaultState {
 		_ReturnState = "";//denne er enten null eller den staten som den skal forandres til
 
 		if (TargetInfo != null) {
+			UpdatePaths ();
+			GoToDestination ();
+		}else {
+			TheTargetHiearchy.SearchAfterNewTargets ();
+			TheTargetHiearchy.CheckIfICanSwitchTarget ();
+			TargetInfo = MyInfo.GetTargetBehaviour ();
+			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 			UpdatePaths ();
 			GoToDestination ();
 		}
@@ -134,21 +146,23 @@ public class MeeleWalkToTarget : DefaultState {
 			TargetNeighbourGroups = TargetInfo.NeighbourGroups;
 
 			if (NeighbourGroups == TargetNeighbourGroups) {//if in the same room go straight to the target
+
 				_Roomindex = _TheRoomPath.Length;
 
 				PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
 				PersonalNodeMap.SetInfoAndStartSearch (true);
 				_Nodeindex = _Nodesindex [0];
+				HaveSearched = true;
 
 			} else {
 				CreateThePath.SetEndRoom (TargetNeighbourGroups);  
 
 				if (CreateThePath.CreatePath () == false) {//if eather of us dont have a room connected yet, go straight to the target
-					PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
-					PersonalNodeMap.SetInfoAndStartSearch (true);
-					_Nodeindex = _Nodesindex [0];
-					HaveSearched = true;
+					HaveSearched = false;
+					MyInfo.UpdateThePath = true;
 					return;
+				} else {
+					HaveSearched = true;
 				}
 
 				_Roomindex = _Roomsindex [0];
@@ -165,7 +179,7 @@ public class MeeleWalkToTarget : DefaultState {
 					_Nodeindex = _Nodesindex [0];
 				}
 			}
-			HaveSearched = true;
+			_SearchAgainIndex = _Nodeindex;
 		}
 	}
 
@@ -291,7 +305,6 @@ public class MeeleWalkToTarget : DefaultState {
 			}
 
 		} else {
-			Debug.Log ("Could Not Find What I Needed");
 			_MyRigidbody2D.velocity = Vector2.zero;
 		}
 	}

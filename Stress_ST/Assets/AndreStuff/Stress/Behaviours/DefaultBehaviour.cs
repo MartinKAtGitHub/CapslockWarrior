@@ -19,6 +19,9 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	public float[] Damage= new float[1];
 	public float[] MovementSpeed = new float[1];
 
+	[HideInInspector] public GameObject _GoAfter = null;//the target
+	public DefaultBehaviour DefaultBehaviourTarget;
+
 	public abstract void OnDestroyed ();
 	public abstract void AttackTarget (Vector3 targetPos);
 	public abstract void RecievedDmg (int _damage);
@@ -33,4 +36,21 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	}
 
 	public abstract void SetNeighbourGroup (List<RoomConnectorCreating> neighbours);
+
+
+	public virtual DefaultBehaviour GetTargetBehaviour(){
+		if (_GoAfter != null)
+			return _GoAfter.GetComponent<DefaultBehaviour>(); 
+
+		return null;
+	}
+
+	public virtual DefaultBehaviour GetDefaultBehaviour(){
+		return GetComponent<DefaultBehaviour> (); 
+	}
+
+	public virtual void SetTarget(GameObject target){
+		_GoAfter = target;
+		DefaultBehaviourTarget = _GoAfter.GetComponent<DefaultBehaviour>();
+	}
 }

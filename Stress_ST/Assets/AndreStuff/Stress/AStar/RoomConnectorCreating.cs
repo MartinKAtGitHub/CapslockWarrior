@@ -74,8 +74,7 @@ public class RoomConnectorCreating : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D (Collider2D coll){//when a gameobject is removed from the collider with tag == wall, then update the nodemap and recalculate the pathlist 	//0,01745329251 == math.pi / 180
-	
-		if (coll.transform.GetComponent<DefaultBehaviour> () != null) {
+		if (coll.transform.parent.GetComponent<DefaultBehaviour> () != null) {
 			_RoomConnectorDirection.x = Mathf.Cos (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
 			_RoomConnectorDirection.y = Mathf.Sin (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
 			_ObjectFromRoomConnectorDirection.x = coll.transform.position.x - transform.position.x;//calculating the vector the object has when exiting the collider

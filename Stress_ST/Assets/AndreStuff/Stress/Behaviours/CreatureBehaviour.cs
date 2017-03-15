@@ -6,11 +6,18 @@ using System;
 
 public class CreatureBehaviour : MovingCreatures {
 
+	public TargetHierarchy TargetPriorityClass;
+	List<DefaultBehaviour> WhatToPrioritize;//this might become an List<string> containing name of tags to search after   or simply just List<gameobject>
+
+
 	public StressEnums.NodeSizes NodeSizess = StressEnums.NodeSizes.One;
 	public Transform HitPoint;
 	public Transform WalkColliderPoint;
 
 	void Awake(){
+		//TargetPriorityClass = new TargetHierarchy (this);
+		TargetPriorityClass.SetTargetHierarchy(this);
+
 		if (WalkColliderPoint == null)
 			WalkColliderPoint = this.transform;
 		myPos [0, 0] = WalkColliderPoint.position.x;
@@ -24,20 +31,15 @@ public class CreatureBehaviour : MovingCreatures {
 		_PersonalNodeMap.CreateNodeMap ();
 		_PersonalNodeMap.SetCenterPos (myPos);
 	
-
-
-		if(GameObject.FindGameObjectWithTag ("Player1") != null)//TODO make target hierarchy. then iterate on it an take the first one alive
-			SetTarget (GameObject.FindGameObjectWithTag ("Player1"));
-
 		if (RunPathfinding == true) {
 			if (CreatureType == StressEnums.EnemyType.Ranged) {//makes it possible to add different states to the targets if that is needed
-				MovementFSM = new FSM_Manager( new DefaultState[] { new RangedWalkToTarget(_PersonalNodeMap, _CreateThePath, this, AttackRange, MovementSpeed,LineOfSight), new AttackState(this,CanIRanged, AttackRange,LineOfSight),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
+				MovementFSM = new FSM_Manager( new DefaultState[] { new RangedWalkToTarget(TargetPriorityClass, _PersonalNodeMap, _CreateThePath, this, AttackRange, MovementSpeed,LineOfSight), new AttackState(TargetPriorityClass, this,CanIRanged, AttackRange,LineOfSight),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
 				MovementFSM.Init(this);
 			}else if(CreatureType == StressEnums.EnemyType.Meele){
-				MovementFSM = new FSM_Manager( new DefaultState[] { new MeeleWalkToTarget(_PersonalNodeMap, _CreateThePath, this, AttackRange, MovementSpeed,LineOfSight), new AttackState(this,CanIRanged, AttackRange,LineOfSight),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
+				MovementFSM = new FSM_Manager( new DefaultState[] { new MeeleWalkToTarget(TargetPriorityClass, _PersonalNodeMap, _CreateThePath, this, AttackRange, MovementSpeed,LineOfSight), new AttackState(TargetPriorityClass, this,CanIRanged, AttackRange,LineOfSight),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
 				MovementFSM.Init(this);
 			}else if(CreatureType == StressEnums.EnemyType.Fast){
-				MovementFSM = new FSM_Manager( new DefaultState[] { new MeeleWalkToTarget(_PersonalNodeMap, _CreateThePath, this, AttackRange, MovementSpeed,LineOfSight), new AttackState(this,CanIRanged, AttackRange,LineOfSight),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
+				MovementFSM = new FSM_Manager( new DefaultState[] { new MeeleWalkToTarget(TargetPriorityClass, _PersonalNodeMap, _CreateThePath, this, AttackRange, MovementSpeed,LineOfSight), new AttackState(TargetPriorityClass, this,CanIRanged, AttackRange,LineOfSight),} );//definerer alle statene for de spesifikke fsm'ene. og den første i dette tilfeller "FindTarget og AttackState" vil bli kalt først/default state
 				MovementFSM.Init(this);
 			}
 		}
@@ -115,7 +117,7 @@ public class CreatureBehaviour : MovingCreatures {
 	 
 	public override void RecievedDmg(int _damage){
 		OnDestroyed ();
-	//	Debug.Log ("I Got Hit :" + name);
+		//	Debug.Log (name + " Got Hit with: " + _damage + " damage");
 	}
 
 	public override void ChangeMovementAdd(float a){

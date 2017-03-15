@@ -4,15 +4,9 @@ using System.Collections.Generic;
 
 public abstract class MovingCreatures : DefaultBehaviour {
 
-
-	// Added
-	public DefaultBehaviour DefaultBehaviourTarget;
-	//-------
 	public FSM_Manager MovementFSM; // Needed for AI
 	public AStarPathfinding_RoomPaths _CreateThePath;// Needed for AI
 	public CreatingObjectNodeMap _PersonalNodeMap;// Needed for AI
-
-	[HideInInspector] public GameObject _GoAfter = null;//the target
 
 	[HideInInspector] public bool UpdateThePath = false;//when this is true the pathfinding will run
 	public bool RunPathfinding = true;//if true then the target is using the pathfining
@@ -28,20 +22,7 @@ public abstract class MovingCreatures : DefaultBehaviour {
 
 	public LayerMask LineOfSight;//this is what the physics2d.linecast cant hit. if it does move closer
 
-	public virtual DefaultBehaviour GetTargetBehaviour(){
-		if (_GoAfter != null)
-			return _GoAfter.GetComponent<DefaultBehaviour>(); 
 
-		return null;
-	}
-
-	public void SetTarget(GameObject target){
-		_GoAfter = target;
-		// Added ----------------
-		DefaultBehaviourTarget = _GoAfter.GetComponent<DefaultBehaviour>();
-		// -----------
-		_CreateThePath.SetEndRoomAndNode (DefaultBehaviourTarget.NeighbourGroups, DefaultBehaviourTarget.GetMyNode());
-	}
 
 	public override void SetAiRoom(Wall_ID room){//just called once, and that is when spawning an object
 		base.SetAiRoom(room);
@@ -53,6 +34,10 @@ public abstract class MovingCreatures : DefaultBehaviour {
 		_CreateThePath.SetStartRoom (neighbours);
 	}
 
+	public override void SetTarget(GameObject target){
+		base.SetTarget(target);
+		_CreateThePath.SetEndRoomAndNode (DefaultBehaviourTarget.NeighbourGroups, DefaultBehaviourTarget.GetMyNode());
+	}
 
 	#region What to do when colliding with objects  
 	//TODO improve this so that i only have to call one method for all objects

@@ -24,6 +24,7 @@ public class Nodes {
 	float _XValue = 0, _YValue = 0; //just some values that im using
 	float[,] _GetIDSaver;//just an empty array that im using
 
+	public DefaultBehaviour WhatIsNodeOccupiedWith;
 
 	/// <summary>
 	/// 1. Initializes a new instance of the <see cref="Nodes"/> class.

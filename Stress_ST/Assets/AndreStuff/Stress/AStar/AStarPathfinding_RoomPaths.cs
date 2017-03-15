@@ -66,7 +66,6 @@ public class AStarPathfinding_RoomPaths{
 	#region A* For paths
 
 	public bool CreatePath() {//Starts A* and clears all the nodes so that they are rdy for the next search
-
 		_RoomIndexSaved = 0;
 		_OpenListAtIndex = 0;
 		_ClosedListAtIndex = 0;

@@ -19,7 +19,7 @@ public class AttackState : DefaultState {
 	Vector2 targetPos = Vector2.zero;
 	Vector3 targetPoss;
 
-	public AttackState(CreatureBehaviour myInfo, bool[] canIRanged, float theRange, LayerMask lineOfSight) {//giving copies of info to this class
+	public AttackState(TargetHierarchy theTargetHierarchy, CreatureBehaviour myInfo, bool[] canIRanged, float theRange, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "AttackState";
 		_MyInfo = myInfo;
 		_MyTransform = _MyInfo.transform;

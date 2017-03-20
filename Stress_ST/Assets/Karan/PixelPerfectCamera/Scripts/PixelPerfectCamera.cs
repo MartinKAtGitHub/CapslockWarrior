@@ -37,12 +37,20 @@ public class PixelPerfectCamera : MonoBehaviour {
     public bool showHUD;
 
     // Output
+    [NonSerialized]
     public Vector2 cameraSize;
+    [NonSerialized]
     public ConstraintType contraintUsed;
+    [NonSerialized]
     public float cameraPixelsPerUnit;
+    [NonSerialized]
     public float ratio;
+    [NonSerialized]
     public Vector2 nativeAssetResolution;
+    [NonSerialized]
     public float fovCoverage;
+    [NonSerialized]
+    public bool isInitialized;
 
     // Internal
     Resolution res;
@@ -124,6 +132,7 @@ public class PixelPerfectCamera : MonoBehaviour {
         this.ratio = ratioUsed;
         this.nativeAssetResolution = new Vector2(horizontalFOV * assetsPixelsPerUnit, verticalFOV * assetsPixelsPerUnit);
         this.fovCoverage = ratioTargetOriginal / ratioUsed;
+        this.isInitialized = true;
         // ------ GUI Calculations End  -----
 
         return verticalFOV / 2;
@@ -139,6 +148,12 @@ public class PixelPerfectCamera : MonoBehaviour {
         res.width = cam.pixelWidth;
         res.height = cam.pixelHeight;
         res.refreshRate = Screen.currentResolution.refreshRate;
+
+        if (res.width == 0 || res.height == 0)
+        {
+            return;
+        }
+
         float maxCameraHalfWidthReq = (maxCameraHalfWidthEnabled) ? maxCameraHalfWidth : -1;
         float maxCameraHalfHeightReq = (maxCameraHalfHeightEnabled) ? maxCameraHalfHeight : -1;
         float cameraSize = calculatePixelPerfectCameraSize(pixelPerfect, res, assetsPixelsPerUnit, maxCameraHalfWidthReq, maxCameraHalfHeightReq, targetCameraHalfWidth, targetCameraHalfHeight, targetDimension);
@@ -180,13 +195,29 @@ public class PixelPerfectCamera : MonoBehaviour {
     void OnGUI () {
         if (showHUD)
         {
+            float scale = Screen.dpi / 96.0f;
+
             // Make a background box
-            GUI.Box(new Rect(10, 10, 130, 90), "Camera");
+            GUIStyle boxStyle = new GUIStyle(GUI.skin.box);
+            boxStyle.fontSize = (int)(13 * scale);
+            GUI.Box(new Rect(10 * scale, 10 * scale, 130 * scale, 90 * scale), "Camera", boxStyle);
 
             // Make the first button. If it is pressed, update
-            pixelPerfect = GUI.Toggle(new Rect(20, 40, 90, 20), pixelPerfect, new GUIContent("Pixel perfect"));
-            retroSnap = GUI.Toggle(new Rect(20, 60, 90, 20), retroSnap, new GUIContent("Retro Snap"));
-            if (GUI.changed) {
+            // http://forum.unity3d.com/threads/toggle-size.55615/
+            GUIStyle toggleStyle = new GUIStyle(GUI.skin.toggle);
+            toggleStyle.fontSize = (int)(13 * scale);
+            toggleStyle.border = new RectOffset(0, 0, 0, 0);
+            toggleStyle.overflow = new RectOffset(0, 0, 0, 0);
+            toggleStyle.padding = new RectOffset(0,0,0,0);
+            toggleStyle.imagePosition = ImagePosition.ImageOnly;
+            pixelPerfect = GUI.Toggle(new Rect(20 * scale, 40 * scale, 20 * scale, 20 * scale), pixelPerfect, new GUIContent("Pixel perfect"), toggleStyle);
+            GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+            labelStyle.fontSize = (int)(13 * scale);
+            GUI.Label(new Rect(40 * scale, 40 * scale, 80 * scale, 20 * scale), new GUIContent("Pixel perfect"), labelStyle);
+            retroSnap = GUI.Toggle(new Rect(20 * scale, 60 * scale, 20 * scale, 20 * scale), retroSnap, new GUIContent("Retro Snap"), toggleStyle);
+            GUI.Label(new Rect(40 * scale, 60 * scale, 80 * scale, 20 * scale), new GUIContent("Retro Snap"), labelStyle);
+            if (GUI.changed)
+            {
                 adjustCameraFOV();
             }
 
@@ -272,6 +303,8 @@ public class PixelPerfectCameraEditor : Editor
         serializedObject.ApplyModifiedProperties();
 
         // Show results
+        if (!((PixelPerfectCamera)target).isInitialized)
+            return;
         GUILayout.BeginVertical();
         GUILayout.Space(5);
         DrawSizeStats();

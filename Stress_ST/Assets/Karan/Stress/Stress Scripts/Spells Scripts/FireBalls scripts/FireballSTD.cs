@@ -62,10 +62,6 @@ public class FireballSTD : Fire {
 			float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		}
-		else
-		{
-			//Debug.Log("Target is null");
-		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) 
@@ -94,7 +90,7 @@ public class FireballSTD : Fire {
 	{
 		//TODO Can change the HotShot Code to ScanForClosestTarget() then instanciate if enemy range
 		//ScanForClosestTarget();
-		ScanForClosestTarget();
+		//ScanForClosestTarget();
 		//InGameSpellRef.GetComponent<FireballSTD>().CoolDownTimer = CoolDownTimer;
 
 	}
@@ -105,7 +101,7 @@ public class FireballSTD : Fire {
 
 	}
 
-	void ScanForClosestTarget()// TODO add if no enemys are in range
+	/*void ScanForClosestTarget()// TODO add if no enemys are in range
 	{
 		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position,DetectionRange,FireBallDetection);
 		if(enemiesInRange.Length > 0) // I get back an array of targets if in range, so if > 0 then i got someone in range
@@ -142,31 +138,42 @@ public class FireballSTD : Fire {
 			//Destroy(this.gameObject);
 		}
 	}
-
+	*/
 	bool ScanForClosesTargetBoolienCheck()
 	{
 		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position,DetectionRange,FireBallDetection);
+
+		for (int i = 0; i < enemiesInRange.Length; i++) {
+				
+			Debug.Log("ALL ENEMIS IN RANGE ----------->" + enemiesInRange[i].name + " LENGTH = " + enemiesInRange.Length );
+		}
 		if(enemiesInRange.Length > 0) // I get back an array of targets if in range, so if > 0 then i got someone in range
 		{
+			
 			float distance = 0;
-			float minDistance = DetectionRange; // i need a value that is higher then the distance that can be detected
+			float minDistance = 1000000; // i need a value that is higher then the distance that can be detected
 			//Debug.Log(ProjectileSpawn.position + "CENTER OF RANGE");
+
 			for (int i = 0; i < enemiesInRange.Length; i++) 
 			{
+				Debug.Log("THE NAME OF TARGET IS --->" + enemiesInRange[i].name);
 				//TODO maybe use Math.abs
 				distance = Vector3.Distance(enemiesInRange[i].gameObject.transform.position, SpellSpawnPos.position);
 				//distance = Mathf.Abs(distance);
 				//Debug.Log("Distance IS = " + distance);
 				if(distance < minDistance)
 				{
-					InGameSpellRef = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
+					//InGameSpellRef = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
 					minDistance = distance;
-					InGameSpellRef.GetComponent<FireballSTD>().fireBallTarget = enemiesInRange[i].gameObject;
-
-					Debug.Log(enemiesInRange[i].gameObject.name);
+					//InGameSpellRef.GetComponent<FireballSTD>().fireBallTarget = enemiesInRange[i].gameObject;
+					fireBallTarget = enemiesInRange[i].gameObject;
+					//TARGET = enemiesInRange[i].gameObject
+					//Debug.Log(enemiesInRange[i].gameObject.name);
 					IsSpellCasted = true;
 				}
 			}
+			InGameSpellRef = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
+			InGameSpellRef.GetComponent<FireballSTD>().fireBallTarget = fireBallTarget;
 			return true;
 			//isSpellCasted = true;
 			//Debug.LogWarning(" SPELL IS TRUE LOLOLOLOL");

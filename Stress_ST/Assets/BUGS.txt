@@ -19,7 +19,6 @@ Ui - NullPoint Page reset, Select another Page before prevois page has faded out
 
 
 
-
 // Andrew Bugs
 random words make -> engelsk, norsk
 enemy word change at spawn

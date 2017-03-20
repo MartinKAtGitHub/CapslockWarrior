@@ -23,9 +23,9 @@ using System.Collections;
 /// </remarks>
 public class PixelSnap : MonoBehaviour
 {
-    Sprite sprite;
-    Vector3 actualPosition;
-    bool shouldRestorePosition;
+    private Sprite sprite;
+    private Vector3 actualPosition;
+    private bool shouldRestorePosition;
 
     // Use this for initialization
     void Start()
@@ -34,6 +34,10 @@ public class PixelSnap : MonoBehaviour
         if (renderer != null)
         {
             sprite = renderer.sprite;
+        }
+        else
+        {
+            sprite = null;
         }
     }
 
@@ -83,23 +87,24 @@ public class PixelSnap : MonoBehaviour
                 pivotOffset *= camPixelsPerAssetPixel; // in screen pixels
                 pivotOffsetFrac = pivotOffset - new Vector2(Mathf.Floor(pivotOffset.x), (Mathf.Floor(pivotOffset.y))); // fract part in screen pixels
                 pivotOffsetInt = pivotOffset - pivotOffsetFrac; // integer part in screen pixels
-               // We subtract the integer part so that the anchor point snaps to the texel's edge
+                                                                // We subtract the integer part so that the anchor point snaps to the texel's edge
             }
         }
         if (retroSnap)
         {
             float assetPPU = pixelPerfectCamera.assetsPixelsPerUnit;
             float assetUPP = 1.0f / assetPPU;
-            float camPixelsPerAssetPixel = cameraPPU / sprite.pixelsPerUnit;
+            float camPixelsPerAssetPixel = cameraPPU / assetPPU;
 
             offset.x /= camPixelsPerAssetPixel; // zero or half a screen pixel in texture pixels
             offset.y /= camPixelsPerAssetPixel;
             relPos.x = (Mathf.Round(relPos.x / assetUPP - offset.x - pivotOffsetFrac.x) + offset.x + pivotOffsetFrac.x) * assetUPP;
             relPos.y = (Mathf.Round(relPos.y / assetUPP - offset.y - pivotOffsetFrac.y) + offset.y + pivotOffsetFrac.y) * assetUPP;
-            
+
         }
-        else {
-            // Convert the units to pixels, round them, convert back to units. The offsets make sure that the distance we round is from screen pixel (fragment) edges snap to texel edges.
+        else
+        {
+            // Convert the units to pixels, round them, convert back to units. The offsets make sure that the distance we round is from screen pixel (fragment) edges to texel edges.
             relPos.x = (Mathf.Round(relPos.x / cameraUPP - offset.x - pivotOffsetFrac.x) + offset.x + pivotOffsetFrac.x + pivotOffsetInt.x) * cameraUPP;
             relPos.y = (Mathf.Round(relPos.y / cameraUPP - offset.y - pivotOffsetFrac.y) + offset.y + pivotOffsetFrac.y + pivotOffsetInt.y) * cameraUPP;
         }

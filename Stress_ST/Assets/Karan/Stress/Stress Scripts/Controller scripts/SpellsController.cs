@@ -173,7 +173,7 @@ public class SpellsController : MonoBehaviour {
 
 	void CheckKeyPress()
 	{
-	//	Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
+		//Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
 		//Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyFour);
 		CheckCoolDowns();
 		

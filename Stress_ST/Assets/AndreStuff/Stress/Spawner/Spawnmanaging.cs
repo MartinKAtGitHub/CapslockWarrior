@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 public class Spawnmanaging : MonoBehaviour {
 
+	public bool StartSpawn = false;
+
 	public GameObject[] SpawnPoints;
 	GameObject _SpawnedObject;
 
-	public bool StartSpawn = false;
 
 	public int SpawnRate;
 	int _WaveNumber = 0;	

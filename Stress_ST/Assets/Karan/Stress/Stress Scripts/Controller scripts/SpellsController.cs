@@ -173,80 +173,88 @@ public class SpellsController : MonoBehaviour {
 
 	void CheckKeyPress()
 	{
-		//Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
-		//Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyFour);
 		CheckCoolDowns();
 		
 		if(Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			if(spellKeyOneReady == true)
 			{
-				//SpellsOnKeyOne.Cast();
 				spellKeyOneReady = false;
-				 if(SpellsOnKeyOne.CastBoolienReturn())
-				 {
+				if(SpellsOnKeyOne.CastBoolienReturn())
+				{
 					timerForSpellOnKeyOne = saveTimerKeyOne;
 					Debug.Log("START TIMER AGAIN");
-				 }
-				 else
-				 {
-					Debug.Log("DONT START TIMER AGAIN");
-				 }
+				}
+				else
+				{
+					Debug.Log("DONT START TIMER AGAIN K1");
+				}
 			}
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha2))
 		{
 			if(spellKeyTwoReady == true)
 			{
-				SpellsOnKeyTwo.Cast();
 				spellKeyTwoReady = false;
-				timerForSpellOnKeyTwo = saveTimerKeyTwo;
+				if(SpellsOnKeyTwo.CastBoolienReturn())
+				{
+					timerForSpellOnKeyTwo = saveTimerKeyTwo;
+				}
+				else
+				{
+					Debug.Log("DONT START TIMER AGAIN K2");
+				}
 			}
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha3))
 		{
 			if(spellKeyThreeReady == true)
 			{
-				SpellsOnKeyThree.Cast();
 				spellKeyThreeReady = false;
-				timerForSpellOnKeyThree = saveTimerKeyThree;
+				if(SpellsOnKeyThree.CastBoolienReturn())
+				{
+					timerForSpellOnKeyThree = saveTimerKeyThree;
+				}
 			}
 		}
 		if(Input.GetKeyDown(KeyCode.Alpha4))
 		{
 			if(spellKeyFourReady == true)
 			{
-				SpellsOnKeyFour.Cast();
 				spellKeyTwoReady = false;
-				timerForSpellOnKeyFour = saveTimerKeyFour;
+				if(SpellsOnKeyFour.CastBoolienReturn())
+				{
+					timerForSpellOnKeyFour = saveTimerKeyFour;
+				}
 			}
 		}
 	}
 
 	void CheckCoolDowns()
 	{
+		//CheckForSpellIsUSed();
+		NoCheckForSpellIsUsed();
 
-		CheckForSpellIsUSed();
-
-		//NoCheckForSpellIsUsed();
-
-		////////////////////////////////////////////
 		if(timerForSpellOnKeyOne <= 0)
 		{
 			spellKeyOneReady = true;
-			//Debug.LogWarning("Spells ready k1");
-		}else
-		{
-			//Debug.LogWarning(" SPELL 1 NOT READY");
+
 		}
+		else
+		{
+		//	Debug.LogWarning(" SPELL 1 NOT READY");
+		}
+
 		if(timerForSpellOnKeyTwo <=0)
 		{
 			spellKeyTwoReady = true;
 		}
+
 		if(timerForSpellOnKeyThree <= 0)
 		{
 			spellKeyThreeReady = true;
 		}
+
 		if(timerForSpellOnKeyFour <= 0)
 		{
 			spellKeyFourReady = true;

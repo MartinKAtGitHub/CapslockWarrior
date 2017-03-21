@@ -70,6 +70,7 @@ public class SlowFieldSpell : Earth {
 
 	public override bool CastBoolienReturn()
 	{
+		Instantiate(this, SpellSpawnPos.position,Quaternion.identity);
 		return true;
 	}
 }

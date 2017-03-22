@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine.UI;
 
 public class CreatureBehaviour : MovingCreatures {
 
@@ -14,8 +15,14 @@ public class CreatureBehaviour : MovingCreatures {
 	public Transform HitPoint;
 	public Transform WalkColliderPoint;
 
-	void Awake(){
+	public Text TextElement;
+	public string _EnemyHealth;
+	EnemyWordChecker test;
+
+	void Awake(){ 
 		//TargetPriorityClass = new TargetHierarchy (this);
+		test = new EnemyWordChecker(TextElement,_EnemyHealth, this); 
+		test.ToString ();
 		TargetPriorityClass.SetTargetHierarchy(this);
 
 		if (WalkColliderPoint == null)

@@ -41,7 +41,7 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 		Targets = new List<DefaultBehaviour>();
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {
 			FoundTargets = GameObject.FindGameObjectsWithTag (TheTargetHierarchy [i]);
-			if (FoundTargets.Length != null) {
+			if (FoundTargets.Length > 0) {
 				for (int j = 0; j < FoundTargets.Length; j++) {
 					Targets.Add (FoundTargets[j].GetComponent<DefaultBehaviour>());
 				}
@@ -69,7 +69,7 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {//going to change this 
 			FoundTargets = GameObject.FindGameObjectsWithTag (TheTargetHierarchy [i]);
-			if (FoundTargets.Length != null) {
+			if (FoundTargets.Length > 0) {
 				Object.SetTarget(FoundTargets[0]);
 					return;
 			}
@@ -92,7 +92,7 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {//going to change this 
 			FoundTargets = GameObject.FindGameObjectsWithTag (TheTargetHierarchy [i]);
-			if (FoundTargets.Length != null) {
+			if (FoundTargets.Length > 0) {
 				Object.SetTarget(FoundTargets[0]);
 				return;
 			}

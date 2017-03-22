@@ -15,7 +15,6 @@ public class AttackState : DefaultState {
 	OnlyShootAfterAnimation ShootingAnimation;
 	OnlyQuitAfterAnimation QuittingAnimation;
 
-	bool AnimationStarted = false;
 	Vector2 targetPos = Vector2.zero;
 	Vector3 targetPoss;
 
@@ -61,7 +60,9 @@ public class AttackState : DefaultState {
 	public override string ProcessState() {//this is called every frame
 		if (ShootingAnimation.Shoot == true) {
 			ShootingAnimation.Shoot = false;
-
+			targetPoss = _TargetInfo.transform.position;
+			targetPos.x = _TargetInfo.myPos [0, 0];
+			targetPos.y = _TargetInfo.myPos [0, 1];
 			if (CanIRanged [0] == true) {
 				_MyInfo.AttackTarget (targetPoss);
 			} else {

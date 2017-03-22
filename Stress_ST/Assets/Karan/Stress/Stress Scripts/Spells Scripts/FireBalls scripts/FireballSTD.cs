@@ -62,6 +62,11 @@ public class FireballSTD : Fire {
 			float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		}
+		else
+		{
+			Destroy(this.gameObject);
+			Debug.Log("Target Died from somthing els");
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) 
@@ -101,45 +106,7 @@ public class FireballSTD : Fire {
 
 	}
 
-	/*void ScanForClosestTarget()// TODO add if no enemys are in range
-	{
-		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position,DetectionRange,FireBallDetection);
-		if(enemiesInRange.Length > 0) // I get back an array of targets if in range, so if > 0 then i got someone in range
-		{
-			float distance = 0;
-			float minDistance = DetectionRange; // i need a value that is higher then the distance that can be detected
-			//Debug.Log(ProjectileSpawn.position + "CENTER OF RANGE");
-			for (int i = 0; i < enemiesInRange.Length; i++) 
-			{
-				//TODO maybe use Math.abs
-				distance = Vector3.Distance(enemiesInRange[i].gameObject.transform.position, SpellSpawnPos.position);
-				//distance = Mathf.Abs(distance);
-				//Debug.Log("Distance IS = " + distance);
-				if(distance < minDistance)
-				{
-					InGameSpellRef = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
-					minDistance = distance;
-					InGameSpellRef.GetComponent<FireballSTD>().fireBallTarget = enemiesInRange[i].gameObject;
-
-					Debug.Log(enemiesInRange[i].gameObject.name);
-					IsSpellCasted = true;
-				}
-			}
-			//isSpellCasted = true;
-			//Debug.LogWarning(" SPELL IS TRUE LOLOLOLOL");
-		}
-		else
-		{
-			Debug.LogWarning("ENEMIS ARE NOT IN RANGE --> create GUI to notify player AND RESET TIMER");
-			//InGameSpellRef = this.gameObject;
-			//isSpellCasted = false;
-			//IsSpellCasted = false;
-			//CoolDownTimer = 0;
-			//Destroy(this.gameObject);
-		}
-	}
-	*/
-	bool ScanForClosesTargetBoolienCheck()
+	private bool ScanForClosesTargetBoolienCheck()
 	{
 		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position,DetectionRange,FireBallDetection);
 

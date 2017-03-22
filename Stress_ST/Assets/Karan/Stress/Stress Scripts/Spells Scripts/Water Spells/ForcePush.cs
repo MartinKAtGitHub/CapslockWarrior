@@ -45,7 +45,8 @@ public class ForcePush : Water {
 
 	public override bool CastBoolienReturn ()
 	{
-		throw new System.NotImplementedException ();
+		ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
+		return true;
 	}
 	void OnTriggerEnter2D(Collider2D other)
 	{

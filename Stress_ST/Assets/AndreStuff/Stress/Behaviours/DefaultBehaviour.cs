@@ -26,6 +26,7 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	public abstract void AttackTarget (Vector3 targetPos);
 	public abstract void RecievedDmg (int _damage);
 	public abstract void ChangeMovementAdd(float a);
+	public abstract void GotTheKill(int a);
 
 	public virtual Nodes[] GetMyNode(){
 		return MyNode;

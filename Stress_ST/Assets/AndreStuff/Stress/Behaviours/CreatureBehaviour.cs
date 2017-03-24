@@ -21,9 +21,11 @@ public class CreatureBehaviour : MovingCreatures {
 
 	void Awake(){ 
 		//TargetPriorityClass = new TargetHierarchy (this);
-		test = new EnemyWordChecker(TextElement,_EnemyHealth, this); 
-		test.ToString ();
+
 		TargetPriorityClass.SetTargetHierarchy(this);
+		if (test == null) {
+			test = new EnemyWordChecker(TextElement,_EnemyHealth, this); 
+		}
 
 		if (WalkColliderPoint == null)
 			WalkColliderPoint = this.transform;
@@ -121,7 +123,11 @@ public class CreatureBehaviour : MovingCreatures {
 			}
 		}
 	}
-	 
+
+	public override void SetTarget(GameObject target){
+		base.SetTarget(target);
+	}
+
 	public override void RecievedDmg(int _damage){
 		OnDestroyed ();
 		//	Debug.Log (name + " Got Hit with: " + _damage + " damage");
@@ -129,6 +135,10 @@ public class CreatureBehaviour : MovingCreatures {
 
 	public override void ChangeMovementAdd(float a){
 		MovementSpeed [0] += a;
+	}
+
+	public override void GotTheKill(int a){
+		Debug.Log ("Score " + a);
 	}
 
 	public bool ShowGizmos = false;

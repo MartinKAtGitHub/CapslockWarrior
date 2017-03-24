@@ -9,16 +9,6 @@ public class TargetHierarchy {//TODO improve searching choises based on distance
 https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 	*/
 
-
-
-
-
-
-
-
-
-
-
 	List<DefaultBehaviour> Targets = new List<DefaultBehaviour>();
 	GameObject[] FoundTargets;
 

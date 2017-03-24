@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
 public class EnemyWordChecker {
 	//Multiple Health Bars???
@@ -11,12 +12,22 @@ public class EnemyWordChecker {
 	bool _StopChecking;
 	int _WordsToRemove;//a counter that is used to deside how many words to remove after the player presses enter
 	public string _EnemyHealth;
+	string _OriginalWord;
+
 	int _CleaveDmg;
 	DefaultBehaviour theParent;
+	//PlayerTyping currentTarget;
+	HashSet<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> > Theplayers = new HashSet<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> >();
+	List<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> > players = new List<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> >();//this is a list that is containing all players and their strings. so this must be shared between all players to get the effect we're after
+	KeyValuePair<GameObject, KeyValuePair<Color, string[]>> longest;
+	KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  shortest;
+	Color32 testingcolor32;
+	string hex;
 
 	public EnemyWordChecker(Text textElement, string enemyHealth, DefaultBehaviour parent){//Adding methods to events and setting startvalues
 		TextElement = textElement;
 		_EnemyHealth = enemyHealth;
+		_OriginalWord = enemyHealth;
 		theParent = parent;
 
 		_WordsToRemove = 0;
@@ -25,10 +36,10 @@ public class EnemyWordChecker {
 		_CleaveDmg = TalentBonusStats.CleaveDmg;
 		_StopChecking = false;
 
-		PlayerTyping.OnCompareStart += CompareStart;
-		PlayerTyping.OnCompareRestart += CompareRestart;
-		PlayerTyping.OnCompareEnd += CompareEnd;
-
+		TypingEvents.OnCompareStart += CompareStart;
+		TypingEvents.OnCompareRestart += CompareRestart;
+		TypingEvents.OnCompareEnd += CompareEnd;
+		players.Add (new KeyValuePair<GameObject, KeyValuePair<Color, string[]>>(theParent.gameObject, new  KeyValuePair<Color, string[]> (Color.yellow, new string[1]{ "muaaaooo" })));
 	}
 
 	#region EventMethods
@@ -37,47 +48,98 @@ public class EnemyWordChecker {
 		_StopChecking = false;
 	}
 
-	void CompareEnd(){//When the player presses enter then this will run 
+	void CompareEnd(GameObject thisObject){//When the player presses enter then this will run 
 		if (_WordsToRemove > 0 && _WordsToRemove <= _EnemyHealth.Length) {
 			_EnemyHealth = _EnemyHealth.Remove (0, _WordsToRemove);
 			TextElement.text = string.Format("<color=black>{0}</color>", _EnemyHealth);
+			shortest.Key.GetComponent<DefaultBehaviour> ().GotTheKill (0);//if multiple peeps are going to recieve score then you can create an even and give them score through the event or loop throgh players list
+			_WordsToRemove = 0;
 			if (_EnemyHealth.Length <= 0) {
-//				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().RemoveObject(this.gameObject);
+				//				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().RemoveObject(this.gameObject);
+				shortest.Key.GetComponent<DefaultBehaviour> ().GotTheKill (_OriginalWord.Length);//if multiple peeps are going to recieve score then you can create an even and give them score through the event or loop throgh players list
 				theParent.OnDestroyed();
 			}
 		}
 	}
 
-	void CompareStart(string InputString){//Compares _EnemyHealth with what the player typed(InputString) 
+	void CompareStart(KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  InputString){//Compares _EnemyHealth with what the player typed(InputString) 
 
-		if (!_StopChecking && InputString.Length > 0) {
-			if (TextElement == null) {} else {
-			
-				_WordsToRemove = 0;
-				TextElement.text = "";
+		if (!Theplayers.Contains (InputString)) {
+			Theplayers.Add (InputString);
+			players.Add (InputString);
+		}
 
-				if (_CleaveDmg == 0) {
-					PerfectWord (InputString);
+		shortest = InputString;
+		longest = shortest;
+		TextElement.text = "";
 
-				} else if (_CleaveDmg == 1) {
-					PerfectWordCleave (InputString);
+		for (int i = 0; i < players.Count; i++) {
+			if (players [i].Value.Value [0].Length > longest.Value.Value [0].Length)
+				longest = players [i];
+		}
 
-				} else if (_CleaveDmg == 2) {
-					SuperCleave (InputString);
-				}	
-			} 
-		} else {
-			if (TextElement == null) {} else {
-				TextElement.text = string.Format ("<color=black>{0}</color>", _EnemyHealth);
-				_WordsToRemove = 0;
+		_WordsToRemove = 0;
+
+
+		int wordlength = shortest.Value.Value [0].Length;
+		if (wordlength > _EnemyHealth.Length)
+			wordlength = _EnemyHealth.Length;
+	
+		testingcolor32 = (Color32)shortest.Value.Key;
+		hex = testingcolor32.r.ToString ("X2") + testingcolor32.g.ToString ("X2") + testingcolor32.b.ToString ("X2") + testingcolor32.a.ToString ("X2");
+
+		for (int i = 0; i < wordlength; i++) {
+				
+			if (shortest.Value.Value [0] [i] == _EnemyHealth [i]) {
+				_WordsToRemove++;
+				TextElement.text += string.Format ("<color=#" + hex + ">{0}</color>", _EnemyHealth [i]);
+			} else {
+				i = wordlength;
 			}
 		}
+
+		if (_WordsToRemove == _EnemyHealth.Length) {
+			shortest.Key.GetComponent<DefaultBehaviour> ().GotTheKill (_OriginalWord.Length);//if multiple peeps are going to recieve score then you can create an even and give them score through the event or loop throgh players list
+			TypingEvents.OnCompareStart -= CompareStart;
+			TypingEvents.OnCompareRestart -= CompareRestart;
+			TypingEvents.OnCompareEnd -= CompareEnd;
+			theParent.OnDestroyed ();
+		}
+
+		if (longest.Key != shortest.Key) {
+
+			testingcolor32 = (Color32)longest.Value.Key;
+			hex = testingcolor32.r.ToString ("X2") + testingcolor32.g.ToString ("X2") + testingcolor32.b.ToString ("X2") + testingcolor32.a.ToString ("X2");
+
+			wordlength = longest.Value.Value [0].Length;
+			if (wordlength > _EnemyHealth.Length)
+				wordlength = _EnemyHealth.Length;
+
+			for (int i = 0; i < wordlength; i++) {
+
+				if (longest.Value.Value [0] [i] == _EnemyHealth [i]) {
+					if (!(i < _WordsToRemove)) {
+						_WordsToRemove++;
+						TextElement.text += string.Format ("<color=#" + hex + ">{0}</color>", _EnemyHealth [i]);
+					}
+				} else {
+					i = wordlength;
+				}
+			}
+		}
+
+		testingcolor32 = (Color32)Color.black;
+		hex = testingcolor32.r.ToString ("X2") + testingcolor32.g.ToString ("X2") + testingcolor32.b.ToString ("X2") + testingcolor32.a.ToString ("X2");
+
+		for (int i = _WordsToRemove; i < _EnemyHealth.Length; i++) {
+			TextElement.text += string.Format ("<color=#" + hex + ">{0}</color>", _EnemyHealth [i]);
+		}
 	}
-		
+
 	#region DifferentWordComparers
 
 	void PerfectWord(string InputString){//if the player types something then that's what's being deleted. if we have silver and silverpine, and the player type silverp, then only silverp from silverpine will be deleted because silver does not contain p at the end
-	
+
 		if (InputString.Length <= _EnemyHealth.Length) {
 			for (int i = 0; i < _EnemyHealth.Length; i++) {
 				if (i <= InputString.Length - 1) {
@@ -144,11 +206,11 @@ public class EnemyWordChecker {
 
 	void SetHealthString(string words){
 		_EnemyHealth = words;
+		_OriginalWord = _EnemyHealth;
 	}
 
 
 }
-
 /*	public Text TextElement;
 
 	bool _StopChecking;

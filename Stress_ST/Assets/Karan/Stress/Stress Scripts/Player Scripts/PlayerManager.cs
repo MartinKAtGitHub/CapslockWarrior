@@ -136,6 +136,13 @@ public class PlayerManager : DefaultBehaviour {
 
 	}
 
+	public override void GotTheKill(int a)
+	{
+		//Debug.Log ("Score " + a);
+		GetComponent<PlayerTyping> ().ResetTheText ();
+
+	}
+
 	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
 		NeighbourGroups = neighbours;
 	}

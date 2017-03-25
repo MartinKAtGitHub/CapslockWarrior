@@ -37,9 +37,9 @@ public class EnemyWordChecker {
 		_StopChecking = false;
 
 		TypingEvents.OnCompareStart += CompareStart;
-		TypingEvents.OnCompareRestart += CompareRestart;
+	//	TypingEvents.OnCompareRestart += CompareRestart;
 		TypingEvents.OnCompareEnd += CompareEnd;
-		players.Add (new KeyValuePair<GameObject, KeyValuePair<Color, string[]>>(theParent.gameObject, new  KeyValuePair<Color, string[]> (Color.yellow, new string[1]{ "muaaaooo" })));
+//		players.Add (new KeyValuePair<GameObject, KeyValuePair<Color, string[]>>(theParent.gameObject, new  KeyValuePair<Color, string[]> (Color.yellow, new string[1]{ "muaaaooo" })));
 	}
 
 	#region EventMethods
@@ -57,6 +57,8 @@ public class EnemyWordChecker {
 			if (_EnemyHealth.Length <= 0) {
 				//				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().RemoveObject(this.gameObject);
 				shortest.Key.GetComponent<DefaultBehaviour> ().GotTheKill (_OriginalWord.Length);//if multiple peeps are going to recieve score then you can create an even and give them score through the event or loop throgh players list
+				TypingEvents.OnCompareStart -= CompareStart;
+				TypingEvents.OnCompareEnd -= CompareEnd;
 				theParent.OnDestroyed();
 			}
 		}
@@ -101,7 +103,7 @@ public class EnemyWordChecker {
 		if (_WordsToRemove == _EnemyHealth.Length) {
 			shortest.Key.GetComponent<DefaultBehaviour> ().GotTheKill (_OriginalWord.Length);//if multiple peeps are going to recieve score then you can create an even and give them score through the event or loop throgh players list
 			TypingEvents.OnCompareStart -= CompareStart;
-			TypingEvents.OnCompareRestart -= CompareRestart;
+	//		TypingEvents.OnCompareRestart -= CompareRestart;
 			TypingEvents.OnCompareEnd -= CompareEnd;
 			theParent.OnDestroyed ();
 		}

@@ -27,6 +27,7 @@ public class GolumMovementTest : MonoBehaviour {
 		{
 			rb.velocity = new Vector2(speed,0.0f);
 			IsMoving = true;
+
 		}
 	}
 

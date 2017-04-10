@@ -5,6 +5,7 @@ public abstract class Spells : MonoBehaviour{
 
 
 	public float CoolDownTimer;
+	public int ManaCost;
 
 	// This code i feel to be convinent 
 	public Transform SpellSpawnPos;

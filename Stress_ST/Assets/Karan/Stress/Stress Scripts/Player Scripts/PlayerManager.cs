@@ -10,6 +10,11 @@ public class PlayerManager : DefaultBehaviour {
 
 
 	public float HealthPoints = 100;
+	public float CurrentMana = 100;
+	public float MaxMana = 100;
+
+	[Tooltip(" Sets the mana Regen Rate = value per sek")]
+	public float ManaRegenRate = 1;
 
 	// TODO ask andrew about prefab and ang drag and drop GM 
 	public Text HealtPoints_Txt; // I HAVE DRAGED AND DROPED THE TXT OBJECT
@@ -91,6 +96,7 @@ public class PlayerManager : DefaultBehaviour {
 	//	myPos [0, 1] = transform.position.y;
 
 		isPlayerAlive();
+		ManaRegen(ManaRegenRate);
 	}
 
 	public void TakeDamage(int damageAmount)
@@ -145,6 +151,21 @@ public class PlayerManager : DefaultBehaviour {
 
 	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
 		NeighbourGroups = neighbours;
+	}
+
+
+	public void ManaRegen(float manaRegenRate)// TODO Double check the ManaRegen Method in PlayerManager to see if it is not to expensive
+	{
+		if(CurrentMana < MaxMana) // this has some over flow soo it will stop at 100.001 feks Do we want to set it to 100? 
+		{
+			// Do this every second 
+			CurrentMana += manaRegenRate * Time.deltaTime;
+			Debug.Log("Regening Mana" + ManaRegenRate + " Per sek");
+		}
+		else
+		{
+			CurrentMana = MaxMana; 
+		}
 	}
 
 }

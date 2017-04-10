@@ -75,9 +75,6 @@ public class EnemyWordChecker {
 		longest = shortest;
 		TextElement.text = "";
 
-		Debug.Log (players.Count + " | " + players [0]);
-		Debug.Log (players [0].Value);
-		Debug.Log (players [0].Value.Value [0]);
 		for (int i = 0; i < players.Count; i++) {
 			if (players [i].Value.Value [0].Length > longest.Value.Value [0].Length)
 				longest = players [i];

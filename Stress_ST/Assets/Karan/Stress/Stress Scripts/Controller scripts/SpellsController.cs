@@ -27,10 +27,17 @@ public class SpellsController : MonoBehaviour {
 	private bool spellKeyThreeReady;
 	private bool spellKeyFourReady;
 
+	private PlayerManager playerManager;
 
 	// Use this for initialization
 	void Start () 
 	{
+		playerManager = GetComponent<PlayerManager>();
+
+		Debug.Log(" HEALT IS =" + playerManager.HealthPoints);
+		Debug.Log("Mana is = " + playerManager.CurrentMana);
+
+
 		if(AgumentedSpellGameObjectKeyOne == null)
 		{
 			Debug.LogError("No spell Set on Key 1, pls add a default spell here to avoid null ref");
@@ -179,15 +186,25 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyOneReady == true)
 			{
-				spellKeyOneReady = false;
-				if(SpellsOnKeyOne.CastBoolienReturn())
+				if(SpellsOnKeyOne.ManaCost < playerManager.CurrentMana)
 				{
-					timerForSpellOnKeyOne = saveTimerKeyOne;
-					Debug.Log("START TIMER AGAIN");
+					spellKeyOneReady = false;
+					if(SpellsOnKeyOne.CastBoolienReturn())
+					{
+						timerForSpellOnKeyOne = saveTimerKeyOne;
+						playerManager.CurrentMana -= SpellsOnKeyOne.ManaCost;	
+
+						Debug.Log("Spell on key 2 used -> Current mana is " + playerManager.CurrentMana); 
+						Debug.Log("START TIMER AGAIN");
+					}
+					else
+					{
+						Debug.Log("DONT START TIMER AGAIN K1");
+					}
 				}
 				else
 				{
-					Debug.Log("DONT START TIMER AGAIN K1");
+					Debug.Log("Cant use spell on Key 1  NO MANA");
 				}
 			}
 		}
@@ -195,14 +212,23 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyTwoReady == true)
 			{
-				spellKeyTwoReady = false;
-				if(SpellsOnKeyTwo.CastBoolienReturn())
+				if(SpellsOnKeyTwo.ManaCost < playerManager.CurrentMana)
 				{
-					timerForSpellOnKeyTwo = saveTimerKeyTwo;
+					spellKeyTwoReady = false;
+					if(SpellsOnKeyTwo.CastBoolienReturn())
+					{
+						timerForSpellOnKeyTwo = saveTimerKeyTwo;
+						playerManager.CurrentMana -= SpellsOnKeyTwo.ManaCost;
+						Debug.Log("Spell on key 2 used -> Current mana is " + playerManager.CurrentMana); 
+					}
+					else
+					{
+						Debug.Log("DONT START TIMER AGAIN K2");
+					}
 				}
 				else
 				{
-					Debug.Log("DONT START TIMER AGAIN K2");
+					Debug.Log("Cant use spell on Key 2  NO MANA");
 				}
 			}
 		}
@@ -210,10 +236,19 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyThreeReady == true)
 			{
-				spellKeyThreeReady = false;
-				if(SpellsOnKeyThree.CastBoolienReturn())
+				if(SpellsOnKeyThree.ManaCost < playerManager.CurrentMana)
 				{
-					timerForSpellOnKeyThree = saveTimerKeyThree;
+					spellKeyThreeReady = false;
+					if(SpellsOnKeyThree.CastBoolienReturn())
+					{
+						timerForSpellOnKeyThree = saveTimerKeyThree;
+						playerManager.CurrentMana -= SpellsOnKeyThree.ManaCost;
+						Debug.Log("Spell on key 3 used -> Current mana is " + playerManager.CurrentMana); 
+					}
+				}
+				else
+				{
+					Debug.Log("Cant use spell on Key 3  NO MANA");
 				}
 			}
 		}
@@ -221,10 +256,18 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyFourReady == true)
 			{
-				spellKeyTwoReady = false;
-				if(SpellsOnKeyFour.CastBoolienReturn())
+				if(SpellsOnKeyFour.ManaCost < playerManager.CurrentMana)
 				{
-					timerForSpellOnKeyFour = saveTimerKeyFour;
+					spellKeyTwoReady = false;
+					if(SpellsOnKeyFour.CastBoolienReturn())
+					{
+						timerForSpellOnKeyFour = saveTimerKeyFour;
+						playerManager.CurrentMana -= SpellsOnKeyFour.ManaCost;
+						Debug.Log("Spell on key 4 used -> Current mana is " + playerManager.CurrentMana); 
+					}
+				}else
+				{
+					Debug.Log("Cant use spell on Key 4  NO MANA");
 				}
 			}
 		}

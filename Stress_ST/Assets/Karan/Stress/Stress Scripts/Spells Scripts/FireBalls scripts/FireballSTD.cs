@@ -37,7 +37,7 @@ public class FireballSTD : Fire {
 	void Start () 
 	{
 		SaveCoolDownTimer = CoolDownTimer;
-		Debug.Log(SaveCoolDownTimer + "<----SAVED");
+		//Debug.Log(SaveCoolDownTimer + "<----SAVED");
 		//rb = GetComponent<Rigidbody2D>();
 		HSParticleSystem = this.gameObject.GetComponentInChildren<ParticleSystem>(); // I can do this to the Top/ first child but nt second
 		ImpactGM = this.gameObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>(); // This is not Code firednly as i am manually telling where the child is. 

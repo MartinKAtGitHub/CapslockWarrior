@@ -19,10 +19,11 @@ public class PlayerTyping : MonoBehaviour {
 
 	void Start (){
 		keytest = new KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  (this.gameObject, new KeyValuePair<Color, string[]>(TextColor, myText));
+		myText [0] = "";
 	}
 	bool ClearText = false;
 	void Update () {//checking when pressing down a button, and if it's an ok letter then it goes through and the enemies recieves it
-		if(ClearText == true){
+		if (ClearText == true) {
 			ClearText = false;
 			myText [0] = "";
 			TextElement.text = "";
@@ -30,22 +31,22 @@ public class PlayerTyping : MonoBehaviour {
 
 		if (Input.anyKeyDown && !(Input.GetKeyDown (KeyCode.Backspace) || Input.GetKeyDown (KeyCode.Return))) {
 			if ((string)Input.inputString != "") {//max input = 5 letters
-				for(int i = 0; i < ((string)Input.inputString).Length; i++){
+				for (int i = 0; i < ((string)Input.inputString).Length; i++) {
 					if (char.GetNumericValue (((string)Input.inputString) [i]) < 0) {
-						myText[0] += ((string)Input.inputString)[i];
+						myText [0] += ((string)Input.inputString) [i];
 					}
 				}
-				TextElement.text = myText[0];
+				TextElement.text = myText [0];
 				TypingEvents.OnStartCompareChanged (keytest);
 			}
 		} else {
 			if (Input.GetKeyDown (KeyCode.Return)) {
 				TypingEvents.OnEndCompareChanged (this.gameObject);
-				myText[0] = "";
+				myText [0] = "";
 				TextElement.text = "";
 			} else if (Input.GetKeyDown (KeyCode.Backspace)) {
 				if (TextElement.text.Length > 0) {
-					myText[0] = myText[0].Remove (myText[0].Length - 1);
+					myText [0] = myText [0].Remove (myText [0].Length - 1);
 					TextElement.text = myText [0];
 					TypingEvents.OnStartCompareChanged (keytest);
 				}

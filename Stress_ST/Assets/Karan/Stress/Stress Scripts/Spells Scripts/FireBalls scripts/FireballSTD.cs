@@ -42,6 +42,7 @@ public class FireballSTD : Fire {
 		HSParticleSystem = this.gameObject.GetComponentInChildren<ParticleSystem>(); // I can do this to the Top/ first child but nt second
 		ImpactGM = this.gameObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>(); // This is not Code firednly as i am manually telling where the child is. 
 		graphics = this.gameObject.transform.GetChild(0).gameObject;
+		//Debug.Log(graphics.name +  " <------------------ WTF");
 		hotShotHitBox = this.gameObject.GetComponent<BoxCollider2D>();
 		//ScanForClosestTarget();
 		Debug.Log("Fire ball target =" + fireBallTarget.name);

@@ -211,6 +211,10 @@ public class EnemyWordChecker {
 		_OriginalWord = _EnemyHealth;
 	}
 
+	public void RemoveEvent(){
+		TypingEvents.OnCompareStart -= CompareStart;
+		TypingEvents.OnCompareEnd -= CompareEnd;
+	}
 
 }
 /*	public Text TextElement;

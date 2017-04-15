@@ -16,6 +16,9 @@ public class SendSpellToGM : MonoBehaviour {
 		if(GameManger == null)
 		{
 			Debug.LogError("DID NOT FIND GAMEMANGER");
+		}else
+		{
+		Debug.Log("I founf the GM");
 		}
 
 		Key = transform.parent.parent;
@@ -23,14 +26,17 @@ public class SendSpellToGM : MonoBehaviour {
 		// HACK if parent the brancher under button both buttons will be clickable witch is somthing i dont want to do
 		//parentName = transform.parent.parent.parent.name;
 		//Debug.Log("paraent name is = " + parentName);
-
+		Debug.Log(Key.name);
 	}
 
 
 	public void SendingSpellToGM(GameObject spell)
 	{
 
-
+	if(spell == null)
+	{
+		Debug.Log("NO SPELL TO SEND");
+	}
 
 		// FIXME check parent button to see TAG||NAME some kind of ID to check witch button it is
 

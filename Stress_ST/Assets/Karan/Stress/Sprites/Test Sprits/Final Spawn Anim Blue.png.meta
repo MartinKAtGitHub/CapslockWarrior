@@ -1,9 +1,25 @@
 fileFormatVersion: 2
 guid: 131bf2a5a17f4fb418e28caf0488f671
-timeCreated: 1492107612
+timeCreated: 1492178674
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Final Spawn Anim Blue_0
+    21300002: Final Spawn Anim Blue_1
+    21300004: Final Spawn Anim Blue_2
+    21300006: Final Spawn Anim Blue_3
+    21300008: Final Spawn Anim Blue_4
+    21300010: Final Spawn Anim Blue_5
+    21300012: Final Spawn Anim Blue_6
+    21300014: Final Spawn Anim Blue_7
+    21300016: Final Spawn Anim Blue_8
+    21300018: Final Spawn Anim Blue_9
+    21300020: Final Spawn Anim Blue_10
+    21300022: Final Spawn Anim Blue_11
+    21300024: Final Spawn Anim Blue_12
+    21300026: Final Spawn Anim Blue_13
+    21300028: Final Spawn Anim Blue_14
+    21300030: Final Spawn Anim Blue_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -68,7 +84,215 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 35, y: 53, z: 35, w: 31}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 11, z: 29, w: 24}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 18, z: 29, w: 38}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_3
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 20, y: 27, z: 18, w: 27}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_4
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 52, z: 4, w: 16}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_5
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 63, z: 2, w: 8}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 9, y: 10, z: 5, w: 3}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_7
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 6, y: 13, z: 5, w: 1}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_8
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 5, y: 13, z: 5, w: 1}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_9
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 12, z: 4, w: 1}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_10
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 5, y: 12, z: 5, w: 2}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_11
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 6, y: 12, z: 6, w: 2}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_12
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 6, y: 12, z: 6, w: 2}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_13
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 23, y: 6, z: 23, w: 3}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_14
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 25, y: 30, z: 24, w: 6}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Final Spawn Anim Blue_15
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 80
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 34, y: 77, z: 29, w: 3}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

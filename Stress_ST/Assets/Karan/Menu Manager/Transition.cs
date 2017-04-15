@@ -62,6 +62,10 @@ public class Transition : MonoBehaviour {
        images = GetComponentsInChildren<Image>();
        texts = GetComponentsInChildren<Text>();
 
+		if(parentTag == null)
+       {
+       		Debug.LogError("You Have Forgoten To add Parent tag");
+       }
 	}
 	
 	// Update is called once per frame

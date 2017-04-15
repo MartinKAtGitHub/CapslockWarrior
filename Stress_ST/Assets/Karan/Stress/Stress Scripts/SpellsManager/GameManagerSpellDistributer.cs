@@ -20,8 +20,7 @@ public class GameManagerSpellDistributer : MonoBehaviour {
 	public void  LoadDataToHeroOnSceneLoad() // TODO need to make a method for multiplayer heros, maybe just and a string parameter and find them
 	{
 
-		MainHero = GameObject.FindGameObjectWithTag("MainHero").GetComponent<SpellsController>();
-
+		MainHero = GameObject.FindGameObjectWithTag("Player1").GetComponent<SpellsController>();
 
 		MainHero.AgumentedSpellGameObjectKeyOne= SpellOnKeyOne;
 		MainHero.AgumentedSpellGameObjectKeyTwo = SpellOnKeyTwo;

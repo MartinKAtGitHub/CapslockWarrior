@@ -56,14 +56,14 @@ public class DynamicListener : MonoBehaviour
         {
             if(!parameter)
             {
-                btn.onClick.AddListener(()=> objectListening.SendMessage(sendMessage)); // ?????????????????????
+                btn.onClick.AddListener(()=> objectListening.SendMessage(sendMessage)); // SendMessage is the method name on the game object eks DoWhatever()
 
-                Debug.Log("PARA");
+                Debug.Log("no PARA");
             }
             else
             {
-                btn.onClick.AddListener(() => objectListening.SendMessage(sendMessage, messageParameter)); //?????????????????????
-                Debug.Log(" no PARA");
+                btn.onClick.AddListener(() => objectListening.SendMessage(sendMessage, messageParameter)); // This also sends a paramater with it eks SetNextPage("MenuPage");
+                Debug.Log("With Para");
             }
         }
         else

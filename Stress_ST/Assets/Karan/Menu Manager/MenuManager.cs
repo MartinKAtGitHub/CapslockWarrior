@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MenuManager : MonoBehaviour {
 
+	public string LevelName;
+	[Space(10)]
     /// <summary>
     /// 1. the Pages and PageName has to be in the same order for this to work. WHY NOT save the name of the game object at the same time/ use that name insted of another array
     /// </summary>
@@ -11,6 +13,8 @@ public class MenuManager : MonoBehaviour {
 
     GameObject currentPage;
     //private bool enterScreen = false; // this can be used for pause.
+
+
 
 	// Use this for initialization
 	void Start ()
@@ -63,8 +67,43 @@ public class MenuManager : MonoBehaviour {
         {
             if (PAGE_CODE == pageNames[i])
             {
-                // the pageNames have to be in the same order as the pages for this to work
-               
+
+				if(PAGE_CODE == "LoadoutPageSinglePlayer")
+	            {
+					GameObject btn;
+					Debug.Log("LoadeOutPage");
+					OnBtnClickStartLevel t;
+	            	
+					for (int p = 0; p < pages[i].transform.childCount; p++) 
+					{
+						if(pages[i].transform.GetChild(p).name == "StartLevel_btn")
+						{
+							btn = pages[i].transform.GetChild(p).gameObject;
+							if(btn == null)
+			            	{
+			            		Debug.Log("Cant find the Btn");
+			            	}
+							t = btn.GetComponent<OnBtnClickStartLevel>();
+							if(t == null)
+			            	{
+			            		Debug.LogError("Cant find Btn Or Script On btn");
+			            	}
+			            	else
+			            	{
+			            		t.LevelName = LevelName;
+			            	}
+						}
+	            	}
+
+
+
+	            	//btn = GameObject.FindGameObjectWithTag("StartLevelBtn");
+
+
+
+
+	            }
+                   // the pageNames have to be in the same order as the pages for this to work   
                 RevealPageInUI(i);
             }
         }

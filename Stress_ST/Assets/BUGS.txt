@@ -7,7 +7,7 @@ animatorcontroller animaitons using StateMachineBehaviour -> if object is a pref
 // Karan Bugs
 Ui - Tool tip fade out. Hover over tool top enabled button and repeat to see bug.
 Ui - NullPoint Page reset, Select another Page before prevois page has faded out.
-
+Ui - BtnBrachers (the spawned btns) Have the wrong (1.321 somthign)
 
 
 

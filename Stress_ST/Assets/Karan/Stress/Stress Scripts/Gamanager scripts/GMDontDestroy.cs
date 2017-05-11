@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class GMDontDestroy : MonoBehaviour {
 
-
 	void Awake()// singleton for the game master.
 	{
 		DontDestroyOnLoad(this);
@@ -15,7 +14,7 @@ public class GMDontDestroy : MonoBehaviour {
 		}
 
 		SceneManager.sceneLoaded += delegate {
-			Debug.Log("Level Loaded");
+			Debug.Log("Level Loaded ");
 		};
 	}
 }

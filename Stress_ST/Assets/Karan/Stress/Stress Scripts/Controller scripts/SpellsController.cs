@@ -12,6 +12,12 @@ public class SpellsController : MonoBehaviour {
 	public GameObject AgumentedSpellGameObjectKeyThree;
 	public GameObject AgumentedSpellGameObjectKeyFour;
 
+	[Space (10)]
+	public GameObject AgumentedSpellGameObjectKeyOneDefaultSpell;
+	public GameObject AgumentedSpellGameObjectKeyTwoDefaultSpell;
+	public GameObject AgumentedSpellGameObjectKeyThreeDefaultSpell;
+	public GameObject AgumentedSpellGameObjectKeyFourDefaultSpell;
+
 	private float timerForSpellOnKeyOne;
 	private float timerForSpellOnKeyTwo;
 	private float timerForSpellOnKeyThree;
@@ -40,19 +46,23 @@ public class SpellsController : MonoBehaviour {
 
 		if(AgumentedSpellGameObjectKeyOne == null)
 		{
-			Debug.LogError("No spell Set on Key 1, pls add a default spell here to avoid null ref");
+			Debug.LogWarning("No spell Set on Key 1, Setting default spells");
+			AgumentedSpellGameObjectKeyOne = AgumentedSpellGameObjectKeyOneDefaultSpell;
 		}
 		if(AgumentedSpellGameObjectKeyTwo == null)
 		{
-			Debug.LogError("No spell Set on Key 2, pls add a default spell here to avoid null ref");
+			Debug.LogWarning("No spell Set on Key 2, Setting default spells");
+			AgumentedSpellGameObjectKeyTwo = AgumentedSpellGameObjectKeyTwoDefaultSpell;
 		}
 		if(AgumentedSpellGameObjectKeyThree == null)
 		{
-			Debug.LogError("No spell Set on Key 3, pls add a default spell here to avoid null ref");
+			Debug.LogWarning("No spell Set on Key 3, Setting default spells");
+			AgumentedSpellGameObjectKeyThree = AgumentedSpellGameObjectKeyThreeDefaultSpell;
 		}
 		if(AgumentedSpellGameObjectKeyFour == null)
 		{
-			Debug.LogError("No spell Set on Key 4, pls add a default spell here to avoid null ref");
+			Debug.LogWarning("No spell Set on Key 4, Setting default spells");
+			AgumentedSpellGameObjectKeyFour = AgumentedSpellGameObjectKeyFourDefaultSpell;
 		}
 
 		SpellsOnKeyOne = AgumentedSpellGameObjectKeyOne.GetComponent<Spells>(); 
@@ -87,6 +97,9 @@ public class SpellsController : MonoBehaviour {
 
 		//////////////// Problemetic code //////////////////
 		// TODO find a smarter solution SpellsController
+		SpellsOnKeyOne.PlayerGameObject = this.gameObject;
+		SpellsOnKeyTwo.PlayerGameObject = this.gameObject;
+		SpellsOnKeyThree.PlayerGameObject = this.gameObject;
 		SpellsOnKeyFour.PlayerGameObject = this.gameObject;
 
 		Transform SpellsSpawn = transform.FindChild("ProjectileSpawn");//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob

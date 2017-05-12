@@ -19,7 +19,7 @@ public class OnBtnClickStartLevel : MonoBehaviour {
 	public void StartLevel()
 	{
 		SceneManager.LoadScene(LevelName);
-		//SceneManager.LoadSceneAsync(LevelName);
+
 	}
 
 }

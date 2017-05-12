@@ -3,7 +3,8 @@ using System.Collections;
 
 public class MenuManager : MonoBehaviour {
 
-	public string LevelName;
+	[HideInInspector]
+	public string LevelName; // this is just for holding data
 	[Space(10)]
     /// <summary>
     /// 1. the Pages and PageName has to be in the same order for this to work. WHY NOT save the name of the game object at the same time/ use that name insted of another array
@@ -68,7 +69,7 @@ public class MenuManager : MonoBehaviour {
             if (PAGE_CODE == pageNames[i])
             {
 
-				if(PAGE_CODE == "LoadoutPageSinglePlayer")
+				if(PAGE_CODE == "LoadoutPageSinglePlayer") // This whole If is to send the name of lvl to the btn so it can be sendt
 	            {
 					GameObject btn;
 					Debug.Log("LoadeOutPage");
@@ -83,7 +84,9 @@ public class MenuManager : MonoBehaviour {
 			            	{
 			            		Debug.Log("Cant find the Btn");
 			            	}
+
 							t = btn.GetComponent<OnBtnClickStartLevel>();
+
 							if(t == null)
 			            	{
 			            		Debug.LogError("Cant find Btn Or Script On btn");

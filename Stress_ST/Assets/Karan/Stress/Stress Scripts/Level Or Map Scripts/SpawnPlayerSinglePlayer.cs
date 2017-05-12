@@ -6,12 +6,14 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	
 
 	public GameObject MainHero;
+	public GameObject CountDownAnim;
 
 	private GameObject GM;
 	private GameObject HeroClone;
 
 	private GameManagerSpellDistributer GMSpellDist;
 	private SpellsController spellsController;
+	private Animator animController;
 
 	void Start () 
 	{
@@ -26,6 +28,7 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 			{ 
 				Debug.LogError("SpawnPlayerSingleplayer could not find GameManager or Main hero -> GM (" + GMSpellDist + ") HERO (" + MainHero + ")");
 			}
+
 
 	
 		SpawnPlayerChar();
@@ -43,6 +46,8 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	{
 		// so we sett bool to be true the moment level starts i guess -- we might get problems with all the things loading så things will be out of sync
 		// we wait for anim to be to play and signal the player spawn to get ready.
+
+
 
 	}
 

@@ -5,6 +5,7 @@ public class RunAnimationIfPlayerClose : MonoBehaviour {
 
 	public Transform Player;
 	public Transform me;
+	public bool activated = false;
 
 	float distance = 5f;
 	// Use this for initialization
@@ -14,7 +15,12 @@ public class RunAnimationIfPlayerClose : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (distance <= Vector3.Distance (Player.position, me.position)) {
+		/*if (distance <= Vector3.Distance (Player.position, me.position)) {
+			GetComponent<Animator> ().SetInteger ("Change", 2);
+		} else {
+			GetComponent<Animator> ().SetInteger ("Change", 1);
+		}*/
+		if (activated == true) {
 			GetComponent<Animator> ().SetInteger ("Change", 2);
 		} else {
 			GetComponent<Animator> ().SetInteger ("Change", 1);

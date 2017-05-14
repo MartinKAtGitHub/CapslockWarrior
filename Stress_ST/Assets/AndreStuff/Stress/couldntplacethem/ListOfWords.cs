@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ListOfWords : MonoBehaviour {
+public class ListOfWords {
 
 	//This is straight forward ;-p the words are created and sendt to their target
 
@@ -19,7 +19,7 @@ public class ListOfWords : MonoBehaviour {
 	#region ListOfWords
 
 	#region ThreeLetterWords
-		string[] _ThreeLetterWords = new string[] {//3 letters
+		static string[] _ThreeLetterWords = new string[] {//3 letters
 			"and",
 			"ant",	
 			"any",	
@@ -43,7 +43,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region FourLetterWords
-		string[] _FourLetterWords = new string[] {//4 letters
+	static string[] _FourLetterWords = new string[] {//4 letters
 			"also",	
 			"ally",	
 			"able",	
@@ -59,7 +59,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region FiveLetterWords
-		string[] _FiveLetterWords = new string[] {//5 letters
+	static string[] _FiveLetterWords = new string[] {//5 letters
 			"admit",
 			"adult",	
 			"adept",	
@@ -122,7 +122,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region SixLetterWords
-		string[] _SixLetterWords = new string[] {//6 letters
+	static string[] _SixLetterWords = new string[] {//6 letters
 			"accent",
 			"accept",
 			"access",
@@ -187,7 +187,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region SevenLetterWords
-		string[] _SevenLetterWords = new string[] {//7 letters
+	static string[] _SevenLetterWords = new string[] {//7 letters
 			"abandon",
 			"achieve",
 			"advisor",
@@ -248,7 +248,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region EightLetterWords
-		string[] _EightLetterWords = new string[] {//8 letters
+	static string[] _EightLetterWords = new string[] {//8 letters
 			"accuracy",
 			"aircraft",
 			"airplane",
@@ -320,7 +320,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region NineLetterWords
-		string[] _NineLetterWords = new string[] {//9 letters
+	static string[] _NineLetterWords = new string[] {//9 letters
 			"abandoned",
 			"adversary",
 			"admission",
@@ -374,7 +374,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region TenLetterWords
-		string[] _TenLetterWords = new string[] {//10 letters
+	static string[] _TenLetterWords = new string[] {//10 letters
 			"accessible",
 			"accordance",
 			"accountant",
@@ -428,7 +428,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region ElevenLetterWords
-		string[] _ElevenLetterWords = new string[] {//11 letters
+	static string[] _ElevenLetterWords = new string[] {//11 letters
 			"apocalyptic",
 			"arrangement",
 			"alternative",
@@ -457,7 +457,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region TwelveLetterWords
-		string[] _TwelveLetterWords = new string[] {//12 letters
+	static string[] _TwelveLetterWords = new string[] {//12 letters
 			"alphabetical",
 			"astronomical",
 			"accidentally",
@@ -479,7 +479,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region ThirteenLetterWords
-		string[] _ThirteenLetterWords = new string[] {//13 letters
+	static string[] _ThirteenLetterWords = new string[] {//13 letters
 			"argyranthemum",
 			"approximately",
 			"arteriography",
@@ -490,7 +490,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region FourteenLetterWords
-		string[] _FourteenLetterWords = new string[] { //14 letters
+	static string[] _FourteenLetterWords = new string[] { //14 letters
 			"alphabetically",
 			"automatization",
 			"automatisation",
@@ -500,7 +500,7 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region FifteenLetterWords
-		string[] _FifteenLetterWords = new string[] { //15 letters
+	static string[] _FifteenLetterWords = new string[] { //15 letters
 			"acupuncturation",
 			"anticlockwisely",
 			"archaeastronomy",
@@ -508,14 +508,13 @@ public class ListOfWords : MonoBehaviour {
 	#endregion
 
 	#region SixteenLetterWords
-		string[] _SixteenLetterWords = new string[] { //16 letters
+	static string[] _SixteenLetterWords = new string[] { //16 letters
 			"administratively",
 		};	
 	#endregion
 
 	#endregion
-			
-	public string GetRandomWords(int letters){//returns a word of size letters
+	public static string GetRandomWords(int letters){//returns a word of size letters
 		if (letters == 3) {
 			return _ThreeLetterWords [Random.Range (0, _ThreeLetterWords.Length)];
 		} else if (letters == 4) {
@@ -545,7 +544,8 @@ public class ListOfWords : MonoBehaviour {
 		} else if (letters == 16) {
 			return _SixteenLetterWords [Random.Range (0, _SixteenLetterWords.Length)];
 		} else {
-			return GetRandomLowerCaseLetters(letters);
+			return _SixteenLetterWords [Random.Range (0, _SixteenLetterWords.Length)];
+			//return GetRandomLowerCaseLetters(letters);
 		}
 	}
 		

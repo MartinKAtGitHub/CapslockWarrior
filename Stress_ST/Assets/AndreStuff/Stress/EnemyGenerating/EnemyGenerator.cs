@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemyGenerator : ListOfWords {
+public class EnemyGenerator : MonoBehaviour {
 
 	[SerializeField]
 	List<Transform> _SpawnPoints;
@@ -99,10 +99,11 @@ public class EnemyGenerator : ListOfWords {
 							middleMan = (_TheEnemyAttacher.GetBossEnemies () as EnemyBlueprint);	
 						}
 						if (middleMan.GetEnemyHealth () > 0) {//moved this from enemywordchecker because thought it might improve the perfromance, then if objects health is 0 it wont be spawned
-							_EnemyObject.GetComponentInChildren<EnemyWordChecker> ()._EnemyHealth = GetRandomWords (middleMan.GetEnemyHealth ());
-							//_EnemyObject.GetComponentInChildren<SpriteRenderer> ().sprite = middleMan.GetEnemySprite ();
-							_EnemyObject.GetComponentInChildren<Animator> ().runtimeAnimatorController = middleMan.GetEnemyAnimator ();
-							WhereToSpawnEnemies ();
+						//	_EnemyObject.GetComponent<CreatureBehaviour> ().setword(GetRandomWords (middleMan.GetEnemyHealth ()));
+						//	_EnemyObject.GetComponentInChildren<EnemyWordChecker> ()._EnemyHealth = GetRandomWords (middleMan.GetEnemyHealth ());
+							// this was commented out_EnemyObject.GetComponentInChildren<SpriteRenderer> ().sprite = middleMan.GetEnemySprite ();
+			//				_EnemyObject.GetComponentInChildren<Animator> ().runtimeAnimatorController = middleMan.GetEnemyAnimator ();
+							WhereToSpawnEnemies (middleMan);
 						} else {
 						}
 					}
@@ -123,11 +124,13 @@ public class EnemyGenerator : ListOfWords {
 	}
 
 
-	void WhereToSpawnEnemies(){//TODO improve this, currently spawning enemies from 4 different positions, random.range to choose which to spawn from
+	void WhereToSpawnEnemies(EnemyBlueprint middleMan){//TODO improve this, currently spawning enemies from 4 different positions, random.range to choose which to spawn from
 
 		Transform s = _SpawnPoints [Random.Range (0, _SpawnPoints.Count)];
 
 		GameObject saver = Instantiate (_EnemyObject, s.position, Quaternion.identity) as GameObject;
+	//	saver.GetComponent<CreatureBehaviour> ().setword(GetRandomWords (middleMan.GetEnemyHealth ()));
+		saver.GetComponentInChildren<Animator> ().runtimeAnimatorController = middleMan.GetEnemyAnimator ();
 		saver.transform.SetParent (s);
 //		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<InTheMiddleManager>().AddObject(saver);
 	}

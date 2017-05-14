@@ -19,6 +19,12 @@ public class CreatureBehaviour : MovingCreatures {
 	public string _EnemyHealth;
 	EnemyWordChecker test;
 
+	public void setword(string a){
+		test._EnemyHealth = a;
+		TextElement.text = a;
+		_EnemyHealth = a;
+	}
+
 	void Awake(){ 
 		//TargetPriorityClass = new TargetHierarchy (this);
 

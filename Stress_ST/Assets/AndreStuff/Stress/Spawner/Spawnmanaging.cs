@@ -48,6 +48,7 @@ public class Spawnmanaging : MonoBehaviour {
 							_SpawnSpot = 0;
 						}
 						_SpawnedObject = Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [_SpawnSpot].transform.position, Quaternion.identity, SpawnPoints [_SpawnSpot].transform) as GameObject;
+						_SpawnedObject.GetComponent<CreatureBehaviour> ().setword(ListOfWords.GetRandomWords (ObjectsToSpawn [k].creature.gameObject.GetComponent<CreatureBehaviour>().MyHealthPoints[0]));
 						_SpawnedObject.GetComponent<MovingCreatures> ().SetAiRoom (SpawnPoints [_SpawnSpot++].GetComponent<SpawningPointLocation> ().PointPlacement);
 					}
 				}

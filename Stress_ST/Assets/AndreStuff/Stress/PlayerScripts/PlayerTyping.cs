@@ -18,6 +18,9 @@ public class PlayerTyping : MonoBehaviour {
 	KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  keytest;
 
 	void Start (){
+		if (TextElement == null) {
+			TextElement = GameObject.Find ("Canvas").transform.GetChild(0).FindChild("Text").gameObject.GetComponent<Text>();
+		}
 		keytest = new KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  (this.gameObject, new KeyValuePair<Color, string[]>(TextColor, myText));
 		myText [0] = "";
 	}

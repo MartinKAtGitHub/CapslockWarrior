@@ -136,7 +136,7 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 	public override void RecievedDmg(int _damage){
-		OnDestroyed ();
+		//OnDestroyed ();
 		//	Debug.Log (name + " Got Hit with: " + _damage + " damage");
 	}
 

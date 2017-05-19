@@ -14,11 +14,14 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	private GameManagerSpellDistributer GMSpellDist;
 	private SpellsController spellsController;
 	private Animator animController;
+	private Spawnmanaging Spawner;
 
 	void Start () 
 	{
-			GM = GameObject.FindGameObjectWithTag("GameManager");
 
+			Spawner = GetComponent<Spawnmanaging>();
+
+			GM = GameObject.FindGameObjectWithTag("GameManager");
 			if(GM != null && MainHero != null)
 			{
 				GMSpellDist = GM.GetComponent<GameManagerSpellDistributer>();
@@ -30,8 +33,8 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 			}
 
 
-	
-		SpawnPlayerChar();
+		// spawnanim (1 sek) start anim
+ 		SpawnPlayerChar();
 
 	}
 	
@@ -75,4 +78,9 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		*/
 	}
 
+
+	public void StartSpawner()
+	{
+		Spawner.StartSpawn = true;
+	}
 }

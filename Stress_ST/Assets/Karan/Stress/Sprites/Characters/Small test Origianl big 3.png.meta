@@ -1,23 +1,18 @@
 fileFormatVersion: 2
-guid: e13a91c4774558247915a023e0712107
-timeCreated: 1494947491
+guid: a89bb6626a25e1a459c65d6fa9fb5b99
+timeCreated: 1494943801
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Golem1_0
-    21300002: Golem1_1
-    21300004: Golem1_2
-    21300006: Golem1_3
-    21300008: Golem1_4
-    21300010: Golem1_6
-    21300012: Golem1_7
-    21300014: Golem1_8
-    21300016: Golem1_9
-    21300018: Golem1_5
+    21300000: Small test Origianl big 3_0
+    21300002: Small test Origianl big 3_1
+    21300004: Small test Origianl big 3_2
+    21300006: Small test Origianl big 3_3
+    21300008: Small test Origianl big 3_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -34,11 +29,11 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -80,7 +75,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Golem1_0
+      name: Small test Origianl big 3_0
       rect:
         serializedVersion: 2
         x: 0
@@ -93,7 +88,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Golem1_1
+      name: Small test Origianl big 3_1
       rect:
         serializedVersion: 2
         x: 50
@@ -106,20 +101,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Golem1_2
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 100
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Golem1_3
+      name: Small test Origianl big 3_2
       rect:
         serializedVersion: 2
         x: 0
@@ -132,7 +114,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Golem1_4
+      name: Small test Origianl big 3_3
       rect:
         serializedVersion: 2
         x: 50
@@ -145,50 +127,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Golem1_5
+      name: Small test Origianl big 3_4
       rect:
         serializedVersion: 2
         x: 100
         y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Golem1_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Golem1_7
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Golem1_8
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 0
         width: 50
         height: 50
       alignment: 0

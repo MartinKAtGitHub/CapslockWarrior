@@ -30,6 +30,7 @@ public class PlayerTyping : MonoBehaviour {
 			ClearText = false;
 			myText [0] = "";
 			TextElement.text = "";
+			TypingEvents.OnStartCompareChanged (keytest);
 		}
 
 		if (Input.anyKeyDown && !(Input.GetKeyDown (KeyCode.Backspace) || Input.GetKeyDown (KeyCode.Return))) {

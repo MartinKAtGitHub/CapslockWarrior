@@ -25,7 +25,7 @@ public class AttackState : DefaultState {
 		_MyRigidbody2D = _MyInfo.GetComponent<Rigidbody2D> ();
 		CanIRanged = canIRanged;//TODO DONT DELETE
 
-		_MyAnimator = myInfo.transform.FindChild("GFX").GetComponent<Animator> ();
+		_MyAnimator = myInfo.transform.Find("GFX").GetComponent<Animator> ();
 		ShootingAnimation = _MyAnimator.GetBehaviour<OnlyShootAfterAnimation> ();
 		QuittingAnimation = _MyAnimator.GetBehaviour<OnlyQuitAfterAnimation> ();
 

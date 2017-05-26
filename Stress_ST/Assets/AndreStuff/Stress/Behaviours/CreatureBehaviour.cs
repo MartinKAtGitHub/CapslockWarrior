@@ -39,7 +39,7 @@ public class CreatureBehaviour : MovingCreatures {
 		myPos [0, 1] = WalkColliderPoint.position.y;	
 		MyNode [0] = new Nodes (myPos, 0);
 		_CreateThePath = new AStarPathfinding_RoomPaths (54, MyNode[0]);//TODO make 54 and 13 gamemanagervariables so that i get them and put them here
-		_PersonalNodeMap = new CreatingObjectNodeMap(transform.FindChild("FeetCollider").GetComponent<BoxCollider2D>().size, transform.FindChild ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2, NodeSizess, PathfindingNodeID);//if i do this then the constructor is only called once instead of 4 times......
+		_PersonalNodeMap = new CreatingObjectNodeMap(transform.Find("FeetCollider").GetComponent<BoxCollider2D>().size, transform.Find ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2, NodeSizess, PathfindingNodeID);//if i do this then the constructor is only called once instead of 4 times......
 	}
 
 	void Start(){
@@ -158,8 +158,8 @@ public class CreatureBehaviour : MovingCreatures {
 
 
 
-			for (int x = 0; x < Mathf.FloorToInt((transform.FindChild ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2) / (1 / (float)NodeSizess) * 2) + 1; x++) {
-				for (int y = 0; y <  Mathf.FloorToInt((transform.FindChild ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2) / (1 / (float)NodeSizess) * 2) + 1; y++) {
+			for (int x = 0; x < Mathf.FloorToInt((transform.Find ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2) / (1 / (float)NodeSizess) * 2) + 1; x++) {
+				for (int y = 0; y <  Mathf.FloorToInt((transform.Find ("WalkingCollider").GetComponent<BoxCollider2D> ().size.x / 2) / (1 / (float)NodeSizess) * 2) + 1; y++) {
 					if (mynodes [x, y].GetCollision () == PathfindingNodeID[0]) {
 						Gizmos.color = Color.black;
 					} else if (mynodes [x, y].GetCollision () == PathfindingNodeID[1]) {

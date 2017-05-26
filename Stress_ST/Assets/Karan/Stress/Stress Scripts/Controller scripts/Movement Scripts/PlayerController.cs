@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 
 
 	public float maxSpeed = 10f;
+	public Animator heroAnimator;
+
 	bool facingRigth;
 	bool cancelMouseMovement;
 	bool targetSet;
@@ -74,6 +76,14 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 
 		 heroGraphics = transform.FindChild("GFX"); // use thesprite rendrer.flip(X) insted of scale maybe?
 		//Debug.LogWarning("ADD THE INTERFACE TO PLAYERCONTOLLER MOUSE");
+
+
+		// heroAnimator = GetComponent<Animator>();
+		heroAnimator = heroGraphics.GetComponent<Animator>();
+		if(heroAnimator == null)
+		{
+			Debug.LogWarning("SHITT IS NULL DOG");
+		}
 	}
 
 
@@ -147,14 +157,21 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		facing.x = Input.GetAxisRaw("MouseAndArrowsX"); // remove AD keys in input Manager
 		facing.y = Input.GetAxisRaw("MouseAndArrowsY");	// Remove WS keys in input Manager
 
+
+
 		playerRigBdy.velocity = new Vector2 (facing.x * maxSpeed, facing.y * maxSpeed);
+
+		//heroAnimator.SetFloat("Speed", PlayerRigBdy.velocity.x); Need to figure out how to connect anim
+
 
 		if(Mathf.Abs(facing.x) > 0) // Might be better WITHOUT .abs()
 		{
+
 			cancelMouseMovement = true;
 		}
 		if(Mathf.Abs(facing.y) > 0)// Might be better WITHOUT .abs()
 		{
+
 			cancelMouseMovement = true;
 		}
 		if(!cancelMouseMovement)

@@ -31,7 +31,7 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 			{ 
 				Debug.LogError("SpawnPlayerSingleplayer could not find GameManager or Main hero -> GM (" + GMSpellDist + ") HERO (" + MainHero + ")");
 			}
-
+		StartCountDownAnimGui();
 
 		// spawnanim (1 sek) start anim
  		SpawnPlayerChar();
@@ -49,7 +49,9 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	{
 		// so we sett bool to be true the moment level starts i guess -- we might get problems with all the things loading så things will be out of sync
 		// we wait for anim to be to play and signal the player spawn to get ready.
+		CountDownAnim.SetActive(true);
 
+		//CountDownAnimStartScript t =  CountDownAnim.GetComponent<CountDownAnimStartScript>();
 
 
 	}

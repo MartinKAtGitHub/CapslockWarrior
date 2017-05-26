@@ -77,7 +77,7 @@ public class RangedWalkToTarget : DefaultState {
 
 		_MyRigidbody2D = myInfo.GetComponent<Rigidbody2D> ();
 
-		GFX = myInfo.transform.FindChild ("GFX");
+		GFX = myInfo.transform.Find ("GFX");
 		_CreatureAnimator = GFX.GetComponent<Animator> ();
 		_LineOfSight = lineOfSight;
 

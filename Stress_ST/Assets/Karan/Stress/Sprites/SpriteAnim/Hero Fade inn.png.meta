@@ -1,22 +1,21 @@
 fileFormatVersion: 2
-guid: 972102ce2a2cc154c9c1c20e537bb6f5
-timeCreated: 1469634149
+guid: 6cec399454a5b034dadac55c3d228460
+timeCreated: 1495645915
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Hero 3 Coate Anim_0
-    21300002: Hero 3 Coate Anim_1
-    21300004: Hero 3 Coate Anim_2
-    21300006: Hero 3 Coate Anim_3
-    21300008: Hero 3 Coate Anim_4
-    21300010: Hero 3 Coate Anim_5
-    21300012: Hero 3 Coate Anim_6
-    21300014: Hero 3 Coate Anim_7
-    21300016: Hero 3 Coate Anim_8
+    21300000: Hero Fade inn_0
+    21300002: Hero Fade inn_1
+    21300004: Hero Fade inn_2
+    21300006: Hero Fade inn_3
+    21300008: Hero Fade inn_4
+    21300010: Hero Fade inn_5
+    21300012: Hero Fade inn_6
+    21300014: Hero Fade inn_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -33,11 +32,11 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     filterMode: 0
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -45,11 +44,11 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -62,7 +61,7 @@ TextureImporter:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -70,7 +69,7 @@ TextureImporter:
   - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -79,122 +78,83 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hero 3 Coate Anim_0
+      name: Hero Fade inn_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 105
-        width: 43
-        height: 51
-      alignment: 9
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: Hero 3 Coate Anim_1
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 105
-        width: 44
-        height: 51
+        x: 0
+        y: 104
+        width: 52
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: -1
+      tessellationDetail: 0
     - serializedVersion: 2
-      name: Hero 3 Coate Anim_2
+      name: Hero Fade inn_1
       rect:
         serializedVersion: 2
-        x: 114
-        y: 105
-        width: 41
-        height: 51
+        x: 52
+        y: 104
+        width: 52
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: -1
+      tessellationDetail: 0
     - serializedVersion: 2
-      name: Hero 3 Coate Anim_3
+      name: Hero Fade inn_2
       rect:
         serializedVersion: 2
-        x: 10
-        y: 53
-        width: 40
-        height: 51
+        x: 104
+        y: 104
+        width: 52
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: -1
+      tessellationDetail: 0
     - serializedVersion: 2
-      name: Hero 3 Coate Anim_4
+      name: Hero Fade inn_3
       rect:
         serializedVersion: 2
-        x: 73
-        y: 64
-        width: 29
-        height: 40
+        x: 0
+        y: 52
+        width: 52
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: -1
+      tessellationDetail: 0
     - serializedVersion: 2
-      name: Hero 3 Coate Anim_5
+      name: Hero Fade inn_4
       rect:
         serializedVersion: 2
-        x: 113
-        y: 53
-        width: 42
-        height: 51
+        x: 52
+        y: 52
+        width: 52
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: -1
+      tessellationDetail: 0
     - serializedVersion: 2
-      name: Hero 3 Coate Anim_6
+      name: Hero Fade inn_5
       rect:
         serializedVersion: 2
-        x: 10
-        y: 1
-        width: 42
-        height: 51
+        x: 104
+        y: 52
+        width: 52
+        height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: Hero 3 Coate Anim_7
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 1
-        width: 41
-        height: 51
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
-    - serializedVersion: 2
-      name: Hero 3 Coate Anim_8
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 1
-        width: 42
-        height: 51
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: -1
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

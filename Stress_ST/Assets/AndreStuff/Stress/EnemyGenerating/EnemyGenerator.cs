@@ -146,7 +146,7 @@ public class EnemyGenerator : MonoBehaviour {
 
 		KeyValuePair<string,int> DifficultyAndNumber = _WaveListHolder.Dequeue ();
 		
-		GameObject InstatiatedObject = Instantiate (Resources.Load ("Andre/Prefabs/TimeBarObject", typeof(GameObject)) as GameObject, _SpawnTimerBar.transform.FindChild ("StartPosition").transform.position, Quaternion.identity) as GameObject;
+		GameObject InstatiatedObject = Instantiate (Resources.Load ("Andre/Prefabs/TimeBarObject", typeof(GameObject)) as GameObject, _SpawnTimerBar.transform.Find ("StartPosition").transform.position, Quaternion.identity) as GameObject;
 		InstatiatedObject.transform.SetParent (_SpawnTimerBar.transform);
 	
 		InstatiatedObject.transform.localScale = new Vector3 (15,15,15);//for some reason the scale changes depending on how much the camera is zoomed in/out so had to do this. TODO find a solution

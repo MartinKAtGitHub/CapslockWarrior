@@ -12,7 +12,7 @@ public class MoveToEnd : MonoBehaviour {
 	GameObject _EnemyGenerator;
 
 	void Start(){
-		_EndPosition = transform.parent.FindChild("EndPosition");
+		_EndPosition = transform.parent.Find("EndPosition");
 	}
 
 	void Update() {

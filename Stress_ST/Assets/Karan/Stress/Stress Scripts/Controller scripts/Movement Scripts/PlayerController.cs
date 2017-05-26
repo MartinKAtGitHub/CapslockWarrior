@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		playerRigBdy = GetComponent<Rigidbody2D>();
 		mousePos = Vector3.zero;
 
-		 heroGraphics = transform.FindChild("GFX"); // use thesprite rendrer.flip(X) insted of scale maybe?
+		 heroGraphics = transform.Find("GFX"); // use thesprite rendrer.flip(X) insted of scale maybe?
 		//Debug.LogWarning("ADD THE INTERFACE TO PLAYERCONTOLLER MOUSE");
 
 

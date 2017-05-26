@@ -102,7 +102,7 @@ public class SpellsController : MonoBehaviour {
 		SpellsOnKeyThree.PlayerGameObject = this.gameObject;
 		SpellsOnKeyFour.PlayerGameObject = this.gameObject;
 
-		Transform SpellsSpawn = transform.FindChild("ProjectileSpawn");//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob
+		Transform SpellsSpawn = transform.Find("ProjectileSpawn");//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob
 		SpellsOnKeyOne.SpellSpawnPos = SpellsSpawn;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
 		SpellsOnKeyTwo.SpellSpawnPos = SpellsSpawn;
 		SpellsOnKeyThree.SpellSpawnPos = SpellsSpawn;

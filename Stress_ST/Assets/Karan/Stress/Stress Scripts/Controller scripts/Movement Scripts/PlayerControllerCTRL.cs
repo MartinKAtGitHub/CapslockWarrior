@@ -71,7 +71,7 @@ public class PlayerControllerCTRL : MonoBehaviour, IMovementEngin{
 
 		PlayerRigBdy = GetComponent<Rigidbody2D>();
 		spriteFacingRigth = true;
-		heroGraphics = transform.FindChild("GFX");
+		heroGraphics = transform.Find("GFX");
 
 	}
 	

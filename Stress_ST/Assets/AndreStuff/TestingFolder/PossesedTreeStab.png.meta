@@ -1,15 +1,17 @@
 fileFormatVersion: 2
-guid: 2075b49d61ec43e4697cf8c97c2c45ac
-timeCreated: 1496668112
+guid: 086596772d8785a40885c99440cb0b16
+timeCreated: 1496665272
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PossesedTreeWalking_0
-    21300002: PossesedTreeWalking_1
-    21300004: PossesedTreeWalking_2
-    21300006: PossesedTreeWalking_3
-    21300008: PossesedTreeWalking_4
-    21300010: PossesedTreeWalking_5
+    21300000: PossesedTreeStab_0
+    21300002: PossesedTreeStab_1
+    21300004: PossesedTreeStab_2
+    21300006: PossesedTreeStab_3
+    21300008: PossesedTreeStab_4
+    21300010: PossesedTreeStab_5
+    21300012: PossesedTreeStab_6
+    21300014: PossesedTreeStab_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -76,7 +78,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PossesedTreeWalking_0
+      name: PossesedTreeStab_0
       rect:
         serializedVersion: 2
         x: 0
@@ -89,7 +91,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_1
+      name: PossesedTreeStab_1
       rect:
         serializedVersion: 2
         x: 312
@@ -102,7 +104,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_2
+      name: PossesedTreeStab_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 624
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PossesedTreeStab_3
       rect:
         serializedVersion: 2
         x: 0
@@ -115,7 +130,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_3
+      name: PossesedTreeStab_4
       rect:
         serializedVersion: 2
         x: 312
@@ -128,7 +143,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_4
+      name: PossesedTreeStab_5
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PossesedTreeStab_6
       rect:
         serializedVersion: 2
         x: 0
@@ -141,7 +169,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_5
+      name: PossesedTreeStab_7
       rect:
         serializedVersion: 2
         x: 312

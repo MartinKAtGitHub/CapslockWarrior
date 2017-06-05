@@ -1,15 +1,13 @@
 fileFormatVersion: 2
-guid: 2075b49d61ec43e4697cf8c97c2c45ac
-timeCreated: 1496668112
+guid: aaeaabf602b4b48448782ca423850e79
+timeCreated: 1496679134
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PossesedTreeWalking_0
-    21300002: PossesedTreeWalking_1
-    21300004: PossesedTreeWalking_2
-    21300006: PossesedTreeWalking_3
-    21300008: PossesedTreeWalking_4
-    21300010: PossesedTreeWalking_5
+    21300000: PossesedTreePreShoot_0
+    21300002: PossesedTreePreShoot_1
+    21300004: PossesedTreePreShoot_2
+    21300006: PossesedTreePreShoot_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -76,33 +74,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PossesedTreeWalking_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 624
-        width: 312
-        height: 312
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: PossesedTreeWalking_1
-      rect:
-        serializedVersion: 2
-        x: 312
-        y: 624
-        width: 312
-        height: 312
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: PossesedTreeWalking_2
+      name: PossesedTreePreShoot_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,7 +87,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_3
+      name: PossesedTreePreShoot_1
       rect:
         serializedVersion: 2
         x: 312
@@ -128,7 +100,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_4
+      name: PossesedTreePreShoot_2
       rect:
         serializedVersion: 2
         x: 0
@@ -141,7 +113,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeWalking_5
+      name: PossesedTreePreShoot_3
       rect:
         serializedVersion: 2
         x: 312

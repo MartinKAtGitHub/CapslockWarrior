@@ -1,17 +1,13 @@
 fileFormatVersion: 2
-guid: bbce5860d59cf274bbf3e427317c477c
-timeCreated: 1495045112
+guid: 5a571ea6aa0803e4da603eb7460cbd78
+timeCreated: 1496671311
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PossesedTreeReCharge_0
-    21300002: PossesedTreeReCharge_1
-    21300004: PossesedTreeReCharge_2
-    21300006: PossesedTreeReCharge_3
-    21300008: PossesedTreeReCharge_4
-    21300010: PossesedTreeReCharge_5
-    21300012: PossesedTreeReCharge_6
-    21300014: PossesedTreeReCharge_7
+    21300000: PossesedTreeStabIdle_0
+    21300002: PossesedTreeStabIdle_1
+    21300004: PossesedTreeStabIdle_2
+    21300006: PossesedTreeStabIdle_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -78,46 +74,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PossesedTreeReCharge_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 624
-        width: 312
-        height: 312
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: PossesedTreeReCharge_1
-      rect:
-        serializedVersion: 2
-        x: 312
-        y: 624
-        width: 312
-        height: 312
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: PossesedTreeReCharge_2
-      rect:
-        serializedVersion: 2
-        x: 624
-        y: 624
-        width: 312
-        height: 312
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: PossesedTreeReCharge_3
+      name: PossesedTreeStabIdle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -125,12 +82,12 @@ TextureImporter:
         width: 312
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeReCharge_4
+      name: PossesedTreeStabIdle_1
       rect:
         serializedVersion: 2
         x: 312
@@ -138,25 +95,12 @@ TextureImporter:
         width: 312
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeReCharge_5
-      rect:
-        serializedVersion: 2
-        x: 624
-        y: 312
-        width: 312
-        height: 312
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: PossesedTreeReCharge_6
+      name: PossesedTreeStabIdle_2
       rect:
         serializedVersion: 2
         x: 0
@@ -164,12 +108,12 @@ TextureImporter:
         width: 312
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PossesedTreeReCharge_7
+      name: PossesedTreeStabIdle_3
       rect:
         serializedVersion: 2
         x: 312
@@ -177,7 +121,7 @@ TextureImporter:
         width: 312
         height: 312
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

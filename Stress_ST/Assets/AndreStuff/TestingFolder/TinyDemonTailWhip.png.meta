@@ -1,14 +1,18 @@
 fileFormatVersion: 2
-guid: b3ea530153c687a4ba7e036c267c7ca1
-timeCreated: 1497268119
+guid: f3f10b30f9cb96543b42d716014f06df
+timeCreated: 1497272432
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: TinyDemonRunning_0
-    21300002: TinyDemonRunning_1
-    21300004: TinyDemonRunning_2
-    21300006: TinyDemonRunning_3
-    21300008: TinyDemonRunning_4
+    21300000: TinyDemonTailWhip_0
+    21300002: TinyDemonTailWhip_1
+    21300004: TinyDemonTailWhip_2
+    21300006: TinyDemonTailWhip_3
+    21300008: TinyDemonTailWhip_4
+    21300010: TinyDemonTailWhip_5
+    21300012: TinyDemonTailWhip_6
+    21300014: TinyDemonTailWhip_7
+    21300016: TinyDemonTailWhip_8
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -75,65 +79,117 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TinyDemonRunning_0
+      name: TinyDemonTailWhip_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 40
-        width: 20
-        height: 20
+        y: 44
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TinyDemonRunning_1
+      name: TinyDemonTailWhip_1
       rect:
         serializedVersion: 2
-        x: 20
-        y: 40
-        width: 20
-        height: 20
+        x: 22
+        y: 44
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TinyDemonRunning_2
+      name: TinyDemonTailWhip_2
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 44
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TinyDemonTailWhip_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 20
-        width: 20
-        height: 20
+        y: 22
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TinyDemonRunning_3
+      name: TinyDemonTailWhip_4
       rect:
         serializedVersion: 2
-        x: 20
-        y: 20
-        width: 20
-        height: 20
+        x: 22
+        y: 22
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TinyDemonRunning_4
+      name: TinyDemonTailWhip_5
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 22
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TinyDemonTailWhip_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 20
-        height: 20
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TinyDemonTailWhip_7
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TinyDemonTailWhip_8
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 0
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

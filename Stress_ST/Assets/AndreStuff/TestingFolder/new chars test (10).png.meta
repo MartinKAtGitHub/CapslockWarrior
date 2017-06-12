@@ -1,55 +1,58 @@
 fileFormatVersion: 2
-guid: a55c5bc0e08333845b68a831c6cc93d6
-timeCreated: 1497224625
+guid: d54f50b34f427d143a8c1b856c4eb7d1
+timeCreated: 1497295807
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: new chars test (9)_0
-    21300002: new chars test (9)_1
-    21300004: new chars test (9)_2
-    21300006: new chars test (9)_3
-    21300008: new chars test (9)_4
-    21300010: new chars test (9)_5
-    21300012: new chars test (9)_6
-    21300014: new chars test (9)_7
-    21300016: new chars test (9)_8
-    21300018: new chars test (9)_9
-    21300020: new chars test (9)_10
-    21300022: new chars test (9)_11
-    21300024: new chars test (9)_12
-    21300026: new chars test (9)_13
-    21300028: new chars test (9)_14
-    21300030: new chars test (9)_15
-    21300032: new chars test (9)_16
-    21300034: new chars test (9)_17
-    21300036: new chars test (9)_18
-    21300038: new chars test (9)_19
-    21300040: new chars test (9)_20
-    21300042: new chars test (9)_21
-    21300044: new chars test (9)_22
-    21300046: new chars test (9)_23
-    21300048: new chars test (9)_24
-    21300050: new chars test (9)_25
-    21300052: new chars test (9)_26
-    21300054: new chars test (9)_27
-    21300056: new chars test (9)_28
-    21300058: new chars test (9)_29
-    21300060: new chars test (9)_30
-    21300062: new chars test (9)_31
-    21300064: new chars test (9)_32
-    21300066: new chars test (9)_33
-    21300068: new chars test (9)_34
-    21300070: new chars test (9)_35
-    21300072: new chars test (9)_36
-    21300074: new chars test (9)_37
-    21300076: new chars test (9)_38
-    21300078: new chars test (9)_39
-    21300080: new chars test (9)_40
-    21300082: new chars test (9)_41
-    21300084: new chars test (9)_42
-    21300086: new chars test (9)_43
-    21300088: new chars test (9)_44
-    21300090: new chars test (9)_45
+    21300000: new chars test (10)_0
+    21300002: new chars test (10)_1
+    21300004: new chars test (10)_2
+    21300006: new chars test (10)_3
+    21300008: new chars test (10)_4
+    21300010: new chars test (10)_5
+    21300012: new chars test (10)_6
+    21300014: new chars test (10)_7
+    21300016: new chars test (10)_8
+    21300018: new chars test (10)_9
+    21300020: new chars test (10)_10
+    21300022: new chars test (10)_11
+    21300024: new chars test (10)_12
+    21300026: new chars test (10)_13
+    21300028: new chars test (10)_14
+    21300030: new chars test (10)_15
+    21300032: new chars test (10)_16
+    21300034: new chars test (10)_17
+    21300036: new chars test (10)_18
+    21300038: new chars test (10)_19
+    21300040: new chars test (10)_20
+    21300042: new chars test (10)_21
+    21300044: new chars test (10)_22
+    21300046: new chars test (10)_23
+    21300048: new chars test (10)_24
+    21300050: new chars test (10)_25
+    21300052: new chars test (10)_26
+    21300054: new chars test (10)_27
+    21300056: new chars test (10)_28
+    21300058: new chars test (10)_29
+    21300060: new chars test (10)_30
+    21300062: new chars test (10)_31
+    21300064: new chars test (10)_32
+    21300066: new chars test (10)_33
+    21300068: new chars test (10)_34
+    21300070: new chars test (10)_35
+    21300072: new chars test (10)_36
+    21300074: new chars test (10)_37
+    21300076: new chars test (10)_38
+    21300078: new chars test (10)_39
+    21300080: new chars test (10)_40
+    21300082: new chars test (10)_41
+    21300084: new chars test (10)_42
+    21300086: new chars test (10)_43
+    21300088: new chars test (10)_44
+    21300090: new chars test (10)_45
+    21300092: new chars test (10)_46
+    21300094: new chars test (10)_47
+    21300096: new chars test (10)_48
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -116,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: new chars test (9)_0
+      name: new chars test (10)_0
       rect:
         serializedVersion: 2
         x: 0
@@ -129,7 +132,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_1
+      name: new chars test (10)_1
       rect:
         serializedVersion: 2
         x: 20
@@ -142,7 +145,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_2
+      name: new chars test (10)_2
       rect:
         serializedVersion: 2
         x: 40
@@ -155,7 +158,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_3
+      name: new chars test (10)_3
       rect:
         serializedVersion: 2
         x: 60
@@ -168,7 +171,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_4
+      name: new chars test (10)_4
       rect:
         serializedVersion: 2
         x: 80
@@ -181,7 +184,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_5
+      name: new chars test (10)_5
       rect:
         serializedVersion: 2
         x: 100
@@ -194,7 +197,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_6
+      name: new chars test (10)_6
       rect:
         serializedVersion: 2
         x: 120
@@ -207,7 +210,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_7
+      name: new chars test (10)_7
       rect:
         serializedVersion: 2
         x: 0
@@ -220,7 +223,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_8
+      name: new chars test (10)_8
       rect:
         serializedVersion: 2
         x: 20
@@ -233,7 +236,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_9
+      name: new chars test (10)_9
       rect:
         serializedVersion: 2
         x: 40
@@ -246,7 +249,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_10
+      name: new chars test (10)_10
       rect:
         serializedVersion: 2
         x: 60
@@ -259,7 +262,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_11
+      name: new chars test (10)_11
       rect:
         serializedVersion: 2
         x: 80
@@ -272,7 +275,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_12
+      name: new chars test (10)_12
       rect:
         serializedVersion: 2
         x: 100
@@ -285,7 +288,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_13
+      name: new chars test (10)_13
       rect:
         serializedVersion: 2
         x: 120
@@ -298,7 +301,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_14
+      name: new chars test (10)_14
       rect:
         serializedVersion: 2
         x: 0
@@ -311,7 +314,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_15
+      name: new chars test (10)_15
       rect:
         serializedVersion: 2
         x: 20
@@ -324,7 +327,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_16
+      name: new chars test (10)_16
       rect:
         serializedVersion: 2
         x: 40
@@ -337,7 +340,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_17
+      name: new chars test (10)_17
       rect:
         serializedVersion: 2
         x: 60
@@ -350,7 +353,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_18
+      name: new chars test (10)_18
       rect:
         serializedVersion: 2
         x: 80
@@ -363,7 +366,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_19
+      name: new chars test (10)_19
       rect:
         serializedVersion: 2
         x: 100
@@ -376,7 +379,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_20
+      name: new chars test (10)_20
       rect:
         serializedVersion: 2
         x: 120
@@ -389,7 +392,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_21
+      name: new chars test (10)_21
       rect:
         serializedVersion: 2
         x: 0
@@ -402,7 +405,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_22
+      name: new chars test (10)_22
       rect:
         serializedVersion: 2
         x: 20
@@ -415,7 +418,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_23
+      name: new chars test (10)_23
       rect:
         serializedVersion: 2
         x: 40
@@ -428,7 +431,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_24
+      name: new chars test (10)_24
       rect:
         serializedVersion: 2
         x: 60
@@ -441,7 +444,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_25
+      name: new chars test (10)_25
       rect:
         serializedVersion: 2
         x: 80
@@ -454,7 +457,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_26
+      name: new chars test (10)_26
       rect:
         serializedVersion: 2
         x: 100
@@ -467,7 +470,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_27
+      name: new chars test (10)_27
       rect:
         serializedVersion: 2
         x: 120
@@ -480,7 +483,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_28
+      name: new chars test (10)_28
       rect:
         serializedVersion: 2
         x: 0
@@ -493,7 +496,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_29
+      name: new chars test (10)_29
       rect:
         serializedVersion: 2
         x: 20
@@ -506,7 +509,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_30
+      name: new chars test (10)_30
       rect:
         serializedVersion: 2
         x: 40
@@ -519,7 +522,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_31
+      name: new chars test (10)_31
       rect:
         serializedVersion: 2
         x: 60
@@ -532,7 +535,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_32
+      name: new chars test (10)_32
       rect:
         serializedVersion: 2
         x: 80
@@ -545,7 +548,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_33
+      name: new chars test (10)_33
       rect:
         serializedVersion: 2
         x: 100
@@ -558,7 +561,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_34
+      name: new chars test (10)_34
       rect:
         serializedVersion: 2
         x: 120
@@ -571,7 +574,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_35
+      name: new chars test (10)_35
       rect:
         serializedVersion: 2
         x: 0
@@ -584,7 +587,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_36
+      name: new chars test (10)_36
       rect:
         serializedVersion: 2
         x: 20
@@ -597,7 +600,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_37
+      name: new chars test (10)_37
       rect:
         serializedVersion: 2
         x: 40
@@ -610,7 +613,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_38
+      name: new chars test (10)_38
       rect:
         serializedVersion: 2
         x: 60
@@ -623,7 +626,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_39
+      name: new chars test (10)_39
       rect:
         serializedVersion: 2
         x: 80
@@ -636,7 +639,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_40
+      name: new chars test (10)_40
       rect:
         serializedVersion: 2
         x: 100
@@ -649,7 +652,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_41
+      name: new chars test (10)_41
       rect:
         serializedVersion: 2
         x: 120
@@ -662,7 +665,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_42
+      name: new chars test (10)_42
       rect:
         serializedVersion: 2
         x: 0
@@ -675,7 +678,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_43
+      name: new chars test (10)_43
       rect:
         serializedVersion: 2
         x: 20
@@ -688,7 +691,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_44
+      name: new chars test (10)_44
       rect:
         serializedVersion: 2
         x: 40
@@ -701,10 +704,49 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: new chars test (9)_45
+      name: new chars test (10)_45
       rect:
         serializedVersion: 2
         x: 60
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: new chars test (10)_46
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: new chars test (10)_47
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: new chars test (10)_48
+      rect:
+        serializedVersion: 2
+        x: 120
         y: 0
         width: 20
         height: 20

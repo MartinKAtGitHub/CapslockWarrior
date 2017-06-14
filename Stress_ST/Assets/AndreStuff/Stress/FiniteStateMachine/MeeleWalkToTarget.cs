@@ -196,8 +196,13 @@ public class MeeleWalkToTarget : DefaultState {
 				_MovementDirection.x = TargetInfo.myPos[0,0] ;
 				_MovementDirection.y = TargetInfo.myPos[0,1] ;
 			
-			
-				if (Vector2.Distance ((Vector2)MyInfo.transform.position, _MovementDirection) <= _Range) {//TODO quickfix
+				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//TODO before quickfix !!!!!!  checking if im withing range of the target 
+					if (Physics2D.Linecast ((Vector2)MyTransform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
+						_ReturnState = "AttackState";
+						return;
+					} 
+				}
+				if (Vector2.Distance ((Vector2)MyInfo.transform.position, _MovementDirection) <= _Range) {//TODO quickfix, monster need to face the player  
 					_MovementDirection = (new Vector2 (TargetInfo.myPos [0, 0], TargetInfo.myPos [0, 1]) - new Vector2 (MyInfo.myPos [0, 0], MyInfo.myPos [0, 1]));
 						if (_MovementDirection.x < width && _MovementDirection.x > -width && _MovementDirection.y < height && _MovementDirection.y > -height) {
 						_ReturnState = "AttackState";
@@ -206,12 +211,7 @@ public class MeeleWalkToTarget : DefaultState {
 				}
 				_MovementDirection.x = TargetInfo.myPos[0,0];
 				_MovementDirection.y = TargetInfo.myPos[0,1];
-				/*if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
-					if (Physics2D.Linecast ((Vector2)MyTransform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
-						_ReturnState = "AttackState";
-						return;
-					} 
-				}*/
+
 
 				#region Calculating Direction/speed
 

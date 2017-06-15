@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 71ad44860a8cb254aabd46dc07996cf5
-timeCreated: 1497470667
+guid: d7ddb16c153180946aec949eb5f44943
+timeCreated: 1497487258
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Characters Generation 2_0
-    21300002: Characters Generation 2_1
-    21300004: Characters Generation 2_2
-    21300006: Characters Generation 2_3
-    21300008: Characters Generation 2_4
-    21300010: Characters Generation 2_5
+    21300000: DiggingMole_0
+    21300002: DiggingMole_1
+    21300004: DiggingMole_2
+    21300006: DiggingMole_3
+    21300008: DiggingMole_4
+    21300010: DiggingMole_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -76,78 +76,78 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Characters Generation 2_0
+      name: DiggingMole_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 50
-        width: 25
-        height: 25
+        y: 40
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_1
+      name: DiggingMole_1
       rect:
         serializedVersion: 2
-        x: 25
-        y: 50
-        width: 25
-        height: 25
+        x: 20
+        y: 40
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_2
+      name: DiggingMole_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 25
-        width: 25
-        height: 25
+        y: 20
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_3
+      name: DiggingMole_3
       rect:
         serializedVersion: 2
-        x: 25
-        y: 25
-        width: 25
-        height: 25
+        x: 20
+        y: 20
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_4
+      name: DiggingMole_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 25
-        height: 25
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_5
+      name: DiggingMole_5
       rect:
         serializedVersion: 2
-        x: 25
+        x: 20
         y: 0
-        width: 25
-        height: 25
+        width: 20
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

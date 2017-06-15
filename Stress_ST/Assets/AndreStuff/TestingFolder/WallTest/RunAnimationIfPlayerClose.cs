@@ -7,7 +7,6 @@ public class RunAnimationIfPlayerClose : MonoBehaviour {
 	public Transform me;
 	public bool activated = false;
 
-	float distance = 5f;
 	// Use this for initialization
 	void Start () {
 		me = transform;

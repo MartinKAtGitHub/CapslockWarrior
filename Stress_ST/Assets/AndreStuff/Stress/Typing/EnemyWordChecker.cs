@@ -9,12 +9,12 @@ public class EnemyWordChecker {
 
 	public Text TextElement;
 
-	bool _StopChecking;
+//	bool _StopChecking;
 	int _WordsToRemove;//a counter that is used to deside how many words to remove after the player presses enter
 	public string _EnemyHealth;
 	string _OriginalWord;
 
-	int _CleaveDmg;
+//	int _CleaveDmg; TODO tobeused
 	DefaultBehaviour theParent;
 	//PlayerTyping currentTarget;
 	HashSet<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> > Theplayers = new HashSet<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> >();
@@ -33,8 +33,8 @@ public class EnemyWordChecker {
 		_WordsToRemove = 0;
 
 		TextElement.text = _EnemyHealth;
-		_CleaveDmg = TalentBonusStats.CleaveDmg;
-		_StopChecking = false;
+//		_CleaveDmg = TalentBonusStats.CleaveDmg; TODO tobeused
+//		_StopChecking = false;
 
 		TypingEvents.OnCompareStart += CompareStart;
 	//	TypingEvents.OnCompareRestart += CompareRestart;
@@ -45,7 +45,7 @@ public class EnemyWordChecker {
 	#region EventMethods
 
 	void CompareRestart(){//When the player deletes a letter then this will run 
-		_StopChecking = false;
+//		_StopChecking = false;
 	}
 
 	void CompareEnd(GameObject thisObject){//When the player presses enter then this will run 
@@ -150,7 +150,7 @@ public class EnemyWordChecker {
 						TextElement.text += string.Format ("<color=green>{0}</color>", _EnemyHealth [i]);
 					} else {
 						TextElement.text = string.Format ("<color=black>{0}</color>", _EnemyHealth);
-						_StopChecking = true;
+		//				_StopChecking = true;
 						return;
 					}
 				} else {
@@ -159,7 +159,7 @@ public class EnemyWordChecker {
 			}
 		} else {
 			TextElement.text = string.Format ("<color=black>{0}</color>", _EnemyHealth);
-			_StopChecking = true;
+		//	_StopChecking = true;
 			return;
 		}
 	}
@@ -173,7 +173,7 @@ public class EnemyWordChecker {
 					TextElement.text += string.Format ("<color=green>{0}</color>", _EnemyHealth [i]);
 				} else {
 					TextElement.text = string.Format ("<color=black>{0}</color>", _EnemyHealth);
-					_StopChecking = true;
+				//	_StopChecking = true;
 					return;
 				}
 			} else {
@@ -211,7 +211,7 @@ public class EnemyWordChecker {
 		_OriginalWord = _EnemyHealth;
 	}
 
-	public void RemoveEvent(){
+	public void RemoveEvent(){ 
 		TypingEvents.OnCompareStart -= CompareStart;
 		TypingEvents.OnCompareEnd -= CompareEnd;
 	}

@@ -23,7 +23,7 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	public DefaultBehaviour DefaultBehaviourTarget;
 
 	public abstract void OnDestroyed ();
-	public abstract void AttackTarget (Vector3 targetPos);
+	public abstract void AttackTarget (Transform targetPos);
 	public abstract void RecievedDmg (int _damage);
 	public abstract void ChangeMovementAdd(float a);
 	public abstract void GotTheKill(int a);

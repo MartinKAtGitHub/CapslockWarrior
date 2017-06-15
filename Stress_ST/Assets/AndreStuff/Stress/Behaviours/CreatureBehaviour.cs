@@ -113,17 +113,17 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 	GameObject saved;
-	public override void AttackTarget(Vector3 targetPos){
+	public override void AttackTarget(Transform targetPos){
 		
 		if (_GoAfter != null) {
 			if (CreatureType == StressEnums.EnemyType.Ranged) {
 				if (CanIRanged [0] == true) {
 
-					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos);;
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos as Transform);;
 				}
 			} else if (CreatureType == StressEnums.EnemyType.Meele) {
 				if (CanIRanged [0] == true) {
-					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos);;
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos  as Transform);;
 				} else {
 					DefaultBehaviourTarget.RecievedDmg(2);
 				}

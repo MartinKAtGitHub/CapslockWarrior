@@ -11,22 +11,23 @@ public class MultiStepBullet : BulletBehaviour {
 
 	public Animator TheAnimator;
 	bool play = true;
+	private Vector3 _direction = Vector3.zero;
 
 	OnlyShootAfterAnimation GoTONextTransition;
 
 	// Use this for initialization
-	public override void SetObjectDirection(GameObject sender, Vector3 target){
+	public override void SetObjectDirection(GameObject sender, Transform target){
 		GoTONextTransition = TheAnimator.GetBehaviour<OnlyShootAfterAnimation> ();
 		ImTheShooter = sender;
-		_MyShootingDirection = (target - transform.position).normalized;
 
-		if (target.y < transform.position.y) {//this desides which way im rotating
-			/*unity -> obsolete so change this TODO*/
-			transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle (Vector3.right, _MyShootingDirection) * -1));//vec3.ang returns a deg value so changing it to rad
-		} else {
-			/*unity -> obsolete so change this TODO*/
-			transform.RotateAround (new Vector3 (0, 0, 1), Mathf.Deg2Rad * (Vector3.Angle (Vector3.right, _MyShootingDirection) * 1));
-		}
+		_MyShootingDirection = (target.position - transform.position).normalized;
+		_direction.z = Vector3.Angle (Vector3.right, _MyShootingDirection);
+
+		if (_MyShootingDirection.y < 0) {
+			_direction.z = _direction.z * -1;
+		}  
+		transform.rotation = Quaternion.Euler (_direction);
+
 	}
 
 	// Update is called once per frame

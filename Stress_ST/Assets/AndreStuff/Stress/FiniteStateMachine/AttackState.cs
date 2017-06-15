@@ -16,7 +16,7 @@ public class AttackState : DefaultState {
 	OnlyQuitAfterAnimation QuittingAnimation;
 
 	Vector2 targetPos = Vector2.zero;
-	Vector3 targetPoss;
+//	Vector3 targetPoss;
 
 	public AttackState(TargetHierarchy theTargetHierarchy, CreatureBehaviour myInfo, bool[] canIRanged, float theRange, LayerMask lineOfSight) {//giving copies of info to this class
 		Id = "AttackState";
@@ -48,7 +48,7 @@ public class AttackState : DefaultState {
 
 		_MyRigidbody2D.velocity = new Vector2 (0, 0);
 		_MyAnimator.SetFloat ("ChangeAnimation", 5);
-		targetPoss = _TargetInfo.transform.position;
+	//	targetPoss = _TargetInfo.transform.position;
 
 		ShootingAnimation.Shoot = false;
 		QuittingAnimation.ImQuitting = false;
@@ -60,19 +60,19 @@ public class AttackState : DefaultState {
 	public override string ProcessState() {//this is called every frame
 		if (ShootingAnimation.Shoot == true) {
 			ShootingAnimation.Shoot = false;
-			targetPoss = _TargetInfo.transform.position;
+		//	targetPoss = _TargetInfo.transform.position;
 			targetPos.x = _TargetInfo.myPos [0, 0];
 			targetPos.y = _TargetInfo.myPos [0, 1];
 			if (CanIRanged [0] == true) {
-				_MyInfo.AttackTarget (targetPoss);
+				_MyInfo.AttackTarget (_TargetInfo.transform);
 			} else {
 				if (Vector2.Distance ((Vector2)_MyTransform.position, targetPos) < _Range) {//checking if im withing range of the target 
 					if (Physics2D.Linecast ((Vector2)_MyTransform.position, targetPos, _LineOfSight).transform == null) {
-						_MyInfo.AttackTarget (targetPoss);
+						_MyInfo.AttackTarget (_TargetInfo.transform);
 					}
 				}
 			}
-			targetPoss = _TargetInfo.transform.position;
+		//	targetPoss = _TargetInfo.transform.position;
 		}
 
 		if (QuittingAnimation.ImQuitting == true) {

@@ -12,6 +12,6 @@ public abstract class BulletBehaviour : MonoBehaviour {
 	public float BulletSpeed;
 
 
-	public abstract void SetObjectDirection (GameObject sender, Vector3 target);
+	public abstract void SetObjectDirection (GameObject sender, Transform target);
 
 }

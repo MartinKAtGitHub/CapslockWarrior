@@ -1,15 +1,19 @@
 fileFormatVersion: 2
-guid: d7ddb16c153180946aec949eb5f44943
-timeCreated: 1497487258
+guid: 9b1d53e07906aeb49a4fefb99a6d51e5
+timeCreated: 1497713034
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: DiggingMole_0
-    21300002: DiggingMole_1
-    21300004: DiggingMole_2
-    21300006: DiggingMole_3
-    21300008: DiggingMole_4
-    21300010: DiggingMole_5
+    21300000: DiggingMoleLooking_0
+    21300002: DiggingMoleLooking_1
+    21300004: DiggingMoleLooking_2
+    21300006: DiggingMoleLooking_3
+    21300008: DiggingMoleLooking_4
+    21300010: DiggingMoleLooking_5
+    21300012: DiggingMoleLooking_6
+    21300014: DiggingMoleLooking_7
+    21300016: DiggingMoleLooking_8
+    21300018: DiggingMoleLooking_9
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -76,7 +80,46 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DiggingMole_0
+      name: DiggingMoleLooking_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 60
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: DiggingMoleLooking_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 60
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: DiggingMoleLooking_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 60
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: DiggingMoleLooking_3
       rect:
         serializedVersion: 2
         x: 0
@@ -89,7 +132,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: DiggingMole_1
+      name: DiggingMoleLooking_4
       rect:
         serializedVersion: 2
         x: 20
@@ -102,7 +145,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: DiggingMole_2
+      name: DiggingMoleLooking_5
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 40
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: DiggingMoleLooking_6
       rect:
         serializedVersion: 2
         x: 0
@@ -115,7 +171,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: DiggingMole_3
+      name: DiggingMoleLooking_7
       rect:
         serializedVersion: 2
         x: 20
@@ -128,11 +184,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: DiggingMole_4
+      name: DiggingMoleLooking_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 40
+        y: 20
         width: 20
         height: 20
       alignment: 0
@@ -141,10 +197,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: DiggingMole_5
+      name: DiggingMoleLooking_9
       rect:
         serializedVersion: 2
-        x: 20
+        x: 0
         y: 0
         width: 20
         height: 20

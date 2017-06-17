@@ -1,17 +1,13 @@
 fileFormatVersion: 2
-guid: 61cce7ac0b4b6534e9f0ec8c0de6520d
-timeCreated: 1497624604
+guid: 4b2010c7914360241ba32e0779899735
+timeCreated: 1497640296
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Characters Generation 2_0
-    21300002: Characters Generation 2_1
-    21300004: Characters Generation 2_2
-    21300006: Characters Generation 2_3
-    21300008: Characters Generation 2_4
-    21300010: Characters Generation 2_5
-    21300012: Characters Generation 2_6
-    21300014: Characters Generation 2_7
+    21300000: ChargingSheepHitObject_0
+    21300002: ChargingSheepHitObject_1
+    21300004: ChargingSheepHitObject_2
+    21300006: ChargingSheepHitObject_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -78,104 +74,52 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Characters Generation 2_0
+      name: ChargingSheepHitObject_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 50
-        width: 25
-        height: 25
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_1
+      name: ChargingSheepHitObject_1
       rect:
         serializedVersion: 2
-        x: 25
-        y: 50
-        width: 25
-        height: 25
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_2
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 50
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 25
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_4
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 25
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_5
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 25
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_6
+      name: ChargingSheepHitObject_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 25
-        height: 25
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_7
+      name: ChargingSheepHitObject_3
       rect:
         serializedVersion: 2
-        x: 25
+        x: 32
         y: 0
-        width: 25
-        height: 25
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

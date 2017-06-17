@@ -1,17 +1,13 @@
 fileFormatVersion: 2
-guid: 61cce7ac0b4b6534e9f0ec8c0de6520d
-timeCreated: 1497624604
+guid: ba50911d96fa15444b0078c3ce7c08f0
+timeCreated: 1497560829
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Characters Generation 2_0
-    21300002: Characters Generation 2_1
-    21300004: Characters Generation 2_2
-    21300006: Characters Generation 2_3
-    21300008: Characters Generation 2_4
-    21300010: Characters Generation 2_5
-    21300012: Characters Generation 2_6
-    21300014: Characters Generation 2_7
+    21300000: ChargingSheepWalking_0
+    21300002: ChargingSheepWalking_1
+    21300004: ChargingSheepWalking_2
+    21300006: ChargingSheepWalking_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -78,104 +74,52 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Characters Generation 2_0
+      name: ChargingSheepWalking_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 50
-        width: 25
-        height: 25
+        y: 24
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_1
+      name: ChargingSheepWalking_1
       rect:
         serializedVersion: 2
-        x: 25
-        y: 50
-        width: 25
-        height: 25
+        x: 24
+        y: 24
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_2
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 50
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 25
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_4
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 25
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_5
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 25
-        width: 25
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Characters Generation 2_6
+      name: ChargingSheepWalking_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 25
-        height: 25
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Characters Generation 2_7
+      name: ChargingSheepWalking_3
       rect:
         serializedVersion: 2
-        x: 25
+        x: 24
         y: 0
-        width: 25
-        height: 25
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -44,13 +44,10 @@ public class xSheepTest : MonoBehaviour {
 	bool turnafterhit = false;
 
 	void OnCollisionEnter2D(Collision2D coll){
-		Debug.Log ("te");
 		if (coll.gameObject.tag == "Wall") {
 			way = !way;
-			Debug.Log ("te");
 
 			myanim.SetFloat("AnimatorStage", 2);
-			Debug.Log ("te2 " + myanim.GetFloat("AnimatorStage"));
 
 			animatorscript.Animationfinished = false;
 			turnafterhit = true;

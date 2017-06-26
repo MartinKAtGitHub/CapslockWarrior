@@ -1,14 +1,19 @@
 fileFormatVersion: 2
-guid: 28d9073a724289644a96304ad6fa7789
-timeCreated: 1497706818
+guid: b2a29148d2dc18d4f8a78466a7ecf834
+timeCreated: 1498481932
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: DiggingMoleDigging_0
-    21300002: DiggingMoleDigging_1
-    21300004: DiggingMoleDigging_2
-    21300006: DiggingMoleDigging_3
-    21300008: DiggingMoleDigging_4
+    21300000: DiggingMoleDigging (1)_0
+    21300002: DiggingMoleDigging (1)_1
+    21300004: DiggingMoleDigging (1)_2
+    21300006: DiggingMoleDigging (1)_3
+    21300008: DiggingMoleDigging (1)_4
+    21300010: DiggingMoleDigging_0
+    21300012: DiggingMoleDigging_1
+    21300014: DiggingMoleDigging_2
+    21300016: DiggingMoleDigging_3
+    21300018: DiggingMoleDigging_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0

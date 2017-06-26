@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-	public abstract class DefaultState {
+public abstract class DefaultState {
 
 		protected MonoBehaviour CreatureObject;//lar de som arver fra denne bruke MonoBehaviour, hvis de trenger det. for å forandre på objektets rotasjon,fart,osv
 

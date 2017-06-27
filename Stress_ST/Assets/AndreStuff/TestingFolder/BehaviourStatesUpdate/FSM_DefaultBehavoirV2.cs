@@ -15,60 +15,27 @@ public class FSM_DefaultBehavoirV2 {
 	//walk movevelues 0 = movementspeed, 1 = movement distance to travel, 2 = the distance traveled 
 	//timemove movevalues 0 = time to move, 1 = the index for the time array, 2 = movementspeed
 	public enum TheMovementBehaviours { TeleportDistance = 6, Stop = 7, Walk = 8, TimedMovement = 9 }
-	public enum TheAttackType {SpellCastMultipleTimes = 10, SpellCastOnce = 11, CircleCast = 12, RektangleCast = 13, LineCast = 14, OnCollisionHit = 5 }
-	public enum ExitReuirement { Nothing = 15, Collision = 16, Time = 17, DistanceToTargetLessThen = 18, DistanceToTargetMoreThen = 19, RayCastHit = 20, RayCastMissed = 21 }
+	public enum TheAttackType {SpellCastMultipleTimes = 10, SpellCastOnce = 11, CircleCast = 12, RektangleCast = 13, LineCast = 14, OnCollisionHit = 5, AnimationDecideWhenToAttack = 22 }
+	public enum ExitReuirement { Nothing = 15, Collision = 16, Time = 17, DistanceToTargetLessThen = 18, DistanceToTargetMoreThen = 19, RayCastHitWall = 20, RayCastClearPathToTarget = 21 }
 
 
 	[Tooltip("If You're Going To Attack Then 'True'. If Not Then 'False'. 'False' == Only Movement")]
 	public bool AttackOrMove;
+	[Tooltip("If The Object Have Some Logic That It Has To Do Then When That Is Done It Can Change State. The 'True'")]
 	public bool FinishBehaviourToExit;
 	[Tooltip("Vector size == Currently 1")]
 	public Vector3[] Vectors;
 
 	public TheAttackAndMovementBehaviour AttackAndMove;
 	public TheMovementBehaviour[] Move;
-	[Tooltip("How Many Different Requirement-Goups Do You Want\nA Group Is If You Want To Have An '&&'. Which Means That Both Needs To Be True")]
+	[Tooltip("How Many Different Requirement-Goups Do You Want\nA Group Is If You Want To Have An '&&'. Which Means That Both Requirements Must Be Met")]
 	public TheExitRequirements[] ExitRequirements;
-
-
-	public void FixTheIndexes(){
-		if (AttackOrMove == true) {
-			for(int i = 0; i < AttackAndMove.TheAttack.Length; i++){
-				AttackAndMove.TheAttack[i].AttackBehaviourIndex = (int)AttackAndMove.TheAttack[i].AttackBehaviour;
-			}
-			for(int i = 0; i < AttackAndMove.TheAttackMovement.Length; i++){
-				AttackAndMove.TheAttackMovement[i].AttackMovementBehaviourIndex = (int)AttackAndMove.TheAttackMovement[i].AttackMovementBehaviour;
-				AttackAndMove.TheAttackMovement[i].AttackMovementStateIndex = (int)AttackAndMove.TheAttackMovement[i].AttackMovementState;
-			}
-		}else{
-			for (int i = 0; i < Move.Length; i++) {
-				Move [i].MovementBehaviourIndex = (int)Move [i].MovementBehaviour;
-				Move [i].MovementStateIndex = (int)Move [i].MovementState;
-			}
-		}
-
-		for (int i = 0; i < ExitRequirements.Length; i++) {
-			for (int j = 0; j < ExitRequirements[i].Requirements.Length; j++) {
-				ExitRequirements[i].RequirementIndex[j] = (int)ExitRequirements[i].Requirements[j];
-			}
-		}
-	}
-
-
-
-
-	[System.Serializable]
-	public struct WhenTenteringBehaviour {
-		public bool ChangeAnimationStage;
-		public float AnimatorStage;
-
-	}
 
 	[System.Serializable]
 	public struct TheAttackAndMovementBehaviour{
 		public TheAttackBehaviour[] TheAttack;
-		[Tooltip("Teleport size 0:\n[0] == distance to move.\n\nStop size 2:\n[0] == how long to stand stil.\n[1] == 0.\n\nWalk size 3:\n[0] == movementspeed.\n[1] == distance to travel.\n[2] == 0.\n\nTimemovement size 3:\n[0] == time to move.\n[1] == 0\n[2] == movementspeed.\n-----------\nVector size 1")]
 		public TheAttackMovement[] TheAttackMovement;
+
 	}
 
 	[System.Serializable]
@@ -83,56 +50,61 @@ public class FSM_DefaultBehavoirV2 {
 	[System.Serializable]
 	public struct TheAttackBehaviour{//The Attack Behaviour Does Not Rotate, Only Movement Does. So If You Want It To Rotate Then Use The Movement To Change The Attack
 		[HideInInspector]
-		public int AttackBehaviourIndex; 
+		public int AttackBehaviourIndex;//Used To Store The Index To The FunctionPointerIndex 
 		public TheAttackType AttackBehaviour;
 		public SpellAttackInfo SpellInfo;
 
-		[Tooltip("Needs To Be Size 2")]
+		[Tooltip("OnCollisionHit Size 1, [0] = Dmg.\n\nCastMulipleTimes Size 1, [0] = AttackSpeed.\n\nSpellCastOnce Size 1, [0] = AttackSpeed.\n\nAnimationDecidesWhenToAttack Size 0.\n\nOnlyDebugToShow+NotImplementedCorrectly\nRektLineCast Size 1, [0] AttackSpeed\nCircleCast Size 2, [0] = AttackSpeed, [1] = Radius")]
 		public float[] AttackValues;
 		[Tooltip("Currently Used For LineCast CircleCast And RektCast")]
 		public LayerMask WhatCanIHit;
 
+		[Tooltip("Only Used For SpellCast..\nThis Is Used To Tell In Which AttackMovement You Can Attack.\n\nIf You Have 4 Movement Behaviours, And Want to Attack In Behaviour 0 And 3. Then You Make The Size [2] And 0 and 3 in [0] and [2]")]
 		public int[] MovementIndexToAttack;
 	}
 
 	[System.Serializable]
 	public struct TheAttackMovement{
 		[HideInInspector]
-		public int AttackMovementBehaviourIndex; 
+		public int AttackMovementBehaviourIndex; //Used To Store The Index To The FunctionPointerIndex 
 		[HideInInspector]
-		public int AttackMovementStateIndex;
+		public int AttackMovementStateIndex;//Used To Store The Index To The FunctionPointerIndex 
 
 		public TheMovementVector AttackMovementBehaviour;
 		public TheMovementBehaviours AttackMovementState;
 
-		[Tooltip("Teleport size 0:\n[0] == distance to move.\n\nStop size 2:\n[0] == how long to stand stil.\n[1] == 0.\n\nWalk size 3:\n[0] == movementspeed.\n[1] == distance to travel.\n[2] == 0.\n\nTimemovement size 3:\n[0] == time to move.\n[1] == 0\n[2] == movementspeed.")]
+		[Tooltip("Teleport Size 1:\n[0] == Distance To Teleport.\n\nStop Size 1:\n[0] == Stop Time.\n\nWalk Size 3:\n[0] == MovementSpeed.\n[1] == Distance To Walk.\n[2] == Distance Walked.\n\nTimed Movement Size 2:\n[0] == Time To Walk.\n[1] == Movementspeed.")]
 		public float[] MovementValues;
 
+		[Tooltip("If True Then You Want To Change The Attack Behaviour. Which Happends The Moment This MovementBehaviour Activates")]
 		public bool ChangeAttackIndex;
 		public int AttackIndexValue;
+		[Tooltip("If True Then You Want To Change The Animation. Which Happends The Moment This MovementBehaviour Activates")]
 		public bool ChangeAnimationStage;
 		public float AnimationStageValue;
+		[Tooltip("If You Want To Rotate While Attacking. The Animator Also Contols This Behaviour, And This Is The Stage Below So The Animator Will Override This")]
 		public bool RotateWhileAttacking;
+		[Tooltip("If An AttackBehaviour Is Limited To Only Attack Once, Then This Can Override That And Make It Attack Again")]
+		public bool ICanAttackAgain;
 	}
 
 	[System.Serializable]
 	public struct TheMovementBehaviour{
 		[HideInInspector]
-		public int MovementBehaviourIndex; 
+		public int MovementBehaviourIndex;//Used To Store The Index To The FunctionPointerIndex 
 		[HideInInspector]
-		public int MovementStateIndex;
+		public int MovementStateIndex;//Used To Store The Index To The FunctionPointerIndex 
 
 		public TheMovementVector MovementBehaviour;
 		public TheMovementBehaviours MovementState;
 
-		[Tooltip("Teleport size 0:\n[0] == distance to move.\n\nStop size 2:\n[0] == how long to stand stil.\n[1] == 0.\n\nWalk size 3:\n[0] == movementspeed.\n[1] == distance to travel.\n[2] == 0.\n\nTimemovement size 3:\n[0] == time to move.\n[1] == 0\n[2] == movementspeed.")]
+		[Tooltip("Teleport Size 1:\n[0] == Distance To Teleport.\n\nStop Size 1:\n[0] == Stop Time.\n\nWalk Size 3:\n[0] == MovementSpeed.\n[1] == Distance To Walk.\n[2] == Distance Walked.\n\nTimed Movement Size 2:\n[0] == Time To Walk.\n[1] == Movementspeed.")]
 		public float[] MovementValues;
 	
 		[Tooltip("If True Then You Want To Change That Animation Parameter")]
 		public bool ChangeAnimationStage;
-		[Tooltip("Animator Parameter Value")]
 		public float AnimationStageValue;
-		[Tooltip("Look At Target While Moving")]
+		[Tooltip("Look At Target While Moving. The Animator Can Override This With Its LookDirection Parameter")]
 		public bool LookAtTarget;
 	}
 
@@ -140,12 +112,14 @@ public class FSM_DefaultBehavoirV2 {
 	[System.Serializable]
 	public struct TheExitRequirements {
 		[HideInInspector]
-		public int[] RequirementIndex;
+		public int[] RequirementIndex;//Used For The FunctionPointer
+		[HideInInspector]
+		public int[] TimeSavedIndex;//Used To Save The Time In MyTime[TimeSavedIndex] Which Get The Time To Exit
 	
 		[Tooltip("How Many Different Requirement Do You Want, If More Then 1 Then It Checks If Both Are True, Then It Changes To The Requirement StateIndexValue")]
 		public ExitReuirement[] Requirements;
 
-		[Tooltip("Requirement Values. Time == size[2], Distance == size[2], RayCast == [1]")]
+		[Tooltip("Values Need To Align With The Requirements.Length. If Time Is Requirements[4], Then In ValueRequirements[4] Have The Value To Exit")]
 		public float[] ValueRequirements;
 
 		[Tooltip("Which Element In The Array Do You Want To Change Too")]

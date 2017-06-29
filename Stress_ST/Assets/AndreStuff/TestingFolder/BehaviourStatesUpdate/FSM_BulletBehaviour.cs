@@ -17,8 +17,9 @@ public class FSM_BulletBehaviour : MonoBehaviour {
 	int BulletIndex = 0;
 	public bool DestroyOnHit = true;
 
-	public void SetDmgModifiers(FSM_DefaultBehavoirV2.SpellAttackInfo modifyers){
+	public void SetDmgModifiers(FSM_DefaultBehavoirV2.SpellAttackInfo modifyers, Transform theTarget){
 		Modifyers = modifyers;
+		TheTarget = theTarget;
 	}
 
 	// Use this for initialization
@@ -32,15 +33,13 @@ public class FSM_BulletBehaviour : MonoBehaviour {
 		} else if (BulletBehaviour == HowToBehave.StandStill) {
 			FunctionPointerBullet [2] = StandStill;
 			BulletIndex = 2;
-	}
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		FunctionPointerBullet [BulletIndex] ();
+	//	FunctionPointerBullet [BulletIndex] ();
 	}
-
-
 
 	void FollowTheTarget(){
 		transform.position += (transform.position - target).normalized * Modifyers.AttackMovement * Time.deltaTime;
@@ -54,4 +53,68 @@ public class FSM_BulletBehaviour : MonoBehaviour {
 	//	transform.position += new Vector3 (0, 0.01f, 0);
 	}
 
+
+
+
+	//-----------------------------
+
+	[HideInInspector] public GameObject ImTheShooter;
+
+	[HideInInspector] public Vector3 _MyShootingDirection;
+	[HideInInspector] public const string Wall = "Wall";
+
+	public Rigidbody2D MyRigidbody2D;
+	public float BulletSpeed;
+
+
+//	public abstract void SetObjectDirection (GameObject sender, Transform target);
+
+	public bool FollowWhenCreating = true;
+	public bool StartMoving = false;
+
+	Transform TheTarget;
+	ShootingAfterAnimation ShootingAnimation;
+	private Vector3 _direction = Vector3.zero;
+
+	// Use this for initialization
+	void Start () {
+		if (name != "MoleBullet(Clone)") {
+		MyRigidbody2D = GetComponent<Rigidbody2D> ();
+		ShootingAnimation = GetComponent<Animator> ().GetBehaviour<ShootingAfterAnimation> ();
+		ShootingAnimation.ShootingAnimationFinished = false;
+		}
+	}
+	void FixedUpdate () {
+		if (name != "MoleBullet(Clone)") {
+
+			if (StartMoving == true) {
+				MyRigidbody2D.velocity = _MyShootingDirection * BulletSpeed;
+			} else {
+				if (FollowWhenCreating == true) {
+
+					_MyShootingDirection = TheTarget.position - transform.position;
+					_direction.z = Vector3.Angle (Vector3.right, _MyShootingDirection);
+
+					if (_MyShootingDirection.y < 0) {
+						_direction.z = _direction.z * -1;
+					}  
+					transform.rotation = Quaternion.Euler (_direction);
+
+					if (ShootingAnimation.ShootingAnimationFinished == true) {
+						_MyShootingDirection = _MyShootingDirection.normalized;
+						StartMoving = true;
+					}
+				}
+			}
+		}
+	}
+
+
+	public void SetObjectDirection(GameObject sender, Transform target){
+		TheTarget = target;
+		ImTheShooter = sender;
+
+	}
+
 }
+

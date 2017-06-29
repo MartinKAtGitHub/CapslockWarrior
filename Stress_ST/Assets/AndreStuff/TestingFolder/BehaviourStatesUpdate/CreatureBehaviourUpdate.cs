@@ -5,9 +5,10 @@ using UnityEngine.UI;
 using System;
 
 public class CreatureBehaviourUpdate : MonoBehaviour {
-//	[Header("Testing V2")]
-//	[Space(20)]       10 each line 
-//	[Tooltip("The Info")]
+
+	//	[Header("Testing V2")]
+	//	[Space(20)]       10 each line 
+	//	[Tooltip("The Info")]
 
 	// <summary>
 	// method description.
@@ -15,44 +16,52 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	// <param name="index">Parameter info.</param>
 	// <returns>Returns void.</returns>
 	//void SetAttackMovementPointer (int index) {
+	int StateIndex = 0;
 
-
-	[Header("Testing V2")]
-	[Space(20)]
 	public FSM_DefaultBehavoirV2[] CreatureStatesV2;
 
 	public delegate void FunctionPointer();
-	public FunctionPointer[] TheFunctionPointer = new FunctionPointer[21];
+	public FunctionPointer[] TheFunctionPointer = new FunctionPointer[23];
 
+	int StateSaver = 0;
 	int PreviourStateIndex = 0;
-	public int StateIndex = 0;
 	int AttackIndex = 0;
-	int MoveIndex = 0; 
+	int MovementIndex = 0; 
 	int RequirementGroupIndex = 0;
 	int RequirementIndex = 0;
-
 	bool StateFinished = false;
 	bool RequirementReturnTrue = false;
 
-	public Transform target;
-	public float []TheTime;//the clock
-	public float[] MyTimes;//all time values
+	Transform target;
+	float []TheTime;//the clock
+	float[] MyTimes;//all time values
 
 	bool CollideToQuit = false;
 	bool DidICollide = false;
 	bool CollisionOn = false;
-	bool AttackBool = false;
-	bool MovementBool = false;
 	bool FollowNodes = false;
+	bool NextStatePlz = false; 
+
+	int AttackTimeIndex = 0;//since there can only be one attackbehaviour active at a single moment, then instead of all having one variable each for a indexsaver then just made it here
+	int MovementTimeIndex = 0;//there can be multiple movement states but only one is active at once
+	bool AttackStarted = false;
+	bool MovementStarted = false;
+
 	Animator MyAnimator;
+	Vector2 LookLeft = new Vector2 (-2, 2);
+	Vector2 LookRight = new Vector2 (2, 2);
 	int AnimatorControllerParameterStop = Animator.StringToHash ("Stop");
 	int AnimatorControllerParameterStage = Animator.StringToHash ("AnimatorStage");
+	int AnimatorControllerParameterShoot = Animator.StringToHash ("Shoot");
+	int AnimatorControllerParameterLockDirection = Animator.StringToHash ("LockDirection");
 
 
 	void Start(){//Setting All FunctionPointer Refrences + casting enum value to int
 		TheTime = GameObject.FindGameObjectWithTag ("Respawn").GetComponent<ClockTest>().GetTime();
 		MyTimes = new float[10];
 		MyAnimator = GetComponent<Animator> ();
+		target = GameObject.Find ("Hero v5").transform;
+
 		for (int k = 0; k < CreatureStatesV2.Length; k++) {
 
 			if (CreatureStatesV2 [k].AttackOrMove == true) {
@@ -77,21 +86,22 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 			for (int i = 0; i < CreatureStatesV2 [k].ExitRequirements.Length; i++) {//casting exitbehaviour enum to int. the requirementindex need to be the same lenght or more then the exitrequirement length
 				CreatureStatesV2 [k].ExitRequirements [i].RequirementIndex = new int[CreatureStatesV2 [k].ExitRequirements [i].Requirements.Length];
+				CreatureStatesV2 [k].ExitRequirements [i].TimeSavedIndex = new int[CreatureStatesV2 [k].ExitRequirements [i].Requirements.Length];
 				for (int j = 0; j < CreatureStatesV2 [k].ExitRequirements [i].Requirements.Length; j++) {
 					CreatureStatesV2 [k].ExitRequirements [i].RequirementIndex [j] = (int)CreatureStatesV2 [k].ExitRequirements [i].Requirements [j];
 					SetExitPointer (CreatureStatesV2 [k].ExitRequirements [i].RequirementIndex[j]);
 				}
 			}
 		}
-			
+
 		SetAllTimeVariables ();
 		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].ChangeAnimationStage == true) {
-				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].AnimationStageValue);
+			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].ChangeAnimationStage == true) {
+				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AnimationStageValue);
 			}
 		} else {
-			if (CreatureStatesV2 [StateIndex].Move [MoveIndex].ChangeAnimationStage == true) {
-				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MoveIndex].AnimationStageValue);
+			if (CreatureStatesV2 [StateIndex].Move [MovementIndex].ChangeAnimationStage == true) {
+				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MovementIndex].AnimationStageValue);
 			}
 		}
 
@@ -100,112 +110,109 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	void Update(){
 
 		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-			
-			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackBehaviourIndex] ();//getting the index and uses it to go to the correct method;
-			
-			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].AttackMovementBehaviourIndex] ();//getting the index and uses it to go to the correct method;
-			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].AttackMovementStateIndex] ();//getting the index and uses it to go to the correct method;
-		
-			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].RotateWhileAttacking == true) {
-				if (target.transform.position.x - transform.position.x > 0) {
-					GetComponent<SpriteRenderer> ().flipX = false;
-				} else {
-					GetComponent<SpriteRenderer> ().flipX = true;
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackBehaviourIndex] ();//Calling The attackmethod, it's the way to attack, buff yourself, cast spell on target....
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementBehaviourIndex] ();//Calling The movementmethod for the movementvector enum.  it's the enum that controlls the vector which the object need to go/look at
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementStateIndex] ();//Calling The movementmethod for the movementbehaviour enum.  it's the enum that controlls the movementbehaviour, walk, stand still, teleport...
+
+			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].RotateWhileAttacking == true) {
+				if (MyAnimator.GetBool (AnimatorControllerParameterLockDirection) == false) {
+					if (target.transform.position.x - transform.position.x > 0) {
+						transform.localScale = LookRight;
+					} else {
+						transform.localScale = LookLeft;
+					}
 				}
 			}	
 		} else {
-			
-			TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementBehaviourIndex] ();//getting the index and uses it to go to the correct method;
-			TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementStateIndex] ();//getting the index and uses it to go to the correct method;
-		
-			if (CreatureStatesV2 [StateIndex].Move[MoveIndex].LookAtTarget == true) {
-				if (target.transform.position.x - transform.position.x > 0) {
-					GetComponent<SpriteRenderer> ().flipX = false;
-				} else {
-					GetComponent<SpriteRenderer> ().flipX = true;
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementBehaviourIndex] ();//Calling The movementmethod for the movementvector enum.  it's the enum that controlls the vector which the object need to go/look at
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementStateIndex] ();//Calling The movementmethod for the movementbehaviour enum.  it's the enum that controlls the movementbehaviour, walk, stand still, teleport...
+
+			if (CreatureStatesV2 [StateIndex].Move [MovementIndex].LookAtTarget == true) {
+				if (MyAnimator.GetBool (AnimatorControllerParameterLockDirection) == false) {
+					if (target.transform.position.x - transform.position.x > 0) {
+						transform.localScale = LookRight;
+					} else {
+						transform.localScale = LookLeft;
+					}
 				}
 			}	
 		}
 
-
-
-
-		if (CreatureStatesV2 [StateIndex].FinishBehaviourToExit == true && StateFinished == true) {
-			for (RequirementGroupIndex = 0; RequirementGroupIndex < CreatureStatesV2 [StateIndex].ExitRequirements.Length; RequirementGroupIndex++) {//going throught each exit requirement groups
-				for (RequirementIndex = 0; RequirementIndex < CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length; RequirementIndex++) {//going through the group
-					TheFunctionPointer [CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex [RequirementIndex]] ();//getting the index and uses it to go to the correct method;
-					if (RequirementReturnTrue == true) {
-						RequirementReturnTrue = false;
-
-						if (RequirementIndex == CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length - 1) {
-							ResetAllTimeVariables ();
-							PreviourStateIndex = StateIndex;
-							StateIndex = CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ChangeToBehaviour;
-							CollideToQuit = false;
-							DidICollide = false;
-							CollisionOn = false;
-							MovementBool = true;
-							MoveIndex = 0;
-							StateFinished = false;	
-							SetAllTimeVariables ();
-
-							if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-								if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].ChangeAnimationStage == true) {
-									MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].AnimationStageValue);
-								}
-							} else {
-								if (CreatureStatesV2 [StateIndex].Move [MoveIndex].ChangeAnimationStage == true) {
-									MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MoveIndex].AnimationStageValue);
-								}
-							}
-
-							return;
-						}
-					
-					} else {
-						RequirementIndex = CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length;
-					}
-				}
+		if (CreatureStatesV2 [StateIndex].FinishBehaviourToExit == true && StateFinished == true) {//If The Behaviours In The State Is Finished This Happends
+			PreviourStateIndex = StateIndex;
+			RunRequirementIndexSearch ();
+			if (PreviourStateIndex == StateIndex) {//Requirements Not Met
+				StateSaver = StateIndex;
+				ResetState ();//Reset And Start Over In The Save State
 			}
-		} else if (CreatureStatesV2 [StateIndex].FinishBehaviourToExit == false) {//checked each frame, so do the most expensive last in a group, or just last.
-			for (RequirementGroupIndex = 0; RequirementGroupIndex < CreatureStatesV2 [StateIndex].ExitRequirements.Length; RequirementGroupIndex++) {//going throught each exit requirement groups
-				for (RequirementIndex = 0; RequirementIndex < CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length; RequirementIndex++) {//going through the group
-					TheFunctionPointer [CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex [RequirementIndex]] ();//getting the index and uses it to go to the correct method;
-					if (RequirementReturnTrue == true) {
-						RequirementReturnTrue = false;
 
-						if (RequirementIndex == CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length - 1) {
-							ResetAllTimeVariables ();
-							StateIndex = CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ChangeToBehaviour;
-							MovementBool = true;
-							MoveIndex = 0;
-							AttackIndex = 0;
-							AttackBool = false;
-							StateFinished = false;
-							CollideToQuit = false;
-							DidICollide = false;
-							CollisionOn = false;
-							SetAllTimeVariables ();
+		} else if (CreatureStatesV2 [StateIndex].FinishBehaviourToExit == false) {
+			PreviourStateIndex = StateIndex;
+			RunRequirementIndexSearch ();
+			if (PreviourStateIndex == StateIndex && StateFinished == true) {//Requirements Not Met And Behaviours Finished
+				StateSaver = StateIndex;
+				ResetState ();//Reset And Start Over In The Save State
+			}
+		}
+	}
 
-							if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-								if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].ChangeAnimationStage == true) {
-									MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].AnimationStageValue);
-								}
-							} else {
-								if (CreatureStatesV2 [StateIndex].Move [MoveIndex].ChangeAnimationStage == true) {
-									MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MoveIndex].AnimationStageValue);
-								}
-							}
+	void RunRequirementIndexSearch(){//Checking The Requirements. If Requirement Is Met, The State Changes. If Not Then It Continue
 
-							return;
-						}
+		for (RequirementGroupIndex = 0; RequirementGroupIndex < CreatureStatesV2 [StateIndex].ExitRequirements.Length; RequirementGroupIndex++) {//going throught each exit requirement groups
+			for (RequirementIndex = 0; RequirementIndex < CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length; RequirementIndex++) {//going through the group
 
-					} else {
-						RequirementIndex = CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length;
+				TheFunctionPointer [CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex [RequirementIndex]] ();//getting the index and uses it to go to the correct method;
+				if (RequirementReturnTrue == true) {
+					RequirementReturnTrue = false;
+					if (RequirementIndex == CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length - 1) {
+						StateSaver = CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ChangeToBehaviour;
+						ResetState ();
+						return;
 					}
+				} else {
+					RequirementIndex = CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length;
 				}
 			}
 		}
+
+	}
+
+	void ResetState(){//Reseting Objects Used In Current State + Setting New Values
+
+		NextStatePlz = true;
+		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {//Calling The methods again to reset the variables used in them
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackBehaviourIndex] ();
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementBehaviourIndex] ();
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementStateIndex] ();
+		}else{
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementBehaviourIndex] ();
+			TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementStateIndex] ();
+		}
+
+		for (RequirementGroupIndex = 0; RequirementGroupIndex < CreatureStatesV2 [StateIndex].ExitRequirements.Length; RequirementGroupIndex++) {//going throught each exit requirement groups
+			for (RequirementIndex = 0; RequirementIndex < CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex.Length; RequirementIndex++) {//going through the group
+				TheFunctionPointer [CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].RequirementIndex [RequirementIndex]] ();//getting the index and uses it to go to the correct method;
+			}
+		}
+		NextStatePlz = false;
+		StateFinished = false;	
+		StateIndex = StateSaver;
+		MovementIndex = 0;
+		AttackIndex = 0;
+
+		SetAllTimeVariables ();
+
+		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {//Setting Animator Parameter That Desides Which Animation To Run
+			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].ChangeAnimationStage == true) {
+				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AnimationStageValue);
+			}
+
+		} else {
+			if (CreatureStatesV2 [StateIndex].Move [MovementIndex].ChangeAnimationStage == true) {
+				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MovementIndex].AnimationStageValue);
+			}
+		}
+
 	}
 
 
@@ -236,8 +243,8 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 			} else {
 				Debug.LogWarning ("Did You Forget Something");
 			}
-
 		}
+
 	}
 
 	void SetMovementPointer(int index){//Might Not Be The Same In The Future So Just Made Two Different Methods
@@ -265,14 +272,14 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 			} else {
 				Debug.LogWarning ("Did You Forget Something");
 			}
-
 		}
+
 	}
 
 	void SetAttackPointer(int index){
 
 		if (TheFunctionPointer [index] == null) {
-			
+
 			if (index == 10) {
 				TheFunctionPointer [index] = CastMultipleTimes;
 			} else if (index == 11) {
@@ -285,11 +292,13 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 				TheFunctionPointer [index] = RektangleCast;
 			}  else if (index == 5) {
 				TheFunctionPointer [index] = OnCollisionDealDamage;
+			}  else if (index == 22) {
+				TheFunctionPointer [index] = AnimationDecideAttack;
 			}  else {
 				Debug.LogWarning ("Did You Forget Something");
 			}
-		
 		}
+
 	}
 
 	void SetExitPointer(int index){
@@ -307,14 +316,14 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 			} else if (index == 19) {
 				TheFunctionPointer [index] = DistanceToPlayerMoreThen;
 			} else if (index == 20) {
-				TheFunctionPointer [index] = RayCastHit;
+				TheFunctionPointer [index] = RayCastHitWall;
 			} else if (index == 21) {
-				TheFunctionPointer [index] = RayCastMissed;
+				TheFunctionPointer [index] = RayCastClearPathToTarget;
 			}  else {
 				Debug.LogWarning ("Did You Forget Something");
 			}
-
 		}
+
 	}
 
 	#endregion
@@ -322,22 +331,22 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D coll){
 		if (CollisionOn == true) {
 			DidICollide = true;
-			Debug.Log (coll.gameObject.name + " Took " + CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[2] + " Dmg");
+			Debug.Log (coll.gameObject.name + " Took " + CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[0] + " Dmg");
 		}
 		if (CollideToQuit == true) {
 			DidICollide = true;
 		}
 	}
 
-	void OnCollisionStay2D(Collision2D coll){
+	/*	void OnCollisionStay2D(Collision2D coll){
 		if (CollisionOn == true) {
 			DidICollide = true;
-			Debug.Log (coll.gameObject.name + " Took " + CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[2] + " Dmg");
+			Debug.Log (coll.gameObject.name + " Took " + CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[0] + " Dmg");
 		}
 		if (CollideToQuit == true) {
 			DidICollide = true;
 		}
-	}
+	}*/
 
 	#region Attack
 	//**********************************************************
@@ -347,77 +356,122 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 	#region CastMethods
 
-	public void LineCast(){//if you need a different shape then a circle
-	
-		if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[1]] > TheTime [0]) {
-			RaycastHit2D[] SavedCast = Physics2D.LinecastAll (transform.position, transform.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
-			if (SavedCast.Length > 0) {
-				for(int i = 0; i < SavedCast.Length; i++)
-					Debug.Log (SavedCast[i].transform.name + " Took DMG");
-				//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
-			}
-		}
-	
-	}
 
-	public void RektangleCast(){//if you need a different shape then a circle
 
-		if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[1]] > TheTime [0]) {
-			Collider2D[] SavedCast = Physics2D.OverlapAreaAll (transform.position, transform.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
-			if (SavedCast.Length > 0) {
-				for(int i = 0; i < SavedCast.Length; i++)
-					Debug.Log (SavedCast[i].transform.name + " Took DMG");
-				//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
-			}
-		}
 
-	}
+	public void LineCast(){//TODO
 
-	public void CircleCast(){// if you have an melee that does an aoe 
+		if (NextStatePlz == false) {
 
-		if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[1]] > TheTime [0]) {
-			Collider2D[] SavedCast = Physics2D.OverlapCircleAll (transform.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [0], CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
-			if (SavedCast.Length > 0) {
-				for (int i = 0; i < SavedCast.Length; i++) {
-					Debug.Log (SavedCast[i].transform.name + " Took DMG");
-				//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
+			if (MyTimes [AttackTimeIndex] > TheTime [0]) {
+				RaycastHit2D[] SavedCast = Physics2D.LinecastAll (transform.position, target.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
+				if (SavedCast.Length > 0) {
+					Debug.Log ("From You To Target " + SavedCast.Length + " Was Hit");
+					for (int i = 0; i < SavedCast.Length; i++)
+						Debug.Log (SavedCast [i].transform.name + " Took DMG");
+					//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
 				}
 			}
+		} else {//ResetEverything That This Used Which Isnt Nesessary For Other Methods
+			MyTimes [AttackTimeIndex] = 0;
+		}
+
+	}
+
+	public void RektangleCast(){//TODO
+
+		if (NextStatePlz == false) {
+
+			if (MyTimes [AttackTimeIndex] > TheTime [0]) {
+				Collider2D[] SavedCast = Physics2D.OverlapAreaAll (transform.position - Vector3.one, transform.position + Vector3.one, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
+				if (SavedCast.Length > 0) {
+					Debug.Log ("A 2x2 Square Around You " + SavedCast.Length + " Was Hit");
+					for (int i = 0; i < SavedCast.Length; i++)
+						Debug.Log (SavedCast [i].transform.name + " Took DMG");
+					//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
+				}
+			}
+		} else {
+			MyTimes [AttackTimeIndex] = 0;
+		}
+
+	}
+
+	public void CircleCast(){//TODO
+
+		if (NextStatePlz == false) {
+
+			if (MyTimes [AttackTimeIndex] > TheTime [0]) {
+				Collider2D[] SavedCast = Physics2D.OverlapCircleAll (transform.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1], CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
+				if (SavedCast.Length > 0) {
+					Debug.Log ("A " + CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1] + " Radius Circle Around You Hit " + SavedCast.Length + " Was Hit");
+					for (int i = 0; i < SavedCast.Length; i++) {
+						Debug.Log (SavedCast [i].transform.name + " Took DMG");
+						//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
+					}
+				}
+			}
+		} else {
+			MyTimes [AttackTimeIndex] = 0;
 		}
 
 	}
 
 	#endregion
 
-	public void OnCollisionDealDamage(){
-		if (CollisionOn == false) {
-			CollisionOn = true;
+	public void AnimationDecideAttack(){
+		if (MyAnimator.GetBool (AnimatorControllerParameterShoot) == true) {
+			MyAnimator.SetBool (AnimatorControllerParameterShoot, false);
+			Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo,target);
 		}
 	}
 
-	public void CastOnce(){//cast the spell once
+	public void OnCollisionDealDamage(){//Just turning on a boolean that controles if im registering the collision or not
 
-		if (AttackBool == false) {
-			if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues[1]] < TheTime [0]) {
-				for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack.Length; i++) {
-					if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack [i] == MoveIndex) {
-						AttackBool = true; 
-						Instantiate(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild(0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour>().SetDmgModifiers(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo);
+		if (NextStatePlz == false) {
+			if (CollisionOn == false) {
+				CollisionOn = true;
+			}
+		} else {
+			CollisionOn = false;
+		}
+	}
+
+	public void CastOnce(){//cast the spell once -> Its time based, so the attackvalues sice must be 2++ and [0] is the time [1] is the time index
+
+		if (NextStatePlz == false) {
+			if (AttackStarted == false) {
+				if (MyTimes [AttackTimeIndex] < TheTime [0]) {
+					for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack.Length; i++) {
+						if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack [i] == MovementIndex) {//Attack MovementIndexToAttack Used Here.
+							AttackStarted = true; 
+							Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo, target);
+							break;
+						}
 					}
 				}
 			}
+		} else {
+			AttackStarted = false;
+			MyTimes [AttackTimeIndex] = 0; 
 		}
 
 	}
-	public void CastMultipleTimes(){//if spell can be cast muliple times
+	public void CastMultipleTimes(){//if spell can be cast muliple times  
 
-		if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1]] < TheTime [0]) {
-			for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack.Length; i++) {
-				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack [i] == MoveIndex) {
-					Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo);
-					MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1]] = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [0] + TheTime [0];//setting new time
+		if (NextStatePlz == false) {
+			if (MyTimes [AttackTimeIndex] < TheTime [0]) {
+				for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack.Length; i++) {
+					if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack [i] == MovementIndex) {
+						Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo,target);
+						MyTimes [AttackTimeIndex] = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [0] + TheTime [0];//setting new time
+						break;
+					}
 				}
+
 			}
+		} else {
+			MyTimes [AttackTimeIndex] = 0;
 		}
 
 	}
@@ -426,235 +480,261 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 	#region MovementMethods
 
-	public void FollowNodePathToTarget(){
-		//update nodemap
-		FollowNodes = true;
+	public void FollowNodePathToTarget(){//NodeMap Have Not Been Implemented TODO
+		if (NextStatePlz == false) {
+			FollowNodes = true;
+		} else {
+			FollowNodes = false;
+		}
 	}
 
 	public void GoStraightToTarget(){//Movement speed is index 0
 
-		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-			CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
+		if (NextStatePlz == false) {
+			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+				CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
+			} else {
+				CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
+			}
 		} else {
-			CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
+
 		}
 
 	}
 
 	public void LockMovementDirectionToTarget(){
-	
-		if (MovementBool == true) {
-			MovementBool = false;
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
-			} else {
-				CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
-			}
-		}
 
-	}
-
-	public void LockMovementDirectionToNextNode(){
-		//update node map
-
-		if (MovementBool == true) {
-			MovementBool = false;
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				//CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].Vectors [0] = (target - transform.position).normalized;
-			} else {
-				//CreatureStatesV2 [StateIndex].Move [MoveIndex].Vectors [0] = (target - transform.position).normalized;
-			}
-		}
-
-	}
-
-	public void LockCurrentVector(){//TODO this is currently impossible
-		if (MovementBool == true) {
-			MovementBool = false;
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-		//		CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].Vectors [0] = (target.position - transform.position).normalized;
-			} else {
-				CreatureStatesV2 [StateIndex].Vectors [0] = CreatureStatesV2 [PreviourStateIndex].Vectors [0];
-		//		CreatureStatesV2 [StateIndex].Move [MoveIndex].Vectors [0] = (target.position - transform.position).normalized;
-			}
-		}
-	}
-
-/*	public void StandStill(){
-
-		if (CreatureStatesV2 [StateIndex].AttackandmoveOrMove == true) {
-			if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]] > TheTime [0]) {
-				ResetTimeMovementVariables ();
-				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement.Length <= MoveIndex + 1) {
-					MoveIndex = 0;
-					StateFinished = true;
+		if (NextStatePlz == false) {
+			if (MovementStarted == false) {
+				MovementStarted = true;
+				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+					CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
 				} else {
-					MoveIndex++;
-					SetTimeMovementVariables ();
+					CreatureStatesV2 [StateIndex].Vectors [0] = (target.position - transform.position).normalized;
 				}
 			}
 		} else {
-			if (MyTimes [(int)CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [0]] > TheTime [0]) {
-				ResetTimeMovementVariables ();
-				if (CreatureStatesV2 [StateIndex].Move.Length <= MoveIndex + 1) {
-					MoveIndex = 0;
-					StateFinished = true;
-				} else {
-					MoveIndex++;
-					SetTimeMovementVariables ();
-				}
-			}
+			MovementStarted = false;
 		}
 
-	}*/
+	}
+
+	public void LockMovementDirectionToNextNode(){//NodeMap Have Not Been Implemented TODO
+		//update node map
+
+		if (NextStatePlz == false) {
+			if (MovementStarted == false) {
+				MovementStarted = true;
+				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+					//CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].Vectors [0] = (target - transform.position).normalized;
+				} else {
+					//CreatureStatesV2 [StateIndex].Move [MoveIndex].Vectors [0] = (target - transform.position).normalized;
+				}
+			}
+		} else {
+			MovementStarted = false;
+
+		}
+
+	}
+
+	public void LockCurrentVector(){
+
+		if (NextStatePlz == false) {
+			if (MovementStarted == false) {
+				MovementStarted = true;
+				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+					CreatureStatesV2 [StateIndex].Vectors [0] = CreatureStatesV2 [StateIndex].Vectors [0];
+				} else {
+					CreatureStatesV2 [StateIndex].Vectors [0] = CreatureStatesV2 [StateIndex].Vectors [0];
+				}
+			}
+		} else {
+			MovementStarted = false;
+		}
+	}
 
 	public void TeleportDistance(){
 
-		if (FollowNodes == true) {
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				//b	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).x; 
-				//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).y; 
+		if (NextStatePlz == false) {
+			if (FollowNodes == true) {
+				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+					//b	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).x; 
+					//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).y; 
 
-				//a	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).x; 
-				//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).y; 
+					//a	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).x; 
+					//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).y; 
 
-				//aa	//vector = b - a; * (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] - Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0])
-				//transform.position += aa; 
+					//aa	//vector = b - a; * (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] - Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0])
+					//transform.position += aa; 
+				} else {
+					//b	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).x; 
+					//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).y; 
+
+					//a	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).x; 
+					//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).y; 
+
+					//aa	//vector = b - a; * (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] - Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0])
+					//transform.position += aa; 
+				}
 			} else {
-				//b	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).x; 
-				//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0]).y; 
-
-				//a	//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).x; 
-				//Node[Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] + 1).y; 
-
-				//aa	//vector = b - a; * (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] - Mathf.floor(CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0])
-				//transform.position += aa; 
+				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+					if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+						transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [0];
+						WhatToDoWhenDone ();
+					}
+				} else {
+					if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+						transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [0];
+						WhatToDoWhenDone ();
+					}
+				}
 			}
 		} else {
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
-					transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0];
-					WhatToDoWhenDone ();
-				}
-			} else {
-				if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
-					transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [0];
-					WhatToDoWhenDone ();
-				}
-			}
+
 		}
 	}
 
 	public void Stop(){
 
-		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-			if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [1]] < TheTime [0]) {
-				ResetTimeMovementVariables ();
-				WhatToDoWhenDone ();
+		if (NextStatePlz == false) {
+			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+				if (MyTimes [MovementTimeIndex] < TheTime [0]) {
+					WhatToDoWhenDone ();
+				}
+			} else {
+				if (MyTimes [MovementTimeIndex] < TheTime [0]) {
+					WhatToDoWhenDone ();
+				}
 			}
 		} else {
-			if (MyTimes [(int)CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [1]] < TheTime [0]) {
-				ResetTimeMovementVariables ();
-				WhatToDoWhenDone ();
+			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+				MyTimes [MovementTimeIndex] = 0;
+			} else {
+				MyTimes [MovementTimeIndex] = 0;
 			}
 		}
 
 	}
 
 	public void Walk(){
-
-		if (FollowNodes == true) {
-			//follow them
-		} else {
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [2] > CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [1]) {
-					CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [2] = 0;
-					WhatToDoWhenDone();
-				} else {
-					if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
-						CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [2] = Vector2.Distance (Vector2.zero, CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] * Time.deltaTime);
-						transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [0] * Time.deltaTime;
-					}
-				}
-
+		if (NextStatePlz == false) {
+			if (FollowNodes == true) {
+				//follow them
 			} else {
-				if (CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [2] > CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [1]) {
-					CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [2] = 0;
-					WhatToDoWhenDone ();
+				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+					if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [2] > CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [1]) {
+						WhatToDoWhenDone ();
+					} else {
+						if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+							CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [2] += Vector2.Distance (Vector2.zero, CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [0] * Time.deltaTime);
+							transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [0] * Time.deltaTime;
+						}
+					} 
 				} else {
-					if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
-						CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [2] += Vector2.Distance (Vector2.zero, CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [0] * Time.deltaTime);
-						transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [0] * Time.deltaTime;
+					if (CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [2] > CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [1]) {
+						WhatToDoWhenDone ();
+					} else {
+						if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+							CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [2] += Vector2.Distance (Vector2.zero, CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [0] * Time.deltaTime);
+							transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [0] * Time.deltaTime;
+						}
 					}
 				}
 			}
+		} else {
+			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+				CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [2] = 0;
+			} else {
+				CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [2] = 0;
+			}
 		}
-
 
 	}
 
 	public void TimeMovement(){
-		
-		if (FollowNodes == true) {
-			//follow them
+
+		if (NextStatePlz == false) {
+			if (FollowNodes == true) {
+				//follow them
+			} else {
+				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+					if (MyTimes [MovementTimeIndex] < TheTime [0]) {
+						WhatToDoWhenDone ();
+					} else {
+						if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+							transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [1] * Time.deltaTime;
+						}
+					}
+
+				} else {
+					if (MyTimes [MovementTimeIndex] < TheTime [0]) {
+						WhatToDoWhenDone ();
+					} else {
+						if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+							transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [1] * Time.deltaTime;
+						}
+					}
+				}
+			}
 		} else {
 			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				if (MyTimes [(int)CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [1]] < TheTime [0]) {//TODO i dont like the cast(int) because this is called once every frame
-					ResetTimeMovementVariables ();
-					WhatToDoWhenDone();
-				} else {
-					if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
-						transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].MovementValues [2] * Time.deltaTime;
-					}
-				}
-
+				MyTimes [MovementTimeIndex] = 0;
 			} else {
-				if (MyTimes [(int)CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [1]] < TheTime [0]) {//TODO i dont like the cast(int) because this is called once every frame
-					ResetTimeMovementVariables ();
-					WhatToDoWhenDone();
-				} else {
-					if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
-						transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MoveIndex].MovementValues [2] * Time.deltaTime;
-					}
-				}
+				MyTimes [MovementTimeIndex] = 0;
 			}
 		}
+
 	}
 
-	void WhatToDoWhenDone(){
+	void WhatToDoWhenDone(){//TODO didnt change this
 		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement.Length <= MoveIndex + 1) {
-				MoveIndex = 0;
-				StateFinished = true;
+			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement.Length <= MovementIndex + 1) {//If True Then Im At The Last MovementBehaviour
+				StateFinished = true;//This Tells Me That The Behaviour Is Finished And That I Want To Check The Requirements If I Can Change State
 			} else {
-				MoveIndex++;
+				NextStatePlz = true;
+				TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementBehaviourIndex] ();
+				TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementStateIndex] ();
+				NextStatePlz = false;
+
+				MovementIndex++;
+				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].ChangeAttackIndex == true) {
+					NextStatePlz = true;
+					TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackBehaviourIndex] ();//I Dont Want The Timers To Be Bugged So Im Reseting The AttackBehaviour Timers When i Enter A New Movement Behaviour
+					NextStatePlz = false;
+					AttackIndex = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackIndexValue;
+					SetAttackSpeedVariables ();
+				}else if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].ICanAttackAgain == true) {
+					NextStatePlz = true;
+					TheFunctionPointer [CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackBehaviourIndex] ();//I Dont Want The Timers To Be Bugged So Im Reseting The AttackBehaviour Timers When i Enter A New Movement Behaviour
+					NextStatePlz = false;
+					SetAttackSpeedVariables ();
+				}
+
+				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].ChangeAnimationStage == true) {//if the exit requirement is met, then i need this to change the animationstate to the correct movement behaviour
+					MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AnimationStageValue);
+				}
+
 				SetTimeMovementVariables ();
 			}
-			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].ChangeAnimationStage == true) {//if the exit requirement is met, then i need this to change the animationstate to the correct movement behaviour
-				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].AnimationStageValue);
-			}
-			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].ChangeAttackIndex == true) {
-				AttackIndex = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MoveIndex].AttackIndexValue;
-				AttackBool = false;
-			}
-			DidICollide = false;
-			CollisionOn = false;
-			MovementBool = true;
+
 		} else {
-			if (CreatureStatesV2 [StateIndex].Move.Length <= MoveIndex + 1) {
-				MoveIndex = 0;
-				StateFinished = true;
+			if (CreatureStatesV2 [StateIndex].Move.Length <= MovementIndex + 1) {
+				StateFinished = true;//This Tells Me That The Behaviour Is Finished And That I Want To Check The Requirements If I Can Change State
 			} else {
-				MoveIndex++;
+				NextStatePlz = true;
+				TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementBehaviourIndex] ();//Calling The movementmethod for the movementvector enum.  it's the enum that controlls the vector which the object need to go/look at
+				TheFunctionPointer [CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementStateIndex] ();//Calling The movementmethod for the movementbehaviour enum.  it's the enum that controlls the movementbehaviour, walk, stand still, teleport...
+				NextStatePlz = false;
+
+				MovementIndex++;
+				if (CreatureStatesV2 [StateIndex].Move [MovementIndex].ChangeAnimationStage == true) {//if the exit requirement is met, then i need this to change the animationstate to the correct movement behaviour
+					MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MovementIndex].AnimationStageValue);
+				}
 				SetTimeMovementVariables ();
 			}
-			if (CreatureStatesV2 [StateIndex].Move [MoveIndex].ChangeAnimationStage == true) {//if the exit requirement is met, then i need this to change the animationstate to the correct movement behaviour
-				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MoveIndex].AnimationStageValue);
-			}
-			DidICollide = false;
-			CollisionOn = false;
-			MovementBool = true;
 		}
+
 	}
 
 	#endregion
@@ -662,79 +742,40 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	#region ExitRequierments
 
 	public void Nothing(){
-		RequirementReturnTrue = true;
+		if (NextStatePlz == false) {
+			RequirementReturnTrue = true;
+		} else {
+
+		}
 	}
 
 	public void Collision(){
-		if (CollideToQuit == false) {
-			CollideToQuit = true;
-		}
-		if (DidICollide == true) {
-			RequirementReturnTrue = true;
+
+		if (NextStatePlz == false) {	
+			if (CollideToQuit == false) {
+				CollideToQuit = true;
+			}
+			if (DidICollide == true) {
+				RequirementReturnTrue = true;
+			}
+		} else {
+			CollideToQuit = false;
+			DidICollide = false;
 		}
 	}
-		
+
 	#region TheTime
 
 	public void TimeExit(){
 
-		if (MyTimes [(int)CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ValueRequirements [1]] < TheTime [0]) {//TODO i dont like the cast(int) because this is called once every frame
-			RequirementReturnTrue = true;
-		}
-
-	}
-
-	void ResetAllTimeVariables(){
-		
-		for (int i = 0; i < MyTimes.Length; i++) {
-			MyTimes [i] = 0;
-		}
-
-		for (int i = 0; i < CreatureStatesV2 [StateIndex].ExitRequirements.Length; i++) {//going throught each exit requirement groups
-			for (int j = 0; j < CreatureStatesV2 [StateIndex].ExitRequirements [i].RequirementIndex.Length; j++) {//going through the group
-				if (CreatureStatesV2 [StateIndex].ExitRequirements [i].RequirementIndex [j] == 17) {
-					CreatureStatesV2 [StateIndex].ExitRequirements [i].ValueRequirements [1] = 0;
-				}
+		if (NextStatePlz == false) {	
+			if (MyTimes [CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].TimeSavedIndex [RequirementIndex]] < TheTime [0]) {
+				RequirementReturnTrue = true;
 			}
-		}
-
-		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-
-			ResetAttackSpeedVariable ();
-			ResetTimeMovementVariables ();
-
 		} else {
-
-			ResetTimeMovementVariables ();
-
+			MyTimes [CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].TimeSavedIndex [RequirementIndex]] = 0;
 		}
 
-	}
-
-	void ResetTimeMovementVariables(){
-		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-
-			for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement.Length; i++) {//going throught each exit requirement groups
-				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [i].AttackMovementStateIndex == 9) {
-					CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [i].MovementValues [1] = 0;
-				}
-			}
-
-		} else {
-
-			for (int i = 0; i < CreatureStatesV2 [StateIndex].Move.Length; i++) {//going throught each exit requirement groups
-				if (CreatureStatesV2 [StateIndex].Move [i].MovementStateIndex == 9) {
-					CreatureStatesV2 [StateIndex].Move [i].MovementValues [1] = 0;
-				}
-			}
-
-		}
-	}
-
-	void ResetAttackSpeedVariable(){
-		for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack.Length; i++) {//going throught each exit requirement groups
-			CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [i].AttackValues [1] = 0;
-		}
 	}
 
 	void SetAllTimeVariables(){
@@ -744,8 +785,8 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 				if (CreatureStatesV2 [StateIndex].ExitRequirements [i].RequirementIndex [j] == 17) {
 					for (int k = 0; k < MyTimes.Length; k++) {
 						if (MyTimes [k] == 0) {
-							CreatureStatesV2 [StateIndex].ExitRequirements [i].ValueRequirements [1] = k;
-							MyTimes [k] = CreatureStatesV2 [StateIndex].ExitRequirements [i].ValueRequirements [0] + TheTime [0];
+							CreatureStatesV2 [StateIndex].ExitRequirements [i].TimeSavedIndex [j] = k;
+							MyTimes [k] = CreatureStatesV2 [StateIndex].ExitRequirements [i].ValueRequirements [j] + TheTime [0];
 							break;
 						}
 					}
@@ -754,60 +795,47 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 		}
 
 		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-
 			SetAttackSpeedVariables ();
 			SetTimeMovementVariables ();
-
 		} else {
-		
 			SetTimeMovementVariables ();
-
 		}
+
 	}
 
 	void SetTimeMovementVariables(){
-		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+		if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {//If Time Is Used In Any Way, The Time Value Need To Be In Position [0] in MovementValues
 
-			for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement.Length; i++) {//going throught each exit requirement groups
-				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [i].AttackMovementStateIndex == 9 || CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [i].AttackMovementStateIndex == 7) {
-
-					for (int k = 0; k < MyTimes.Length; k++) {
-						if (MyTimes [k] == 0) {
-							CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [i].MovementValues [1] = k;
-							MyTimes [k] = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [i].MovementValues [0] + TheTime [0];
-							break;
-						}
+			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementStateIndex == 9 || CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].AttackMovementStateIndex == 7) {
+				for (int k = 0; k < MyTimes.Length; k++) {
+					if (MyTimes [k] == 0) {
+						MovementTimeIndex = k;
+						MyTimes [k] = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [0] + TheTime [0];
+						break;
 					}
-
 				}
 			}
-
 		} else {
-
-			for (int i = 0; i < CreatureStatesV2 [StateIndex].Move.Length; i++) {//going throught each exit requirement groups
-				if (CreatureStatesV2 [StateIndex].Move [i].MovementStateIndex == 9 || CreatureStatesV2 [StateIndex].Move [i].MovementStateIndex == 7) {
-
-					for (int k = 0; k < MyTimes.Length; k++) {
-						if (MyTimes [k] == 0) {
-							CreatureStatesV2 [StateIndex].Move [i].MovementValues [1] = k;
-							MyTimes [k] = CreatureStatesV2 [StateIndex].Move [i].MovementValues [0] + TheTime [0];
-							break;
-						}
+			if (CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementStateIndex == 9 || CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementStateIndex == 7) {
+				for (int k = 0; k < MyTimes.Length; k++) {
+					if (MyTimes [k] == 0) {
+						MovementTimeIndex = k;
+						MyTimes [k] = CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [0] + TheTime [0];
+						break;
 					}
-
 				}
 			}
 		}
+
 	}
 
 	void SetAttackSpeedVariables(){
-		for (int k = 0; k < MyTimes.Length; k++) {
-			if (MyTimes [k] == 0) {
-				if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [0] != 0) {
-					CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1] = k;
+
+		if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues.Length > 0) {
+			for (int k = 0; k < MyTimes.Length; k++) {
+				if (MyTimes [k] == 0) {
+					AttackTimeIndex = k;
 					MyTimes [k] = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [0] + TheTime [0];
-					break;
-				} else {
 					break;
 				}
 			}
@@ -817,30 +845,53 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	#endregion
 
 	public void DistanceToPlayerLessThen(){
-		
-		if (Vector3.Distance (target.position, transform.position) < CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ValueRequirements [0]) {
-			RequirementReturnTrue = true;
+
+		if (NextStatePlz == false) {	
+			if (Vector3.Distance (target.position, transform.position) < CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ValueRequirements [RequirementIndex]) {
+				RequirementReturnTrue = true;
+			}
+		} else {
+
 		}
+
 	}
 
 	public void DistanceToPlayerMoreThen(){
-		if (Vector3.Distance (target.position, transform.position) > CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ValueRequirements [0]) {
-			RequirementReturnTrue = true;
-		}
-	}
 
-	public void RayCastHit(){
+		if (NextStatePlz == false) {	
+			if (Vector3.Distance (target.position, transform.position) > CreatureStatesV2 [StateIndex].ExitRequirements [RequirementGroupIndex].ValueRequirements [RequirementIndex]) {
+				RequirementReturnTrue = true;
+			}
+		} else {
 
-		if (Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer("Wall")).transform != null) {
-			RequirementReturnTrue = true;
 		}
 
 	}
 
-	public void RayCastMissed(){
+	public void RayCastHitWall(){
 
-		if (Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer("Wall")).transform == null) {
-			RequirementReturnTrue = true;
+		if (NextStatePlz == false) {	
+			if (Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer ("Walls")).transform != null) {
+				RequirementReturnTrue = true;
+			} else {
+				//		Debug.Log (" Didnt Hit Anything");
+			}
+		} else {
+
+		}
+
+	}
+
+	public void RayCastClearPathToTarget(){
+
+		if (NextStatePlz == false) {	
+			if (Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer ("Walls")).transform == null) {
+				RequirementReturnTrue = true;
+			} else {
+				//		Debug.Log ("Hit " + Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer ("Walls")).transform.name);
+			}
+		} else {
+
 		}
 
 	}

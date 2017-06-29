@@ -16,6 +16,12 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	// <param name="index">Parameter info.</param>
 	// <returns>Returns void.</returns>
 	//void SetAttackMovementPointer (int index) {
+
+	public int Health = 0;
+	public int Energy = 0;
+	public int Ammo = 0;
+
+
 	int StateIndex = 0;
 
 	public FSM_DefaultBehavoirV2[] CreatureStatesV2;
@@ -34,7 +40,7 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 	Transform target;
 	float []TheTime;//the clock
-	float[] MyTimes;//all time values
+	public float[] MyTimes;//all time values
 
 	bool CollideToQuit = false;
 	bool DidICollide = false;
@@ -44,7 +50,6 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 	int AttackTimeIndex = 0;//since there can only be one attackbehaviour active at a single moment, then instead of all having one variable each for a indexsaver then just made it here
 	int MovementTimeIndex = 0;//there can be multiple movement states but only one is active at once
-	bool AttackStarted = false;
 	bool MovementStarted = false;
 
 	Animator MyAnimator;
@@ -55,6 +60,10 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	int AnimatorControllerParameterShoot = Animator.StringToHash ("Shoot");
 	int AnimatorControllerParameterLockDirection = Animator.StringToHash ("LockDirection");
 
+	int AnimatorControllerParameterStop1 = Animator.StringToHash ("Stop");
+	int AnimatorControllerParameterStage2 = Animator.StringToHash ("AnimatorStage");
+	int AnimatorControllerParameterShoot3 = Animator.StringToHash ("Shoot");
+	int AnimatorControllerParameterLockDirection4 = Animator.StringToHash ("LockDirection");
 
 	void Start(){//Setting All FunctionPointer Refrences + casting enum value to int
 		TheTime = GameObject.FindGameObjectWithTag ("Respawn").GetComponent<ClockTest>().GetTime();
@@ -104,7 +113,6 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 				MyAnimator.SetFloat (AnimatorControllerParameterStage, CreatureStatesV2 [StateIndex].Move [MovementIndex].AnimationStageValue);
 			}
 		}
-
 	}
 
 	void Update(){
@@ -154,6 +162,7 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 				ResetState ();//Reset And Start Over In The Save State
 			}
 		}
+	
 	}
 
 	void RunRequirementIndexSearch(){//Checking The Requirements. If Requirement Is Met, The State Changes. If Not Then It Continue
@@ -281,16 +290,12 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 		if (TheFunctionPointer [index] == null) {
 
 			if (index == 10) {
-				TheFunctionPointer [index] = CastMultipleTimes;
-			} else if (index == 11) {
-				TheFunctionPointer [index] = CastOnce;
-			} else if (index == 12) {
+				TheFunctionPointer [index] = AttackSpeedDesides;
+			}  else if (index == 12) {
 				TheFunctionPointer [index] = CircleCast;
 			} else if (index == 13) {
 				TheFunctionPointer [index] = RektangleCast;
-			} else if (index == 14) {
-				TheFunctionPointer [index] = RektangleCast;
-			}  else if (index == 5) {
+			} else if (index == 5) {
 				TheFunctionPointer [index] = OnCollisionDealDamage;
 			}  else if (index == 22) {
 				TheFunctionPointer [index] = AnimationDecideAttack;
@@ -356,39 +361,17 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 	#region CastMethods
 
-
-
-
-	public void LineCast(){//TODO
+	public void RektangleCast(){//Casting the Rektanglecast On The AttackPositionChild. Then I Take The Vector[1] As The Width And Height. TODO Remove Debug When fully Implemented
 
 		if (NextStatePlz == false) {
 
-			if (MyTimes [AttackTimeIndex] > TheTime [0]) {
-				RaycastHit2D[] SavedCast = Physics2D.LinecastAll (transform.position, target.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
+			if (MyTimes [AttackTimeIndex] < TheTime [0]) {
+				Collider2D[] SavedCast = Physics2D.OverlapAreaAll (transform.GetChild(0).transform.position - CreatureStatesV2 [StateIndex].Vectors[1], transform.GetChild(0).transform.position + CreatureStatesV2 [StateIndex].Vectors[1], CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
 				if (SavedCast.Length > 0) {
-					Debug.Log ("From You To Target " + SavedCast.Length + " Was Hit");
+					Debug.Log ("A " + (CreatureStatesV2 [StateIndex].Vectors[1].x * 2) + "x" + (CreatureStatesV2 [StateIndex].Vectors[1].y * 2) + " Square Around You " + SavedCast.Length + " Was Hit");
 					for (int i = 0; i < SavedCast.Length; i++)
 						Debug.Log (SavedCast [i].transform.name + " Took DMG");
-					//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
-				}
-			}
-		} else {//ResetEverything That This Used Which Isnt Nesessary For Other Methods
-			MyTimes [AttackTimeIndex] = 0;
-		}
-
-	}
-
-	public void RektangleCast(){//TODO
-
-		if (NextStatePlz == false) {
-
-			if (MyTimes [AttackTimeIndex] > TheTime [0]) {
-				Collider2D[] SavedCast = Physics2D.OverlapAreaAll (transform.position - Vector3.one, transform.position + Vector3.one, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
-				if (SavedCast.Length > 0) {
-					Debug.Log ("A 2x2 Square Around You " + SavedCast.Length + " Was Hit");
-					for (int i = 0; i < SavedCast.Length; i++)
-						Debug.Log (SavedCast [i].transform.name + " Took DMG");
-					//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
+					//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo/attackdmg);
 				}
 			}
 		} else {
@@ -397,17 +380,17 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 	}
 
-	public void CircleCast(){//TODO
+	public void CircleCast(){//Circle Center Is AttackPositionChild. Circle Radius Is AttackValues [1] TODO Remove Debug When fully Implemented
 
 		if (NextStatePlz == false) {
 
-			if (MyTimes [AttackTimeIndex] > TheTime [0]) {
-				Collider2D[] SavedCast = Physics2D.OverlapCircleAll (transform.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1], CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
+			if (MyTimes [AttackTimeIndex] < TheTime [0]) {
+				Collider2D[] SavedCast = Physics2D.OverlapCircleAll (transform.GetChild(0).transform.position, CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1], CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].WhatCanIHit);
 				if (SavedCast.Length > 0) {
 					Debug.Log ("A " + CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [1] + " Radius Circle Around You Hit " + SavedCast.Length + " Was Hit");
 					for (int i = 0; i < SavedCast.Length; i++) {
 						Debug.Log (SavedCast [i].transform.name + " Took DMG");
-						//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo);
+						//	SavedCast [i].gameObject.GetComponent<Script> ().RecieveDmg (Spellinfo/attackdmg);
 					}
 				}
 			}
@@ -437,27 +420,7 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 		}
 	}
 
-	public void CastOnce(){//cast the spell once -> Its time based, so the attackvalues sice must be 2++ and [0] is the time [1] is the time index
-
-		if (NextStatePlz == false) {
-			if (AttackStarted == false) {
-				if (MyTimes [AttackTimeIndex] < TheTime [0]) {
-					for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack.Length; i++) {
-						if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack [i] == MovementIndex) {//Attack MovementIndexToAttack Used Here.
-							AttackStarted = true; 
-							Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo, target);
-							break;
-						}
-					}
-				}
-			}
-		} else {
-			AttackStarted = false;
-			MyTimes [AttackTimeIndex] = 0; 
-		}
-
-	}
-	public void CastMultipleTimes(){//if spell can be cast muliple times  
+	public void AttackSpeedDesides(){//Attacks With Intervals Of Value AttackValues [0] == AttackSpeed
 
 		if (NextStatePlz == false) {
 			if (MyTimes [AttackTimeIndex] < TheTime [0]) {
@@ -543,8 +506,8 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 		if (NextStatePlz == false) {
 			if (MovementStarted == false) {
 				MovementStarted = true;
-				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-					CreatureStatesV2 [StateIndex].Vectors [0] = CreatureStatesV2 [StateIndex].Vectors [0];
+				if (MovementIndex == 0) {
+					CreatureStatesV2 [StateIndex].Vectors [0] = CreatureStatesV2 [PreviourStateIndex].Vectors [0];
 				} else {
 					CreatureStatesV2 [StateIndex].Vectors [0] = CreatureStatesV2 [StateIndex].Vectors [0];
 				}
@@ -598,21 +561,11 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	public void Stop(){
 
 		if (NextStatePlz == false) {
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				if (MyTimes [MovementTimeIndex] < TheTime [0]) {
-					WhatToDoWhenDone ();
-				}
-			} else {
-				if (MyTimes [MovementTimeIndex] < TheTime [0]) {
-					WhatToDoWhenDone ();
-				}
+			if (MyTimes [MovementTimeIndex] < TheTime [0]) {
+				WhatToDoWhenDone ();
 			}
 		} else {
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				MyTimes [MovementTimeIndex] = 0;
-			} else {
-				MyTimes [MovementTimeIndex] = 0;
-			}
+			MyTimes [MovementTimeIndex] = 0;
 		}
 
 	}
@@ -658,31 +611,20 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 			if (FollowNodes == true) {
 				//follow them
 			} else {
-				if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-					if (MyTimes [MovementTimeIndex] < TheTime [0]) {
-						WhatToDoWhenDone ();
-					} else {
-						if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
-							transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [1] * Time.deltaTime;
-						}
-					}
-
+				if (MyTimes [MovementTimeIndex] < TheTime [0]) {
+					WhatToDoWhenDone ();
 				} else {
-					if (MyTimes [MovementTimeIndex] < TheTime [0]) {
-						WhatToDoWhenDone ();
-					} else {
-						if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+					if (MyAnimator.GetBool (AnimatorControllerParameterStop) == false) {
+						if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
+							transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].MovementValues [1] * Time.deltaTime;
+						} else {
 							transform.position += CreatureStatesV2 [StateIndex].Vectors [0] * CreatureStatesV2 [StateIndex].Move [MovementIndex].MovementValues [1] * Time.deltaTime;
 						}
 					}
 				}
 			}
 		} else {
-			if (CreatureStatesV2 [StateIndex].AttackOrMove == true) {
-				MyTimes [MovementTimeIndex] = 0;
-			} else {
-				MyTimes [MovementTimeIndex] = 0;
-			}
+			MyTimes [MovementTimeIndex] = 0;
 		}
 
 	}
@@ -888,7 +830,7 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 			if (Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer ("Walls")).transform == null) {
 				RequirementReturnTrue = true;
 			} else {
-				//		Debug.Log ("Hit " + Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer ("Walls")).transform.name);
+				//Debug.Log ("Hit " + Physics2D.Linecast (transform.position, target.position, LayerMask.NameToLayer ("Walls")).transform.name);
 			}
 		} else {
 

@@ -15,7 +15,7 @@ public class FSM_DefaultBehavoirV2 {
 	//walk movevelues 0 = movementspeed, 1 = movement distance to travel, 2 = the distance traveled 
 	//timemove movevalues 0 = time to move, 1 = the index for the time array, 2 = movementspeed
 	public enum TheMovementBehaviours { TeleportDistance = 6, Stop = 7, Walk = 8, TimedMovement = 9 }
-	public enum TheAttackType {SpellCastMultipleTimes = 10, SpellCastOnce = 11, CircleCast = 12, RektangleCast = 13, LineCast = 14, OnCollisionHit = 5, AnimationDecideWhenToAttack = 22 }
+	public enum TheAttackType {AttackspeedDesideAttack = 10,  CircleCast = 12, RektangleCast = 13, OnCollisionHit = 5, AnimationDecideWhenToAttack = 22 }
 	public enum ExitReuirement { Nothing = 15, Collision = 16, Time = 17, DistanceToTargetLessThen = 18, DistanceToTargetMoreThen = 19, RayCastHitWall = 20, RayCastClearPathToTarget = 21 }
 
 
@@ -23,7 +23,7 @@ public class FSM_DefaultBehavoirV2 {
 	public bool AttackOrMove;
 	[Tooltip("If The Object Have Some Logic That It Has To Do Then When That Is Done It Can Change State. The 'True'")]
 	public bool FinishBehaviourToExit;
-	[Tooltip("Vector size == Currently 1")]
+	[Tooltip("Vector Index [0] Is Reserved For The MovementVector.\n\nRektCast Uses [1] For Rektangle Size")]
 	public Vector3[] Vectors;
 
 	public TheAttackAndMovementBehaviour AttackAndMove;
@@ -54,7 +54,7 @@ public class FSM_DefaultBehavoirV2 {
 		public TheAttackType AttackBehaviour;
 		public SpellAttackInfo SpellInfo;
 
-		[Tooltip("OnCollisionHit Size 1, [0] = Dmg.\n\nCastMulipleTimes Size 1, [0] = AttackSpeed.\n\nSpellCastOnce Size 1, [0] = AttackSpeed.\n\nAnimationDecidesWhenToAttack Size 0.\n\nOnlyDebugToShow+NotImplementedCorrectly\nRektLineCast Size 1, [0] AttackSpeed\nCircleCast Size 2, [0] = AttackSpeed, [1] = Radius")]
+		[Tooltip("OnCollisionHit Size 1, [0] = Dmg.\n\nAttackspeed Deside Attack Size 1, [0] = AttackSpeed.\n\nSpellCastOnce Size 1, [0] = AttackSpeed.\n\nAnimationDecidesWhenToAttack Size 0.\n\nOnlyDebugToShow+UsedIfAnimationsHaveBuiltInAttack\nRektCast Size 1, [0] AttackSpeed\nCircleCast Size 2, [0] = AttackSpeed, [1] = Radius")]
 		public float[] AttackValues;
 		[Tooltip("Currently Used For LineCast CircleCast And RektCast")]
 		public LayerMask WhatCanIHit;

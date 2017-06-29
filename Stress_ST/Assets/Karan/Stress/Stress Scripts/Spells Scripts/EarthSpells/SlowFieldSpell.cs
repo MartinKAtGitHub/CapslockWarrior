@@ -4,9 +4,14 @@ using System.Collections;
 public class SlowFieldSpell : Earth {
 
 
+	public float SpellRadius; 
 	private float OriginalSpeed;
 	public float SlowRate;
 	private bool isSpellCasted;
+
+	private CircleCollider2D cC2d;
+	//private ParticleSystem.ShapeModule particalSys;
+	private ParticleSystem test;
 
 	public override bool IsSpellCasted 
 	{
@@ -22,7 +27,15 @@ public class SlowFieldSpell : Earth {
 	// Use this for initialization
 	void Start () 
 	{
-		
+		cC2d = GetComponent<CircleCollider2D>();
+		cC2d.radius = SpellRadius;
+
+		//particalSys = GetComponentInChildren<ParticleSystem.ShapeModule>();
+		//particalSys.radius = SpellRadius;
+
+		test = GetComponentInChildren<ParticleSystem>();
+		var sh = test.shape;
+		sh.radius = SpellRadius;
 	}
 	
 	// Update is called once per frame

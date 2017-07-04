@@ -112,14 +112,14 @@ public class FSM_BulletBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (name != "MoleBullet(Clone)") {
+		if (name == "GhostyBullet 1(Clone)") {
 		MyRigidbody2D = GetComponent<Rigidbody2D> ();
 		ShootingAnimation = GetComponent<Animator> ().GetBehaviour<ShootingAfterAnimation> ();
 		ShootingAnimation.ShootingAnimationFinished = false;
 		}
 	}
 	void FixedUpdate () {
-		if (name != "MoleBullet(Clone)") {
+		if (name == "GhostyBullet 1(Clone)") {
 
 			if (StartMoving == true) {
 				MyRigidbody2D.velocity = _MyShootingDirection * BulletSpeed;

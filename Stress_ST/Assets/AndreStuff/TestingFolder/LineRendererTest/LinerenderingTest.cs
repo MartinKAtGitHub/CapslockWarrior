@@ -13,6 +13,16 @@ public class LinerenderingTest : MonoBehaviour {
 
 	public float lineDrawSpeed = 6f;
 
+	public Material Material0;
+	public Material Material1;
+	public Material Material2;
+	public Material Material3;
+	
+	public float changematerialtime = 0.1f;
+	float counterr = 0;
+	int materialcount;
+	public bool ropeorlightning = false;
+	float x;
 
 	// Use this for initialization
 	void Start () {
@@ -24,19 +34,7 @@ public class LinerenderingTest : MonoBehaviour {
 		dist = Vector3.Distance (LineSource.position, LineTarget.position);
 	}
 
-	// Update is called once per frame
 
-	public Material Material0;
-	public Material Material1;
-	public Material Material2;
-	public Material Material3;
-
-	public float changematerialtime = 0.1f;
-	 float counterr = 0;
-	int materialcount;
-	public bool ropeorlightning = false;
-
-	 float x;
 	void Update () {
 
 		counterr += Time.deltaTime;
@@ -56,22 +54,15 @@ public class LinerenderingTest : MonoBehaviour {
 			} 
 		}
 
-
-
-
 		if (ropeorlightning == false) {
 
 			if (counter < dist) {
 				dist = Vector3.Distance (LineTarget.position, LineSource.position);
 
 				counter += 0.1f / lineDrawSpeed;
-				float x = Mathf.Lerp (0, dist, counter);
-				Vector3 pointA = LineSource.position;
-				Vector3 pointB = LineTarget.position;
-
+				x = Mathf.Lerp (0, dist, counter);
+				Line.SetPosition (0, LineSource.position);
 				Line.SetPosition (1, (x * (LineTarget.position - LineSource.position).normalized) + LineSource.position);
-
-
 
 			} else {
 				Line.SetPosition (0, LineSource.position);
@@ -94,9 +85,6 @@ public class LinerenderingTest : MonoBehaviour {
 				x = 0;
 				counter = 0;
 			}
-
 		}
-
-
 	}
 }

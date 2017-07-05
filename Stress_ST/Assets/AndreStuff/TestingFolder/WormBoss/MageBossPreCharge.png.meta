@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: f3fb4a3ff3f64f147b5e5e3d3cd5d498
-timeCreated: 1499099855
+guid: b1781ceeab296c34db55991a71e47350
+timeCreated: 1499272138
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MageBoss V2 PreCharge_0
-    21300002: MageBoss V2 PreCharge_1
-    21300004: MageBoss V2 PreCharge_2
-    21300006: MageBoss V2 PreCharge_3
-    21300008: MageBoss V2 PreCharge_4
-    21300010: MageBoss V2 PreCharge_5
-    21300012: MageBoss V2 PreCharge_6
+    21300000: MageBossPreCharge_0
+    21300002: MageBossPreCharge_1
+    21300004: MageBossPreCharge_2
+    21300006: MageBossPreCharge_3
+    21300008: MageBossPreCharge_4
+    21300010: MageBossPreCharge_5
+    21300012: MageBossPreCharge_6
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -77,91 +77,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MageBoss V2 PreCharge_0
+      name: MageBossPreCharge_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 100
-        width: 50
-        height: 50
+        y: 120
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V2 PreCharge_1
+      name: MageBossPreCharge_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 100
-        width: 50
-        height: 50
+        x: 60
+        y: 120
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V2 PreCharge_2
+      name: MageBossPreCharge_2
       rect:
         serializedVersion: 2
-        x: 100
-        y: 100
-        width: 50
-        height: 50
+        x: 120
+        y: 120
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V2 PreCharge_3
+      name: MageBossPreCharge_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 50
-        width: 50
-        height: 50
+        y: 60
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V2 PreCharge_4
+      name: MageBossPreCharge_4
       rect:
         serializedVersion: 2
-        x: 50
-        y: 50
-        width: 50
-        height: 50
+        x: 60
+        y: 60
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V2 PreCharge_5
+      name: MageBossPreCharge_5
       rect:
         serializedVersion: 2
-        x: 100
-        y: 50
-        width: 50
-        height: 50
+        x: 120
+        y: 60
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V2 PreCharge_6
+      name: MageBossPreCharge_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 50
-        height: 50
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

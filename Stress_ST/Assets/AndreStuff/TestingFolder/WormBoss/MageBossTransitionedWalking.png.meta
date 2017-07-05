@@ -1,29 +1,21 @@
 fileFormatVersion: 2
-guid: 6eee23fbf2f03404c962a37d64111c5a
-timeCreated: 1499177400
+guid: 7fc424ba43440cd48841aad7e18861d5
+timeCreated: 1499287387
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MageBoss V4_0
-    21300002: MageBoss V4_1
-    21300004: MageBoss V4_2
-    21300006: MageBoss V4_3
-    21300008: MageBoss V4_4
-    21300010: MageBoss V4_5
-    21300012: MageBoss V4_6
-    21300014: MageBoss V4_7
-    21300016: MageBoss V4_8
-    21300018: MageBoss V4_9
-    21300020: MageBoss V4_10
-    21300022: MageBoss V4_11
-    21300024: MageBoss V4_12
-    21300026: MageBoss V4_13
-    21300028: MageBoss V4_14
-    21300030: MageBoss V4_15
-    21300032: MageBoss V4_16
-    21300034: MageBoss V4_17
-    21300036: MageBoss V4_18
-    21300038: MageBoss V4_19
+    21300000: MageBossTransitionedWalking_0
+    21300002: MageBossTransitionedWalking_1
+    21300004: MageBossTransitionedWalking_2
+    21300006: MageBossTransitionedWalking_3
+    21300008: MageBossTransitionedWalking_4
+    21300010: MageBossTransitionedWalking_5
+    21300012: MageBossTransitionedWalking_6
+    21300014: MageBossTransitionedWalking_7
+    21300016: MageBossTransitionedWalking_8
+    21300018: MageBossTransitionedWalking_9
+    21300020: MageBossTransitionedWalking_10
+    21300022: MageBossTransitionedWalking_11
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -90,260 +82,156 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MageBoss V4_0
+      name: MageBossTransitionedWalking_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 200
-        width: 50
-        height: 50
+        y: 180
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_1
+      name: MageBossTransitionedWalking_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 200
-        width: 50
-        height: 50
+        x: 60
+        y: 180
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_2
+      name: MageBossTransitionedWalking_2
       rect:
         serializedVersion: 2
-        x: 100
-        y: 200
-        width: 50
-        height: 50
+        x: 120
+        y: 180
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_3
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 200
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_4
+      name: MageBossTransitionedWalking_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 150
-        width: 50
-        height: 50
+        y: 120
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_5
+      name: MageBossTransitionedWalking_4
       rect:
         serializedVersion: 2
-        x: 50
-        y: 150
-        width: 50
-        height: 50
+        x: 60
+        y: 120
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_6
+      name: MageBossTransitionedWalking_5
       rect:
         serializedVersion: 2
-        x: 100
-        y: 150
-        width: 50
-        height: 50
+        x: 120
+        y: 120
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_7
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 150
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_8
+      name: MageBossTransitionedWalking_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 100
-        width: 50
-        height: 50
+        y: 60
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_9
+      name: MageBossTransitionedWalking_7
       rect:
         serializedVersion: 2
-        x: 50
-        y: 100
-        width: 50
-        height: 50
+        x: 60
+        y: 60
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_10
+      name: MageBossTransitionedWalking_8
       rect:
         serializedVersion: 2
-        x: 100
-        y: 100
-        width: 50
-        height: 50
+        x: 120
+        y: 60
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_11
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 100
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_13
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_14
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_15
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_16
+      name: MageBossTransitionedWalking_9
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 50
-        height: 50
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_17
+      name: MageBossTransitionedWalking_10
       rect:
         serializedVersion: 2
-        x: 50
+        x: 60
         y: 0
-        width: 50
-        height: 50
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MageBoss V4_18
+      name: MageBossTransitionedWalking_11
       rect:
         serializedVersion: 2
-        x: 100
+        x: 120
         y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MageBoss V4_19
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 0
-        width: 50
-        height: 50
+        width: 60
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

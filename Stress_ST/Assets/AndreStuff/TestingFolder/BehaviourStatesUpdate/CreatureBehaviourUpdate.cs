@@ -53,8 +53,8 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	bool MovementStarted = false;
 
 	Animator MyAnimator;
-	Vector2 LookLeft = new Vector2 (-2, 2);
-	Vector2 LookRight = new Vector2 (2, 2);
+	Vector2 LookLeft = new Vector2 (-1, 1);
+	Vector2 LookRight = new Vector2 (1, 1);
 	int AnimatorControllerParameterStop = Animator.StringToHash ("Stop");
 	int AnimatorControllerParameterStage = Animator.StringToHash ("AnimatorStage");
 	int AnimatorControllerParameterShoot = Animator.StringToHash ("Shoot");

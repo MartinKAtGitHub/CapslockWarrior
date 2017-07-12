@@ -64,13 +64,15 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	int AnimatorControllerParameterStage2 = Animator.StringToHash ("AnimatorStage");
 	int AnimatorControllerParameterShoot3 = Animator.StringToHash ("Shoot");
 	int AnimatorControllerParameterLockDirection4 = Animator.StringToHash ("LockDirection");
+	SpriteRenderer mysprite;
+	public bool RotateOrFlip = false;
 
 	void Start(){//Setting All FunctionPointer Refrences + casting enum value to int
 		TheTime = GameObject.FindGameObjectWithTag ("Respawn").GetComponent<ClockTest>().GetTime();
 		MyTimes = new float[10];
 		MyAnimator = GetComponent<Animator> ();
 		target = GameObject.Find ("Hero v5").transform;
-
+		mysprite = transform.GetComponent<SpriteRenderer> ();
 		for (int k = 0; k < CreatureStatesV2.Length; k++) {
 
 			if (CreatureStatesV2 [k].AttackOrMove == true) {
@@ -124,10 +126,19 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 			if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttackMovement [MovementIndex].RotateWhileAttacking == true) {
 				if (MyAnimator.GetBool (AnimatorControllerParameterLockDirection) == false) {
-					if (target.transform.position.x - transform.position.x > 0) {
-						transform.localScale = LookRight;
+				
+					if (RotateOrFlip == true) {
+						if (target.transform.position.x - transform.position.x > 0) {
+							mysprite.flipX = false;
+						} else {
+							mysprite.flipX = true;
+						}
 					} else {
-						transform.localScale = LookLeft;
+						if (target.transform.position.x - transform.position.x > 0) {
+							transform.localScale = LookRight;
+						} else {
+							transform.localScale = LookLeft;
+						}
 					}
 				}
 			}	
@@ -137,10 +148,18 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 
 			if (CreatureStatesV2 [StateIndex].Move [MovementIndex].LookAtTarget == true) {
 				if (MyAnimator.GetBool (AnimatorControllerParameterLockDirection) == false) {
-					if (target.transform.position.x - transform.position.x > 0) {
-						transform.localScale = LookRight;
+					if (RotateOrFlip == true) {
+						if (target.transform.position.x - transform.position.x > 0) {
+							mysprite.flipX = false;
+						} else {
+							mysprite.flipX = true;
+						}
 					} else {
-						transform.localScale = LookLeft;
+						if (target.transform.position.x - transform.position.x > 0) {
+							transform.localScale = LookRight;
+						} else {
+							transform.localScale = LookLeft;
+						}
 					}
 				}
 			}	

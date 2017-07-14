@@ -60,10 +60,10 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	int AnimatorControllerParameterShoot = Animator.StringToHash ("Shoot");
 	int AnimatorControllerParameterLockDirection = Animator.StringToHash ("LockDirection");
 
-	int AnimatorControllerParameterStop1 = Animator.StringToHash ("Stop");
+/*	int AnimatorControllerParameterStop1 = Animator.StringToHash ("Stop");
 	int AnimatorControllerParameterStage2 = Animator.StringToHash ("AnimatorStage");
 	int AnimatorControllerParameterShoot3 = Animator.StringToHash ("Shoot");
-	int AnimatorControllerParameterLockDirection4 = Animator.StringToHash ("LockDirection");
+	int AnimatorControllerParameterLockDirection4 = Animator.StringToHash ("LockDirection");*/
 	SpriteRenderer mysprite;
 	public bool RotateOrFlip = false;
 
@@ -241,6 +241,10 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 			}
 		}
 
+	}
+
+	public void ObjectGotHurt(float Damage){
+	
 	}
 
 
@@ -424,7 +428,7 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 	public void AnimationDecideAttack(){
 		if (MyAnimator.GetBool (AnimatorControllerParameterShoot) == true) {
 			MyAnimator.SetBool (AnimatorControllerParameterShoot, false);
-			Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo,target);
+			Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<BulletBehaviourDefault> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo,target, transform.gameObject);
 		}
 	}
 
@@ -445,7 +449,7 @@ public class CreatureBehaviourUpdate : MonoBehaviour {
 			if (MyTimes [AttackTimeIndex] < TheTime [0]) {
 				for (int i = 0; i < CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack.Length; i++) {
 					if (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].MovementIndexToAttack [i] == MovementIndex) {
-						Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<FSM_BulletBehaviour> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo,target);
+						Instantiate (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo.Spell, transform.GetChild (0).position, Quaternion.identity).GetComponent<BulletBehaviourDefault> ().SetDmgModifiers (CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].SpellInfo,target, transform.gameObject);
 						MyTimes [AttackTimeIndex] = CreatureStatesV2 [StateIndex].AttackAndMove.TheAttack [AttackIndex].AttackValues [0] + TheTime [0];//setting new time
 						break;
 					}

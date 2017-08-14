@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	
 
 	public GameObject MainHero;
 	public GameObject CountDownAnim;
+	public GameObject SpellBarGUI;
 
+	private GameObject MainCanvas;
 	private GameObject GM;
 	private GameObject HeroClone;
 
@@ -19,31 +22,29 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	void Start () 
 	{
 
-			Spawner = GetComponent<Spawnmanaging>();
+		Spawner = GetComponent<Spawnmanaging>();
 
-			GM = GameObject.FindGameObjectWithTag("GameManager");
-			if(GM != null && MainHero != null)
-			{
-				GMSpellDist = GM.GetComponent<GameManagerSpellDistributer>();
-				spellsController = MainHero.GetComponent<SpellsController>();
-			}
-			else
-			{ 
-				Debug.LogError("SpawnPlayerSingleplayer could not find GameManager or Main hero -> GM (" + GMSpellDist + ") HERO (" + MainHero + ")");
-			}
+		GM = GameObject.FindGameObjectWithTag("GameManager");
+		MainCanvas = GameObject.FindGameObjectWithTag("MainCanvas");
+
+
+		if(GM != null && MainHero != null)
+		{
+			GMSpellDist = GM.GetComponent<GameManagerSpellDistributer>();
+			spellsController = MainHero.GetComponent<SpellsController>();
+		}
+		else
+		{ 
+			Debug.LogError("SpawnPlayerSingleplayer could not find GameManager or Main hero -> GM (" + GMSpellDist + ") HERO (" + MainHero + ")");
+		}
+
+		SetGUISpellICons();
+
 		StartCountDownAnimGui();
-
 		// spawnanim (1 sek) start anim
  		SpawnPlayerChar();
 
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
-
 
 	public void StartCountDownAnimGui()
 	{
@@ -58,6 +59,7 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 
 	public void SpawnPlayerChar()
 	{
+		//TODO Catch ERROR / NULL SO THIS DOSENT CRASH
 		// We send the spells the player choose in Main Map to the acutal hero here.
 
 		// we chnage the prefab
@@ -84,5 +86,16 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	public void StartSpawner()
 	{
 		Spawner.StartSpawn = true;
+	}
+
+	private void SetGUISpellICons()
+	{
+		GameObject spellBar;
+		spellBar = (GameObject)Instantiate(SpellBarGUI, MainCanvas.transform);
+
+		spellBar.transform.GetChild(0).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyOne.GetComponent<Spells>().SpellIcon;
+		spellBar.transform.GetChild(1).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyTwo.GetComponent<Spells>().SpellIcon;
+		spellBar.transform.GetChild(2).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyThree.GetComponent<Spells>().SpellIcon;
+		spellBar.transform.GetChild(3).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyFour.GetComponent<Spells>().SpellIcon;
 	}
 }

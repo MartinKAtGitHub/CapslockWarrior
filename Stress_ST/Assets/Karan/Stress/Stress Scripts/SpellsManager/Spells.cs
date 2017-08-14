@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public abstract class Spells : MonoBehaviour{
 
 
 	public float CoolDownTimer;
 	public int ManaCost;
+	public Sprite SpellIcon;
 
 	// This code i feel to be convinent 
 	public Transform SpellSpawnPos;

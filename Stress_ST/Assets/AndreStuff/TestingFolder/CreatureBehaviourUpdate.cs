@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using System;
 
 public class CreatureBehaviourUpdate : MonoBehaviour {
+	//TODO character rotation towards target. transition logic. only happen once pr entrance. show/hide health text
+
+
 
 	//	[Header("Testing V2")]
 	//	[Space(20)]       10 each line 

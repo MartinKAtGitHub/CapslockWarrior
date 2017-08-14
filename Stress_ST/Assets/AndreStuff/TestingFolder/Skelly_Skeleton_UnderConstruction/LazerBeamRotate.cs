@@ -17,6 +17,7 @@ public class LazerBeamRotate : MonoBehaviour {
 	bool Changed = false;
 	Vector2 SpriteSize = Vector2.zero;
 	RaycastHit2D[] RaycastValues;
+	public Animator MyAnimator;
 
 	void Start () {
 		RotatingValue = 1;
@@ -34,6 +35,9 @@ public class LazerBeamRotate : MonoBehaviour {
 			}
 		}
 	}
+	public bool test = true;
+	public RuntimeAnimatorController testi1;
+	public RuntimeAnimatorController testi2;
 
 	void Update () {
 
@@ -51,11 +55,16 @@ public class LazerBeamRotate : MonoBehaviour {
 		if (RaycastValues.Length > 0) {
 
 			if (Changed == true) {
-				EndPoint_SR.gameObject.SetActive(true);
+				if (test == true) {
+					
+					EndPoint_SR.enabled = true;
+				} else {
+					MyAnimator.runtimeAnimatorController = testi2;
+				}
 				Changed = false;
 			}
 
-			SpriteSize.x = Vector3.Distance (transform.parent.position, RaycastValues [0].point);
+			SpriteSize.x = Vector3.Distance (transform.parent.position, ((Vector3)RaycastValues [0].point * Offset));
 			MySpriterenderer.size = SpriteSize;
 			StartVector = ((Vector3)RaycastValues [0].point - transform.parent.position).normalized * SpriteSize.x;
 			EndPoint_SR.gameObject.transform.position = RaycastValues [0].point;
@@ -66,11 +75,15 @@ public class LazerBeamRotate : MonoBehaviour {
 				SpriteSize.x = StartDistance;
 				MySpriterenderer.size = SpriteSize;
 				StartVector = StartVector.normalized * SpriteSize.x;
-				EndPoint_SR.gameObject.SetActive(false);
+				if(test == true)
+				EndPoint_SR.enabled = false;
+				else
+				MyAnimator.runtimeAnimatorController = testi1;
 			}
 		}
 
 		transform.localPosition = StartVector / 2;
 
 	}
+	public float Offset = 0;
 }

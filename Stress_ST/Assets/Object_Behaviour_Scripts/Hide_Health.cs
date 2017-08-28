@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Show_Health : The_Default_Transition_Info {
+public class Hide_Health : The_Default_Transition_Info {
 
-	public bool HideOnExit = true;
+	public bool ShowOnExit = true;
 	public bool DissableTypeChecking = true;
 	public DefaultBehaviour _TheObject;
 
 
 	public override void OnEnter(){
-		Debug.Log ("HER1");
-		_TheObject._WordChecker.ShowHealth (DissableTypeChecking);
+		_TheObject._WordChecker.HideHealth (DissableTypeChecking);
 	}
 
 	public override void OnExit(){
-		if (HideOnExit == true) {
-			_TheObject._WordChecker.ShowHealth (DissableTypeChecking);
+		if (ShowOnExit == true) {
+			_TheObject._WordChecker.HideHealth (DissableTypeChecking);
 		}
 	}
 

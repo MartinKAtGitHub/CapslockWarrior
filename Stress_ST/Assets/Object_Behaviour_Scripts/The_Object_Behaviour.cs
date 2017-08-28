@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class The_Object_Behaviour : MonoBehaviour {
+[System.Serializable]
+public class The_Object_Behaviour {
+
+	public AStarPathfinding_RoomPaths _CreateThePath;//Pathfinding For Room To Room
+	public CreatingObjectNodeMap _PersonalNodeMap;//Personal Node Pathfinding. Creating A Small "Room" Which The Creature Know Whats Inside
+	public DefaultBehaviour _TheObject;
+
+	[Tooltip("PathfindingNodeID is the cost to move to the different nodes //// 0 = normal nodes(1) //// 1 = undestructable walls(100) //// 2 = other units(3)")]
+	public float[] PathfindingNodeID = new float[3];//when going through the nodemap the this is the value for the different tiles when navigating
+
 
 	[Tooltip("Object Phases Of Behaviours")]
 	public The_Object_Phase_Behaviour[] ObjectPhases;
-	[Space(20)]
 
-	public float Health = 5;
-	public float Damage = 2;
-	public float MovementSpeed = 3;
+
 
 	int[] _BehaviourIndex = new int[1];
 	int _CreaturePhase = 0;
@@ -30,26 +36,27 @@ public class The_Object_Behaviour : MonoBehaviour {
 	Vector3[] MyMovementVector = new Vector3[1];
 	Vector3[] MyRotationVector = new Vector3[1];
 	The_Default_Behaviour.ResetState _ResetEnum = The_Default_Behaviour.ResetState.ResetOnPhaseChange;
+	[HideInInspector] public bool[] GotPushed = new bool[1];
+
+
+	[Space(50)]
+	public Vector3[] ObjectCurrentVector = new Vector3[1];
+	public Vector3[] ObjectTargetVector = new Vector3[1];
 
 
 	///<summary>
 	///[0] == Stop, [1] == AnimatorStage, [2] == Shoot, [3] == LockDirection
 	/// </summary>
-	public int[] AnimatorVariables = new int[5] {//TODO Going To Add This To The GameManager, Depending On How Expensive This Is
-		Animator.StringToHash ("Stop"),
-		Animator.StringToHash ("AnimatorStage"),
-		Animator.StringToHash ("Shoot"),
-		Animator.StringToHash ("LockDirection"),
-		Animator.StringToHash ("StopExitCheck")
-	};
+	[HideInInspector] public int[] AnimatorVariables;
 
-	void Start(){//Setting All FunctionPointer Refrences + casting enum value to int
-	//	Health *= difficulty TODO
-	//	Damage *= difficulty TODO
-	//	MovementSpeed *= difficulty TODO
-		MyAnimator = GetComponent<Animator>();
-		_MyTransform = transform;
-		_Target = GameObject.Find ("Hero v5").transform;
+	public void BehaviourStart(){//Setting All FunctionPointer Refrences + casting enum value to int
+
+		MyAnimator = _TheObject.MyAnimator.MyAnimator;
+		AnimatorVariables = _TheObject.MyAnimator.AnimatorVariables;
+		_Target = _TheObject._TheTarget.transform;
+
+		ObjectCurrentVector[0] = Vector3.right;
+		ObjectTargetVector[0] = _Target.position;
 
 		for (int j = 0; j < ObjectPhases.Length; j++) {
 				
@@ -66,24 +73,31 @@ public class The_Object_Behaviour : MonoBehaviour {
 		for (int i = 0; i < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; i++) {//If The Object Start With A Transition
 			ObjectPhases [_CreaturePhase].PhaseChangeInfo [i].OnEnter ();
 		}
+
+		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
+
 	}
 
-	void Update (){
+	public void InBetween(){
+//		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
+	}
+
+	public void BehaviourUpdate (){
 		TheTime [0] += Time.deltaTime;
 
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].BehaviourUpdate();
-
 	
 		if(MyAnimator.GetBool(AnimatorVariables[3]) == false)
 			_MyTransform.eulerAngles = MyRotationVector[0];//Updating Rotations
 
 		if(MyAnimator.GetBool(AnimatorVariables[0]) == false)
-			_MyTransform.position += MyMovementVector [0];//Updating Positions
+			_TheObject.GetComponent<Rigidbody2D>().velocity = MyMovementVector [0] * 30;//Updating Positions
 
 		if (MyAnimator.GetBool(AnimatorVariables [4]) == false) {
 			CheckIfExitRequirementsAreMet ();
 		}
 	}
+
 
 	void CheckIfExitRequirementsAreMet(){//Checking If I Can Change Phase
 
@@ -115,7 +129,6 @@ public class The_Object_Behaviour : MonoBehaviour {
 						if (ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements [i].GetBool (2) == false) {//Requirement Check If True
 							i = ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length + 2;
 						} else {
-							Debug.Log ("HERE " + i + " | " + (ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length - 1));
 							if (i == ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length - 1) {//If I Am At The Last Exit_Requirement, Then All Are True And I Can Change Phase
 								for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
 									ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
@@ -132,7 +145,6 @@ public class The_Object_Behaviour : MonoBehaviour {
 	}
 
 	void RunResetBehaviours (){//Reseting Currently Used Behaviours
-		Debug.Log ("HERE");
 		_CollisionBehaviours = new List<Behaviour_Default> ();
 		_ResetEnum = The_Default_Behaviour.ResetState.ResetOnPhaseChange;
 		_BehaviourIndex [0] = 0;
@@ -159,27 +171,27 @@ public class The_Object_Behaviour : MonoBehaviour {
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
 	}
 		
-	public void SetMovementBehaviour(int theValue){
-		Debug.Log ("SETTING");
-		_BehaviourIndex [0] = theValue;
-
-		if (_BehaviourIndex [0] < ObjectPhases [_CreaturePhase].Behaviours.Length) {
+	public void SetMovementBehaviour(int theValue){//If TheValue Is Bigger Then The Amount Of Behaviours In The Phase. Then It Forces Itself To Exit To The First Exitgroup ChangeToPhase Value
+		if (theValue < ObjectPhases [_CreaturePhase].Behaviours.Length) {
+			_BehaviourIndex [0] = theValue;
 			ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
+		} else {
+		//	_BehaviourIndex [0] = 0;
+		//	ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
+
+			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {//If You Want To ForceQuit. Then Make This True. 
+				ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
+			}
+			_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [0].ChangeToPhase;
+			RunResetBehaviours ();
+			return;
 		}
 	}
-
-	public void SetMovementVector(Vector3 theMoveDirectoin){
-		MyMovementVector [0] = theMoveDirectoin;
-	}
-
+		
 	public Vector3[] GetMovementVector(){
 		return MyMovementVector;
 	}
-
-	public void SetRotationVector(Vector3 theRotationDirectoin){
-		MyRotationVector [0] = theRotationDirectoin;
-	}
-
+		
 	public Vector3[] GetRotationVector(){
 		return MyRotationVector;
 	}
@@ -192,8 +204,8 @@ public class The_Object_Behaviour : MonoBehaviour {
 		_CollisionBehaviours.Add (theBehaviours);
 	}
 
-	void OnCollisionEnter2D(Collision2D coll){
-
+	public void OnCollisions(Collision2D coll){
+		
 		if (_CollisionBehaviours != null) {
 			for (int i = 0; i < _CollisionBehaviours.Count; i++) {//Going Through My List Of Behaviours That Need Collision Info. 
 				_LayerMasks = _CollisionBehaviours [i].GetLayerMask ();//Getting The LayerMask Values From The Behaviours

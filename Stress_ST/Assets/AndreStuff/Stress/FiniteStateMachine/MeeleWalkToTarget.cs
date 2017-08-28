@@ -68,7 +68,7 @@ public class MeeleWalkToTarget : DefaultState {
 		CreateThePath = createThePath;
 
 		MyInfo = myInfo;
-		MyTransform = MyInfo.WalkColliderPoint.transform;
+		MyTransform = MyInfo.transform;
 		_TheNodePath = PersonalNodeMap.GetNodeList ();
 		_Nodesindex = PersonalNodeMap.GetNodeindex ();
 
@@ -84,7 +84,7 @@ public class MeeleWalkToTarget : DefaultState {
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
 
-		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 1f;//TODO check this out, if the value is to small then character will turn around and walk backwards(was 2 changed to 1f)
+		_DistanceFromNode = (1 / (float)0.125f) / 1f;//TODO check this out, if the value is to small then character will turn around and walk backwards(was 2 changed to 1f)
 		TheTargetHiearchy = theTargetHierarchy;
 
 		width = (myInfo.GetComponent<BoxCollider2D> ().size.x / 2) * 1.75f;//TODO quickfix
@@ -93,7 +93,8 @@ public class MeeleWalkToTarget : DefaultState {
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
 
-		if (MyInfo._GoAfter == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
+	//	if (MyInfo._TheTarget == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
+		if (MyInfo._TheTarget.gameObject == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
 			TheTargetHiearchy.SearchAfterNewTargets ();
 			TheTargetHiearchy.CheckIfICanSwitchTarget ();//setting new target here
 			TargetInfo = MyInfo.GetTargetBehaviour ();
@@ -102,13 +103,13 @@ public class MeeleWalkToTarget : DefaultState {
 				TargetInfo = MyInfo.GetTargetBehaviour ();
 			}
 		}
-		MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
+//RRR	MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 
 		_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
 		_ReturnState = "";
 
 		HaveSearched = false;
-		MyInfo.UpdateThePath = true;
+//		MyInfo.UpdateThePath = true;
 		return "";
 	}
 
@@ -124,7 +125,7 @@ public class MeeleWalkToTarget : DefaultState {
 			TheTargetHiearchy.SearchAfterNewTargets ();
 			TheTargetHiearchy.CheckIfICanSwitchTarget ();
 			TargetInfo = MyInfo.GetTargetBehaviour ();
-			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
+//RRR		MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 			UpdatePaths ();
 			GoToDestination ();
 		}
@@ -140,8 +141,9 @@ public class MeeleWalkToTarget : DefaultState {
 
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
 
-		if (MyInfo.UpdateThePath == true) {
-			MyInfo.UpdateThePath = false;
+//		if (MyInfo.UpdateThePath == true) {
+		if (true) {
+		//	MyInfo.UpdateThePath = false;
 			NeighbourGroups = MyInfo.NeighbourGroups;
 			TargetNeighbourGroups = TargetInfo.NeighbourGroups;
 
@@ -149,8 +151,8 @@ public class MeeleWalkToTarget : DefaultState {
 
 				_Roomindex = _TheRoomPath.Length;
 
-				PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
-				PersonalNodeMap.SetInfoAndStartSearch (true);
+				PersonalNodeMap.SetTargetPos (TargetInfo.MyPos);
+				PersonalNodeMap.SetInfoAndStartSearch ();
 				_Nodeindex = _Nodesindex [0];
 				HaveSearched = true;
 
@@ -159,7 +161,7 @@ public class MeeleWalkToTarget : DefaultState {
 
 				if (CreateThePath.CreatePath () == false) {//if eather of us dont have a room connected yet, go straight to the target
 					HaveSearched = false;
-					MyInfo.UpdateThePath = true;
+			//		MyInfo.UpdateThePath = true;
 					return;
 				} else {
 					HaveSearched = true;
@@ -170,12 +172,12 @@ public class MeeleWalkToTarget : DefaultState {
 				if ((_Roomindex) - _TheRoomPath.Length < 0) {//if true go to the pathconnector node closest to the target
 
 					WhichNodeToGOTO (_TheRoomPath [_Roomindex].GetComponent<RoomConnectorCreating> ().GettheNodes ()); 
-					PersonalNodeMap.SetInfoAndStartSearch (true);
+					PersonalNodeMap.SetInfoAndStartSearch ();
 					_Nodeindex = _Nodesindex [0];
 
 				} else {
-					PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
-					PersonalNodeMap.SetInfoAndStartSearch (true);
+					PersonalNodeMap.SetTargetPos (TargetInfo.MyPos);
+					PersonalNodeMap.SetInfoAndStartSearch ();
 					_Nodeindex = _Nodesindex [0];
 				}
 			}
@@ -193,8 +195,8 @@ public class MeeleWalkToTarget : DefaultState {
 			if (Vector2.Distance (_GoalPosition, (Vector2)MyTransform.position) <= _DistanceFromNode) {//if im inside the node im going to 
 				_Nodeindex++;
 
-				_MovementDirection.x = TargetInfo.myPos[0,0] ;
-				_MovementDirection.y = TargetInfo.myPos[0,1] ;
+				_MovementDirection.x = TargetInfo.MyPos[0,0] ;
+				_MovementDirection.y = TargetInfo.MyPos[0,1] ;
 			
 				if (Vector2.Distance ((Vector2)MyTransform.position, _MovementDirection) <= _Range) {//TODO before quickfix !!!!!!  checking if im withing range of the target 
 					if (Physics2D.Linecast ((Vector2)MyTransform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
@@ -203,14 +205,14 @@ public class MeeleWalkToTarget : DefaultState {
 					} 
 				}
 				if (Vector2.Distance ((Vector2)MyInfo.transform.position, _MovementDirection) <= _Range) {//TODO quickfix, monster need to face the player  
-					_MovementDirection = (new Vector2 (TargetInfo.myPos [0, 0], TargetInfo.myPos [0, 1]) - new Vector2 (MyInfo.myPos [0, 0], MyInfo.myPos [0, 1]));
+					_MovementDirection = (new Vector2 (TargetInfo.MyPos [0, 0], TargetInfo.MyPos [0, 1]) - new Vector2 (MyInfo.MyPos [0, 0], MyInfo.MyPos [0, 1]));
 						if (_MovementDirection.x < width && _MovementDirection.x > -width && _MovementDirection.y < height && _MovementDirection.y > -height) {
 						_ReturnState = "AttackState";
 						return;
 					}
 				}
-				_MovementDirection.x = TargetInfo.myPos[0,0];
-				_MovementDirection.y = TargetInfo.myPos[0,1];
+				_MovementDirection.x = TargetInfo.MyPos[0,0];
+				_MovementDirection.y = TargetInfo.MyPos[0,1];
 
 
 				#region Calculating Direction/speed
@@ -254,13 +256,13 @@ public class MeeleWalkToTarget : DefaultState {
 
 				if (_Nodeindex > _SearchAgainIndex) {
 					HaveSearched = false;
-					MyInfo.UpdateThePath = true;
+				//	MyInfo.UpdateThePath = true;
 				}
 
 
 				if (_Nodeindex >= _TheNodePath.Length) {
 					HaveSearched = false;
-					MyInfo.UpdateThePath = true;
+				//	MyInfo.UpdateThePath = true;
 				}
 
 			} else {
@@ -312,8 +314,8 @@ public class MeeleWalkToTarget : DefaultState {
 	void WhichNodeToGOTO(List<Nodes> ListOfNodes){//calculating which node to go to in the roomconnector 
 		_TheDistance = 1000;
 		_Counter = 0;
-		_TargetVector.x = TargetInfo.myPos [0, 0];
-		_TargetVector.y = TargetInfo.myPos [0, 1];
+		_TargetVector.x = TargetInfo.MyPos [0, 0];
+		_TargetVector.y = TargetInfo.MyPos [0, 1];
 
 		for (int i = 0; i < ListOfNodes.Count; i++) {
 			_ObjectVector.x = ListOfNodes [i].GetID () [0, 0];

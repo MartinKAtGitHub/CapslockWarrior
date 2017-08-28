@@ -8,12 +8,10 @@ public abstract class MovingCreatures : DefaultBehaviour {
 	public AStarPathfinding_RoomPaths _CreateThePath;// Needed for AI
 	public CreatingObjectNodeMap _PersonalNodeMap;// Needed for AI
 
-	[HideInInspector] public bool UpdateThePath = false;//when this is true the pathfinding will run
-	public bool RunPathfinding = true;//if true then the target is using the pathfining
+	[HideInInspector] public bool RoomPathUpdate = false;//when this is true the pathfinding will run
+	[HideInInspector] public bool AStarSearchUpdate = false;//when this is true the pathfinding will run
 
-
-	[Tooltip("PathfindingNodeID is the cost to move to the different nodes //// 0 = normal nodes(1) //// 1 = undestructable walls(100) //// 2 = other units(3)")]
-	public float[] PathfindingNodeID = new float[3];//when going through the nodemap the this is the value for the different tiles when navigating
+	public bool RunObjectBehaviours = true;//if true then the target is using the pathfining
 
 	public float AttackRange = 1;
 
@@ -22,46 +20,43 @@ public abstract class MovingCreatures : DefaultBehaviour {
 
 	public LayerMask LineOfSight;//this is what the physics2d.linecast cant hit. if it does move closer
 
-
-
 	public override void SetAiRoom(Wall_ID room){//just called once, and that is when spawning an object
 		base.SetAiRoom(room);
-		_CreateThePath.SetStartRoom (room.Connectors);
+		ObjectBehaviour._CreateThePath.SetStartRoom (room.Connectors);
+		RoomPathUpdate = true;
 	}
 
-	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
+	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){//When The Object Enters A New Room This Updates The Nodes
 		NeighbourGroups = neighbours;
-		_CreateThePath.SetStartRoom (neighbours);
+		ObjectBehaviour._CreateThePath.SetStartRoom (neighbours);
+		RoomPathUpdate = true;
 	}
 
 	public override void SetTarget(GameObject target){
 		base.SetTarget(target);
-		_CreateThePath.SetEndRoomAndNode (DefaultBehaviourTarget.NeighbourGroups, DefaultBehaviourTarget.GetMyNode());
+		ObjectBehaviour._CreateThePath.SetEndRoomAndNode (_TheTarget.NeighbourGroups, _TheTarget.MyNode);
 	}
 
 	#region What to do when colliding with objects  
-	//TODO improve this so that i only have to call one method for all objects
 
-	public void AddWallWithTrigger(GameObject collidingwithobject){
-		_PersonalNodeMap.AddWalls (collidingwithobject);
-		UpdateThePath = true;
+	public void AddStaticObject(GameObject collidingwithobject){
+		ObjectBehaviour._PersonalNodeMap.AddWalls (collidingwithobject);
+		AStarSearchUpdate = true;
 	}
 
-	public void RemoveWallWithTrigger(GameObject collidingwithobject){
-		_PersonalNodeMap.RemoveWalls (collidingwithobject);
-		UpdateThePath = true;
+	public void RemoveStaticObjects(GameObject collidingwithobject){
+		ObjectBehaviour._PersonalNodeMap.RemoveWalls (collidingwithobject);
+		AStarSearchUpdate = true;
 	}
 
 	public void AddEnemy (GameObject collidingwithobject){
-		if (collidingwithobject != gameObject) {
-			_PersonalNodeMap.AddEnemyPositions (collidingwithobject.gameObject);
-			UpdateThePath = true;
-		}
+		ObjectBehaviour._PersonalNodeMap.AddEnemyPositions (collidingwithobject.gameObject);
+		AStarSearchUpdate = true;
 	}
 
 	public void RemoveEnemy (GameObject collidingwithobject){
-		_PersonalNodeMap.RemoveEnemyPositions (collidingwithobject.gameObject);
-		UpdateThePath = true;
+		ObjectBehaviour._PersonalNodeMap.RemoveEnemyPositions (collidingwithobject.gameObject);
+		AStarSearchUpdate = true;
 	}
 
 	public void RemoveMyselfFromOthers(){

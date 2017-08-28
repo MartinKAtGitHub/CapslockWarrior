@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move_Straight_To_Target : The_Default_Movement_Behaviour {
+public class Move_To_Vector_Without_Pathfinding : The_Default_Movement_Behaviour {
 
 	[Space(10)]
 	[Header("Movement Values")]
-
+	[Tooltip("This Is Multiplyed With Movement Speed And Then Added To The MovementVector")]
 	public float MovementMultiplyer = 1;
 	[Tooltip("Time == true, Distance == false")]
 	public bool TimeOrDistance = false;
 	[Tooltip("Value To Check, If TimeOrDistance == True Then CheckingValue Is Time, Distance If False")]//Might Make A Enum, But Just Came Up With These Two
 	public float CheckingValue = 10;
-	[Tooltip("When Entering New Behaviour Change The Animation Stage To The Selected Value")]
 
 	float[] _TheTime;
 	int[] _AnimatorVariables;
@@ -23,10 +22,10 @@ public class Move_Straight_To_Target : The_Default_Movement_Behaviour {
 
 	public override void SetMethod (The_Object_Behaviour myTransform){
 		base.SetMethod (myTransform);
-
 		_MyObject = myTransform;
-		_MyTransform = myTransform._MyTransform;
-		_TargetTransform = myTransform._Target;
+		_MyTransform = myTransform._TheObject;
+		_TargetTransform = myTransform._TheObject._TheTarget;
+
 		_TheTime = _MyObject.GetTheTime ();
 		_AnimatorVariables = _MyObject.AnimatorVariables;
 	}
@@ -38,10 +37,7 @@ public class Move_Straight_To_Target : The_Default_Movement_Behaviour {
 		_MyObject.MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);
 
 		if (TheResetState == ResetState.ResetOnEnter) {
-			if (TimeOrDistance == true) {
-				TimeStarted = _TheTime [0];
-			}
-			_ValueWhenLastUpdated = 0;
+			Reset ();
 		} else {
 			if (TimeOrDistance == true) {
 				TimeStarted = _TheTime [0];
@@ -50,14 +46,11 @@ public class Move_Straight_To_Target : The_Default_Movement_Behaviour {
 	}
 
 	public override void BehaviourUpdate (){
-
-		RotationMethods ();
+		MovementRotations ();
 
 		if (TimeOrDistance == false) {
-			MoveDirection [0] = (_TargetTransform.position - _MyTransform.position).normalized * Time.deltaTime * (_MyObject.MovementSpeed * MovementMultiplyer);//1 == creature standard speed
+			MoveDirection [0] = (_TargetTransform.transform.position - _MyTransform.transform.position).normalized * MovementMultiplyer;//1 == creature standard speed
 			_ValueWhenLastUpdated += Vector3.Distance (Vector3.zero, MoveDirection [0]);//Distance Traveled
-
-			_MyTransform.position += MoveDirection [0];
 
 			if (_Attacking == false) {
 				if (_ValueWhenLastUpdated >= CheckingValue) {
@@ -68,7 +61,7 @@ public class Move_Straight_To_Target : The_Default_Movement_Behaviour {
 				}
 			}
 		} else {
-			MoveDirection [0] = (_TargetTransform.position - _MyTransform.position).normalized * Time.deltaTime * (_MyObject.MovementSpeed * MovementMultiplyer);//1 == creature standard speed
+			MoveDirection [0] = (_TargetTransform.transform.position - _MyTransform.transform.position).normalized * MovementMultiplyer;//1 == creature standard speed
 			_ValueWhenLastUpdated = _TheTime [0] - TimeStarted;//Time Spent 
 
 			if (_Attacking == false) {
@@ -80,32 +73,37 @@ public class Move_Straight_To_Target : The_Default_Movement_Behaviour {
 				}
 			}
 		}
-
 	}
 
 	public override void Reset (){
+		if (TimeOrDistance == true) {
+			TimeStarted = _TheTime [0];
+		}
 		_ValueWhenLastUpdated = 0;
 	}
 
 	public override bool GetBool (int index){
-		_Attacking = true;
-		BehaviourUpdate ();
-		_Attacking = false;
 
-		if (_ValueWhenLastUpdated >= CheckingValue) {
-			if (TheResetState == ResetState.ResetWhenComplete) {
-				Reset ();
+		if (index == 5) {
+			_Attacking = true;
+			BehaviourUpdate ();
+			_Attacking = false;
+
+			if (_ValueWhenLastUpdated >= CheckingValue) {
+				if (TheResetState == ResetState.ResetWhenComplete) {
+					Reset ();
+				}
+				return true;
 			}
-			return true;
-		} else {
-			return base.GetBool (index);
 		}
+
+		return false;
 	}
 
 	public override int GetInt (int index){
 		if (index == 2) {//5 == Coming From Attack
 			return WhenCompleteChangeToBehaviourIndex;
-		} else {
+		}else{
 			return 0;
 		}
 	}

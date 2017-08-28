@@ -13,19 +13,31 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 	GameObject[] FoundTargets;
 
 	public List<string> TheTargetHierarchy = new List<string>();
-	DefaultBehaviour Object;
+
+	[HideInInspector]
+	public DefaultBehaviour MyObject;
 
 	public TargetHierarchy(DefaultBehaviour ThisObject){
-		Object = ThisObject;
+		MyObject = ThisObject;
 	}
 
 	public void AddTarget(DefaultBehaviour ATarget){
 		Targets.Add (ATarget);
 	}
 
-	public void SetTargetHierarchy(DefaultBehaviour ThisObject){
-		Object = ThisObject;
+	public DefaultBehaviour GetTarget (){//Searching For Targets And Chooses The First One TODO Do A Distance Check
+		SearchAfterNewTargets ();
+
+		if (Targets.Count > 0) {
+			for (int i = 0; i < Targets.Count; i++) {
+				if (Targets [i] != null) {
+					return Targets [0];
+				} 
+			}
+		}
+		return null;
 	}
+
 
 	public void SearchAfterNewTargets(){//this searches through all tags in the hiearchy for the given tag.TODO instead of a search, make it so that object tell a manager that they exist, then get the objects from there
 		Targets = new List<DefaultBehaviour>();
@@ -51,7 +63,7 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {
 			for (int j = 0; j < Targets.Count; j++) {
 				if (TheTargetHierarchy [i] == Targets [j].tag) {//might become abit expensive, TODO create an enum for tags and do enum.parse() on targets[j].tag instead of comparing so many strings, could also have a seperate list for just the tag/enum of the targets[j] to optimalize it abit more
-					Object.SetTarget (Targets [j].gameObject);
+					MyObject.SetTarget (Targets [j].gameObject);
 					return;
 				}
 			}
@@ -60,12 +72,12 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {//going to change this 
 			FoundTargets = GameObject.FindGameObjectsWithTag (TheTargetHierarchy [i]);
 			if (FoundTargets.Length > 0) {
-				Object.SetTarget(FoundTargets[0]);
+				MyObject.SetTarget(FoundTargets[0]);
 					return;
 			}
 		}
 
-		Object.SetTarget(Object.gameObject);//if i come this far then set myself as the target 
+		MyObject.SetTarget(MyObject.gameObject);//if i come this far then set myself as the target 
 		return;
 	}
 
@@ -74,7 +86,7 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {
 			for (int j = 0; j < Targets.Count; j++) {
 				if (TheTargetHierarchy [i] == Targets [j].tag) {//might become abit expensive, TODO create an enum for tags and do enum.parse() on targets[j].tag instead of comparing so many strings, could also have a seperate list for just the tag/enum of the targets[j] to optimalize it abit more
-					Object.SetTarget (Targets [j].gameObject);
+					MyObject.SetTarget (Targets [j].gameObject);
 					return;
 				}
 			}
@@ -83,12 +95,12 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {//going to change this 
 			FoundTargets = GameObject.FindGameObjectsWithTag (TheTargetHierarchy [i]);
 			if (FoundTargets.Length > 0) {
-				Object.SetTarget(FoundTargets[0]);
+				MyObject.SetTarget(FoundTargets[0]);
 				return;
 			}
 		}
 
-		Object.SetTarget(Object.gameObject);//if i come this far then set myself as the target 
+		MyObject.SetTarget(MyObject.gameObject);//if i come this far then set myself as the target 
 		return;
 	}
 

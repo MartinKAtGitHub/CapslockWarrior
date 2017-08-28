@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class PlayerManager : DefaultBehaviour {
 
+	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center
+	const float _NodeDimentions = 0.08f;
 
 	public float HealthPoints = 100;
 	public float CurrentMana = 100;
@@ -21,73 +23,18 @@ public class PlayerManager : DefaultBehaviour {
 	public Text ManaPoints_Txt; // I HAVE DRAGED AND DROPED THE TXT OBJECT
 
 	void Awake(){
-		myPos [0, 0] = transform.position.x;
-		myPos [0, 1] = transform.position.y - 0.16f;
+		
+		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+		MyNode [0] = new Nodes (MyPos, 0);
 
-		if (myPos [0, 0] < 0) {
-			if ((myPos [0, 0] % 0.25f) < -0.125f) {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) - 0.25f;
-			} else {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
-			}
-		} else {
-			if ((myPos [0, 0] % 0.25f) < 0.125f) {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
-			} else {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) + 0.25f;
-			}
-		}
-
-		if (myPos [0, 1] < 0) {
-			if ((myPos [0, 1] % 0.25f) < -0.125f) {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) - 0.25f;
-			} else {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
-			}
-		} else {
-			if ((myPos [0, 1] % 0.25f) < 0.125f) {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
-			} else {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) + 0.25f;
-			}
-		}
-
-		MyNode [0] = new Nodes (myPos, 0);
 	}
 
 	// Update is called once per frame
 
 	void FixedUpdate(){
-		myPos [0, 0] = transform.position.x;
-		myPos [0, 1] = transform.position.y - 0.16f;
-
-		if (myPos [0, 0] < 0) {
-			if ((myPos [0, 0] % 0.25f) < -0.125f) {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) - 0.25f;
-			} else {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
-			}
-		} else {
-			if ((myPos [0, 0] % 0.25f) < 0.125f) {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
-			} else {
-				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) + 0.25f;
-			}
-		}
-
-		if (myPos [0, 1] < 0) {
-			if ((myPos [0, 1] % 0.25f) < -0.125f) {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) - 0.25f;
-			} else {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
-			}
-		} else {
-			if ((myPos [0, 1] % 0.25f) < 0.125f) {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
-			} else {
-				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) + 0.25f;
-			}
-		}
+		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
 	}
 
 	void Update () 
@@ -101,7 +48,7 @@ public class PlayerManager : DefaultBehaviour {
 
 	public void TakeDamage(int damageAmount)
 	{
-		;
+		
 
 		HealthPoints -= damageAmount;
 

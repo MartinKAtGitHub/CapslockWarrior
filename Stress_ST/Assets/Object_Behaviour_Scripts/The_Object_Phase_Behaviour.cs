@@ -6,7 +6,7 @@ using UnityEngine;
 public class The_Object_Phase_Behaviour {
 
 	[Tooltip("The CoolDown On When This Phase Can Be Entered")]
-	public float ColdownTimer = 0;
+//	public float ColdownTimer = 0;
 	public The_Default_Transition_Info[] PhaseChangeInfo;
 
 	[Space(10)]

@@ -38,7 +38,7 @@ public class AttackState : DefaultState {
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
 
-		if (_MyInfo._GoAfter == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
+		if (_MyInfo._TheTarget == null) {//having a failsafe here, so if i dont have a target, ill switch state to something that can search
 			return _ReturnState; //TODO TODO "TargetSearch";
 		}else{
 			if (_TargetInfo != _MyInfo.GetTargetBehaviour ()) {//if this target isnt the same as what im after, change it
@@ -61,8 +61,8 @@ public class AttackState : DefaultState {
 		if (ShootingAnimation.Shoot == true) {
 			ShootingAnimation.Shoot = false;
 		//	targetPoss = _TargetInfo.transform.position;
-			targetPos.x = _TargetInfo.myPos [0, 0];
-			targetPos.y = _TargetInfo.myPos [0, 1];
+			targetPos.x = _TargetInfo.MyPos [0, 0];
+			targetPos.y = _TargetInfo.MyPos [0, 1];
 			if (CanIRanged [0] == true) {
 				_MyInfo.AttackTarget (_TargetInfo.transform);
 			} else {
@@ -77,8 +77,8 @@ public class AttackState : DefaultState {
 
 		if (QuittingAnimation.ImQuitting == true) {
 			QuittingAnimation.ImQuitting = false;
-			targetPos.x = _TargetInfo.myPos [0, 0];
-			targetPos.y = _TargetInfo.myPos [0, 1];
+			targetPos.x = _TargetInfo.MyPos [0, 0];
+			targetPos.y = _TargetInfo.MyPos [0, 1];
 
 			if (Vector2.Distance ((Vector2)_MyTransform.position, targetPos) < _Range) {//checking if im withing range of the target 
 				if (Physics2D.Linecast ((Vector2)_MyTransform.position, targetPos, _LineOfSight).transform == null) {//check if there are something between me and the target

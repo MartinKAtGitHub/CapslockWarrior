@@ -12,12 +12,76 @@ public class Testing : MonoBehaviour {
 	public float RotateSpeed = 1;
 	public bool Turned = true;
 
+
 	// Use this for initialization
 	void Start () {
 	//	player = GameObject.Find ("Hero v5").transform;
 	}
 	// Update is called once per frame
+	public float[,] myPos = new float[1,2];
+	public float x = 0;
+	public float y = 0; 
+	public float x1 = 0;
+	public float y1 = 0;
+	public float test = 0;
+
+
+	const int MapLowerLeftPosition = -100;
+
 	void Update () {
+	
+		myPos [0, 0] = transform.position.x;
+		myPos [0, 1] = transform.position.y;
+
+
+
+		//		x1 = ((myPos [0, 0] / 0.125f) - 0.0625f) - ((myPos [0, 0] / 0.125f) % 1);
+		//		y1 = ((myPos [0, 0] / 0.125f) - 0.0625f) - ((myPos [0, 1] / 0.125f) % 1);
+
+	
+		x1 = ((transform.position.x - MapLowerLeftPosition) / 0.125f) - (((transform.position.x - MapLowerLeftPosition) / 0.125f) % 1);
+		y1 = ((transform.position.y - MapLowerLeftPosition) / 0.125f) - (((transform.position.y - MapLowerLeftPosition) / 0.125f) % 1);
+
+
+		test = (myPos [0, 0]) % -0.125f + ((myPos [0, 0] / 0.125f) - ((myPos [0, 0] / 0.125f) % 1)); 
+
+
+	//	x1 = ((myPos [0, 0] / 0.125f)) - ((myPos [0, 0] / 0.125f) % 1);
+	//	y1 = ((myPos [0, 1] / 0.125f)) - ((myPos [0, 1] / 0.125f) % 1);
+
+		if (myPos [0, 0] < 0) {
+			if ((myPos [0, 0] % 0.25f) < -0.125f) {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) - 0.25f;
+			} else {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
+			}
+		} else {
+			if ((myPos [0, 0] % 0.25f) < 0.125f) {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f);
+			} else {
+				myPos [0, 0] +=	-(myPos [0, 0] % 0.25f) + 0.25f;
+			}
+		}
+
+		if (myPos [0, 1] < 0) {
+			if ((myPos [0, 1] % 0.25f) < -0.125f) {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) - 0.25f;
+			} else {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
+			}
+		} else {
+			if ((myPos [0, 1] % 0.25f) < 0.125f) {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f);
+			} else {
+				myPos [0, 1] +=	-(myPos [0, 1] % 0.25f) + 0.25f;
+			}
+		}
+
+
+
+		x = myPos [0, 0]; 
+		y = myPos [0, 1]; 
+
 		WalkingDirection = GameObject.Find ("Hero v5").transform.position;
 
 		if (WalkingDirection.x > transform.position.x) {

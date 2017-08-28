@@ -4,173 +4,165 @@ using UnityEngine;
 
 public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 
+	[Tooltip("If You Want The Object To Follow The NodeMap, Then Nothing Is You Answer. If Not The Choose The Option That Suits You Behaviour The Most")]
+	public GameManagerTestingWhileWaiting.VectorDirection DirectionBehaviour;
+
+
+	[Tooltip("When The Behaviour Is Complete, Then It Changes The Behaviour Corresponding To The Set Value")]
 	public int WhenCompleteChangeToBehaviourIndex = 0;
+	[Tooltip("When This Behaviour Is Entered, The Animaiton Value Is Changed To Change The Animation Clip Playing")]
 	public float AnimatorStageValueOnEnter = 0;
 
 	[Header("Rotation Values")]
+	[Tooltip("If The Target Is On Left Then It Rotates To Look Left. (Instant)")]
 	public bool LookAtTarget = true;
+	[Tooltip("If True Then The Objects Rotates To face The Target With The Start Vector Of Vector.Right (1,0,0)")]
 	public bool RotateToWalkingDirection = false;
+	[Tooltip("If True Then The Object Is Rotating Back To Its Original Position. (1,0,0 If Looking Right. -1,0,0 If Looking Left)")]
 	public bool RotateBack = false;
+	[Tooltip("The Speed To Rotate")]
 	public float RotateSpeed = 1;
 	[Space(10)]
 
-	protected Transform _MyTransform;
-	protected Transform _TargetTransform;
+	protected DefaultBehaviour _MyTransform;
+	protected DefaultBehaviour _TargetTransform;
 	protected bool _Turned = true;
 
 	protected Vector3[] MoveDirection;
 	protected Vector3[] RotateDirection;
 	 
-	Vector3 _CurrentDirection = Vector3.right;
 	float _AngleToMove = 0;
+
+	protected Vector3[] _CurrentDirection;
+	protected Vector3[] _TargetDirection;
 
 	public override void SetMethod (The_Object_Behaviour myTransform){
 		_MyObject = myTransform;
 		MoveDirection = _MyObject.GetMovementVector ();
 		RotateDirection = _MyObject.GetRotationVector ();
+
+		_CurrentDirection = myTransform.ObjectCurrentVector;
+		_TargetDirection = myTransform.ObjectTargetVector;
 	}
 
 	public override void OnEnter (){
-		if (_MyTransform.eulerAngles.y == 180) {
+
+		if (_MyTransform.transform.eulerAngles.y == 180) {
 			_Turned = false;
 		} else {
 			_Turned = true;
 		}
-		RotateDirection[0] = _MyTransform.eulerAngles;
+
+		if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.LockAtTarget) {
+			TargetVectorLockAtTarget ();
+		} else if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.LockVector) {
+			TargetVectorLock ();
+		}
 	}
 
-	public void RotationMethods(){
+	public void MovementRotations(){
+		if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
+			TargetVectorTargetFollow ();
+		}
+
+		RotationCalculation ();
+
 		if (LookAtTarget == true) {
 			LookAt ();
 		}
 
 		if (RotateToWalkingDirection == true) {
 			RotateTowards ();
-		}
+		} 
 
 		if (RotateBack == true) {
 			RotateBackStraight ();
 		}
+
 	}
 
+	void RotationCalculation(){
+		_AngleToMove = Vector3.Angle (_CurrentDirection [0], _TargetDirection [0]);
+
+		if (Vector3.Cross (_CurrentDirection [0], _TargetDirection [0]).z < 0) {
+			_AngleToMove *= -1;
+		}
+		_CurrentDirection [0] = Quaternion.AngleAxis ((_AngleToMove * Time.deltaTime) * RotateSpeed, Vector3.forward) * _CurrentDirection [0];
+	}
+
+	void TargetVectorTargetFollow(){
+		_TargetDirection[0] = (_TargetTransform.transform.position - _MyTransform.transform.position).normalized;
+	}
+
+	void TargetVectorLockAtTarget(){
+		_TargetDirection[0] = (_TargetTransform.transform.position - _MyTransform.transform.position).normalized;
+	}
+
+	void TargetVectorLock(){
+		_TargetDirection [0] = _CurrentDirection [0];
+	}
 
 	public void LookAt(){//Rotates The Object To Face The Targeted Object By Rotating The Y'Axis
-		if (LookAtTarget == true) {
-			if (RotateToWalkingDirection == false) {
-				if (_TargetTransform.position.x < _MyTransform.position.x) {
-					if (_Turned == true) {
-						RotateDirection[0].y = 180;
+		if (RotateToWalkingDirection == false) {
+			if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
+				TargetVectorTargetFollow ();
+			}
+
+			if (0 > _CurrentDirection [0].x) {
+				if (_Turned == true) {
+					RotateDirection [0].y = 180;
+					_Turned = false;
+				}
+			} else {
+				if (_Turned == false) {
+					RotateDirection [0].y = 0;
+					_Turned = true;
+				}
+			}
+		} else {//If Im Rotating The Object Then I Need To Check When The Rotation-Z Is More Or Less Then +-90 To Turn Around
+			if (0 > _CurrentDirection [0].x) {
+				if (_Turned == true) {
+					if (_MyTransform.transform.eulerAngles.z >= 90 || _MyTransform.transform.eulerAngles.z < -90) {
+						RotateDirection [0].y = 180;
 						_Turned = false;
-					//	_MyTransform.eulerAngles = RotateDirection[0];
 					}
-				} else {
-					if (_Turned == false) {
-						RotateDirection[0].y = 0;
+				} 
+			} else {
+				if (_Turned == false) {
+					if (_MyTransform.transform.eulerAngles.z >= 90 || _MyTransform.transform.eulerAngles.z < -90) {
+						RotateDirection [0].y = 0;
 						_Turned = true;
-					//	_MyTransform.eulerAngles = RotateDirection[0];
 					}
-				}
-			} else {//If Im Rotating The Object Then I Need To Check When The Rotation-Z Is More Or Less Then +-90 To Turn Around
-				if (_TargetTransform.position.x > _MyTransform.position.x) {
-					if (_Turned == false) {
-						if (_MyTransform.eulerAngles.z > 90 || _MyTransform.eulerAngles.z < -90) {
-							RotateDirection[0].y = 0;
-							_Turned = true;
-						}
-					} 
-				} else {
-					if (_Turned == true) {
-						if (_MyTransform.eulerAngles.z > 90 || _MyTransform.eulerAngles.z < -90) {
-							RotateDirection[0].y = 180;
-							_Turned = false;
-						}
-					} 
-				}
+				} 
 			}
 		}
 	}
 
-	public void RotateTowards(){
-		if (RotateToWalkingDirection == true) {
-			if (_MyTransform.eulerAngles.y == 180) {//If Object Is Rotated 180 Degrees On The Y'axis
-				_CurrentDirection = Quaternion.AngleAxis (_MyTransform.eulerAngles.z, Vector3.back) * Vector3.right;//Getting The Looking Direction.
-				if (_TargetTransform.position.y - _MyTransform.position.y < 0) {
-					_AngleToMove = Vector3.Angle (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position) * -1;//Getting The Angle From My Looking Direction To The "Targeted" Location
-					if (Vector3.Cross (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position).z < 0) {//Checking If The Target Is On The Other Side Of Me, If True Then I Need To Go Backwards
-						_AngleToMove *= -1;
-					}
-				} else {
-					_AngleToMove = Vector3.Angle (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position);	
-					if (Vector3.Cross (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position).z > 0) {
-						_AngleToMove *= -1;
-					}
-				}
-			} else {//Same As Above Just The Oposite
-				_CurrentDirection = Quaternion.AngleAxis (_MyTransform.eulerAngles.z, Vector3.forward) * Vector3.right;
-				if (_TargetTransform.position.y - _MyTransform.position.y < 0) {
-					_AngleToMove = Vector3.Angle (_CurrentDirection, _TargetTransform.position -_MyTransform.position) * -1;
-					if (Vector3.Cross (_CurrentDirection, _TargetTransform.position -_MyTransform.position).z > 0) {
-						_AngleToMove *= -1;
-					}
-				} else {
-					_AngleToMove = Vector3.Angle (_CurrentDirection, _TargetTransform.position -_MyTransform.position);
-					if (Vector3.Cross (_CurrentDirection, _TargetTransform.position -_MyTransform.position).z < 0) {
-						_AngleToMove *= -1;
-					}
-				}
-			}
+	public void RotateTowards(){//Rotating Towards The TargetDirection
 
-			RotateDirection[0].z += (_AngleToMove * Time.deltaTime) * RotateSpeed;//Adding the New Angle To Move
-			if (RotateDirection[0].z < -180) {//Checks If The Rotation Is More Or Less Then 180 -180
-				RotateDirection[0].z = 360 + RotateDirection[0].z;
-			}
-			if (RotateDirection[0].z > 180) {
-				RotateDirection[0].z = RotateDirection[0].z - 360;
-			}
+		_AngleToMove = Vector3.Angle ((Quaternion.Euler (0, RotateDirection [0].y, RotateDirection [0].z) * Vector3.right), _CurrentDirection [0]);
+
+		if (Vector3.Cross ((Quaternion.Euler (0, RotateDirection [0].y, RotateDirection [0].z) * Vector3.right), _CurrentDirection [0]).z < 0) {//Checking Which Side Of The Rotation The Target Rotation Is
+			_AngleToMove *= -1;
 		}
+
+		if (RotateDirection [0].y == 0) {//When Y Are 180 Then The Object Is Rotated And The Rotation Is Mirrored
+			RotateDirection [0].z += (_AngleToMove * Time.deltaTime) * RotateSpeed * 2;//Calculating AngleRotation
+		} else {
+			RotateDirection [0].z -= (_AngleToMove * Time.deltaTime) * RotateSpeed * 2;//Calculating AngleRotation
+		}
+
 	}
+	
+	public void RotateBackStraight(){
 
-	public void RotateBackStraight(){//TODO DO THIS, Rotate Back To Start Vector 
-	/*	if (RotateToWalkingDirection == true) {
-			if (_MyTransform.eulerAngles.y == 180) {//If Object Is Rotated 180 Degrees On The Y'axis
-				_CurrentDirection = Quaternion.AngleAxis (_MyTransform.eulerAngles.z, Vector3.back) * Vector3.right;//Getting The Looking Direction.
-				if (_TargetTransform.position.y - _MyTransform.position.y < 0) {
-					_AngleToMove = Vector3.Angle (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position) * -1;//Getting The Angle From My Looking Direction To The "Targeted" Location
-					if (Vector3.Cross (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position).z < 0) {//Checking If The Target Is On The Other Side Of Me, If True Then I Need To Go Backwards
-						_AngleToMove *= -1;
-					}
-				} else {
-					_AngleToMove = Vector3.Angle (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position);	
-					if (Vector3.Cross (_CurrentDirection * -1, _TargetTransform.position -_MyTransform.position).z > 0) {
-						_AngleToMove *= -1;
-					}
-				}
-			} else {//Same As Above Just The Oposite
-				_CurrentDirection = Quaternion.AngleAxis (_MyTransform.eulerAngles.z, Vector3.forward) * Vector3.right;
-				if (_TargetTransform.position.y - _MyTransform.position.y < 0) {
-					_AngleToMove = Vector3.Angle (_CurrentDirection, _TargetTransform.position -_MyTransform.position) * -1;
-					if (Vector3.Cross (_CurrentDirection, _TargetTransform.position -_MyTransform.position).z > 0) {
-						_AngleToMove *= -1;
-					}
-				} else {
-					_AngleToMove = Vector3.Angle (_CurrentDirection, _TargetTransform.position -_MyTransform.position);
-					if (Vector3.Cross (_CurrentDirection, _TargetTransform.position -_MyTransform.position).z < 0) {
-						_AngleToMove *= -1;
-					}
-				}
-			}
+		RotateDirection [0].z += ((0 - RotateDirection [0].z) * Time.deltaTime) * RotateSpeed;//Rotating To [1,0] Or [-1,0] Depending On Y-Axis Rotation
 
-			RotateDirection[0].z += (_AngleToMove * Time.deltaTime) * RotateSpeed;//Adding the New Angle To Move
-			if (RotateDirection[0].z < -180) {//Checks If The Rotation Is More Or Less Then 180 -180
-				RotateDirection[0].z = 360 + RotateDirection[0].z;
-			}
-			if (RotateDirection[0].z > 180) {
-				RotateDirection[0].z = RotateDirection[0].z - 360;
-			}
-		}*/
 	}
 
 	public override int GetInt (int index){
+		if (index == 4)
+			return 10;
 		if (index == 1) {
 			return WhenCompleteChangeToBehaviourIndex;
 		} else {

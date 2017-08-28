@@ -10,11 +10,9 @@ public class The_Default_Attack_Behaviour : The_Default_Behaviour {
 	public The_Default_Behaviour[] Movement;
 
 	[Header("Attack Values")]
-	public GameObject Bullet;
-	public Vector3 ChangeAttackPositionTo = Vector3.zero;
+	public GameManagerTestingWhileWaiting.SpellAttackInfo[] Bullets;
 
 	public float AnimatorStageValueOnEnter = 0;
-	public float AnimatorStageValueOnFinished = 0;
 	
 
 	protected int _MovementIndex = 0;

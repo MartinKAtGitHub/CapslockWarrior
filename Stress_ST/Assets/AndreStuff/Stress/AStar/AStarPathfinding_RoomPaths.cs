@@ -23,7 +23,6 @@ public class AStarPathfinding_RoomPaths{
 	List<RoomConnectorCreating> _StartRoom;
 	List<RoomConnectorCreating> _EndRoom;
 	Nodes[] _EndNode ;//used to set roomconnector closest to the target
-	Nodes[] MyWorldNode = new Nodes[1];
 
 	float _LowerstFScore = 100000; 
 
@@ -31,13 +30,12 @@ public class AStarPathfinding_RoomPaths{
 	RoomConnectorCreating _ObjectHolder;
 	Wall_ID _ConnectorHub; //is used to know which side of the pathconnector i have searched
 
-	public AStarPathfinding_RoomPaths(int size, Nodes pos){
+	public AStarPathfinding_RoomPaths(int size){
 		_TheSize = size;
 		_OpenList = new RoomConnectorCreating[size];
 		_ClosedList = new RoomConnectorCreating[size]; 
 		_ThePath = new RoomConnectorCreating[size];
 		_ListStartingPosition [0] = size;
-		MyWorldNode[0] = pos;
 	}
 
 	public void SetStartRoom(List<RoomConnectorCreating> startRooms ){
@@ -57,10 +55,6 @@ public class AStarPathfinding_RoomPaths{
 	}
 	public int[] GetListindexref(){
 		return _ListStartingPosition;
-	}
-
-	public Nodes[] GetPosNode (){
-		return MyWorldNode;
 	}
 
 	#region A* For paths

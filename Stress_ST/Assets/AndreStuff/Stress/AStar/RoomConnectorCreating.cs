@@ -99,7 +99,36 @@ public class RoomConnectorCreating : MonoBehaviour {
 		}
 	}
 
-	 
+	public void SelfExit(DefaultBehaviour CollidedObject){
+		_RoomConnectorDirection.x = Mathf.Cos (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
+		_RoomConnectorDirection.y = Mathf.Sin (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
+		_ObjectFromRoomConnectorDirection.x = CollidedObject.transform.position.x - transform.position.x;//calculating the vector the object has when exiting the collider
+		_ObjectFromRoomConnectorDirection.y = CollidedObject.transform.position.y - transform.position.y;//calculating the vector the object has when exiting the collider
+
+		_MaxAngleDifference = Vector2.Angle (_RoomConnectorDirection, Quaternion.Euler (0, 0, transform.rotation.eulerAngles.z) * new Vector2 (GetComponent<BoxCollider2D> ().size.x / 2, GetComponent<BoxCollider2D> ().size.y / 2));//calculating where the top right corner is (border.max (if object is rotated)) depending on boxcollider rotation 
+		_ObjectsAngleDifference = Vector2.Angle (_RoomConnectorDirection, _ObjectFromRoomConnectorDirection);
+
+		if (LeftOrRight == true) {//checking if the object exited the collider inside of a specifik angle
+			if (_ObjectsAngleDifference > -_MaxAngleDifference && _ObjectsAngleDifference < _MaxAngleDifference) {
+				CollidedObject.SetNeighbourGroup (ConnectorHubOne.Connectors);
+			} else {
+				CollidedObject.SetNeighbourGroup (ConnectorHubTwo.Connectors);
+			}
+		} else {
+			if (!(_ObjectsAngleDifference > -_MaxAngleDifference && _ObjectsAngleDifference < _MaxAngleDifference)) {
+				CollidedObject.SetNeighbourGroup (ConnectorHubOne.Connectors);
+			} else {
+				CollidedObject.SetNeighbourGroup (ConnectorHubTwo.Connectors);
+			}
+		}
+	}
+
+	public void SelfEnter(DefaultBehaviour CollidedObject){
+		if (CollidedObject.transform.parent != null && CollidedObject != null) {//TODO RemoveTHIS when AI is fully implemented(not fully but corretly) on everything
+			CollidedObject.SetNeighbourGroup (_MyRoom);
+		}
+	}
+
 	#endregion
 
 }

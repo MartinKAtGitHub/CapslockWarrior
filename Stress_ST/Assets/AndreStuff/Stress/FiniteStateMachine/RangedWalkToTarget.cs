@@ -67,7 +67,7 @@ public class RangedWalkToTarget : DefaultState {
 		CreateThePath = createThePath;
 
 		MyInfo = myInfo;
-		MyTransform = MyInfo.WalkColliderPoint.transform;
+		MyTransform = MyInfo.transform;
 	
 		_TheNodePath = PersonalNodeMap.GetNodeList ();
 		_Nodesindex = PersonalNodeMap.GetNodeindex ();
@@ -84,13 +84,14 @@ public class RangedWalkToTarget : DefaultState {
 		_Range = theRange;
 		_MovementSpeed = movementspeed;
 
-		_DistanceFromNode = (1 / (float)myInfo.NodeSizess) / 1f;
+		_DistanceFromNode = (1 / (float)0.125f) / 1f;
 		TheTargetHiearchy = theTargetHierarchy;
 	}
 
 	public override string EnterState() {//When it switches to this state this is the first thing thats being called
 
-		if (MyInfo._GoAfter == null) {//if i enter this state and i dont have a target, search after one.
+	//	if (MyInfo._TheTarget == null) {//if i enter this state and i dont have a target, search after one.
+		if (MyInfo._TheTarget.gameObject == null) {//if i enter this state and i dont have a target, search after one.
 			TheTargetHiearchy.SearchAfterNewTargets ();
 			TheTargetHiearchy.CheckIfICanSwitchTarget ();//setting new target here
 			TargetInfo = MyInfo.GetTargetBehaviour ();
@@ -100,13 +101,13 @@ public class RangedWalkToTarget : DefaultState {
 			}
 		}
 
-		MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
+//RRR		MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 
 		_CreatureAnimator.SetFloat ("ChangeAnimation", 1);
 		_ReturnState = "";
 	
 		HaveSearched = false;
-		MyInfo.UpdateThePath = true;
+	//	MyInfo.UpdateThePath = true;
 		return "";
 	}
 
@@ -122,7 +123,7 @@ public class RangedWalkToTarget : DefaultState {
 			TheTargetHiearchy.SearchAfterNewTargets ();
 			TheTargetHiearchy.CheckIfICanSwitchTarget ();
 			TargetInfo = MyInfo.GetTargetBehaviour ();
-			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
+//RRR			MyPreviousePosition = PersonalNodeMap.GetCenterPos ();
 			UpdatePaths ();
 			GoToDestination ();
 		}
@@ -138,8 +139,9 @@ public class RangedWalkToTarget : DefaultState {
 
 	void UpdatePaths(){//the path search behaviour happens here, what to search when im here or there etc.
 	
-		if (MyInfo.UpdateThePath == true) {
-			MyInfo.UpdateThePath = false;
+	//	if (MyInfo.UpdateThePath == true) {
+		if (true) {
+		//	MyInfo.UpdateThePath = false;
 			NeighbourGroups = MyInfo.NeighbourGroups;
 			TargetNeighbourGroups = TargetInfo.NeighbourGroups;
 
@@ -147,8 +149,8 @@ public class RangedWalkToTarget : DefaultState {
 				
 				_Roomindex = _TheRoomPath.Length;
 
-				PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
-				PersonalNodeMap.SetInfoAndStartSearch (true);
+				PersonalNodeMap.SetTargetPos (TargetInfo.MyPos);
+				PersonalNodeMap.SetInfoAndStartSearch ();
 				_Nodeindex = _Nodesindex [0];
 				HaveSearched = true;
 
@@ -157,7 +159,7 @@ public class RangedWalkToTarget : DefaultState {
 
 				if (CreateThePath.CreatePath () == false) {//if eather of us dont have a room connected yet, go straight to the target
 					HaveSearched = false;
-					MyInfo.UpdateThePath = true;
+				//	MyInfo.UpdateThePath = true;
 					return;
 				} else {
 					HaveSearched = true;
@@ -168,12 +170,12 @@ public class RangedWalkToTarget : DefaultState {
 				if ((_Roomindex) - _TheRoomPath.Length < 0) {//if true go to the pathconnector node closest to the target
 
 					WhichNodeToGOTO (_TheRoomPath [_Roomindex].GetComponent<RoomConnectorCreating> ().GettheNodes ()); 
-					PersonalNodeMap.SetInfoAndStartSearch (true);
+					PersonalNodeMap.SetInfoAndStartSearch ();
 					_Nodeindex = _Nodesindex [0];
 
 				} else {
-					PersonalNodeMap.SetTargetPos (TargetInfo.myPos);
-					PersonalNodeMap.SetInfoAndStartSearch (true);
+					PersonalNodeMap.SetTargetPos (TargetInfo.MyPos);
+					PersonalNodeMap.SetInfoAndStartSearch ();
 					_Nodeindex = _Nodesindex [0];
 				}
 			}
@@ -191,8 +193,8 @@ public class RangedWalkToTarget : DefaultState {
 			if (Vector2.Distance (_GoalPosition, (Vector2)MyTransform.position) <= _DistanceFromNode) {//if im inside the node im going to 
 				_Nodeindex++;
 
-				_MovementDirection.x = TargetInfo.myPos[0,0];
-				_MovementDirection.y = TargetInfo.myPos[0,1];
+				_MovementDirection.x = TargetInfo.MyPos[0,0];
+				_MovementDirection.y = TargetInfo.MyPos[0,1];
 
 				if (Vector2.Distance ((Vector2)MyInfo.transform.position, _MovementDirection) <= _Range) {//checking if im withing range of the target 
 					if (Physics2D.Linecast ((Vector2)MyInfo.transform.position, _MovementDirection, _LineOfSight).transform == null) {//if im in range do a raycast and see if there is an obsacle in the way, if true then i didnt hit anything
@@ -242,13 +244,13 @@ public class RangedWalkToTarget : DefaultState {
 
 				if (_Nodeindex > _SearchAgainIndex) {
 					HaveSearched = false;
-					MyInfo.UpdateThePath = true;
+				//	MyInfo.UpdateThePath = true;
 				}
 
 
 				if (_Nodeindex >= _TheNodePath.Length) {
 					HaveSearched = false;
-					MyInfo.UpdateThePath = true;
+				//	MyInfo.UpdateThePath = true;
 				}
 
 			} else {
@@ -300,8 +302,8 @@ public class RangedWalkToTarget : DefaultState {
 	void WhichNodeToGOTO(List<Nodes> ListOfNodes){//calculating which node to go to in the roomconnector 
 		_TheDistance = 1000;
 		_Counter = 0;
-		_TargetVector.x = TargetInfo.myPos [0, 0];
-		_TargetVector.y = TargetInfo.myPos [0, 1];
+		_TargetVector.x = TargetInfo.MyPos [0, 0];
+		_TargetVector.y = TargetInfo.MyPos [0, 1];
 
 		for (int i = 0; i < ListOfNodes.Count; i++) {
 			_ObjectVector.x = ListOfNodes [i].GetID () [0, 0];

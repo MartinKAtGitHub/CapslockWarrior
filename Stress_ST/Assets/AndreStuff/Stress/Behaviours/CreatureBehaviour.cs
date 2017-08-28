@@ -7,9 +7,187 @@ using UnityEngine.UI;
 
 public class CreatureBehaviour : MovingCreatures {
 
+	[Header("Pathfinding")]
+	public GameObject FeetPlacements;
+	public GameObject WalkingColliders;
+
 	public TargetHierarchy TargetPriorityClass;
 	List<DefaultBehaviour> WhatToPrioritize;//this might become an List<string> containing name of tags to search after   or simply just List<gameobject>
 
+	public Transform GfxObject;
+
+
+
+	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center
+	const float _NodeDimentions = 0.08f;//update CreatureBehaviour -> NodeMapCollision -> PlayerManager
+
+	public Rigidbody2D MyRididBody;
+	public GameObject PositionUpdateParent;
+
+	bool _Once = false;
+	bool _Twice = true;
+
+
+	void Awake(){ 
+		
+		_WordChecker = new EnemyWordChecker(TextElement, this);
+		
+		ObjectBehaviour._MyTransform = transform;
+		_TheTarget = TargetPriorityClass.GetTarget ();
+
+		MyPos [0, 0] = transform.position.x;
+		MyPos [0, 1] = transform.position.y;	
+		MyNode [0] = new Nodes (MyPos, 0);
+
+		ObjectBehaviour._CreateThePath = new AStarPathfinding_RoomPaths (GameObject.FindGameObjectWithTag ("GameManager").GetComponent<ClockTest>().RoomPathsCount);//Performance Increase Is To Put This In A Different Script And Let Everyone Use That One Script, Insted Of One For Each Object
+		ObjectBehaviour._PersonalNodeMap = new CreatingObjectNodeMap(FeetPlacements.GetComponent<BoxCollider2D>().size, WalkingColliders.GetComponent<BoxCollider2D>().size.x, _NodeDimentions, ObjectBehaviour.PathfindingNodeID, MyNode);
+	}
+
+	void Start(){
+		
+		ObjectBehaviour.BehaviourStart ();
+		ObjectBehaviour._PersonalNodeMap.CreateNodeMap ();
+		ObjectBehaviour._PersonalNodeMap.SetTargetPos (_TheTarget.MyPos);
+		ObjectBehaviour.InBetween ();
+	}
+
+
+	void FixedUpdate (){//this is called at set intevals, and the update is calling the statemachine after the fixedupdate have updated the colliders
+
+		if (_Twice == true) {
+			if (_Once == true) {
+				_Once = false;
+				_Twice = false;
+				ObjectBehaviour._PersonalNodeMap.RemoveEnemyPositions (FeetPlacements);//The Feet Collider Is The Objects Collider Which Tells That The Node Is Occupied By Another Object
+			} else {
+				_Once = true;
+			}
+		}
+
+		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+
+		if (_TheTarget == null){
+			_TheTarget = TargetPriorityClass.GetTarget ();
+		}
+
+		if (RunObjectBehaviours == true) {
+			if (FreezeCharacter == true) {
+				if (MyRididBody.velocity.magnitude < 0.01f) {
+					ObjectBehaviour.GotPushed [0] = true;
+					FreezeCharacter = false;
+				}
+			} else {
+				ObjectBehaviour.BehaviourUpdate ();
+			}
+		} 
+	}
+
+	public override void OnDestroyed(){//TODO implement deathstuff here, its just a method so call this to cancel the update and gg wp hf
+
+		_WordChecker.RemoveEvent ();
+		Instantiate (Resources.Load ("Andre/Prefabs/Creatures/DeadObject") as GameObject, transform.position, Quaternion.identity);
+		Destroy (transform.parent.gameObject);
+	}
+
+	GameObject saved;
+	public override void AttackTarget(Transform targetPos){
+		
+	/*	if (_GoAfter != null) {
+			if (CreatureType == StressEnums.EnemyType.Ranged) {
+				if (CanIRanged [0] == true) {
+
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos as Transform);;
+				}
+			} else if (CreatureType == StressEnums.EnemyType.Meele) {
+				if (CanIRanged [0] == true) {
+					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos  as Transform);;
+				} else {
+					DefaultBehaviourTarget.RecievedDmg(2);
+				}
+			}
+		}*/
+	}
+
+	public override void SetTarget(GameObject target){
+		base.SetTarget(target);
+	}
+
+	public override void RecievedDmg(int _damage){
+		//OnDestroyed ();
+		//	Debug.Log (name + " Got Hit with: " + _damage + " damage");
+	}
+
+	public override void ChangeMovementAdd(float a){
+		ObjectStandardSpeed [0] += a;
+	}
+
+	public override void GotTheKill(int a){
+		Debug.Log ("Score " + a);
+	}
+
+
+	void OnCollisionEnter2D(Collision2D coll){
+		if (coll.otherCollider == gameObject) {//Check If FeetCollider Or BodyCollider Triggered The Collision
+			ObjectBehaviour.OnCollisions (coll);
+		} else {
+	//		Debug.Log ("Colli " + coll.gameObject.name + " | " + coll.otherCollider.name);//FeetCollider
+		}
+	}
+
+	public bool ShowGizmos = false;
+	public float size;
+	float collidersize = 0;
+	bool once = true;
+
+	void OnDrawGizmos(){
+		if (once == true) {
+			once = false;
+			collidersize = WalkingColliders.GetComponent<BoxCollider2D> ().size.x;
+		}
+
+		if (ShowGizmos) {
+			size = _NodeDimentions /1.25f;
+			Nodes[,] mynodes = 	ObjectBehaviour._PersonalNodeMap.GetNodemap ();
+			for (int x = 0; x < Mathf.FloorToInt((collidersize) / _NodeDimentions); x++) {
+				for (int y = 0; y <  Mathf.FloorToInt((collidersize) / _NodeDimentions); y++) {
+					if (mynodes [x, y].GetCollision () == ObjectBehaviour.PathfindingNodeID[0]) {
+						Gizmos.color = Color.black;
+					} else if (mynodes [x, y].GetCollision () == ObjectBehaviour.PathfindingNodeID[1]) {
+						Gizmos.color = Color.blue;
+					} else {
+						Gizmos.color = Color.yellow;
+					
+					} 
+					Gizmos.DrawCube (new Vector3 ((((mynodes [x, y].GetID () [0, 0]) + MyPos [0, 0]) * _NodeDimentions) - 100 + (_NodeDimentions / 2), ((mynodes [x, y].GetID () [0, 1]) + MyPos [0, 1]) * _NodeDimentions - 100  + (_NodeDimentions / 2), 0), new Vector3 (size, size, 0));
+				}
+			}
+		/*	Gizmos.color = Color.white;
+			Gizmos.DrawCube (new Vector3 ((((mynodes [0,0].GetID () [0, 0]) + myPos [0, 0]) * _NodeDimentions) - 100 + (_NodeDimentions / 2), ((mynodes [0,0].GetID () [0, 1]) + myPos [0, 1]) * _NodeDimentions - 100  + (_NodeDimentions / 2), 0), new Vector3 (size, size, size));
+			Gizmos.DrawCube (new Vector3 ((((mynodes [31,31].GetID () [0, 0]) + myPos [0, 0]) * _NodeDimentions) - 100 + (_NodeDimentions / 2), ((mynodes [31,31].GetID () [0, 1]) + myPos [0, 1]) * _NodeDimentions - 100  + (_NodeDimentions / 2), 0), new Vector3 (size, size, size));
+			Gizmos.DrawCube (new Vector3 ((((mynodes [30,31].GetID () [0, 0]) + myPos [0, 0]) * _NodeDimentions) - 100 + (_NodeDimentions / 2), ((mynodes [30,31].GetID () [0, 1]) + myPos [0, 1]) * _NodeDimentions - 100  + (_NodeDimentions / 2), 0), new Vector3 (size, size, size));
+			*/		
+
+			Nodes[] mynodess = ObjectBehaviour._PersonalNodeMap.GetNodeList();
+			int[] count = ObjectBehaviour._PersonalNodeMap.GetNodeindex ();
+			for(int sas = count[0]; sas < mynodess.Length; sas++){
+				Gizmos.color = Color.red;
+				Gizmos.DrawCube (new Vector3 (((mynodess[sas].GetID()[0,0] + MyPos [0, 0]) * _NodeDimentions) - 100 + (_NodeDimentions / 2), ((mynodess[sas].GetID()[0,1] + MyPos [0, 1])  * _NodeDimentions) - 100  + (_NodeDimentions / 2), 0), new Vector3 (size, size, size));
+			}
+
+			mynodes = ObjectBehaviour._PersonalNodeMap.GetNodemap ();
+		}
+	}
+
+}
+
+/*
+public class CreatureBehaviour : MovingCreatures {
+
+	public TargetHierarchy TargetPriorityClass;
+	List<DefaultBehaviour> WhatToPrioritize;//this might become an List<string> containing name of tags to search after   or simply just List<gameobject>
+
+	public The_Object_Behaviour ObjectBehaviour;
 
 	public StressEnums.NodeSizes NodeSizess = StressEnums.NodeSizes.One;
 	public Transform HitPoint;
@@ -26,6 +204,7 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 	void Awake(){ 
+		ObjectBehaviour._MyTransform = transform;
 		//TargetPriorityClass = new TargetHierarchy (this);
 
 		TargetPriorityClass.SetTargetHierarchy(this);
@@ -217,8 +396,10 @@ public class CreatureBehaviour : MovingCreatures {
 			}
 
 			mynodes = _PersonalNodeMap.GetNodemap ();*/
-		}
-	}
+/*}
+}
 
 }
 
+
+*/

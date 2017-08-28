@@ -17,6 +17,7 @@ public class The_Distance_More_Then : The_Default_Exit_Behaviour {
 	}
 
 	public override bool GetBool(int index){
+		Debug.Log ("SEARCHING");
 		if (index == 2) {
 			if (Vector3.Distance (_MyTransform.position, _TargetTransform.position) >= DistanceMoreThen) {
 				return true;

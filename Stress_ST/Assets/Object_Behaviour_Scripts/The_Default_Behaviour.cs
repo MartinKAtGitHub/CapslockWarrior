@@ -27,7 +27,7 @@ public abstract class The_Default_Behaviour : MonoBehaviour {
 	public virtual void Reset (){}
 
 	/// <summary>
-	/// 0 == Base.GetBool() == false, 1 == The Script I The Middle, 2 == Outer Script (With Spesific Logic)
+	/// Attack Uses This To Do Its Movements. Index 5 Is Reserved For Attack Call To Movement
 	/// </summary>
 	public virtual bool GetBool(int index){return false;}
 

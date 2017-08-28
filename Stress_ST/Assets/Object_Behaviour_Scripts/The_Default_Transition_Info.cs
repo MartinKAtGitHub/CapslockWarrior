@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class The_Default_Transition_Info : MonoBehaviour {
 
+	public  virtual void SetMethod(){
+
+	}
+
 	public  virtual void OnEnter(){
 		
 	}

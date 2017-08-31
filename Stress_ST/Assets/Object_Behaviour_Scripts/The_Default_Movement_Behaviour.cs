@@ -24,8 +24,8 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	public float RotateSpeed = 1;
 	[Space(10)]
 
-	protected DefaultBehaviour _MyTransform;
-	protected DefaultBehaviour _TargetTransform;
+	protected DefaultBehaviour _MyTransform;//MyCenterPosition
+	protected DefaultBehaviour _TargetTransform;//TargetCenterPosition
 	protected bool _Turned = true;
 
 	protected Vector3[] MoveDirection;
@@ -36,8 +36,11 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	protected Vector3[] _CurrentDirection;
 	protected Vector3[] _TargetDirection;
 
+	Transform MyRotation;
+
 	public override void SetMethod (The_Object_Behaviour myTransform){
 		_MyObject = myTransform;
+		MyRotation = _MyObject._TheObject.GfxObject.transform;
 		MoveDirection = _MyObject.GetMovementVector ();
 		RotateDirection = _MyObject.GetRotationVector ();
 
@@ -47,7 +50,7 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 
 	public override void OnEnter (){
 
-		if (_MyTransform.transform.eulerAngles.y == 180) {
+		if (MyRotation.eulerAngles.y == 180) {
 			_Turned = false;
 		} else {
 			_Turned = true;
@@ -122,14 +125,14 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 		} else {//If Im Rotating The Object Then I Need To Check When The Rotation-Z Is More Or Less Then +-90 To Turn Around
 			if (0 > _CurrentDirection [0].x) {
 				if (_Turned == true) {
-					if (_MyTransform.transform.eulerAngles.z >= 90 || _MyTransform.transform.eulerAngles.z < -90) {
+					if (MyRotation.eulerAngles.z >= 90 || MyRotation.eulerAngles.z < -90) {
 						RotateDirection [0].y = 180;
 						_Turned = false;
 					}
 				} 
 			} else {
 				if (_Turned == false) {
-					if (_MyTransform.transform.eulerAngles.z >= 90 || _MyTransform.transform.eulerAngles.z < -90) {
+					if (MyRotation.eulerAngles.z >= 90 || MyRotation.eulerAngles.z < -90) {
 						RotateDirection [0].y = 0;
 						_Turned = true;
 					}

@@ -12,12 +12,15 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 
 	int[] _AnimatorVariables;
 	int _BulletCounter = 0;
+	Vector3[] _CurrentDirection;
 
 	public override void SetMethod (The_Object_Behaviour myInfo){
 		base.SetMethod (myInfo);
 		_MyObject = myInfo;
 		_MyAnimator = _MyObject.MyAnimator;
 		_AnimatorVariables = _MyObject.AnimatorVariables;
+
+		_CurrentDirection = _MyObject.ObjectCurrentVector;
 	}
 
 	public override void OnEnter (){
@@ -28,13 +31,22 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 		}
 	
 		_MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);//Overrides Movement AnimatorStage OnEnter. But Only In OnEnter
-		
+	//	_MyAnimator.speed = testspeed;
 	}
+	//	public float testspeed = 10;
 
 	public override void BehaviourUpdate (){
-		
+
 		if (_MyAnimator.GetBool (_AnimatorVariables [2]) == true) {//If Animator Say That I Can Shoot
-			(Instantiate (Bullets[WhichBulletToShootWhen[_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets[0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod(Bullets[WhichBulletToShootWhen[_BulletCounter]], _MyObject);
+			if (_MyObject._TheObject.GfxObject.transform.eulerAngles.y == 0) {
+				if(Bullets [0].AttackPosition.x < 0)
+					Bullets [0].AttackPosition.x *= -1;
+				(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
+			} else {
+				if(Bullets [0].AttackPosition.x > 0)
+					Bullets [0].AttackPosition.x *= -1;
+				(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
+			}
 			_BulletCounter++;
 
 			if (_BulletCounter >= Bullets.Length) {

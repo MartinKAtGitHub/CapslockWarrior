@@ -17,4 +17,33 @@ public class TheAnimator : MonoBehaviour {
 		Animator.StringToHash ("StopExitCheck")
 	};
 
+	void SetShooting(int boolValue){
+		if (boolValue == 0) {
+			MyAnimator.SetBool (AnimatorVariables [2], false);
+		} else {
+			MyAnimator.SetBool(AnimatorVariables[2], true);
+		}
+	}
+
+	void SetLockDirection(int boolValue){
+		if (boolValue == 0) {
+			MyAnimator.SetBool (AnimatorVariables [3], false);
+		} else {
+			MyAnimator.SetBool(AnimatorVariables[3], true);
+		}
+	}
+
+	void SetStop(int boolValue){
+		if (boolValue == 0) {
+			MyAnimator.SetBool (AnimatorVariables [0], false);
+		} else {
+			MyAnimator.SetBool(AnimatorVariables[0], true);
+		}
+	}
+
+	void SetAnimatorStage(int Stage){
+		MyAnimator.SetFloat (AnimatorVariables [1], Stage);
+	}
+
+
 }

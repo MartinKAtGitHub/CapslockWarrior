@@ -8,7 +8,7 @@ public class FollowParent : MonoBehaviour {
 	public Transform PositionUpdateTo;
 
 	// Update is called once per frame
-	void Update () {
+	void Start () {
 		transform.position = PositionUpdateTo.position + Offset;
 	}
 }

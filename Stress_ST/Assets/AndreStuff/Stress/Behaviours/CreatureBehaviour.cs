@@ -7,48 +7,38 @@ using UnityEngine.UI;
 
 public class CreatureBehaviour : MovingCreatures {
 
-	[Header("Pathfinding")]
-	public GameObject FeetPlacements;
-	public GameObject WalkingColliders;
-
 	public TargetHierarchy TargetPriorityClass;
-	List<DefaultBehaviour> WhatToPrioritize;//this might become an List<string> containing name of tags to search after   or simply just List<gameobject>
-
-	public Transform GfxObject;
-
-
 
 	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center
 	const float _NodeDimentions = 0.08f;//update CreatureBehaviour -> NodeMapCollision -> PlayerManager
 
-	public Rigidbody2D MyRididBody;
-	public GameObject PositionUpdateParent;
-
 	bool _Once = false;
 	bool _Twice = true;
+	
+	int[] AnimatorVariables;
 
-
+	public bool ShowGizmos = false;
+	float size = 0.04f;
+	
 	void Awake(){ 
-		
+		AnimatorVariables = GfxObject.GetComponent<TheAnimator> ().AnimatorVariables;
 		_WordChecker = new EnemyWordChecker(TextElement, this);
 		
 		ObjectBehaviour._MyTransform = transform;
 		_TheTarget = TargetPriorityClass.GetTarget ();
 
-		MyPos [0, 0] = transform.position.x;
+		MyPos [0, 0] = transform.position.x; 
 		MyPos [0, 1] = transform.position.y;	
 		MyNode [0] = new Nodes (MyPos, 0);
 
 		ObjectBehaviour._CreateThePath = new AStarPathfinding_RoomPaths (GameObject.FindGameObjectWithTag ("GameManager").GetComponent<ClockTest>().RoomPathsCount);//Performance Increase Is To Put This In A Different Script And Let Everyone Use That One Script, Insted Of One For Each Object
-		ObjectBehaviour._PersonalNodeMap = new CreatingObjectNodeMap(FeetPlacements.GetComponent<BoxCollider2D>().size, WalkingColliders.GetComponent<BoxCollider2D>().size.x, _NodeDimentions, ObjectBehaviour.PathfindingNodeID, MyNode);
+		ObjectBehaviour._PersonalNodeMap = new CreatingObjectNodeMap(FeetPlacements.size, WalkingColliders.size.x, _NodeDimentions, ObjectBehaviour.PathfindingNodeID, MyNode);
 	}
 
 	void Start(){
-		
 		ObjectBehaviour.BehaviourStart ();
 		ObjectBehaviour._PersonalNodeMap.CreateNodeMap ();
 		ObjectBehaviour._PersonalNodeMap.SetTargetPos (_TheTarget.MyPos);
-		ObjectBehaviour.InBetween ();
 	}
 
 
@@ -58,7 +48,7 @@ public class CreatureBehaviour : MovingCreatures {
 			if (_Once == true) {
 				_Once = false;
 				_Twice = false;
-				ObjectBehaviour._PersonalNodeMap.RemoveEnemyPositions (FeetPlacements);//The Feet Collider Is The Objects Collider Which Tells That The Node Is Occupied By Another Object
+				ObjectBehaviour._PersonalNodeMap.RemoveEnemyPositions (FeetPlacements);//This Objects FeetCollider Is Also Added At Start Which Means We Have To Remove It
 			} else {
 				_Once = true;
 			}
@@ -67,20 +57,18 @@ public class CreatureBehaviour : MovingCreatures {
 		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
 		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
 
-		if (_TheTarget == null){
+		if (_TheTarget == null) {
 			_TheTarget = TargetPriorityClass.GetTarget ();
 		}
 
-		if (RunObjectBehaviours == true) {
-			if (FreezeCharacter == true) {
-				if (MyRididBody.velocity.magnitude < 0.01f) {
-					ObjectBehaviour.GotPushed [0] = true;
-					FreezeCharacter = false;
-				}
-			} else {
-				ObjectBehaviour.BehaviourUpdate ();
+		if (FreezeCharacter == true) {
+			if (MyRididBody.velocity.magnitude < 0.01f) {
+				ObjectBehaviour.GotPushed [0] = true;
+				FreezeCharacter = false;
 			}
-		} 
+		} else {
+			ObjectBehaviour.BehaviourUpdate ();
+		}
 	}
 
 	public override void OnDestroyed(){//TODO implement deathstuff here, its just a method so call this to cancel the update and gg wp hf
@@ -127,30 +115,21 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 
-	void OnCollisionEnter2D(Collision2D coll){
+/*	void OnCollisionEnter2D(Collision2D coll){
 		if (coll.otherCollider == gameObject) {//Check If FeetCollider Or BodyCollider Triggered The Collision
 			ObjectBehaviour.OnCollisions (coll);
 		} else {
 	//		Debug.Log ("Colli " + coll.gameObject.name + " | " + coll.otherCollider.name);//FeetCollider
 		}
-	}
-
-	public bool ShowGizmos = false;
-	public float size;
-	float collidersize = 0;
-	bool once = true;
+	}*/
 
 	void OnDrawGizmos(){
-		if (once == true) {
-			once = false;
-			collidersize = WalkingColliders.GetComponent<BoxCollider2D> ().size.x;
-		}
 
 		if (ShowGizmos) {
 			size = _NodeDimentions /1.25f;
 			Nodes[,] mynodes = 	ObjectBehaviour._PersonalNodeMap.GetNodemap ();
-			for (int x = 0; x < Mathf.FloorToInt((collidersize) / _NodeDimentions); x++) {
-				for (int y = 0; y <  Mathf.FloorToInt((collidersize) / _NodeDimentions); y++) {
+			for (int x = 0; x < Mathf.FloorToInt((WalkingColliders.size.x) / _NodeDimentions); x++) {
+				for (int y = 0; y <  Mathf.FloorToInt((WalkingColliders.size.x) / _NodeDimentions); y++) {
 					if (mynodes [x, y].GetCollision () == ObjectBehaviour.PathfindingNodeID[0]) {
 						Gizmos.color = Color.black;
 					} else if (mynodes [x, y].GetCollision () == ObjectBehaviour.PathfindingNodeID[1]) {

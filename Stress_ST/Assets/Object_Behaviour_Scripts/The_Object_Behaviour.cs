@@ -16,8 +16,6 @@ public class The_Object_Behaviour {
 	[Tooltip("Object Phases Of Behaviours")]
 	public The_Object_Phase_Behaviour[] ObjectPhases;
 
-
-
 	int[] _BehaviourIndex = new int[1];
 	int _CreaturePhase = 0;
 
@@ -38,11 +36,8 @@ public class The_Object_Behaviour {
 	The_Default_Behaviour.ResetState _ResetEnum = The_Default_Behaviour.ResetState.ResetOnPhaseChange;
 	[HideInInspector] public bool[] GotPushed = new bool[1];
 
-
-	[Space(50)]
-	public Vector3[] ObjectCurrentVector = new Vector3[1];
-	public Vector3[] ObjectTargetVector = new Vector3[1];
-
+	[HideInInspector]public Vector3[] ObjectCurrentVector = new Vector3[1];
+	[HideInInspector]public Vector3[] ObjectTargetVector = new Vector3[1];
 
 	///<summary>
 	///[0] == Stop, [1] == AnimatorStage, [2] == Shoot, [3] == LockDirection
@@ -50,9 +45,9 @@ public class The_Object_Behaviour {
 	[HideInInspector] public int[] AnimatorVariables;
 
 	public void BehaviourStart(){//Setting All FunctionPointer Refrences + casting enum value to int
-
-		MyAnimator = _TheObject.MyAnimator.MyAnimator;
-		AnimatorVariables = _TheObject.MyAnimator.AnimatorVariables;
+		
+		MyAnimator = _TheObject.GfxObject;
+		AnimatorVariables = _TheObject.GfxObject.GetComponent<TheAnimator>().AnimatorVariables;
 		_Target = _TheObject._TheTarget.transform;
 
 		ObjectCurrentVector[0] = Vector3.right;
@@ -78,17 +73,13 @@ public class The_Object_Behaviour {
 
 	}
 
-	public void InBetween(){
-//		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
-	}
-
 	public void BehaviourUpdate (){
 		TheTime [0] += Time.deltaTime;
 
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].BehaviourUpdate();
 	
 		if(MyAnimator.GetBool(AnimatorVariables[3]) == false)
-			_MyTransform.eulerAngles = MyRotationVector[0];//Updating Rotations
+			MyAnimator.transform.eulerAngles = MyRotationVector[0];//Updating Rotations
 
 		if(MyAnimator.GetBool(AnimatorVariables[0]) == false)
 			_TheObject.GetComponent<Rigidbody2D>().velocity = MyMovementVector [0] * 30;//Updating Positions
@@ -103,28 +94,7 @@ public class The_Object_Behaviour {
 
 		if (ObjectPhases [_CreaturePhase].Behaviours.Length <= _BehaviourIndex [0]) {
 			for (int k = 0; k < ObjectPhases [_CreaturePhase].ExitGroups.Length; k++) {//Going Through All Exit_Requirements Groups To Check What To Do Next
-				for (int i = 0; i < ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length; i++) {//Going Through All Exit_Requirements
-					if (ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements [i].GetBool (2) == false) {//Requirement Check If True
-						i = ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length + 2;
-					} else {
-						if (i == ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length - 1) {//If I Am At The Last Exit_Requirement, Then All Are True And I Can Change Phase
-							for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
-								ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
-							}
-							_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase;
-							RunResetBehaviours ();
-							return;
-						}
-					}
-				}
-			}
-			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {//If The Code Reaches Here, Then Non If The Exit Requirements Were Met, So Then Im reseting The Phase
-				ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
-			}
-			RunResetBehaviours ();
-		} else {
-			for (int k = 0; k < ObjectPhases [_CreaturePhase].ExitGroups.Length; k++) {//Going Through All Exit_Requirements Groups To Check What To Do Next
-				if (ObjectPhases [_CreaturePhase].ExitGroups [k].CheckAllTheTime == true) {
+				if (ObjectPhases [ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase].ColdownTimer <= TheTime [0]) {
 					for (int i = 0; i < ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length; i++) {//Going Through All Exit_Requirements
 						if (ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements [i].GetBool (2) == false) {//Requirement Check If True
 							i = ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length + 2;
@@ -133,6 +103,32 @@ public class The_Object_Behaviour {
 								for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
 									ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
 								}
+								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
+								_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase;
+								RunResetBehaviours ();
+								return;
+							}
+						}
+					}
+				}
+			}
+			ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
+			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {//If The Code Reaches Here, Then Non If The Exit Requirements Were Met, So Then Im reseting The Phase
+				ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
+			}
+			RunResetBehaviours ();
+		} else {
+			for (int k = 0; k < ObjectPhases [_CreaturePhase].ExitGroups.Length; k++) {//Going Through All Exit_Requirements Groups To Check What To Do Next
+				if (ObjectPhases [_CreaturePhase].ExitGroups [k].CheckAllTheTime == true && ObjectPhases [ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase].ColdownTimer <= TheTime[0]) {
+					for (int i = 0; i < ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length; i++) {//Going Through All Exit_Requirements
+						if (ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements [i].GetBool (2) == false) {//Requirement Check If True
+							i = ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length + 2;
+						} else {
+							if (i == ObjectPhases [_CreaturePhase].ExitGroups [k].ExitRequirements.Length - 1) {//If I Am At The Last Exit_Requirement, Then All Are True And I Can Change Phase
+								for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
+									ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
+								}
+								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
 								_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase;
 								RunResetBehaviours ();
 								return;
@@ -145,6 +141,7 @@ public class The_Object_Behaviour {
 	}
 
 	void RunResetBehaviours (){//Reseting Currently Used Behaviours
+		
 		_CollisionBehaviours = new List<Behaviour_Default> ();
 		_ResetEnum = The_Default_Behaviour.ResetState.ResetOnPhaseChange;
 		_BehaviourIndex [0] = 0;
@@ -176,14 +173,16 @@ public class The_Object_Behaviour {
 			_BehaviourIndex [0] = theValue;
 			ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
 		} else {
-		//	_BehaviourIndex [0] = 0;
-		//	ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
 
-			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {//If You Want To ForceQuit. Then Make This True. 
+			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
 				ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
 			}
-			_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [0].ChangeToPhase;
-			RunResetBehaviours ();
+			int Saver = _CreaturePhase;
+			CheckIfExitRequirementsAreMet ();
+			if (Saver == _CreaturePhase) {//CheckIfExitRequirements Failed, Then Its The Same
+				RunResetBehaviours();//Reseting Anyway
+			}
+
 			return;
 		}
 	}
@@ -218,32 +217,6 @@ public class The_Object_Behaviour {
 					}
 				}
 			}
-		}
-	}
-
-	//-------------------------------------------------------------------------------------
-
-	void SetShooting(int boolValue){
-		if (boolValue == 0) {
-			MyAnimator.SetBool (AnimatorVariables [2], false);
-		} else {
-			MyAnimator.SetBool(AnimatorVariables[2], true);
-		}
-	}
-
-	void SetLockDirection(int boolValue){
-		if (boolValue == 0) {
-			MyAnimator.SetBool (AnimatorVariables [3], false);
-		} else {
-			MyAnimator.SetBool(AnimatorVariables[3], true);
-		}
-	}
-
-	void SetStop(int boolValue){
-		if (boolValue == 0) {
-			MyAnimator.SetBool (AnimatorVariables [0], false);
-		} else {
-			MyAnimator.SetBool(AnimatorVariables[0], true);
 		}
 	}
 

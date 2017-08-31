@@ -207,7 +207,7 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 			}
 
 			if (_Nodeindex >= _Nodesindex [0] + ReSearch) {//If The Object Have Walked For X Amount Of Nodes Start The Node A* Again
-				if(_Nodeindex < _TheNodePath.Length - 1)//No Need To Check If Im At The End
+			//	if(_Nodeindex < _TheNodePath.Length - 1)//No Need To Check If Im At The End
 					NodePathCheck ();
 			}
 		}

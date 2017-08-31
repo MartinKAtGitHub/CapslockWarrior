@@ -6,17 +6,11 @@ using UnityEngine.UI;
 [System.Serializable]
 public abstract class DefaultBehaviour : MonoBehaviour {
 
-	[HideInInspector] public bool FreezeCharacter = false;
-	public EnemyWordChecker _WordChecker;
-	public Text TextElement;
-	public string _EnemyHealth;
+	[Header("Object Behaviour")]
+	public The_Object_Behaviour ObjectBehaviour;
 
-	//----------------------- needed to know where this object is.
-	public float[,] MyPos = new float[1,2];//used to update the position for the Objects node position 
-	public Nodes[] MyNode = new Nodes[1];//my node and mypos is used to target objects for the AI so this is needed for everythin that is targetable
-	[HideInInspector] public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();//all objects that are moving need to know in which room they are
-	//-----------------------
-
+	[Space(30)]
+	[Header("Object Stat Variables")]
 	[Tooltip("How Many Words. So Always 1 More Then HealthLength.Length...   Health.Length == 5 Then HealthLength.Length == 6")]
 	public int[] Health = new int[1];
 	[Tooltip("Length Of The Words. So Always 1 More Then HealthLength.Length...   Health.Length == 5 Then HealthLength.Length == 6")]
@@ -26,10 +20,21 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 	public float[] ObjectStandardSpeed = new float[1];
 	public float[] Range = new float[1];
 
-	public The_Object_Behaviour ObjectBehaviour;
+	[HideInInspector] public bool FreezeCharacter = false;//Dissables All Functions
+	public EnemyWordChecker _WordChecker;
+	[Space(20)]
+	public Text TextElement;
+	public Animator GfxObject;
+	public Rigidbody2D MyRididBody;
+
+	//----------------------- needed to know where this object is.
+	public float[,] MyPos = new float[1,2];//used to update the position for the Objects node position 
+	public Nodes[] MyNode = new Nodes[1];//my node and mypos is used to target objects for the AI so this is needed for everythin that is targetable
+	[HideInInspector] public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();//all objects that are moving need to know in which room they are
+	//-----------------------
 
 	[HideInInspector] public DefaultBehaviour _TheTarget = null;//the target
-	public TheAnimator MyAnimator;
+
 
 	public abstract void OnDestroyed ();
 	public abstract void AttackTarget (Transform targetPos);
@@ -53,9 +58,4 @@ public abstract class DefaultBehaviour : MonoBehaviour {
 		_TheTarget = _TheTarget.GetComponent<DefaultBehaviour>();
 	}
 
-	public void setword(string a){
-		_WordChecker._ObjectHealth = a;
-		TextElement.text = a;
-		_EnemyHealth = a;
-	}
 }

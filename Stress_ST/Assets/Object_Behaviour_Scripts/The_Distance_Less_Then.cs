@@ -17,7 +17,6 @@ public class The_Distance_Less_Then : The_Default_Exit_Behaviour {
 	}
 
 	public override bool GetBool(int index){
-		Debug.Log ("HIER");
 		if (index == 2) {
 			if (Vector3.Distance (_MyTransform.position, _TargetTransform.position) < DistanceLessThen) {
 				return true;

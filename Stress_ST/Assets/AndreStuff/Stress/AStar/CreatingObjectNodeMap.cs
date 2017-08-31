@@ -166,20 +166,20 @@ public class CreatingObjectNodeMap {
 		return;
 	}
 
-	public void AddWalls(GameObject NewObject){
-		_WallColliders.Add (NewObject.GetComponent<BoxCollider2D>());
+	public void AddWalls(BoxCollider2D NewObject){
+		_WallColliders.Add (NewObject);
 	}
 
-	public void AddEnemyPositions(GameObject pos){
-		_EnemyColliders.Add (pos.GetComponent<BoxCollider2D> ());
+	public void AddEnemyPositions(BoxCollider2D pos){
+		_EnemyColliders.Add (pos);
 	}
 
-	public void RemoveEnemyPositions(GameObject pos){
-		_EnemyColliders.Remove (pos.GetComponent<BoxCollider2D> ());
+	public void RemoveEnemyPositions(BoxCollider2D pos){
+		_EnemyColliders.Remove (pos);
 	}
 
-	public void RemoveWalls(GameObject OldObject){
-		_WallColliders.Remove (OldObject.GetComponent<BoxCollider2D>());
+	public void RemoveWalls(BoxCollider2D OldObject){
+		_WallColliders.Remove (OldObject);
 	}
 	
 	public void RemoveMyselfFromOthers(GameObject myself){

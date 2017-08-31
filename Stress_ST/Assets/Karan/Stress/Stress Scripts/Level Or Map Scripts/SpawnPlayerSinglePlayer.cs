@@ -14,6 +14,12 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 	private GameObject GM;
 	private GameObject HeroClone;
 
+	private GameObject SpellIconKey1;
+	private GameObject SpellIconKey2;
+	private GameObject SpellIconKey3;
+	private GameObject SpellIconKey4;
+
+
 	private GameManagerSpellDistributer GMSpellDist;
 	private SpellsController spellsController;
 	private Animator animController;
@@ -43,6 +49,8 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		StartCountDownAnimGui();
 		// spawnanim (1 sek) start anim
  		SpawnPlayerChar();
+
+
 
 	}
 
@@ -93,9 +101,29 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		GameObject spellBar;
 		spellBar = (GameObject)Instantiate(SpellBarGUI, MainCanvas.transform);
 
-		spellBar.transform.GetChild(0).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyOne.GetComponent<Spells>().SpellIcon;
-		spellBar.transform.GetChild(1).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyTwo.GetComponent<Spells>().SpellIcon;
-		spellBar.transform.GetChild(2).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyThree.GetComponent<Spells>().SpellIcon;
-		spellBar.transform.GetChild(3).GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyFour.GetComponent<Spells>().SpellIcon;
+
+		SpellIconKey1 = spellBar.transform.GetChild(0).gameObject;
+		SpellIconKey2 = spellBar.transform.GetChild(1).gameObject;
+		SpellIconKey3 = spellBar.transform.GetChild(2).gameObject;
+		SpellIconKey4 = spellBar.transform.GetChild(3).gameObject;
+
+		spellsController.SpellIconKey1ImgOverlay = SpellIconKey1.transform.GetChild(0).gameObject.GetComponent<Image>();
+		spellsController.SpellIconKey2ImgOverlay = SpellIconKey2.transform.GetChild(0).gameObject.GetComponent<Image>();
+		spellsController.SpellIconKey3ImgOverlay = SpellIconKey3.transform.GetChild(0).gameObject.GetComponent<Image>();
+		spellsController.SpellIconKey4ImgOverlay = SpellIconKey4.transform.GetChild(0).gameObject.GetComponent<Image>();
+
+		spellsController.SpellIconKey1TextTimer = SpellIconKey1.transform.GetChild(1).gameObject.GetComponent<Text>();
+		spellsController.SpellIconKey2TextTimer = SpellIconKey2.transform.GetChild(1).gameObject.GetComponent<Text>();
+		spellsController.SpellIconKey3TextTimer = SpellIconKey3.transform.GetChild(1).gameObject.GetComponent<Text>();
+		spellsController.SpellIconKey4TextTimer = SpellIconKey4.transform.GetChild(1).gameObject.GetComponent<Text>();
+
+		SpellIconKey1.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyOne.GetComponent<Spells>().SpellIcon;
+		SpellIconKey2.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyTwo.GetComponent<Spells>().SpellIcon;
+		SpellIconKey3.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyThree.GetComponent<Spells>().SpellIcon;
+		SpellIconKey4.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyFour.GetComponent<Spells>().SpellIcon;
+
+
+
+
 	}
 }

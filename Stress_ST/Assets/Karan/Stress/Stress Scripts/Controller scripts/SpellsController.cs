@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SpellsController : MonoBehaviour {
@@ -18,6 +19,17 @@ public class SpellsController : MonoBehaviour {
 	public GameObject AgumentedSpellGameObjectKeyThreeDefaultSpell;
 	public GameObject AgumentedSpellGameObjectKeyFourDefaultSpell;
 
+
+	public Image SpellIconKey1ImgOverlay;
+	public Image SpellIconKey2ImgOverlay;
+	public Image SpellIconKey3ImgOverlay;
+	public Image SpellIconKey4ImgOverlay;
+
+	public Text SpellIconKey1TextTimer;
+	public Text SpellIconKey2TextTimer;
+	public Text SpellIconKey3TextTimer;
+	public Text SpellIconKey4TextTimer;
+
 	private float timerForSpellOnKeyOne;
 	private float timerForSpellOnKeyTwo;
 	private float timerForSpellOnKeyThree;
@@ -35,6 +47,7 @@ public class SpellsController : MonoBehaviour {
 
 	private PlayerManager playerManager;
 
+	private float imageAplhaTimer = 0;
 	// Use this for initialization
 	void Start () 
 	{
@@ -123,17 +136,22 @@ public class SpellsController : MonoBehaviour {
 
 		// TODO Make a default spell if no spell is slected by player.
 		// TODO Find a way so this can be used on multiable players, MULTIPLAYER style
-	}
+
+//		SpellIconKey1TextTimer.GetComponent<Text>().text = "45";
+//
+//		Color Alpha = SpellIconKey1ImgOverlay.GetComponent<Image>().color;
+//		Alpha.a = 255f;
+//		SpellIconKey1ImgOverlay.GetComponent<Image>().color = Alpha;
+	}	
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		CheckKeyPress();
 		//CheckKeyPressSecondVersion();
-	
 	}
 
-	void CheckKeyPressSecondVersion()
+	/*void CheckKeyPressSecondVersion()
 	{
 		Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
 		NoCheckForSpellIsUsed();
@@ -190,6 +208,7 @@ public class SpellsController : MonoBehaviour {
 			}
 		}
 	}
+	*/
 
 	void CheckKeyPress()
 	{
@@ -199,15 +218,15 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyOneReady == true)
 			{
-				if(SpellsOnKeyOne.ManaCost < playerManager.CurrentMana)
+				if(SpellsOnKeyOne.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyOneReady = false;
 					if(SpellsOnKeyOne.CastBoolienReturn())
 					{
 						timerForSpellOnKeyOne = saveTimerKeyOne;
 						playerManager.CurrentMana -= SpellsOnKeyOne.ManaCost;	
-
-						Debug.Log("Spell on key 2 used -> Current mana is " + playerManager.CurrentMana); 
+		
+						Debug.Log("Spell on key 1 used -> Current mana is " + playerManager.CurrentMana); 
 						Debug.Log("START TIMER AGAIN");
 					}
 					else
@@ -225,7 +244,7 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyTwoReady == true)
 			{
-				if(SpellsOnKeyTwo.ManaCost < playerManager.CurrentMana)
+				if(SpellsOnKeyTwo.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyTwoReady = false;
 					if(SpellsOnKeyTwo.CastBoolienReturn())
@@ -249,7 +268,7 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyThreeReady == true)
 			{
-				if(SpellsOnKeyThree.ManaCost < playerManager.CurrentMana)
+				if(SpellsOnKeyThree.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyThreeReady = false;
 					if(SpellsOnKeyThree.CastBoolienReturn())
@@ -269,7 +288,7 @@ public class SpellsController : MonoBehaviour {
 		{
 			if(spellKeyFourReady == true)
 			{
-				if(SpellsOnKeyFour.ManaCost < playerManager.CurrentMana)
+				if(SpellsOnKeyFour.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyTwoReady = false;
 					if(SpellsOnKeyFour.CastBoolienReturn())
@@ -286,38 +305,55 @@ public class SpellsController : MonoBehaviour {
 		}
 	}
 
-	void CheckCoolDowns()
+	void CheckCoolDowns() // HACK THIS IS BEING DONE EVERY FRAME 
 	{
 		//CheckForSpellIsUSed();
 		NoCheckForSpellIsUsed();
 
-		if(timerForSpellOnKeyOne <= 0)
+		if(timerForSpellOnKeyOne < 1)
 		{
 			spellKeyOneReady = true;
-
+			SetAlphaOnText(SpellIconKey1TextTimer,0f);
 		}
 		else
 		{
-		//	Debug.LogWarning(" SPELL 1 NOT READY");
+			DisplayTimerText(SpellIconKey1TextTimer, (int)timerForSpellOnKeyOne);
+			//SetAplhaOnFrontImage(SpellIconKey1ImgOverlay, 50);
 		}
 
-		if(timerForSpellOnKeyTwo <=0)
+		if(timerForSpellOnKeyTwo < 1)
 		{
 			spellKeyTwoReady = true;
+			SetAlphaOnText(SpellIconKey2TextTimer, 0f);
+		}
+		else
+		{
+			DisplayTimerText(SpellIconKey2TextTimer,(int)timerForSpellOnKeyTwo);
 		}
 
-		if(timerForSpellOnKeyThree <= 0)
+		if(timerForSpellOnKeyThree < 1)
 		{
 			spellKeyThreeReady = true;
+			SetAlphaOnText(SpellIconKey3TextTimer, 0f);
+		}
+		else
+		{
+			DisplayTimerText(SpellIconKey3TextTimer, (int)timerForSpellOnKeyThree);
 		}
 
-		if(timerForSpellOnKeyFour <= 0)
+		if(timerForSpellOnKeyFour < 1)
 		{
 			spellKeyFourReady = true;
+			SetAlphaOnText(SpellIconKey4TextTimer, 0f);
 		}
+		else
+		{
+			DisplayTimerText(SpellIconKey4TextTimer, (int)timerForSpellOnKeyFour);
+		}
+
 	}
 
-	void CheckForSpellIsUSed()
+	/*void CheckForSpellIsUSed()
 	{
 		//Debug.Log(SpellsOnKeyOne.gameObject.name);
 
@@ -346,14 +382,71 @@ public class SpellsController : MonoBehaviour {
 		{
 			timerForSpellOnKeyFour -= Time.deltaTime;
 		}
-	}
+	}*/
 
 	void NoCheckForSpellIsUsed()
 	{
-		timerForSpellOnKeyOne -= Time.deltaTime;
+		//TODO THIS COUNTS PAST 0 so it goes into -1 ...> -100
+		timerForSpellOnKeyOne -= Time.deltaTime; // maube make this into a method so somthing like . SpellTimers(floate SavedTime) { countdown return true false}
 		timerForSpellOnKeyTwo -= Time.deltaTime;
 		timerForSpellOnKeyThree -= Time.deltaTime;
 		timerForSpellOnKeyFour -= Time.deltaTime;
 	}
+
+	void SetAlphaOnText(Text textObject, float alphaValue)
+	{
+		Color tmpAlpha = textObject.color;
+		tmpAlpha.a = alphaValue;
+		textObject.color = tmpAlpha;
+	}
+
+	void SetAplhaOnFrontImage(Image frontImage, float alphaValue) // TODO SPELL ICON ALPHA DOSE NOT WORK FIX NOW PLS
+	{
+
+		imageAplhaTimer = timerForSpellOnKeyOne; // this counts down not up
+		Color tmpAlpha = frontImage.color;
+
+		Debug.Log("\t\t\t\t\t\t\t\t\t Timer is = " + timerForSpellOnKeyOne);
+		if(timerForSpellOnKeyOne == saveTimerKeyOne)
+		{
+			tmpAlpha.a = 200;
+			frontImage.color = tmpAlpha;
+			Debug.Log("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSET TO 200");
+
+		}
+		else if(imageAplhaTimer >= 1f) // this is always true
+		{
+			imageAplhaTimer = imageAplhaTimer % 1f;
+
+			tmpAlpha.a -= 50;
+			frontImage.color = tmpAlpha;
+			Debug.Log("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tWTF IS GOING ON");
+		}
+
+		// if(EVERY SEK)
+			//Change alpha by (cooldown/200(aplha)) 
+	
+//		imageAplhaTimer += Time.deltaTime;
+//
+//		if(imageAplhaTimer >= 1f)
+//		{
+//			imageAplhaTimer = imageAplhaTimer % 1f;
+//			Debug.Log("WTF MODULUS ======== (" + imageAplhaTimer + ")");
+//
+//			Debug.Log("CHANGIG ALPHA LOLOLOLOLOLOLOLOLOLOL");
+//		}
+//			tmpAlpha.a = 200f;
+//			frontImage.color = tmpAlpha;
+//			Debug.Log("REAKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+	}
+
+	void DisplayTimerText(Text textObject, int timer)
+	{
+		int temp = timer;// i know just chill k?
+		textObject.text = temp.ToString();
+		SetAlphaOnText(textObject,255f);
+	}
+
+
 }
 

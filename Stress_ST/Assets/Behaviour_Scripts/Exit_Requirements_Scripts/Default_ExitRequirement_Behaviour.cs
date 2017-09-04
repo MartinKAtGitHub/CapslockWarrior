@@ -1,7 +1,0 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Default_ExitRequirement_Behaviour : Behaviour_Default {
-	
-}

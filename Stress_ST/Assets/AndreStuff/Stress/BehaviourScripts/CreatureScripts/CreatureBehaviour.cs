@@ -71,8 +71,8 @@ public class CreatureBehaviour : MovingCreatures {
 	public override void OnDestroyed(){//TODO implement deathstuff here, its just a method so call this to cancel the update and gg wp hf
 
 		_WordChecker.RemoveEvent ();
-		Instantiate (Resources.Load ("Andre/Prefabs/Creatures/DeadObject") as GameObject, transform.position, Quaternion.identity);
-		Destroy (transform.parent.gameObject);
+		Instantiate (Resources.Load ("DeadObject") as GameObject, transform.position, Quaternion.identity);
+		Destroy (gameObject);
 	}
 
 	GameObject saved;

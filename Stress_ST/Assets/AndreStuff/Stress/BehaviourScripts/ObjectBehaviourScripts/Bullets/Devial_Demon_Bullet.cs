@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Devial_Demon : The_Default_Bullet {
+public class Devial_Demon_Bullet : The_Default_Bullet {
 
 	public Vector2 TheCapsuleSize = Vector2.zero;
 	public LayerMask WhatCanIHit;

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement_Behaviour {
 
 	float[] _TheTime;
-	int[] _AnimatorVariables;
 	bool _Attacking = false;
 
 	float _TimeStarted = 0;
@@ -68,7 +67,6 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 		_TargetTransform = myTransform._TheObject._TheTarget;
 
 		_TheTime = _MyObject.GetTheTime ();
-		_AnimatorVariables = _MyObject.AnimatorVariables;
 
 		_GotPushed = myTransform.GotPushed;
 

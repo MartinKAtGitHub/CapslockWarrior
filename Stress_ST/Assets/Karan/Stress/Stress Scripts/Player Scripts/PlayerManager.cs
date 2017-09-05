@@ -27,7 +27,7 @@ public class PlayerManager : DefaultBehaviour {
 		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
 		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
 		MyNode [0] = new Nodes (MyPos, 0);
-
+		HealtPoints_Txt.text = HealthPoints.ToString();
 	}
 
 	// Update is called once per frame
@@ -71,9 +71,13 @@ public class PlayerManager : DefaultBehaviour {
 	}
 	public override void RecievedDmg(int _damage)
 	{
+
+		/*HealtPoints_Txt.text = (HealthPoints -= _damage).ToString ();//Normal Health Subtraction Without Percentage Subtraction
+		if (HealthPoints <= 0) {OnDestroyed ();}*/
+
+
 		float PercentageDmg;
 		float Total;
-
 		PercentageDmg = _damage / HealthPoints * 100;
 		Total = float.Parse(HealtPoints_Txt.text) -  PercentageDmg;
 		HealtPoints_Txt.text = Total.ToString();

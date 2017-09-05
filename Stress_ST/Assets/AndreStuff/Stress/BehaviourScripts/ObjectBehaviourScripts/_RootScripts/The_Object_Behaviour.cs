@@ -39,7 +39,7 @@ public class The_Object_Behaviour {
 	[HideInInspector]public Vector3[] ObjectTargetVector = new Vector3[1];
 
 	///<summary>
-	///[0] == Stop, [1] == AnimatorStage, [2] == Shoot, [3] == LockDirection
+	///[0] == Stop, [1] == AnimatorStage, [2] == Shoot, [3] == Rotating
 	/// </summary>
 	[HideInInspector] public int[] AnimatorVariables;
 
@@ -77,7 +77,7 @@ public class The_Object_Behaviour {
 
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].BehaviourUpdate();
 	
-		if(MyAnimator.GetBool(AnimatorVariables[3]) == false)
+		if(MyAnimator.GetBool(AnimatorVariables[3]) == true)
 			MyAnimator.transform.eulerAngles = MyRotationVector[0];//Updating Rotations
 
 		if(MyAnimator.GetBool(AnimatorVariables[0]) == false)

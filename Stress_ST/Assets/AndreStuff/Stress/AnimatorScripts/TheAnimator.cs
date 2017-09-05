@@ -13,7 +13,7 @@ public class TheAnimator : MonoBehaviour {
 		Animator.StringToHash ("Stop"),
 		Animator.StringToHash ("AnimatorStage"),
 		Animator.StringToHash ("Shoot"),
-		Animator.StringToHash ("LockDirection"),
+		Animator.StringToHash ("Rotating"),
 		Animator.StringToHash ("StopExitCheck")
 	};
 
@@ -25,7 +25,7 @@ public class TheAnimator : MonoBehaviour {
 		}
 	}
 
-	void SetLockDirection(int boolValue){
+	void SetRotating(int boolValue){
 		if (boolValue == 0) {
 			MyAnimator.SetBool (AnimatorVariables [3], false);
 		} else {

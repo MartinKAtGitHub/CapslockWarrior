@@ -32,13 +32,12 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 		}
 	
 		_MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);//Overrides Movement AnimatorStage OnEnter. But Only In OnEnter
+		_MyAnimator.speed = _MyObject._TheObject.AttackSpeed[0];
 
 	}
-		public float testspeed = 1;
 
 	public override void BehaviourUpdate (){
-		if(testspeed != 1)
-		_MyAnimator.speed = testspeed;
+		
 		if (_MyAnimator.GetBool (_AnimatorVariables [2]) == true) {//If Animator Say That I Can Shoot
 			if (_MyObject._TheObject.GfxObject.transform.eulerAngles.y == 0) {
 				if(Bullets [0].AttackPosition.x < 0)

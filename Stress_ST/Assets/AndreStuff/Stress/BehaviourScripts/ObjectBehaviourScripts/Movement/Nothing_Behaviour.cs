@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Nothing_Behaviour : The_Default_Movement_Behaviour {
 
-	int[] _AnimatorVariables;
 
 	public override void SetMethod (The_Object_Behaviour myTransform){
 
@@ -14,7 +13,6 @@ public class Nothing_Behaviour : The_Default_Movement_Behaviour {
 		_MyTransform = myTransform._TheObject;
 
 		_TargetTransform = myTransform._TheObject._TheTarget;
-		_AnimatorVariables = _MyObject.AnimatorVariables;
 
 	}
 

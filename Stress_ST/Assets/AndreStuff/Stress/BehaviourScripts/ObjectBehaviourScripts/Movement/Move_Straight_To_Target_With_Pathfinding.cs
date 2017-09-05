@@ -14,7 +14,6 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 	public float CheckingValue = 10;
 
 	float[] _TheTime;
-	int[] _AnimatorVariables;
 	bool _Attacking = false;
 
 	float TimeStarted = 0;
@@ -66,7 +65,6 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 		_TargetTransform = myTransform._TheObject._TheTarget;
 		
 		_TheTime = _MyObject.GetTheTime ();
-		_AnimatorVariables = _MyObject.AnimatorVariables;
 
 		_GotPushed = myTransform.GotPushed;
 

@@ -33,11 +33,12 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	 
 	float _AngleToMove = 0;
 
-	protected Vector3[] _CurrentDirection;
+	public Vector3[] _CurrentDirection;
 	protected Vector3[] _TargetDirection;
 
 	Transform MyRotation;
 	protected float[] MovementSpeed;
+	protected int[] _AnimatorVariables;
 
 
 	public override void SetMethod (The_Object_Behaviour myTransform){
@@ -49,6 +50,7 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 
 		_CurrentDirection = myTransform.ObjectCurrentVector;
 		_TargetDirection = myTransform.ObjectTargetVector;
+		_AnimatorVariables = _MyObject.AnimatorVariables;
 	}
 
 	public override void OnEnter (){
@@ -67,24 +69,27 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	}
 
 	public void MovementRotations(){
-		if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
-			TargetVectorTargetFollow ();
+
+			if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
+				TargetVectorTargetFollow ();
+			}
+
+			RotationCalculation ();
+	
+		if (_MyObject.MyAnimator.GetBool (_AnimatorVariables [3]) == true) {
+
+			if (LookAtTarget == true) {
+				LookAt ();
+			}
+
+			if (RotateToWalkingDirection == true) {
+				RotateTowards ();
+			} 
+
+			if (RotateBack == true) {
+				RotateBackStraight ();
+			}
 		}
-
-		RotationCalculation ();
-
-		if (LookAtTarget == true) {
-			LookAt ();
-		}
-
-		if (RotateToWalkingDirection == true) {
-			RotateTowards ();
-		} 
-
-		if (RotateBack == true) {
-			RotateBackStraight ();
-		}
-
 	}
 
 	void RotationCalculation(){
@@ -109,6 +114,7 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	}
 
 	public void LookAt(){//Rotates The Object To Face The Targeted Object By Rotating The Y'Axis
+		
 		if (RotateToWalkingDirection == false) {
 			if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
 				TargetVectorTargetFollow ();

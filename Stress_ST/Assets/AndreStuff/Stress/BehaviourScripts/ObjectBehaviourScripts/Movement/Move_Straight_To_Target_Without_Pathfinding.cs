@@ -16,7 +16,6 @@ public class Move_Straight_To_Target_Without_Pathfinding : The_Default_Movement_
 	public float CheckingValue = 10;
 
 	float[] _TheTime;
-	int[] _AnimatorVariables;
 	bool _Attacking = false;
 
 	float TimeStarted = 0;
@@ -29,7 +28,6 @@ public class Move_Straight_To_Target_Without_Pathfinding : The_Default_Movement_
 		_TargetTransform = myTransform._TheObject._TheTarget;
 
 		_TheTime = _MyObject.GetTheTime ();
-		_AnimatorVariables = _MyObject.AnimatorVariables;
 	}
 
 

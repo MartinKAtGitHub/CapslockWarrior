@@ -29,13 +29,13 @@ public abstract class The_Default_Behaviour : MonoBehaviour {
 	/// <summary>
 	/// Attack Uses This To Do Its Movements. Index 5 Is Reserved For Attack Call To Movement
 	/// </summary>
-	public virtual bool GetBool(int index){return false;}
+	public virtual bool GetBool(int index){return false;}//index 2 == ExitCheck
 
 	/// <summary>
 	/// 0 == Bast.GetLayerMask(), 1 == Outer Script
 	/// </summary>
 	public virtual LayerMask[] GetLayerMask(int index){return null;}
-	public virtual void SetCollision (Collision2D coll){}
+	public virtual void SetCollision (Collider2D coll){}
 
 	public virtual int GetInt (int index){return 0;}
 

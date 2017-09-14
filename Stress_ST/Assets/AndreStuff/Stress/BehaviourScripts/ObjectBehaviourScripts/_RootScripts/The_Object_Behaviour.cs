@@ -42,6 +42,7 @@ public class The_Object_Behaviour {
 	///[0] == Stop, [1] == AnimatorStage, [2] == Shoot, [3] == Rotating
 	/// </summary>
 	[HideInInspector] public int[] AnimatorVariables;
+	List<The_Default_Behaviour> CollisionCheckers = new List<The_Default_Behaviour>();
 
 	public void BehaviourStart(){//Setting All FunctionPointer Refrences + casting enum value to int
 		
@@ -185,6 +186,20 @@ public class The_Object_Behaviour {
 		}
 	}
 		
+	public void SetCollisionRequirements(The_Default_Behaviour behaviours){
+		CollisionCheckers.Add (behaviours);
+	}
+
+	public void OnCollision(Collider2D col){
+
+		for (int i = 0; i < CollisionCheckers.Count; i++) {
+			CollisionCheckers [i].SetCollision (col);
+		}
+
+		CheckIfExitRequirementsAreMet ();
+
+	}
+
 	public Vector3[] GetMovementVector(){
 		return MyMovementVector;
 	}

@@ -9,7 +9,7 @@ public class TargetHierarchy {//TODO improve searching choises based on distance
 https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 	*/
 
-	List<DefaultBehaviour> Targets = new List<DefaultBehaviour>();
+	List<DefaultBehaviourPosition> Targets = new List<DefaultBehaviourPosition>();
 	GameObject[] FoundTargets;
 
 	public List<string> TheTargetHierarchy = new List<string>();
@@ -21,11 +21,11 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 		MyObject = ThisObject;
 	}
 
-	public void AddTarget(DefaultBehaviour ATarget){
+	public void AddTarget(DefaultBehaviourPosition ATarget){
 		Targets.Add (ATarget);
 	}
 
-	public DefaultBehaviour GetTarget (){//Searching For Targets And Chooses The First One TODO Do A Distance Check
+	public DefaultBehaviourPosition GetTarget (){//Searching For Targets And Chooses The First One TODO Do A Distance Check
 		SearchAfterNewTargets ();
 
 		if (Targets.Count > 0) {
@@ -40,12 +40,12 @@ https://msdn.microsoft.com/en-us/library/essfb559(v=vs.110).aspx
 
 
 	public void SearchAfterNewTargets(){//this searches through all tags in the hiearchy for the given tag.TODO instead of a search, make it so that object tell a manager that they exist, then get the objects from there
-		Targets = new List<DefaultBehaviour>();
+		Targets = new List<DefaultBehaviourPosition>();
 		for (int i = 0; i < TheTargetHierarchy.Count; i++) {
 			FoundTargets = GameObject.FindGameObjectsWithTag (TheTargetHierarchy [i]);
 			if (FoundTargets.Length > 0) {
 				for (int j = 0; j < FoundTargets.Length; j++) {
-					Targets.Add (FoundTargets[j].GetComponent<DefaultBehaviour>());
+					Targets.Add (FoundTargets[j].GetComponent<DefaultBehaviourPosition>());
 				}
 			}
 		}

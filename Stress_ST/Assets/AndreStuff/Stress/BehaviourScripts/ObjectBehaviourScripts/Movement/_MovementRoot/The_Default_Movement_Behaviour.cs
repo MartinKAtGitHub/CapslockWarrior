@@ -24,8 +24,8 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	public float RotateSpeed = 1;
 	[Space(10)]
 
-	protected DefaultBehaviour _MyTransform;//MyCenterPosition
-	protected DefaultBehaviour _TargetTransform;//TargetCenterPosition
+	protected DefaultBehaviourPosition _MyTransform;//MyCenterPosition
+	protected DefaultBehaviourPosition _TargetTransform;//TargetCenterPosition
 	protected bool _Turned = true;
 
 	protected Vector3[] MoveDirection;

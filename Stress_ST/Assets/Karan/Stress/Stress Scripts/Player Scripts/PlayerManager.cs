@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 
-public class PlayerManager : DefaultBehaviour {
+public class PlayerManager : DefaultBehaviourPosition {
 
 	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center
 	const float _NodeDimentions = 0.08f;
@@ -62,13 +62,11 @@ public class PlayerManager : DefaultBehaviour {
 		}
 	}
 
-	public override void OnDestroyed()
+	public void OnDestroyed()
 	{
 		Debug.Log("DEAD OMG");
 	}
-	public override void AttackTarget(Transform targetPos){
 
-	}
 	public override void RecievedDmg(int _damage)
 	{
 
@@ -100,9 +98,7 @@ public class PlayerManager : DefaultBehaviour {
 
 	}
 
-	public override void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
-		NeighbourGroups = neighbours;
-	}
+
 
 
 	public void ManaRegen(float manaRegenRate)// TODO Double check the ManaRegen Method in PlayerManager to see if it is not to expensive

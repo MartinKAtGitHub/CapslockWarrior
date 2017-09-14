@@ -18,6 +18,9 @@ public class Devial_Demon_Bullet : The_Default_Bullet {
 		}
 		transform.rotation = Quaternion.Euler (_Shooter.MyAnimator.transform.eulerAngles);
 
+
+		
+
 	}
 
 	void FixedUpdate(){

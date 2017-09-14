@@ -23,7 +23,6 @@ public class CreatureBehaviour : MovingCreatures {
 		
 		ObjectBehaviour._MyTransform = transform;
 		_TheTarget = TargetPriorityClass.GetTarget ();
-
 		MyPos [0, 0] = transform.position.x; 
 		MyPos [0, 1] = transform.position.y;	
 		MyNode [0] = new Nodes (MyPos, 0);
@@ -74,25 +73,7 @@ public class CreatureBehaviour : MovingCreatures {
 		Instantiate (Resources.Load ("DeadObject") as GameObject, transform.position, Quaternion.identity);
 		Destroy (gameObject);
 	}
-
-	GameObject saved;
-	public override void AttackTarget(Transform targetPos){
 		
-	/*	if (_GoAfter != null) {
-			if (CreatureType == StressEnums.EnemyType.Ranged) {
-				if (CanIRanged [0] == true) {
-
-					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos as Transform);;
-				}
-			} else if (CreatureType == StressEnums.EnemyType.Meele) {
-				if (CanIRanged [0] == true) {
-					(Instantiate (Bullet, new Vector3 (HitPoint.transform.position.x, HitPoint.transform.position.y, HitPoint.transform.position.z), Quaternion.identity) as GameObject).GetComponent<BulletBehaviour> ().SetObjectDirection (transform.gameObject, targetPos  as Transform);;
-				} else {
-					DefaultBehaviourTarget.RecievedDmg(2);
-				}
-			}
-		}*/
-	}
 
 	public override void SetTarget(GameObject target){
 		base.SetTarget(target);
@@ -118,6 +99,10 @@ public class CreatureBehaviour : MovingCreatures {
 		} else {
 	//		Debug.Log ("Colli " + coll.gameObject.name + " | " + coll.otherCollider.name);//FeetCollider
 		}
+	}*/
+
+/*	void OnTriggerEnter2D(Collider2D Col){
+		Debug.Log ("Col " + Col.name + " § ");
 	}*/
 
 	void OnDrawGizmos(){

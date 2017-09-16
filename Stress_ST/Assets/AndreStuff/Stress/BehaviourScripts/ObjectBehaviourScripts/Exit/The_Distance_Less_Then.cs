@@ -18,7 +18,7 @@ public class The_Distance_Less_Then : The_Default_Exit_Behaviour {
 	public override bool GetBool(int index){
 		if (index == 2) {
 			
-			if (Vector3.Distance (_MyTransform.position, _TheTarget[0].transform.GetChild(2).transform.position) < DistanceLessThen) {
+			if (Vector3.Distance (_MyTransform.position, _TheTarget[0].transform.position) < DistanceLessThen) {
 				return true;
 			} else {
 				return false;

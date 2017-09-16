@@ -28,7 +28,7 @@ public class DefaultBehaviour : DefaultBehaviourPosition {
 	public Animator GfxObject;
 	public Rigidbody2D MyRididBody;
 
-	[HideInInspector] public DefaultBehaviourPosition[] _TheTarget = new DefaultBehaviourPosition[1];//the target
+	public DefaultBehaviourPosition[] _TheTarget = new DefaultBehaviourPosition[1];//the target
 
 
 

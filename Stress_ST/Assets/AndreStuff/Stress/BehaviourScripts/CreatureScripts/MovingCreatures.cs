@@ -19,7 +19,7 @@ public abstract class MovingCreatures : DefaultBehaviour {
 
 	public override void SetTarget(GameObject target){
 		base.SetTarget(target);
-		ObjectBehaviour._CreateThePath.SetEndRoomAndNode (_TheTarget.NeighbourGroups, _TheTarget.MyNode);
+		ObjectBehaviour._CreateThePath.SetEndRoomAndNode (_TheTarget[0].NeighbourGroups, _TheTarget[0].MyNode);
 	}
 
 	#region What to do when colliding with objects  

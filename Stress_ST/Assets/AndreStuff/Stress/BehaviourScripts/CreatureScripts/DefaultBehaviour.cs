@@ -28,22 +28,22 @@ public class DefaultBehaviour : DefaultBehaviourPosition {
 	public Animator GfxObject;
 	public Rigidbody2D MyRididBody;
 
-	[HideInInspector] public DefaultBehaviourPosition _TheTarget = null;//the target
+	[HideInInspector] public DefaultBehaviourPosition[] _TheTarget = new DefaultBehaviourPosition[1];//the target
 
 
 
 
 	public virtual void OnDestroyed () {}
 
-	public virtual DefaultBehaviour GetTargetBehaviour(){
+	public virtual DefaultBehaviourPosition GetTargetBehaviour(){
 		if (_TheTarget != null)
-			return _TheTarget.GetComponent<DefaultBehaviour>(); 
+			return _TheTarget [0]; 
 
 		return null;
 	}
 
 	public virtual void SetTarget(GameObject target){
-		_TheTarget = _TheTarget.GetComponent<DefaultBehaviour>();
+		_TheTarget[0] = target.GetComponent<DefaultBehaviourPosition>();
 	}
 
 }

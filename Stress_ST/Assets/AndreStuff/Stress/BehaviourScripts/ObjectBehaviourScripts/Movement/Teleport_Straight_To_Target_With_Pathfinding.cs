@@ -115,7 +115,7 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 
 						_ObjectVector.x = _TheNodePath [_Nodeindex].GetID () [0, 0] + (0.04f);
 						_ObjectVector.y = _TheNodePath [_Nodeindex].GetID () [0, 1] + (0.04f);
-						_MyObject._TheObject.transform.position = _MyObject._TheObject.transform.position + (Vector3)((_ObjectVector * 0.08f));//This Should Force The Collider To Update Each Jump To Make An Accurate Teleport (After What I Read, Then This Might Be Abit Expensive)
+						_MyTransform.transform.position = _MyTransform.transform.position + (Vector3)((_ObjectVector * 0.08f));//This Should Force The Collider To Update Each Jump To Make An Accurate Teleport (After What I Read, Then This Might Be Abit Expensive)
 
 					} else {//If Possible Walk Further Down The RoomList Until The Final Destination Is Reached
 						if (_Roomindex >= _TheRoomPath.Length - 1) {//There Are No Further Rooms, And The Player Is Closer Then Distance To Teleport. TODO Can Overshoot?
@@ -124,7 +124,7 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 
 							_ObjectVector.x = _TheNodePath [_Nodeindex].GetID () [0, 0] + (0.04f);
 							_ObjectVector.y = _TheNodePath [_Nodeindex].GetID () [0, 1] + (0.04f);
-							_MyObject._TheObject.transform.position = _MyObject._TheObject.transform.position + (Vector3)((_ObjectVector * 0.08f));//This Should Force The Collider To Update Each Jump To Make An Accurate Teleport (After What I Read, Then This Might Be Abit Expensive)
+							_MyTransform.transform.position = _MyTransform.transform.position + (Vector3)((_ObjectVector * 0.08f));//This Should Force The Collider To Update Each Jump To Make An Accurate Teleport (After What I Read, Then This Might Be Abit Expensive)
 
 							//WHen OVERSHOOT Use RigidBody2d.Moveto -> Calculates Collisions So That The Object Cant Phase Through Walls
 
@@ -132,8 +132,8 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 							_NodesTraveled += NodesLeft;
 							_ObjectVector.x = _TheNodePath [_TheNodePath.Length - 1].GetID () [0, 0];
 							_ObjectVector.y = _TheNodePath [_TheNodePath.Length - 1].GetID () [0, 1];
-							_MyObject._TheObject.transform.position = _MyObject._TheObject.transform.position + (Vector3)((_ObjectVector * 0.08f));//This Should Force The Collider To Update Each Jump To Make An Accurate Teleport (After What I Read, Then This Might Be Abit Expensive)
-							_TheRoomPath [_Roomindex].SelfEnter (_MyObject._TheObject);
+							_MyTransform.transform.position = _MyTransform.transform.position + (Vector3)((_ObjectVector * 0.08f));//This Should Force The Collider To Update Each Jump To Make An Accurate Teleport (After What I Read, Then This Might Be Abit Expensive)
+							_TheRoomPath [_Roomindex].SelfEnter (_MyTransform);
 							PathCheck ();
 						}
 					}
@@ -190,8 +190,8 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 	void PathCheck(){//Checking If Something Needs Updating And Setting NodePath
 		if (_GotPushed[0] == true) {
 
-			if (_TargetNeighbourGroups != _MyObject._TheObject._TheTarget.NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
-				_TargetNeighbourGroups = _MyObject._TheObject._TheTarget.NeighbourGroups;
+			if (_TargetNeighbourGroups != _TargetTransform[0].NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
+				_TargetNeighbourGroups = _TargetTransform[0].NeighbourGroups;
 				_ObjectNeighbourGroups = _MyObject._TheObject.NeighbourGroups;
 				_MyObject._CreateThePath.SetEndRoom (_TargetNeighbourGroups); 
 				_MyObject._CreateThePath.CreatePath ();
@@ -214,8 +214,8 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 
 		} else {
 
-			if (_TargetNeighbourGroups != _MyObject._TheObject._TheTarget.NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
-				_TargetNeighbourGroups = _MyObject._TheObject._TheTarget.NeighbourGroups;
+			if (_TargetNeighbourGroups != _TargetTransform[0].NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
+				_TargetNeighbourGroups = _TargetTransform[0].NeighbourGroups;
 				_ObjectNeighbourGroups = _MyObject._TheObject.NeighbourGroups;
 				_MyObject._CreateThePath.SetEndRoom (_TargetNeighbourGroups); 
 				_MyObject._CreateThePath.CreatePath ();
@@ -244,7 +244,7 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 			_MyObject._PersonalNodeMap.SetInfoAndStartSearch ();//Node Search
 			_Nodeindex = _Nodesindex [0];//Index Refrence For Where I'm Starting From In The List
 		} else {
-			_MyObject._PersonalNodeMap.SetTargetPos (_MyObject._TheObject._TheTarget.MyPos);//Setting The Target As The Next Point To Go To
+			_MyObject._PersonalNodeMap.SetTargetPos (_TargetTransform[0].MyPos);//Setting The Target As The Next Point To Go To
 			_MyObject._PersonalNodeMap.SetInfoAndStartSearch ();
 			_Nodeindex = _Nodesindex [0];//Index Refrence For Where I'm Starting From In The List
 		}
@@ -287,8 +287,8 @@ public class Teleport_Straight_To_Target_With_Pathfinding : The_Default_Movement
 		_Closest = _ListOfNodes [0];
 
 		if (_CurrentRoom.transform.eulerAngles.z == _PreviourRoom.transform.eulerAngles.z) {
-			_TargetVector.x = _MyObject._TheObject._TheTarget.MyPos [0, 0];
-			_TargetVector.y = _MyObject._TheObject._TheTarget.MyPos [0, 1];
+			_TargetVector.x = _TargetTransform[0].MyPos [0, 0];
+			_TargetVector.y = _TargetTransform[0].MyPos [0, 1];
 		} else {
 			_TargetVector.x = _MyObject._TheObject.MyPos [0, 0];
 			_TargetVector.y = _MyObject._TheObject.MyPos [0, 1];	

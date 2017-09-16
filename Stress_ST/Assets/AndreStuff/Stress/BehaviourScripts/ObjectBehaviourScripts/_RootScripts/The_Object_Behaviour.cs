@@ -48,7 +48,7 @@ public class The_Object_Behaviour {
 		
 		MyAnimator = _TheObject.GfxObject;
 		AnimatorVariables = _TheObject.GfxObject.GetComponent<TheAnimator>().AnimatorVariables;
-		_Target = _TheObject._TheTarget.transform;
+		_Target = _TheObject._TheTarget[0].transform;
 
 		ObjectCurrentVector[0] = Vector3.right;
 		ObjectTargetVector[0] = _Target.position;

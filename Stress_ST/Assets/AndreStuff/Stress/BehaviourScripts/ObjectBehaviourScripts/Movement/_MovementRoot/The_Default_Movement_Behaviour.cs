@@ -25,7 +25,7 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	[Space(10)]
 
 	protected DefaultBehaviourPosition _MyTransform;//MyCenterPosition
-	protected DefaultBehaviourPosition _TargetTransform;//TargetCenterPosition
+	protected DefaultBehaviourPosition[] _TargetTransform;//TargetCenterPosition
 	protected bool _Turned = true;
 
 	protected Vector3[] MoveDirection;
@@ -102,11 +102,11 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	}
 
 	void TargetVectorTargetFollow(){
-		_TargetDirection[0] = (_TargetTransform.transform.position - _MyTransform.transform.position).normalized;
+		_TargetDirection[0] = (_TargetTransform[0].transform.position - _MyTransform.transform.position).normalized;
 	}
 
 	void TargetVectorLockAtTarget(){
-		_TargetDirection[0] = (_TargetTransform.transform.position - _MyTransform.transform.position).normalized;
+		_TargetDirection[0] = (_TargetTransform[0].transform.position - _MyTransform.transform.position).normalized;
 	}
 
 	void TargetVectorLock(){

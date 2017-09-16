@@ -22,7 +22,8 @@ public class CreatureBehaviour : MovingCreatures {
 		_WordChecker = new EnemyWordChecker(TextElement, this);
 		
 		ObjectBehaviour._MyTransform = transform;
-		_TheTarget = TargetPriorityClass.GetTarget ();
+
+		_TheTarget[0] = TargetPriorityClass.GetTarget ();
 		MyPos [0, 0] = transform.position.x; 
 		MyPos [0, 1] = transform.position.y;	
 		MyNode [0] = new Nodes (MyPos, 0);
@@ -34,7 +35,7 @@ public class CreatureBehaviour : MovingCreatures {
 	void Start(){
 		ObjectBehaviour.BehaviourStart ();
 		ObjectBehaviour._PersonalNodeMap.CreateNodeMap ();
-		ObjectBehaviour._PersonalNodeMap.SetTargetPos (_TheTarget.MyPos);
+		ObjectBehaviour._PersonalNodeMap.SetTargetPos (_TheTarget[0].MyPos);
 	}
 
 
@@ -50,11 +51,11 @@ public class CreatureBehaviour : MovingCreatures {
 			}
 		}
 
-		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
-		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+		MyPos [0, 0] = ((FeetPlacements.transform.position.x - _NewMapCenter) / _NodeDimentions) - (((FeetPlacements.transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+		MyPos [0, 1] = ((FeetPlacements.transform.position.y - _NewMapCenter) / _NodeDimentions) - (((FeetPlacements.transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
 
-		if (_TheTarget == null) {
-			_TheTarget = TargetPriorityClass.GetTarget ();
+		if (_TheTarget[0] == null) {
+			_TheTarget[0] = TargetPriorityClass.GetTarget ();
 		}
 
 		if (FreezeCharacter == true) {
@@ -93,20 +94,7 @@ public class CreatureBehaviour : MovingCreatures {
 	}
 
 
-/*	void OnCollisionEnter2D(Collision2D coll){
-		if (coll.otherCollider == gameObject) {//Check If FeetCollider Or BodyCollider Triggered The Collision
-			ObjectBehaviour.OnCollisions (coll);
-		} else {
-	//		Debug.Log ("Colli " + coll.gameObject.name + " | " + coll.otherCollider.name);//FeetCollider
-		}
-	}*/
-
-/*	void OnTriggerEnter2D(Collider2D Col){
-		Debug.Log ("Col " + Col.name + " § ");
-	}*/
-
 	void OnDrawGizmos(){
-
 		if (ShowGizmos) {
 			size = _NodeDimentions /1.25f;
 			Nodes[,] mynodes = 	ObjectBehaviour._PersonalNodeMap.GetNodemap ();

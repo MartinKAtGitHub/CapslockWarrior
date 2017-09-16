@@ -68,13 +68,13 @@ public class RoomConnectorCreating : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D coll){//when a gameobject is inside the collider with tag == wall, then update the nodemap and recalculate the pathlist 
-		if (coll.transform.parent != null && coll.transform.parent.transform.GetComponent<DefaultBehaviour> () != null) {//TODO RemoveTHIS when AI is fully implemented(not fully but corretly) on everything
-			coll.transform.parent.transform.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (_MyRoom);
+		if (coll.transform.parent != null && coll.transform.parent.transform.GetComponent<DefaultBehaviourPosition> () != null) {//TODO RemoveTHIS when AI is fully implemented(not fully but corretly) on everything
+			coll.transform.parent.transform.GetComponent<DefaultBehaviourPosition> ().SetNeighbourGroup (_MyRoom);
 		}
 	}
 
 	void OnTriggerExit2D (Collider2D coll){//when a gameobject is removed from the collider with tag == wall, then update the nodemap and recalculate the pathlist 	//0,01745329251 == math.pi / 180
-		if (coll.transform.parent.GetComponent<DefaultBehaviour> () != null) {
+		if (coll.transform.parent.GetComponent<DefaultBehaviourPosition> () != null) {
 			_RoomConnectorDirection.x = Mathf.Cos (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
 			_RoomConnectorDirection.y = Mathf.Sin (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
 			_ObjectFromRoomConnectorDirection.x = coll.transform.position.x - transform.position.x;//calculating the vector the object has when exiting the collider
@@ -85,21 +85,21 @@ public class RoomConnectorCreating : MonoBehaviour {
 
 			if (LeftOrRight == true) {//checking if the object exited the collider inside of a specifik angle
 				if (_ObjectsAngleDifference > -_MaxAngleDifference && _ObjectsAngleDifference < _MaxAngleDifference) {
-					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviourPosition> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
 				} else {
-					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviourPosition> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
 				}
 			} else {
 				if (!(_ObjectsAngleDifference > -_MaxAngleDifference && _ObjectsAngleDifference < _MaxAngleDifference)) {
-					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviourPosition> ().SetNeighbourGroup (ConnectorHubOne.Connectors);
 				} else {
-					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviour> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
+					coll.transform.parent.transform.gameObject.GetComponent<DefaultBehaviourPosition> ().SetNeighbourGroup (ConnectorHubTwo.Connectors);
 				}
 			}
 		}
 	}
 
-	public void SelfExit(DefaultBehaviour CollidedObject){
+	public void SelfExit(DefaultBehaviourPosition CollidedObject){
 		_RoomConnectorDirection.x = Mathf.Cos (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
 		_RoomConnectorDirection.y = Mathf.Sin (0.01745329251f * (transform.rotation.eulerAngles.z + 90));//calculating the vector (direction object is fazing) that the collider the objects colides with
 		_ObjectFromRoomConnectorDirection.x = CollidedObject.transform.position.x - transform.position.x;//calculating the vector the object has when exiting the collider
@@ -123,7 +123,7 @@ public class RoomConnectorCreating : MonoBehaviour {
 		}
 	}
 
-	public void SelfEnter(DefaultBehaviour CollidedObject){
+	public void SelfEnter(DefaultBehaviourPosition CollidedObject){
 		if (CollidedObject.transform.parent != null && CollidedObject != null) {//TODO RemoveTHIS when AI is fully implemented(not fully but corretly) on everything
 			CollidedObject.SetNeighbourGroup (_MyRoom);
 		}

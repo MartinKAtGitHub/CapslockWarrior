@@ -164,8 +164,8 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 
 		if (_GotPushed[0] == true) {
 
-			if (_TargetNeighbourGroups != _MyObject._TheObject._TheTarget.NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
-				_TargetNeighbourGroups = _MyObject._TheObject._TheTarget.NeighbourGroups;
+			if (_TargetNeighbourGroups != _TargetTransform[0].NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
+				_TargetNeighbourGroups = _TargetTransform[0].NeighbourGroups;
 				_ObjectNeighbourGroups = _MyObject._TheObject.NeighbourGroups;
 				_MyObject._CreateThePath.SetEndRoom (_TargetNeighbourGroups); 
 				_MyObject._CreateThePath.CreatePath ();
@@ -188,8 +188,8 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 
 		} else {
 
-			if (_TargetNeighbourGroups != _MyObject._TheObject._TheTarget.NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
-				_TargetNeighbourGroups = _MyObject._TheObject._TheTarget.NeighbourGroups;
+			if (_TargetNeighbourGroups != _TargetTransform[0].NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
+				_TargetNeighbourGroups = _TargetTransform[0].NeighbourGroups;
 				_ObjectNeighbourGroups = _MyObject._TheObject.NeighbourGroups;
 				_MyObject._CreateThePath.SetEndRoom (_TargetNeighbourGroups); 
 				_MyObject._CreateThePath.CreatePath ();
@@ -218,7 +218,7 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 			_MyObject._PersonalNodeMap.SetInfoAndStartSearch ();//Node Search
 			_Nodeindex = _Nodesindex [0];//Index Refrence For Where I'm Starting From In The List
 		} else {
-			_MyObject._PersonalNodeMap.SetTargetPos (_MyObject._TheObject._TheTarget.MyPos);//Setting The Target As The Next Point To Go To
+			_MyObject._PersonalNodeMap.SetTargetPos (_TargetTransform[0].MyPos);//Setting The Target As The Next Point To Go To
 			_MyObject._PersonalNodeMap.SetInfoAndStartSearch ();
 			_Nodeindex = _Nodesindex [0];//Index Refrence For Where I'm Starting From In The List
 		}
@@ -261,8 +261,8 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 		_Closest = _ListOfNodes [0];
 
 		if (_CurrentRoom.transform.eulerAngles.z == _PreviourRoom.transform.eulerAngles.z) {
-			_TargetVector.x = _MyObject._TheObject._TheTarget.MyPos [0, 0];
-			_TargetVector.y = _MyObject._TheObject._TheTarget.MyPos [0, 1];
+			_TargetVector.x = _TargetTransform[0].MyPos [0, 0];
+			_TargetVector.y = _TargetTransform[0].MyPos [0, 1];
 		} else {
 			_TargetVector.x = _MyObject._TheObject.MyPos [0, 0];
 			_TargetVector.y = _MyObject._TheObject.MyPos [0, 1];	

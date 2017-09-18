@@ -87,6 +87,7 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 				_MyObject.SetMovementBehaviour (WhenCompleteChangeToBehaviourIndex);//If All Movement Behaviours In The AttackBehaviour Are Complete, Then The Behaviour Change To The Next
 			}
 		}
+
 	}
 
 	public override void Reset (){

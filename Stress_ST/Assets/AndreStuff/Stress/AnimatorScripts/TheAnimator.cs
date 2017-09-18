@@ -45,5 +45,12 @@ public class TheAnimator : MonoBehaviour {
 		MyAnimator.SetFloat (AnimatorVariables [1], Stage);
 	}
 
+	void SetStopExitCheck(int boolValue){
+		if (boolValue == 0) {
+			MyAnimator.SetBool (AnimatorVariables [4], false);
+		} else {
+			MyAnimator.SetBool(AnimatorVariables[4], true);
+		}
+	}
 
 }

@@ -91,7 +91,7 @@ public class The_Object_Behaviour {
 
 
 	void CheckIfExitRequirementsAreMet(){//Checking If I Can Change Phase
-
+		
 		if (ObjectPhases [_CreaturePhase].Behaviours.Length <= _BehaviourIndex [0]) {
 			for (int k = 0; k < ObjectPhases [_CreaturePhase].ExitGroups.Length; k++) {//Going Through All Exit_Requirements Groups To Check What To Do Next
 				if (ObjectPhases [ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase].ColdownTimer <= TheTime [0]) {
@@ -166,7 +166,7 @@ public class The_Object_Behaviour {
 
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
 	}
-		
+
 	public void SetMovementBehaviour(int theValue){//If TheValue Is Bigger Then The Amount Of Behaviours In The Phase. Then It Forces Itself To Exit To The First Exitgroup ChangeToPhase Value
 		if (theValue < ObjectPhases [_CreaturePhase].Behaviours.Length) {
 			_BehaviourIndex [0] = theValue;

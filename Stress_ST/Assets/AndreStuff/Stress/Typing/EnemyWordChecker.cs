@@ -185,7 +185,6 @@ public class EnemyWordChecker {
 
 				for (int i = _WordsToRemove; i < _WordLengths; i++) {
 					_WordsToRemove++;
-					Debug.Log (_ObjectHealth);
 					TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);
 				} 
 			}

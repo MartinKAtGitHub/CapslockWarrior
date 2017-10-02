@@ -395,9 +395,9 @@ public class SpellsController : MonoBehaviour {
 
 	void SetAlphaOnText(Text textObject, float alphaValue)
 	{
-		Color tmpAlpha = textObject.color;
+	/*	Color tmpAlpha = textObject.color;
 		tmpAlpha.a = alphaValue;
-		textObject.color = tmpAlpha;
+		textObject.color = tmpAlpha;*/
 	}
 
 	void SetAplhaOnFrontImage(Image frontImage, float alphaValue) // TODO SPELL ICON ALPHA DOSE NOT WORK FIX NOW PLS

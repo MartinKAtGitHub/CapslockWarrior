@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class AbsoluteRoot : MonoBehaviour {
 
-	public virtual void HealthChange(int _Damage){}
-	public virtual void M_SpeedChange(float _Mspeed){}
-	public virtual void A_SpeedChange(float _Aspeed){}
-	public virtual void OnDestroyed(){}
+	public float[,] MyPos = new float[1,2];//used to update the position for the Objects node position 
+	public Nodes[] MyNode = new Nodes[1];//my node and mypos is used to target objects for the AI so this is needed for everythin that is targetable
+	[HideInInspector] public List<RoomConnectorCreating> NeighbourGroups = new List<RoomConnectorCreating>();//all objects that are moving need to know in which room they are
 
 
+	public virtual void SetAiRoom(Wall_ID room){//just called once, and that is when spawning an object
+		NeighbourGroups = room.Connectors;
+	}
+
+	public virtual void SetNeighbourGroup(List<RoomConnectorCreating> neighbours){
+		NeighbourGroups = neighbours;
+	}
 
 
-	public virtual void RecievedDmg (int _damage) {}
-	public virtual void ChangeMovementAdd(float a) {}
-	public virtual void GotTheKill(int a) {}
 
 }

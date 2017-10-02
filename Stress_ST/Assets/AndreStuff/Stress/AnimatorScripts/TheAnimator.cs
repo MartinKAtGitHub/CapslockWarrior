@@ -11,11 +11,12 @@ public class TheAnimator : MonoBehaviour {
 	/// </summary>
 	public int[] AnimatorVariables = new int[5] {//TODO Going To Add This To The GameManager, Depending On How Expensive This Is
 		Animator.StringToHash ("Stop"),
-		Animator.StringToHash ("AnimatorStage"),
+		Animator.StringToHash ("AnimatorStages"),
 		Animator.StringToHash ("Shoot"),
 		Animator.StringToHash ("Rotating"),
 		Animator.StringToHash ("StopExitCheck")
 	};
+
 
 	void SetShooting(int boolValue){
 		if (boolValue == 0) {
@@ -42,7 +43,7 @@ public class TheAnimator : MonoBehaviour {
 	}
 
 	void SetAnimatorStage(int Stage){
-		MyAnimator.SetFloat (AnimatorVariables [1], Stage);
+		MyAnimator.SetInteger (AnimatorVariables [1], Stage);
 	}
 
 	void SetStopExitCheck(int boolValue){

@@ -26,7 +26,7 @@ public class Teleport_Straight_To_Target_Without_Pathfinding : The_Default_Movem
 		_MyObject = myTransform;
 		_MyTransform = myTransform._TheObject;
 
-		_TargetTransform = myTransform._TheObject._TheTarget;
+		_TargetTransform = myTransform._TheTarget;
 
 		_TheTime = _MyObject.GetTheTime ();
 
@@ -43,7 +43,7 @@ public class Teleport_Straight_To_Target_Without_Pathfinding : The_Default_Movem
 		}
 
 		MoveDirection [0] = Vector3.zero;
-		_MyObject.MyAnimator.SetFloat (_AnimatorVariables [1], AnimatorStageValueOnEnter);
+		//Ichigo		_MyObject.MyAnimator.SetFloat (_AnimatorVariables [1], AnimatorStageValueOnEnter);
 		StartPosition = _MyTransform.transform.position;
 
 	}

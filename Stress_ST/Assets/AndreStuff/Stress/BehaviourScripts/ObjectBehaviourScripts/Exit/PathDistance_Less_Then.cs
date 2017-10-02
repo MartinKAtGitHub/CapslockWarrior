@@ -14,7 +14,7 @@ public class PathDistance_Less_Then : The_Default_Exit_Behaviour {
 	public override void SetMethod (The_Object_Behaviour myTransform){
 		_MyObject = myTransform;
 		_MyTransform = _MyObject._MyTransform;
-		_TargetTransform = _MyObject._Target;
+		_TargetTransform = _MyObject._TheTarget.transform;
 	}
 
 	public override bool GetBool(int index){

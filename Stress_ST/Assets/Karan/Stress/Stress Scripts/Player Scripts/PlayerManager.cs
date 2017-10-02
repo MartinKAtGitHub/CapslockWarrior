@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 
-public class PlayerManager : DefaultBehaviourPosition {
+public class PlayerManager : AbsoluteRoot {
 
 	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center
 	const float _NodeDimentions = 0.08f;
@@ -67,7 +67,7 @@ public class PlayerManager : DefaultBehaviourPosition {
 		Debug.Log("DEAD OMG");
 	}
 
-	public override void RecievedDmg(int _damage)
+	public void RecievedDmg(int _damage)
 	{
 
 		/*HealtPoints_Txt.text = (HealthPoints -= _damage).ToString ();//Normal Health Subtraction Without Percentage Subtraction
@@ -86,18 +86,32 @@ public class PlayerManager : DefaultBehaviourPosition {
 		}
 
 	}
-	public override void ChangeMovementAdd(float a)
+
+
+	public float totalmovementdecrease = 1;
+	public void MovementSpeedChange(float a)//TODO TODO Speed Change Logic
 	{
+		totalmovementdecrease += a;
+
+		if (totalmovementdecrease < 0) {
+			GetComponent<PlayerController> ().Speed = 0.1f;
+		} else {
+			GetComponent<PlayerController> ().Speed = totalmovementdecrease;
+		}
 
 	}
 
-	public override void GotTheKill(int a)
+	public void GotTheKill(int a){
+		
+		Debug.Log ("Score " + a);
+	}
+
+	public void ResetWord()
 	{
 		//Debug.Log ("Score " + a);
 		GetComponent<PlayerTyping> ().ResetTheText ();
 
 	}
-
 
 
 

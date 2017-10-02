@@ -10,8 +10,8 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 
 	[Tooltip("When The Behaviour Is Complete, Then It Changes The Behaviour Corresponding To The Set Value")]
 	public int WhenCompleteChangeToBehaviourIndex = 0;
-	[Tooltip("When This Behaviour Is Entered, The Animaiton Value Is Changed To Change The Animation Clip Playing")]
-	public float AnimatorStageValueOnEnter = 0;
+	//Ichigo	[Tooltip("When This Behaviour Is Entered, The Animaiton Value Is Changed To Change The Animation Clip Playing")]
+	//Ichigo	public float AnimatorStageValueOnEnter = 0;
 
 	[Header("Rotation Values")]
 	[Tooltip("If The Target Is On Left Then It Rotates To Look Left. (Instant)")]
@@ -24,8 +24,8 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	public float RotateSpeed = 1;
 	[Space(10)]
 
-	protected DefaultBehaviourPosition _MyTransform;//MyCenterPosition
-	protected DefaultBehaviourPosition[] _TargetTransform;//TargetCenterPosition
+	protected AbsoluteRoot _MyTransform;//MyCenterPosition
+	protected AbsoluteRoot _TargetTransform;//TargetCenterPosition
 	protected bool _Turned = true;
 
 	protected Vector3[] MoveDirection;
@@ -37,14 +37,12 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	protected Vector3[] _TargetDirection;
 
 	Transform MyRotation;
-	protected float[] MovementSpeed;
 	protected int[] _AnimatorVariables;
 
 
 	public override void SetMethod (The_Object_Behaviour myTransform){
 		_MyObject = myTransform;
-		MovementSpeed = _MyObject._TheObject.MovementSpeed;
-		MyRotation = _MyObject._TheObject.GfxObject.transform;
+		MyRotation = _MyObject.MyAnimator.transform;
 		MoveDirection = _MyObject.GetMovementVector ();
 		RotateDirection = _MyObject.GetRotationVector ();
 
@@ -71,7 +69,7 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	public void MovementRotations(){
 
 			if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
-				TargetVectorTargetFollow ();
+			TargetVectorTargetFollow ();
 			}
 
 			RotationCalculation ();
@@ -102,11 +100,11 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	}
 
 	void TargetVectorTargetFollow(){
-		_TargetDirection[0] = (_TargetTransform[0].transform.position - _MyTransform.transform.position).normalized;
+		_TargetDirection[0] = (_MyObject._TheTarget.transform.position - _MyTransform.transform.position).normalized;
 	}
 
 	void TargetVectorLockAtTarget(){
-		_TargetDirection[0] = (_TargetTransform[0].transform.position - _MyTransform.transform.position).normalized;
+		_TargetDirection[0] = (_MyObject._TheTarget.transform.position - _MyTransform.transform.position).normalized;
 	}
 
 	void TargetVectorLock(){

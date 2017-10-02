@@ -78,9 +78,9 @@ public class FireballSTD : Fire {
 		if(other.tag == "Enemy")
 		{
 			Debug.Log("HotShot HIT ->" + other.name);
-			if (other.GetComponent<MovingCreatures> () != null) {
-				other.GetComponent<MovingCreatures> ().RecievedDmg (1);
-				other.GetComponent<MovingCreatures> ().RemoveMyselfFromOthers ();
+			if (other.GetComponent<ObjectStats> () != null) {
+				other.GetComponent<ObjectStats> ().RecievedDmg (1);
+				other.GetComponent<ObjectAI> ().RemoveMyselfFromOthers ();
 			}
 			Destroy(other.gameObject); //  TODO this needs to be some logic on enemy death;
 			hotShotHitBox.enabled = false;

@@ -6,16 +6,16 @@ public class Hide_Health : The_Default_Transition_Info {
 
 	public bool ShowOnExit = true;
 	public bool DissableTypeChecking = true;
-	public DefaultBehaviour _TheObject;
+	public ObjectWords _TheObject;
 
 
 	public override void OnEnter(){
-		_TheObject._WordChecker.HideHealth (DissableTypeChecking);
+		_TheObject.MyWord.HideHealth (DissableTypeChecking);
 	}
 
 	public override void OnExit(){
 		if (ShowOnExit == true) {
-			_TheObject._WordChecker.HideHealth (DissableTypeChecking);
+			_TheObject.MyWord.ShowHealth (DissableTypeChecking);
 		}
 	}
 

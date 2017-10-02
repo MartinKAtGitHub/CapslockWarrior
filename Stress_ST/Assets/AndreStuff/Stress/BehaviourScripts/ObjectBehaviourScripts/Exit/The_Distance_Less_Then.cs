@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class The_Distance_Less_Then : The_Default_Exit_Behaviour {
 
-	Transform _MyTransform;
-	DefaultBehaviourPosition[] _TheTarget;
+	The_Object_Behaviour _MyTransform;
 
 	public float DistanceLessThen = 0.3f;
 
 
 	public override void SetMethod (The_Object_Behaviour myTransform){
-		_MyTransform = myTransform._MyTransform;
-		_TheTarget = myTransform._TheObject._TheTarget;
+		_MyTransform = myTransform;
 	}
 
 	public override bool GetBool(int index){
 		if (index == 2) {
-			if (Vector3.Distance (_MyTransform.GetChild(2).position, _TheTarget[0].transform.position) < DistanceLessThen) {
+			if (Vector3.Distance (_MyTransform._TheObject.transform.GetChild(2).position, _MyTransform._TheTarget.transform.position) < DistanceLessThen * _MyTransform._TheObject.AttackRange) {
 				return true;
 			} else {
 				return false;

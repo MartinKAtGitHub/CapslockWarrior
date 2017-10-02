@@ -13,16 +13,16 @@ public class The_Default_Attack_Behaviour : The_Default_Behaviour {
 	[Header("Attack Values")]
 	public GameManagerTestingWhileWaiting.SpellAttackInfo[] Bullets;
 
-	public float AnimatorStageValueOnEnter = 0;
+//Ichigo	public float AnimatorStageValueOnEnter = 0;
 	
 
 	protected int _MovementIndex = 0;
 	protected Animator _MyAnimator;
-	protected float[] AttackSpeed;
+	protected float AttackSpeed;
 
 	public override void SetMethod (The_Object_Behaviour myInfo){
 		_MyObject = myInfo;
-		AttackSpeed = _MyObject._TheObject.AttackSpeed;
+	
 		for (int i = 0; i < Movement.Length; i++) {
 			Movement [i].SetMethod (myInfo);
 		}
@@ -30,6 +30,6 @@ public class The_Default_Attack_Behaviour : The_Default_Behaviour {
 
 	public override void OnEnter (){
 		Movement [_MovementIndex].OnEnter ();
-		_MyAnimator.speed = AttackSpeed [0];
+		_MyAnimator.speed = _MyObject._TheObject.AttackSpeed;
 	}
 }

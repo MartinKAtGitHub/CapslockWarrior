@@ -25,7 +25,7 @@ public class Move_Straight_To_Target_Without_Pathfinding : The_Default_Movement_
 		base.SetMethod (myTransform);
 		_MyObject = myTransform;
 		_MyTransform = myTransform._TheObject;
-		_TargetTransform = myTransform._TheObject._TheTarget;
+		_TargetTransform = myTransform._TheTarget;
 
 		_TheTime = _MyObject.GetTheTime ();
 	}
@@ -34,7 +34,7 @@ public class Move_Straight_To_Target_Without_Pathfinding : The_Default_Movement_
 	public override void OnEnter (){
 		base.OnEnter ();//Rotation
 
-		_MyObject.MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);
+		//Ichigo		_MyObject.MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);
 
 		if (TheResetState == ResetState.ResetOnEnter) {
 			Reset ();
@@ -49,7 +49,7 @@ public class Move_Straight_To_Target_Without_Pathfinding : The_Default_Movement_
 		MovementRotations (); 
 
 		if (TimeOrDistance == false) {
-			MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime * MovementSpeed[0];//1 == creature standard speed
+			MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime *  _MyObject._TheObject.MovementSpeed;//1 == creature standard speed
 			_ValueWhenLastUpdated += Vector3.Distance (Vector3.zero, MoveDirection [0]);//Distance Traveled
 
 			if (_Attacking == false) {
@@ -61,7 +61,7 @@ public class Move_Straight_To_Target_Without_Pathfinding : The_Default_Movement_
 				}
 			}
 		} else {
-			MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime * MovementSpeed[0];//1 == creature standard speed
+			MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime *  _MyObject._TheObject.MovementSpeed;//1 == creature standard speed
 			_ValueWhenLastUpdated = _TheTime [0] - TimeStarted;//Time Spent 
 
 			if (_Attacking == false) {

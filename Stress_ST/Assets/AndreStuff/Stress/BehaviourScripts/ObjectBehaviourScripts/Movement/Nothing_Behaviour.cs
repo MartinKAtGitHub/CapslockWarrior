@@ -12,13 +12,13 @@ public class Nothing_Behaviour : The_Default_Movement_Behaviour {
 		_MyObject = myTransform;
 		_MyTransform = myTransform._TheObject;
 
-		_TargetTransform = myTransform._TheObject._TheTarget;
+		_TargetTransform = myTransform._TheTarget;
 
 	}
 
 	public override void OnEnter (){
 		MoveDirection [0] = Vector3.zero;
-		_MyObject.MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);
+		//Ichigo		_MyObject.MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);
 	}
 
 	public override void BehaviourUpdate (){

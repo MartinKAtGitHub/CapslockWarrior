@@ -49,9 +49,6 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 	Vector2 _TargetVector = Vector2.zero;
 	Vector2 _ObjectVector = Vector2.zero;
 
-	bool[] _GotPushed;
-	DefaultBehaviour test;
-
 	[HideInInspector]public int NodesLeft = 0;
 
 	#endregion
@@ -62,11 +59,10 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 		_MyObject = myTransform;
 		_MyTransform = myTransform._TheObject;
 
-		_TargetTransform = myTransform._TheObject._TheTarget;
+		_TargetTransform = myTransform._TheTarget;
 		
 		_TheTime = _MyObject.GetTheTime ();
 
-		_GotPushed = myTransform.GotPushed;
 
 		_TheNodePath = _MyObject._PersonalNodeMap.GetNodeList ();
 		_Nodesindex =  _MyObject._PersonalNodeMap.GetNodeindex ();
@@ -87,7 +83,7 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 			}
 		}
 
-		_MyObject.MyAnimator.SetFloat (_AnimatorVariables [1], AnimatorStageValueOnEnter);
+		//Ichigo		_MyObject.MyAnimator.SetFloat (_AnimatorVariables [1], AnimatorStageValueOnEnter);
 
 	}
 
@@ -162,24 +158,24 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 
 	void PathCheck(){//Checking If Something Needs Updating And Setting NodePath
 
-		if (_GotPushed[0] == true) {
-
-			if (_TargetNeighbourGroups != _TargetTransform[0].NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
-				_TargetNeighbourGroups = _TargetTransform[0].NeighbourGroups;
+		if (_MyObject.GotPushed == true) {
+			_MyObject.GotPushed = false;
+			if (_TargetNeighbourGroups != _MyObject._TheTarget.NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
+				_TargetNeighbourGroups = _MyObject._TheTarget.NeighbourGroups;
 				_ObjectNeighbourGroups = _MyObject._TheObject.NeighbourGroups;
 				_MyObject._CreateThePath.SetEndRoom (_TargetNeighbourGroups); 
 				_MyObject._CreateThePath.CreatePath ();
 				_Roomindex = _Roomsindex [0];//Index Refrence For Where I'm Starting From In The List
-				_PreviourRoom = _CurrentRoom;
-				_CurrentRoom = _TheRoomPath [_Roomindex];
+		//		_PreviourRoom = _CurrentRoom;
+		//		_CurrentRoom = _TheRoomPath [_Roomindex];
 
 				NodePathCheck ();
 			} else if (_ObjectNeighbourGroups != _MyObject._TheObject.NeighbourGroups) {//If I Changed "Room" Do A Room Path Search
 				_ObjectNeighbourGroups = _MyObject._TheObject.NeighbourGroups;
 				_MyObject._CreateThePath.CreatePath ();
 				_Roomindex = _Roomsindex [0];//Index Refrence For Where I'm Starting From In The List
-				_PreviourRoom = _CurrentRoom;
-				_CurrentRoom = _TheRoomPath [_Roomindex];
+		//		_PreviourRoom = _CurrentRoom;
+		//		_CurrentRoom = _TheRoomPath [_Roomindex];
 
 				NodePathCheck ();
 			} else {
@@ -188,8 +184,8 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 
 		} else {
 
-			if (_TargetNeighbourGroups != _TargetTransform[0].NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
-				_TargetNeighbourGroups = _TargetTransform[0].NeighbourGroups;
+			if (_TargetNeighbourGroups != _MyObject._TheTarget.NeighbourGroups) {//If Target Changed "Room" Do A Room Path Search
+				_TargetNeighbourGroups = _MyObject._TheTarget.NeighbourGroups;
 				_ObjectNeighbourGroups = _MyObject._TheObject.NeighbourGroups;
 				_MyObject._CreateThePath.SetEndRoom (_TargetNeighbourGroups); 
 				_MyObject._CreateThePath.CreatePath ();
@@ -218,7 +214,7 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 			_MyObject._PersonalNodeMap.SetInfoAndStartSearch ();//Node Search
 			_Nodeindex = _Nodesindex [0];//Index Refrence For Where I'm Starting From In The List
 		} else {
-			_MyObject._PersonalNodeMap.SetTargetPos (_TargetTransform[0].MyPos);//Setting The Target As The Next Point To Go To
+			_MyObject._PersonalNodeMap.SetTargetPos (_MyObject._TheTarget.MyPos);//Setting The Target As The Next Point To Go To
 			_MyObject._PersonalNodeMap.SetInfoAndStartSearch ();
 			_Nodeindex = _Nodesindex [0];//Index Refrence For Where I'm Starting From In The List
 		}
@@ -242,13 +238,13 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 				_TargetDirection [0].x = _IdHolder [0, 0] - _PreviousNode [0, 0];
 				_TargetDirection [0].y = _IdHolder [0, 1] - _PreviousNode [0, 1];
 
-				MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime * MovementSpeed[0];
+				MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime * _MyObject._TheObject.MovementSpeed;
 			} 
 		
 		} else {//If The Object Collides With A Collider Which Gives The Object A Wrong Movement Direction. Then By Doing This The Object Refreshes Itself By Adjusting Itself (Isnt Needed, Buf Doesnt Hurt)
 			_TargetDirection [0].x = (_ObjectStartPosition.x + _IdHolder [0, 0]) - _MyObject._TheObject.MyPos [0, 0];
 			_TargetDirection [0].y = (_ObjectStartPosition.y + _IdHolder [0, 1]) - _MyObject._TheObject.MyPos [0, 1];
-			MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime * MovementSpeed[0];
+			MoveDirection [0] = _CurrentDirection[0].normalized * MovementMultiplyer * Time.deltaTime *  _MyObject._TheObject.MovementSpeed;
 		}
 	}
 
@@ -261,8 +257,8 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 		_Closest = _ListOfNodes [0];
 
 		if (_CurrentRoom.transform.eulerAngles.z == _PreviourRoom.transform.eulerAngles.z) {
-			_TargetVector.x = _TargetTransform[0].MyPos [0, 0];
-			_TargetVector.y = _TargetTransform[0].MyPos [0, 1];
+			_TargetVector.x = _MyObject._TheTarget.MyPos [0, 0];
+			_TargetVector.y = _MyObject._TheTarget.MyPos [0, 1];
 		} else {
 			_TargetVector.x = _MyObject._TheObject.MyPos [0, 0];
 			_TargetVector.y = _MyObject._TheObject.MyPos [0, 1];	

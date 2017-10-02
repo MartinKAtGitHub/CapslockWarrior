@@ -34,7 +34,7 @@ public class The_Default_Bullet_WithMovement : The_Default_Bullet {
 
 		_SpellInfo = SpellInfo;
 		_ImTheShooter = _Shooter._TheObject.gameObject;
-		_TargetStartPosition = _Shooter._Target.position;
+		_TargetStartPosition = _Shooter._TheTarget.transform.position;
 		_MyStartPosition = transform.position;
 		_MyShootingDirection = (_TargetStartPosition - _MyStartPosition).normalized;
 
@@ -55,7 +55,7 @@ public class The_Default_Bullet_WithMovement : The_Default_Bullet {
 			}
 
 			transform.rotation = Quaternion.Euler (_Direction);
-			_MyShootingDirection = (_Shooter._Target.position - transform.position).normalized;
+			_MyShootingDirection = (_TargetStartPosition - transform.position).normalized;
 		}
 
 	}

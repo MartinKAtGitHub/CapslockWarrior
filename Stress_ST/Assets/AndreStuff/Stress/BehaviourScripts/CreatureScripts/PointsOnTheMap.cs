@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointsOnTheMap : DefaultBehaviourPosition {
+public class PointsOnTheMap : AbsoluteRoot {
 
 	public Wall_ID PointPlacement;
 	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center

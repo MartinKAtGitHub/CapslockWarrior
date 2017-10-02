@@ -7,7 +7,11 @@ public class The_Object_Behaviour {
 
 	public AStarPathfinding_RoomPaths _CreateThePath;//Pathfinding For Room To Room
 	public CreatingObjectNodeMap _PersonalNodeMap;//Personal Node Pathfinding. Creating A Small "Room" Which The Creature Know Whats Inside
-	public DefaultBehaviour _TheObject;
+	public ObjectStats _TheObject;
+	public Animator MyAnimator;
+	public AbsoluteRoot _TheTarget;
+	[HideInInspector] public bool FreezeCharacter = false;
+	public Rigidbody2D MyRididBody;
 
 	[Tooltip("PathfindingNodeID is the cost to move to the different nodes //// 0 = normal nodes(1) //// 1 = undestructable walls(100) //// 2 = other units(3)")]
 	public float[] PathfindingNodeID = new float[3];//when going through the nodemap the this is the value for the different tiles when navigating
@@ -17,23 +21,19 @@ public class The_Object_Behaviour {
 	public The_Object_Phase_Behaviour[] ObjectPhases;
 
 	int[] _BehaviourIndex = new int[1];
-	int _CreaturePhase = 0;
+	public int _CreaturePhase = 0;
 
 	[HideInInspector]
 	public Transform _MyTransform;
-	[HideInInspector]
-	public Transform _Target;
 	LayerMask[] _LayerMasks;
 
-	[HideInInspector]
-	public Animator MyAnimator;
 
 	[HideInInspector]
 	public float[] TheTime = new float[1];//TODO Going To Add This To The GameManager, Depending On How Expensive This Is
 	Vector3[] MyMovementVector = new Vector3[1];
 	Vector3[] MyRotationVector = new Vector3[1];
 	The_Default_Behaviour.ResetState _ResetEnum = The_Default_Behaviour.ResetState.ResetOnPhaseChange;
-	[HideInInspector] public bool[] GotPushed = new bool[1];
+	[HideInInspector] public bool GotPushed = false;
 
 	[HideInInspector]public Vector3[] ObjectCurrentVector = new Vector3[1];
 	[HideInInspector]public Vector3[] ObjectTargetVector = new Vector3[1];
@@ -45,13 +45,16 @@ public class The_Object_Behaviour {
 	List<The_Default_Behaviour> CollisionCheckers = new List<The_Default_Behaviour>();
 
 	public void BehaviourStart(){//Setting All FunctionPointer Refrences + casting enum value to int
-		
-		MyAnimator = _TheObject.GfxObject;
-		AnimatorVariables = _TheObject.GfxObject.GetComponent<TheAnimator>().AnimatorVariables;
-		_Target = _TheObject._TheTarget[0].transform;
 
+		for (int i = 0; i < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; i++) {//If The Object Start With A Transition
+			ObjectPhases [_CreaturePhase].PhaseChangeInfo [i].OnEnter ();
+		}
+
+		_MyTransform = _TheObject.transform;
+		AnimatorVariables = MyAnimator.GetComponent<TheAnimator>().AnimatorVariables;
+	
 		ObjectCurrentVector[0] = Vector3.right;
-		ObjectTargetVector[0] = _Target.position;
+		ObjectTargetVector[0] = _TheTarget.transform.position;
 
 		for (int j = 0; j < ObjectPhases.Length; j++) {
 				
@@ -65,9 +68,7 @@ public class The_Object_Behaviour {
 			}
 		}
 
-		for (int i = 0; i < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; i++) {//If The Object Start With A Transition
-			ObjectPhases [_CreaturePhase].PhaseChangeInfo [i].OnEnter ();
-		}
+
 
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
 
@@ -76,13 +77,22 @@ public class The_Object_Behaviour {
 	public void BehaviourUpdate (){
 		TheTime [0] += Time.deltaTime;
 
+		if (_TheTarget == null) {
+			if(ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length > 0)
+				ObjectPhases [_CreaturePhase].PhaseChangeInfo [0].OnEnter ();//The Phase Object Target Hierarchy
+			if (_TheTarget == null) {
+				_TheTarget = GameObject.FindGameObjectWithTag ("DummyTarget").GetComponent<AbsoluteRoot>();
+				Debug.Log ("Logic Kinda Failed");
+			}
+		}
+
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].BehaviourUpdate();
 	
 		if(MyAnimator.GetBool(AnimatorVariables[3]) == true)
 			MyAnimator.transform.eulerAngles = MyRotationVector[0];//Updating Rotations
 
 		if(MyAnimator.GetBool(AnimatorVariables[0]) == false)
-			_TheObject.GetComponent<Rigidbody2D>().velocity = MyMovementVector [0] * 30;//Updating Positions
+			MyRididBody.velocity = MyMovementVector [0] * 30;//Updating Positions
 
 		if (MyAnimator.GetBool(AnimatorVariables [4]) == false) {
 			CheckIfExitRequirementsAreMet ();

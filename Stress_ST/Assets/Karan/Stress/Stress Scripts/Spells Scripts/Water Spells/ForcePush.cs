@@ -53,8 +53,8 @@ public class ForcePush : Water {
 		if(other.tag == "Enemy")
 		{
 			//Debug.Log(other.name);
-			if(other.GetComponent<DefaultBehaviour>() != null)//TODO
-				other.GetComponent<DefaultBehaviour>().FreezeCharacter = true;
+			if(other.GetComponent<ObjectAI>() != null)//TODO
+				other.GetComponent<ObjectAI>().TheObject.FreezeCharacter = true;
 		//	other.GetComponent<GolumMovementTest>().IsMoving = false;
 
 		}

@@ -8,22 +8,22 @@ public class Health_Increases : The_Default_Transition_Info {
 	public float HealthGain = 1;
 	public bool PercentageGain = false;
 	public bool RemoveOnExit = false;
-	public DefaultBehaviour _TheObject;
+	public ObjectStats _TheObject;
 
 	public override void OnEnter(){
 		if (PercentageGain == true) {
-			_TheObject._WordChecker.HealthIncrease(Mathf.FloorToInt(_TheObject.Health [0] * HealthGain));
+			_TheObject.HealthWordChange (Mathf.FloorToInt(_TheObject.HealthWords + (_TheObject.HealthWords * HealthGain)));
 		} else {
-			_TheObject._WordChecker.HealthIncrease(Mathf.FloorToInt(HealthGain));
+			_TheObject.HealthWordChange (Mathf.FloorToInt(HealthGain));
 		}
 	}
 
 	public override void OnExit(){
-		if (RemoveOnExit == false) {
+		if (RemoveOnExit == true) {
 			if (PercentageGain == true) {
-				_TheObject._WordChecker.HealthDecrease (Mathf.FloorToInt (_TheObject.Health [0] * HealthGain));
+				_TheObject.HealthWordChange (- Mathf.FloorToInt (_TheObject.HealthWords + _TheObject.HealthWords * HealthGain));
 			} else {
-				_TheObject._WordChecker.HealthDecrease (Mathf.FloorToInt (HealthGain));
+				_TheObject.HealthWordChange (- Mathf.FloorToInt (HealthGain));
 			}
 		}
 	}

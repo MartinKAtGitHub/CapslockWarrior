@@ -4,23 +4,20 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
+[Serializable]
 public class EnemyWordChecker {
 	//Multiple Health Bars???
 
 	public Text TextElement;
+	public ObjectStats TheCreature;
+	public string _ObjectHealth = "ObjectHealth";
 
 //	bool _StopChecking;
 	int _WordsToRemove = 0;//a counter that is used to deside how many words to remove after the player presses enter
-	public string _ObjectHealth = "ObjectHealth";
 	string _OriginalWord;
 
-	int[] Healths;
-	int[] HealthsLength;
 	int HealthIndex = 0;
 
-//	int _CleaveDmg; TODO tobeused
-	DefaultBehaviour _TheObject;
-	//PlayerTyping currentTarget;
 	List<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> > _Players = new List<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> >();//this is a list that is containing all players and their strings. so this must be shared between all players to get the effect we're after
 	KeyValuePair<GameObject, KeyValuePair<Color, string[]>> _LongestPlayer;
 	KeyValuePair<GameObject, KeyValuePair<Color, string[]>> _2ndLongestPlayer;
@@ -31,12 +28,10 @@ public class EnemyWordChecker {
 	List<bool> PlayersTypedCorrect = new List<bool>();
 	int _WordLengths = 0;
 	int NullCheck = 0;
-	bool ScoreAtWordCompleteOrDeath = true;
 	bool IgnoreTyping = false;
 
-	public EnemyWordChecker(Text textElement, string enemyHealth, DefaultBehaviour parent){//Adding methods to events and setting startvalues
-		Healths = parent.Health;
-
+/*	public EnemyWordChecker(Text textElement, string enemyHealth, DefaultBehaviour parent){//Adding methods to events and setting startvalues
+ 
 		TextElement = textElement;
 		_ObjectHealth = enemyHealth;
 		_OriginalWord = enemyHealth;
@@ -55,22 +50,39 @@ public class EnemyWordChecker {
 
 		//_SpawnedObject = Instantiate (ObjectsToSpawn [k].creature.gameObject, SpawnPoints [_SpawnSpot].transform.position, Quaternion.identity, SpawnPoints [_SpawnSpot].transform) as GameObject;
 	//	theParent.setword(ListOfWords.GetRandomWords (Healths[0]));
-	}
+	}*/
 
-	public EnemyWordChecker(Text textElement, DefaultBehaviour parent){//Adding methods to events and setting startvalues
-		Healths = parent.Health;
-		HealthsLength = parent.HealthLength;
+/*	public EnemyWordChecker(Text textElement, DefaultBehaviour parent){//Adding methods to events and setting startvalues
+
 		_TheObject = parent;
 		TextElement = textElement;
 
-		_ObjectHealth = ListOfWords.GetRandomWords (HealthsLength[HealthIndex]);
+//		_ObjectHealth = ListOfWords.GetRandomWords (TheCreature.HealthWordsLength[HealthIndex]);
+		_ObjectHealth = ListOfWords.GetRandomWords (5);
 		_OriginalWord = _ObjectHealth;
 
 		TextElement.text = _ObjectHealth;
 
 		TypingEvents.OnCompareStart += CompareStart;
 		TypingEvents.OnCompareEnd += CompareEnd;
+	}*/
+
+
+
+	public void Setup(){
+
+		_Players = new List<KeyValuePair<GameObject, KeyValuePair<Color, string[]>> >();
+		PlayersTypedCorrect = new List<bool>();
+
+		_ObjectHealth = ListOfWords.GetRandomWords (TheCreature.HealthWordsLength[HealthIndex]);
+		_OriginalWord = _ObjectHealth;
+	
+		TextElement.text = _ObjectHealth;
+
+		TypingEvents.OnCompareStart += CompareStart;
+		TypingEvents.OnCompareEnd += CompareEnd;
 	}
+
 
 	#region EventMethods
 
@@ -119,27 +131,37 @@ public class EnemyWordChecker {
 							PlayersTypedCorrect [i] = true;
 							if (_WordLengths == _ObjectHealth.Length) {
 
-								if (Healths [0] > 0) {
-									Healths[0]--;
+								if (TheCreature.HealthWords > 0) {
+									TheCreature.HealthWords--;
 
-									if (HealthIndex >= HealthsLength.Length - 1) {
+									if (HealthIndex >= TheCreature.HealthWordsLength.Length - 1) {
 										HealthIndex = -1;
 
 									}
-									Debug.Log (HealthIndex + " § " + HealthsLength.Length);
-									_ObjectHealth = ListOfWords.GetRandomWords (HealthsLength [++HealthIndex]);
+
+										
+									_Players [i].Key.GetComponent<PlayerManager> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+									_Players [i].Key.GetComponent<PlayerManager> ().ResetWord ();//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+									
+									_ObjectHealth = ListOfWords.GetRandomWords (TheCreature.HealthWordsLength [++HealthIndex]);
 									_OriginalWord = _ObjectHealth;
-									if (ScoreAtWordCompleteOrDeath == true) {
-										_Players [i].Key.GetComponent<DefaultBehaviour> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+
+									TextElement.text = "";//Removing Text So That I Can Add It Again With New Colors
+									PlayerColor = (Color32)Color.black;
+									ColorValue = PlayerColor.r.ToString ("X2") + PlayerColor.g.ToString ("X2") + PlayerColor.b.ToString ("X2") + PlayerColor.a.ToString ("X2");
+
+									for (int k = 0; k < _ObjectHealth.Length; k++) {
+										TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [k]);
 									}
+
 									return;
 								} else {
-									if (ScoreAtWordCompleteOrDeath == false) {
-										_Players [i].Key.GetComponent<DefaultBehaviour> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
-									}
+									_Players [i].Key.GetComponent<PlayerManager> ().ResetWord ();//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+									_Players [i].Key.GetComponent<PlayerManager> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+
 									TypingEvents.OnCompareStart -= CompareStart;
 									TypingEvents.OnCompareEnd -= CompareEnd;
-									_TheObject.OnDestroyed ();
+									TheCreature.OnDestroyed ();
 								}
 							}
 							break;
@@ -212,7 +234,7 @@ public class EnemyWordChecker {
 	}
 
 	public void ShowHealth(bool DissableHealthLoss){
-		if (DissableHealthLoss == true) {
+		if (DissableHealthLoss == false) {
 			IgnoreTyping = true;
 		} else {
 			IgnoreTyping = false;
@@ -221,13 +243,13 @@ public class EnemyWordChecker {
 	}
 
 	public void HealthIncrease(int healthIncrease){
-		Healths [0] += healthIncrease;
+		TheCreature.HealthWords += healthIncrease;
 	}
 
 	public void HealthDecrease(int healthDecrease){
-		Healths [0] -= healthDecrease;
+		TheCreature.HealthWords -= healthDecrease;
 
-		if (Healths [0] < 0) {
+		if (TheCreature.HealthWords < 0) {
 
 			for (int i = 0; i < _Players.Count; i++) {
 				if (PlayersTypedCorrect [i] == true) {
@@ -242,10 +264,10 @@ public class EnemyWordChecker {
 							break;
 						}
 						if(j == 0){
-							_Players [i].Key.GetComponent<DefaultBehaviour> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+							_Players [i].Key.GetComponent<PlayerManager> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
 							TypingEvents.OnCompareStart -= CompareStart;
 							TypingEvents.OnCompareEnd -= CompareEnd;
-							_TheObject.OnDestroyed ();
+							TheCreature.OnDestroyed ();
 						}
 					}
 				}

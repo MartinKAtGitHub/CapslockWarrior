@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class ChangeRoamingTarget : The_Default_Transition_Info {
 
-/*	public bool ShowOnExit = true;
-	public bool DissableTypeChecking = true;*/
-	public DefaultBehaviour _TheObject;
-	public GameObject roaming;
+
+	public ObjectStats _TheObject;
 
 	public override void OnEnter(){
-		_TheObject.SetTarget (roaming.transform.GetChild(Random.Range(0, roaming.transform.childCount)).gameObject);
+		_TheObject.SetTarget (GameObject.FindGameObjectWithTag("Walkable").transform.GetChild(Random.Range(0, GameObject.FindGameObjectWithTag("Walkable").transform.childCount)).gameObject);
+	
 	}
 
 	public override void OnExit(){

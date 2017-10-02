@@ -50,8 +50,6 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		// spawnanim (1 sek) start anim
  		SpawnPlayerChar();
 
-
-
 	}
 
 	public void StartCountDownAnimGui()

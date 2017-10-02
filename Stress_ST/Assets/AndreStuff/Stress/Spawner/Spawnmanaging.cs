@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public class Spawnmanaging : MonoBehaviour {
 
 	public bool StartSpawn = false;
-
+	public int SpawnRate;
+	[Space(10f)]
 	public GameObject[] SpawnPoints;
 	GameObject _SpawnedObject;
 
 
-	public int SpawnRate;
 	int _WaveNumber = 0;	
 	int _SpawnSpot = 0;
 
@@ -27,17 +27,16 @@ public class Spawnmanaging : MonoBehaviour {
 	void Update () {
 
 		if (StartSpawn == true) {
-			StartSpawn = false;
 			
 			StartCoroutine ("SpawnWave");
+			StartSpawn = false;
 			
 		}
 	}
 
 	private IEnumerator SpawnWave()
 	{
-
-
+		Debug.Log("Starting Ienmuerator spawning");
 		for (int i = 0; i < _WaveNumber; i++) {
 			TheSmallWaves = TheWaves [i].MiniWaves;//henter wave 1.
 			for (int j = 0; j < TheSmallWaves.Length; j++) {

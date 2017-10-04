@@ -31,4 +31,3 @@ Wolf behaviour change? -> walking at normal speed but when in range of the targe
 //TODOS
 Creeps are killing each other
 AI improvement -> a wall need to have an additional size added to it depending on creature boxcolider. so if wall is 10x  and the creature is 2x then the wall in the nodemap should be 12x.. + y axis to  
-Andr

@@ -18,7 +18,7 @@ public class SendSpellToGM : MonoBehaviour {
 			Debug.LogError("DID NOT FIND GAMEMANGER");
 		}else
 		{
-		Debug.Log("I founf the GM");
+		Debug.Log("I found the GM");
 		}
 
 		Key = transform.parent.parent;

@@ -115,11 +115,11 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		spellsController.SpellIconKey3TextTimer = SpellIconKey3.transform.GetChild(1).gameObject.GetComponent<Text>();
 		spellsController.SpellIconKey4TextTimer = SpellIconKey4.transform.GetChild(1).gameObject.GetComponent<Text>();
 
+
 		SpellIconKey1.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyOne.GetComponent<Spells>().SpellIcon;
 		SpellIconKey2.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyTwo.GetComponent<Spells>().SpellIcon;
 		SpellIconKey3.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyThree.GetComponent<Spells>().SpellIcon;
 		SpellIconKey4.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyFour.GetComponent<Spells>().SpellIcon;
-
 
 
 

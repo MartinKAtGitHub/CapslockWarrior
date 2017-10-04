@@ -27,6 +27,6 @@ public class GameManagerSpellDistributer : MonoBehaviour {
 		MainHero.AgumentedSpellGameObjectKeyThree = SpellOnKeyThree;
 		MainHero.AgumentedSpellGameObjectKeyFour = SpellOnKeyFour;
 
-		//FIXME Need a null check to make sure that nothing breakes, just set default spell if something is null
+		// Note If spell is NULL we set default spell in SpellsController. Maybe do it here ?
 	}
 }

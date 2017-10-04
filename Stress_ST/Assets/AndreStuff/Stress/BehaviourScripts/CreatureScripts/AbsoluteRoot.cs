@@ -17,6 +17,13 @@ public class AbsoluteRoot : MonoBehaviour {
 		NeighbourGroups = neighbours;
 	}
 
+	public virtual void HealthWordChange(int _damage){
+	}//Total Word Decrease/Increase
 
+	public virtual void RecievedDmg (int _damage) {
+	}//Reduction To Letters In Words (Or To Player)
+
+	public virtual void MovementSpeedChange(float _moveSpeed){
+	}
 
 }

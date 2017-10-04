@@ -57,7 +57,8 @@ public class The_Object_Behaviour {
 		ObjectTargetVector[0] = _TheTarget.transform.position;
 
 		for (int j = 0; j < ObjectPhases.Length; j++) {
-				
+			ObjectPhases [j].ColdownTimer += TheTime [0] + (ObjectPhases [j].ColdownTime * 0.1f);//Setting A Start CoolDown On 10% Of Normal CD
+
 			for (int i = 0; i < ObjectPhases [j].Behaviours.Length; i++) {
 				ObjectPhases [j].Behaviours [i].SetMethod (this);
 			}
@@ -113,7 +114,10 @@ public class The_Object_Behaviour {
 								for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
 									ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
 								}
+
+
 								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
+
 								_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase;
 								RunResetBehaviours ();
 								return;
@@ -122,7 +126,9 @@ public class The_Object_Behaviour {
 					}
 				}
 			}
+
 			ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
+
 			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {//If The Code Reaches Here, Then Non If The Exit Requirements Were Met, So Then Im reseting The Phase
 				ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
 			}
@@ -138,7 +144,9 @@ public class The_Object_Behaviour {
 								for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
 									ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
 								}
+
 								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
+
 								_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase;
 								RunResetBehaviours ();
 								return;

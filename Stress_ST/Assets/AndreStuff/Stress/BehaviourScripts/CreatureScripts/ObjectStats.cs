@@ -20,15 +20,15 @@ public class ObjectStats : AbsoluteRoot {
 	public int Energy = 1;
 
 
-	public virtual void HealthWordChange(int _damage){
+	public override void HealthWordChange(int _damage){
 		HealthWords -= _damage;
 	}//Total Word Decrease/Increase
 
-	public virtual void RecievedDmg (int _damage) {
+	public override void RecievedDmg (int _damage) {
 		HealthWords -= _damage;
 	}//Reduction To Letters In Words (Or To Player)
 
-	public virtual void MovementSpeedChange(float _moveSpeed){
+	public override void MovementSpeedChange(float _moveSpeed){
 		MovementSpeed += _moveSpeed;	
 	}
 

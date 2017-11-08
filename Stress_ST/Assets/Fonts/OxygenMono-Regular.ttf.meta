@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8c0d3ede31d52e547a4a84976d10efc5
+timeCreated: 1510152995
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Oxygen Mono
+  fontNames:
+  - Oxygen Mono
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

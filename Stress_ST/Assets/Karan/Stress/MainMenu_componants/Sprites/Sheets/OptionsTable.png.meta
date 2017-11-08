@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7284d07f164f3e94c92069d4352c7076
-timeCreated: 1509466123
+timeCreated: 1509985225
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,23 @@ TextureImporter:
     21300014: OptionsTable_7
     21300016: OptionsTable_8
     21300018: OptionsTable_9
+    21300020: OptionsTable_10
+    21300022: OptionsTable_11
+    21300024: OptionsTable_12
+    21300026: OptionsTable_13
+    21300028: OptionsTable_14
+    21300030: OptionsTable_15
+    21300032: OptionsTable_16
+    21300034: OptionsTable_17
+    21300036: OptionsTable_18
+    21300038: OptionsTable_19
+    21300040: OptionsTable_20
+    21300042: OptionsTable_21
+    21300044: OptionsTable_22
+    21300046: OptionsTable_23
+    21300048: OptionsTable_24
+    21300050: OptionsTable_25
+    21300052: OptionsTable_26
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -61,7 +78,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -69,7 +86,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -84,7 +101,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1200
+        y: 1800
         width: 180
         height: 300
       alignment: 0
@@ -97,7 +114,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 180
-        y: 1200
+        y: 1800
         width: 180
         height: 300
       alignment: 0
@@ -110,7 +127,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 360
-        y: 1200
+        y: 1800
         width: 180
         height: 300
       alignment: 0
@@ -123,7 +140,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 540
-        y: 1200
+        y: 1800
         width: 180
         height: 300
       alignment: 0
@@ -136,7 +153,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 900
+        y: 1500
         width: 180
         height: 300
       alignment: 0
@@ -149,7 +166,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 180
-        y: 900
+        y: 1500
         width: 180
         height: 300
       alignment: 0
@@ -162,7 +179,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 360
-        y: 900
+        y: 1500
         width: 180
         height: 300
       alignment: 0
@@ -175,7 +192,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 540
-        y: 900
+        y: 1500
         width: 180
         height: 300
       alignment: 0
@@ -188,7 +205,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 720
-        y: 900
+        y: 1500
         width: 180
         height: 300
       alignment: 0
@@ -200,7 +217,228 @@ TextureImporter:
       name: OptionsTable_9
       rect:
         serializedVersion: 2
+        x: 900
+        y: 1500
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_10
+      rect:
+        serializedVersion: 2
         x: 0
+        y: 1200
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_11
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 1200
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_12
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 1200
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_13
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 1200
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_14
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1200
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_15
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 1200
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 900
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_17
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 900
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_18
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 900
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_19
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 900
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_20
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 900
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_22
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 600
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_23
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 600
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_24
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 600
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_25
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 600
+        width: 180
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OptionsTable_26
+      rect:
+        serializedVersion: 2
+        x: 900
         y: 600
         width: 180
         height: 300

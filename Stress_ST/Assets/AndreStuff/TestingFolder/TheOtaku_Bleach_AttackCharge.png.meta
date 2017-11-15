@@ -1,0 +1,398 @@
+fileFormatVersion: 2
+guid: 03febfa45c0fbab4aa1c057a0db52203
+timeCreated: 1509033150
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: TheOtaku_Bleach_AttackCharge_0
+    21300002: TheOtaku_Bleach_AttackCharge_1
+    21300004: TheOtaku_Bleach_AttackCharge_2
+    21300006: TheOtaku_Bleach_AttackCharge_3
+    21300008: TheOtaku_Bleach_AttackCharge_4
+    21300010: TheOtaku_Bleach_AttackCharge_5
+    21300012: TheOtaku_Bleach_AttackCharge_6
+    21300014: TheOtaku_Bleach_AttackCharge_7
+    21300016: TheOtaku_Bleach_AttackCharge_8
+    21300018: TheOtaku_Bleach_AttackCharge_9
+    21300020: TheOtaku_Bleach_AttackCharge_10
+    21300022: TheOtaku_Bleach_AttackCharge_11
+    21300024: TheOtaku_Bleach_AttackCharge_12
+    21300026: TheOtaku_Bleach_AttackCharge_13
+    21300028: TheOtaku_Bleach_AttackCharge_14
+    21300030: TheOtaku_Bleach_AttackCharge_15
+    21300032: TheOtaku_Bleach_AttackCharge_16
+    21300034: TheOtaku_Bleach_AttackCharge_17
+    21300036: TheOtaku_Bleach_AttackCharge_18
+    21300038: TheOtaku_Bleach_AttackCharge_19
+    21300040: TheOtaku_Bleach_AttackCharge_20
+    21300042: TheOtaku_Bleach_AttackCharge_21
+    21300044: TheOtaku_Bleach_AttackCharge_24
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 183
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 183
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_2
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 183
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_3
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 183
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_4
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 183
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_5
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 183
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_6
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 183
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 122
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_8
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 122
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_9
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 122
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_10
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 122
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_11
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 122
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_12
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 122
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_13
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 122
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 61
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_15
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 61
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_16
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 61
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_17
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 61
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_18
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 61
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_19
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 61
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_20
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 61
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TheOtaku_Bleach_AttackCharge_24
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 0
+        width: 35
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

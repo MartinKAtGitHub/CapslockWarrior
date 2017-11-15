@@ -20,12 +20,16 @@ public class Devial_Demon_Bullet : The_Default_Bullet {
 
 	}
 
+
 	void FixedUpdate(){
-		TheCapsuleSize.x *= 2;//Width need to be multiplyed with 2 to get the diameter correct
 
 		foreach (RaycastHit2D s in Physics2D.CapsuleCastAll (transform.position, TheCapsuleSize, CapsuleDirection2D.Vertical, 0, Vector2.zero, 0, WhatCanIHit)) {//Capsule size is acting weird. the y value is the radius of the height, but the x value is the diameter of the width?????? WHAT why......
-			s.transform.GetComponent<ObjectStats>().RecievedDmg(Mathf.RoundToInt(_SpellInfo.DamageMultiplyer + _Shooter._TheObject.AttackStrength));
+			if(s.transform.CompareTag("Player1")){
+				s.transform.GetComponent<PlayerManager>().RecievedDmg(Mathf.RoundToInt(1/*_SpellInfo.DamageMultiplyer + _Shooter._TheObject.AttackStrength*/));
+			}
+			
 		}
+
 		Destroy (gameObject);
 
 	}

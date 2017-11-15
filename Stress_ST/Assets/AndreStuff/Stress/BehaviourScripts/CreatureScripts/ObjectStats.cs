@@ -11,7 +11,6 @@ public class ObjectStats : AbsoluteRoot {
 	public int[] HealthWordsLength;
 	
 	public float MovementSpeed = 1;
-	public float AttackSpeed = 1;
 
 	public float AttackStrength = 1;
 	public float AttackRange = 1;

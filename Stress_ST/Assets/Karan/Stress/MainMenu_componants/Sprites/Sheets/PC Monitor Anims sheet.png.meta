@@ -1,51 +1,45 @@
 fileFormatVersion: 2
-guid: 5904a5c92030b0a498e087450f79d99f
-timeCreated: 1507296367
+guid: b2a1a5d2f0c67084ea58ccd340524565
+timeCreated: 1509725806
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SoldierAnimations_0
-    21300002: SoldierAnimations_1
-    21300004: SoldierAnimations_2
-    21300006: SoldierAnimations_3
-    21300008: SoldierAnimations_4
-    21300010: SoldierAnimations_5
-    21300012: SoldierAnimations_6
-    21300014: SoldierAnimations_7
-    21300016: SoldierAnimations_8
-    21300018: SoldierAnimations_9
-    21300020: SoldierAnimations_10
-    21300022: SoldierAnimations_11
-    21300024: SoldierAnimations_12
-    21300026: SoldierAnimations_13
-    21300028: SoldierAnimations_14
-    21300030: SoldierAnimations_15
-    21300032: SoldierAnimations_16
-    21300034: SoldierAnimations_17
-    21300036: SoldierAnimations_18
-    21300038: SoldierAnimations_19
-    21300040: SoldierAnimations_20
-    21300042: SoldierAnimations_21
-    21300044: SoldierAnimations_22
-    21300046: SoldierAnimations_23
-    21300048: SoldierAnimations_24
-    21300050: SoldierAnimations_25
-    21300052: SoldierAnimations_26
-    21300054: SoldierAnimations_27
-    21300056: SoldierAnimations_28
-    21300058: SoldierAnimations_29
-    21300060: SoldierAnimations_30
-    21300062: SoldierAnimations_31
-    21300064: SoldierAnimations_32
-    21300066: SoldierAnimations_33
-    21300068: SoldierAnimations_34
-    21300070: SoldierAnimations_35
-    21300072: SoldierAnimations_36
-    21300074: SoldierAnimations_37
-    21300076: SoldierAnimations_38
-    21300078: SoldierAnimations_39
-    21300080: SoldierAnimations_40
-    21300082: SoldierAnimations_41
+    21300000: PC Monitor Anims sheet_0
+    21300002: PC Monitor Anims sheet_1
+    21300004: PC Monitor Anims sheet_2
+    21300006: PC Monitor Anims sheet_3
+    21300008: PC Monitor Anims sheet_4
+    21300010: PC Monitor Anims sheet_5
+    21300012: PC Monitor Anims sheet_6
+    21300014: PC Monitor Anims sheet_7
+    21300016: PC Monitor Anims sheet_8
+    21300018: PC Monitor Anims sheet_9
+    21300020: PC Monitor Anims sheet_10
+    21300022: PC Monitor Anims sheet_11
+    21300024: PC Monitor Anims sheet_12
+    21300026: PC Monitor Anims sheet_13
+    21300028: PC Monitor Anims sheet_14
+    21300030: PC Monitor Anims sheet_15
+    21300032: PC Monitor Anims sheet_16
+    21300034: PC Monitor Anims sheet_17
+    21300036: PC Monitor Anims sheet_18
+    21300038: PC Monitor Anims sheet_19
+    21300040: PC Monitor Anims sheet_20
+    21300042: PC Monitor Anims sheet_21
+    21300044: PC Monitor Anims sheet_22
+    21300046: PC Monitor Anims sheet_23
+    21300048: PC Monitor Anims sheet_24
+    21300050: PC Monitor Anims sheet_25
+    21300052: PC Monitor Anims sheet_26
+    21300054: PC Monitor Anims sheet_27
+    21300056: PC Monitor Anims sheet_28
+    21300058: PC Monitor Anims sheet_29
+    21300060: PC Monitor Anims sheet_30
+    21300062: PC Monitor Anims sheet_31
+    21300064: PC Monitor Anims sheet_32
+    21300066: PC Monitor Anims sheet_33
+    21300068: PC Monitor Anims sheet_34
+    21300070: PC Monitor Anims sheet_35
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -93,7 +87,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -101,7 +95,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -112,546 +106,468 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SoldierAnimations_0
+      name: PC Monitor Anims sheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 540
-        width: 60
-        height: 60
+        y: 630
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SoldierAnimations_1
+      name: PC Monitor Anims sheet_1
       rect:
         serializedVersion: 2
-        x: 60
-        y: 540
-        width: 60
-        height: 60
+        x: 210
+        y: 630
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SoldierAnimations_2
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 540
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_3
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 540
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 480
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_5
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 480
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_6
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 480
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_7
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 480
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_8
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 480
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_9
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 360
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_10
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 360
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_11
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 360
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_12
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 360
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_13
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 360
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_14
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 300
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_15
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 300
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_16
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 300
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_17
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 300
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_18
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 300
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_19
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 240
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_20
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 240
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_21
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 240
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_22
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 240
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_23
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 240
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_24
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 240
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_25
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 180
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_26
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 180
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_27
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 180
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_28
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 180
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_29
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 120
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_30
-      rect:
-        serializedVersion: 2
-        x: 60
-        y: 120
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_31
-      rect:
-        serializedVersion: 2
-        x: 120
-        y: 120
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_32
-      rect:
-        serializedVersion: 2
-        x: 180
-        y: 120
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_33
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 120
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_34
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 120
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_35
-      rect:
-        serializedVersion: 2
-        x: 360
-        y: 120
-        width: 60
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: SoldierAnimations_36
+      name: PC Monitor Anims sheet_2
       rect:
         serializedVersion: 2
         x: 420
-        y: 120
-        width: 60
-        height: 60
+        y: 630
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SoldierAnimations_37
+      name: PC Monitor Anims sheet_3
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 630
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_4
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 630
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1050
+        y: 630
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 630
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 630
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 630
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1890
+        y: 630
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_10
       rect:
         serializedVersion: 2
         x: 0
-        y: 60
-        width: 60
-        height: 60
+        y: 420
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SoldierAnimations_38
+      name: PC Monitor Anims sheet_11
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 420
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_12
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 420
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_13
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 420
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_14
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 420
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_15
+      rect:
+        serializedVersion: 2
+        x: 1050
+        y: 420
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_17
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_18
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_19
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_20
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_21
+      rect:
+        serializedVersion: 2
+        x: 1050
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_22
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_23
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_24
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_25
+      rect:
+        serializedVersion: 2
+        x: 1890
+        y: 210
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_26
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 60
-        height: 60
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SoldierAnimations_39
+      name: PC Monitor Anims sheet_27
       rect:
         serializedVersion: 2
-        x: 60
+        x: 210
         y: 0
-        width: 60
-        height: 60
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SoldierAnimations_40
+      name: PC Monitor Anims sheet_28
       rect:
         serializedVersion: 2
-        x: 120
+        x: 420
         y: 0
-        width: 60
-        height: 60
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SoldierAnimations_41
+      name: PC Monitor Anims sheet_29
       rect:
         serializedVersion: 2
-        x: 180
+        x: 630
         y: 0
-        width: 60
-        height: 60
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_30
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 0
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_31
+      rect:
+        serializedVersion: 2
+        x: 1050
+        y: 0
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_32
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 0
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_33
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 0
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_34
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 0
+        width: 210
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PC Monitor Anims sheet_35
+      rect:
+        serializedVersion: 2
+        x: 1890
+        y: 0
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8d04c7821a3c22c418ae229607bf21af
+timeCreated: 1510152995
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Allerta Stencil
+  fontNames:
+  - Allerta Stencil
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

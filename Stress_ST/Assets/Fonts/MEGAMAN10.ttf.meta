@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 67d4386c411730145a936e47868a33d8
+timeCreated: 1510316818
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: MEGAMAN10
+  fontNames:
+  - MEGAMAN10
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

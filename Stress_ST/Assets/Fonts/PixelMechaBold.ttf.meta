@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 05cb2dcdd63d3c041b840357cd738a1b
+timeCreated: 1510316867
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: PixelMechaBold
+  fontNames:
+  - PixelMechaBold
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

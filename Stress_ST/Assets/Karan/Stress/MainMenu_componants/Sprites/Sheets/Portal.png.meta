@@ -1,18 +1,14 @@
 fileFormatVersion: 2
-guid: af74e1d491b7a0645b8f2af8b9a6e2e2
-timeCreated: 1510160939
+guid: a4efe9e7b20565f4f97f3830c7297215
+timeCreated: 1510590512
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MenuCharacter_0
-    21300002: MenuCharacter_1
-    21300004: MenuCharacter_2
-    21300006: MenuCharacter_3
-    21300008: MenuCharacter_4
-    21300010: MenuCharacter_5
-    21300012: MenuCharacter_6
-    21300014: MenuCharacter_7
-    21300016: MenuCharacter_8
+    21300000: Portal_0
+    21300002: Portal_1
+    21300004: Portal_2
+    21300006: Portal_3
+    21300008: Portal_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -60,7 +56,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -68,7 +64,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -79,117 +75,65 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MenuCharacter_0
+      name: Portal_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 2280
-        width: 330
-        height: 570
+        y: 840
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MenuCharacter_1
+      name: Portal_1
       rect:
         serializedVersion: 2
-        x: 330
-        y: 2280
-        width: 330
-        height: 570
+        x: 0
+        y: 630
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MenuCharacter_2
+      name: Portal_2
       rect:
         serializedVersion: 2
-        x: 660
-        y: 2280
-        width: 330
-        height: 570
+        x: 0
+        y: 420
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MenuCharacter_3
+      name: Portal_3
       rect:
         serializedVersion: 2
-        x: 990
-        y: 2280
-        width: 330
-        height: 570
+        x: 0
+        y: 210
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MenuCharacter_4
+      name: Portal_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 330
-        height: 570
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MenuCharacter_5
-      rect:
-        serializedVersion: 2
-        x: 330
-        y: 0
-        width: 330
-        height: 570
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MenuCharacter_6
-      rect:
-        serializedVersion: 2
-        x: 660
-        y: 0
-        width: 330
-        height: 570
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MenuCharacter_7
-      rect:
-        serializedVersion: 2
-        x: 990
-        y: 0
-        width: 330
-        height: 570
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: MenuCharacter_8
-      rect:
-        serializedVersion: 2
-        x: 1320
-        y: 0
-        width: 330
-        height: 570
+        width: 210
+        height: 210
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

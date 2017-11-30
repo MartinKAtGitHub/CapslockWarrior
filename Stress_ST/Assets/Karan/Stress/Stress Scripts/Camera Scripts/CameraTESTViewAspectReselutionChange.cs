@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraTESTViewAspectReselutionChange : MonoBehaviour {
 
-public int Width;
-public int Hight;
+	public float Width;
+	public float Hight;
 // THIS WILL KEEP THE CAM SIZE NO MATTER THE RESULOTION
 
 // THE ASPECT WILL BE PERCERVED WHEN CHANGEING THE RESELUTON.
@@ -16,7 +16,8 @@ public int Hight;
 
 	void Start () 
 	{
-		Camera.main.aspect = 1.777778f;	// For some reason when i do Width(16)/Hight(9) i get 1. I should be getting 1.777778f
+		//Camera.main.aspect = 1.777778f;	
+		Camera.main.aspect = Width/Hight;	
 
 		Debug.Log("Forcing ASPECT ratio -> " + Camera.main.aspect);
 	}

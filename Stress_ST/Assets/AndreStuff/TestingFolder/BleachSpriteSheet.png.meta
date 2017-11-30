@@ -1,0 +1,566 @@
+fileFormatVersion: 2
+guid: e44828c3f036b5d4dae0f656c8dd8869
+timeCreated: 1510937005
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: BleachSpriteSheet_0
+    21300002: BleachSpriteSheet_1
+    21300004: BleachSpriteSheet_2
+    21300006: BleachSpriteSheet_3
+    21300008: BleachSpriteSheet_4
+    21300010: BleachSpriteSheet_5
+    21300012: BleachSpriteSheet_6
+    21300014: BleachSpriteSheet_7
+    21300016: BleachSpriteSheet_8
+    21300018: BleachSpriteSheet_9
+    21300020: BleachSpriteSheet_10
+    21300022: BleachSpriteSheet_11
+    21300024: BleachSpriteSheet_12
+    21300026: BleachSpriteSheet_13
+    21300028: BleachSpriteSheet_14
+    21300030: BleachSpriteSheet_15
+    21300032: BleachSpriteSheet_16
+    21300034: BleachSpriteSheet_17
+    21300036: BleachSpriteSheet_18
+    21300038: BleachSpriteSheet_19
+    21300040: BleachSpriteSheet_20
+    21300042: BleachSpriteSheet_21
+    21300044: BleachSpriteSheet_22
+    21300046: BleachSpriteSheet_23
+    21300048: BleachSpriteSheet_24
+    21300050: BleachSpriteSheet_25
+    21300052: BleachSpriteSheet_26
+    21300054: BleachSpriteSheet_27
+    21300056: BleachSpriteSheet_28
+    21300058: BleachSpriteSheet_29
+    21300060: BleachSpriteSheet_30
+    21300062: BleachSpriteSheet_31
+    21300064: BleachSpriteSheet_32
+    21300066: BleachSpriteSheet_33
+    21300068: BleachSpriteSheet_34
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BleachSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 325
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 325
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 325
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 325
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 325
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 325
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 260
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 260
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 260
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 260
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 260
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 195
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 195
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 195
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 195
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 195
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 195
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 130
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_19
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 130
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_20
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 130
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_21
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 130
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_22
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 130
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_23
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 130
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 65
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_25
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 65
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_26
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 65
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_27
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 65
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_28
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 65
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_29
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 65
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_31
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 0
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_32
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 0
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_33
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 0
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BleachSpriteSheet_34
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 0
+        width: 59
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

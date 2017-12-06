@@ -6,6 +6,7 @@ public class CameraTESTViewAspectReselutionChange : MonoBehaviour {
 
 	public float Width;
 	public float Hight;
+	private Camera Cam;
 // THIS WILL KEEP THE CAM SIZE NO MATTER THE RESULOTION
 
 // THE ASPECT WILL BE PERCERVED WHEN CHANGEING THE RESELUTON.
@@ -16,8 +17,10 @@ public class CameraTESTViewAspectReselutionChange : MonoBehaviour {
 
 	void Start () 
 	{
+		Cam = GetComponent<Camera>();
+		Cam.aspect = Width/Hight;
 		//Camera.main.aspect = 1.777778f;	
-		Camera.main.aspect = Width/Hight;	
+		//Camera.main.aspect = Width/Hight;	
 
 		Debug.Log("Forcing ASPECT ratio -> " + Camera.main.aspect);
 	}

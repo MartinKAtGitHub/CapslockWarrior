@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenuAnimManager : MonoBehaviour {
 
@@ -17,7 +18,8 @@ public class MainMenuAnimManager : MonoBehaviour {
 
 	[Header("Names of GameObjects we need in this script")] // Copy and past stopped working Buggy shitt
 	[Space(10)]
-	public string MainMenuCanvasName;
+	//public string MainMenuCanvasName; // this is a Tag so
+
 	public string ExitPowerName = "Exit PowerButton";
 	public string EndlessModePhoneName = "EndlessMode Phone";
 	public string PCMonitorName = "PC Monitor";
@@ -37,7 +39,10 @@ public class MainMenuAnimManager : MonoBehaviour {
 	private Text txt_EndlessModePhone;
 	private Text txt_PCMonitor;
 	private Text txt_OptionsTable;
-	// Use this for initialization
+
+	private Camera MainMenuMainCam;
+	private Camera StoryModeZoomCam;
+
 	void Awake () 
 	{
 		NullCheckGameObject.NullCheckFindWithTag(ref MainMenuCanvasRoot, "MainCanvas");
@@ -60,7 +65,12 @@ public class MainMenuAnimManager : MonoBehaviour {
 		txt_EndlessModePhone = UI_EndlessModePhone.GetComponentInChildren<Text>();
 		txt_PCMonitor = UI_PCMonitor.GetComponentInChildren<Text>();
 		txt_OptionsTable = UI_OptionsTable.GetComponentInChildren<Text>();
+
+		MainMenuMainCam = MainMenuCanvasRoot.GetComponentInChildren<Camera>();
+		StoryModeZoomCam = btn_PCMonitor.gameObject.GetComponentInChildren<Camera>(true); // HACK I know this is Clunky maybe find the cam in a btter way
+
 	}
+
 
 
 	public void LoadeStoryModeScene()
@@ -71,8 +81,10 @@ public class MainMenuAnimManager : MonoBehaviour {
 
 	public void OnClickStoryMode()
 	{
+		// HACK the actual execution of the Story anim is On the Button itsef. I can do it here trough code but i didnt Lel
 		IsAllButtonsInteractable(false);
 		DisableAllText();
+		StartStoryModeEffectCam();
 	}
 
 
@@ -91,5 +103,17 @@ public class MainMenuAnimManager : MonoBehaviour {
 		txt_EndlessModePhone.enabled = false;
 		txt_PCMonitor.enabled = false;
 		txt_OptionsTable.enabled = false;
+	}
+
+	void StartStoryModeEffectCam()
+	{
+		MainMenuMainCam.gameObject.SetActive(false);
+		StoryModeZoomCam.gameObject.SetActive(true);
+	}
+
+	public void LoadStoryModeScene() // TODO the Anim event cant find this. Bacuse this script is not attached to the Animated GM
+	{
+		SceneManager.LoadSceneAsync(1);
+		Debug.Log("Starting NEW SCENE");
 	}
 }

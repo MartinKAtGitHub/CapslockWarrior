@@ -14,8 +14,9 @@ public class Speed_Increase : The_Default_Transition_Info {
 	}
 
 	public override void OnExit(){
-		if (RemoveOnExit == true)
+		if (RemoveOnExit == true) {
 			_TheObject.MovementSpeedChange (-MovementIncrease);
+		}
 		
 	}
 

@@ -44,7 +44,7 @@ public class Skelly_Worm_Beam : The_Default_Bullet {
 	int[] _AnimatorVariables;
 
 	void Start () {
-		_AnimatorVariables = _LazerBeamAnimator.GetComponent<LazerBeam_AnimatorParameters> ().AnimatorValue;
+		_AnimatorVariables = _LazerBeamAnimator.GetComponent<Skelly_Worm_LazerBeam_AnimatorParameters> ().AnimatorValue;
 		_RotatingValue += 0;//TODO To Remove Warning
 
 		_SpriteSize.y = _LazerBeamSpriteRenderer.size.y;

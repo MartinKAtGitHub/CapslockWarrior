@@ -64,15 +64,17 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 		} else if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.LockVector) {
 			TargetVectorLock ();
 		}
+
+		_MyObject.MyAnimator.speed = _MyObject._TheObject.MovementSpeed;
 	}
 
 	public void MovementRotations(){
 
-			if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
+		if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
 			TargetVectorTargetFollow ();
-			}
+		}
 
-			RotationCalculation ();
+		RotationCalculation ();
 	
 		if (_MyObject.MyAnimator.GetBool (_AnimatorVariables [3]) == true) {
 

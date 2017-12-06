@@ -26,57 +26,62 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 	}
 
 	public override void OnEnter (){
+		_MovementIndex = 0;
 		base.OnEnter ();
 
 		if (TheResetState == ResetState.ResetOnEnter) {
 			Reset ();
 		}
 //Ichigo		_MyAnimator.SetFloat (_AnimatorVariables[1], AnimatorStageValueOnEnter);//Overrides Movement AnimatorStage OnEnter. But Only In OnEnter
-		_MyAnimator.speed = _MyObject._TheObject.AttackSpeed;
 	}
 
 	public override void BehaviourUpdate (){
 	
 		if (_MyAnimator.GetBool (_AnimatorVariables [2]) == true) {//If Animator Say That I Can Shoot
-			if (_MyAnimator.transform.eulerAngles.y == 0) {
-
-				if (BulletOrCreature == true) {
-					(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
-				} else {
-					Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity).GetComponent<AbsoluteRoot>().SetNeighbourGroup(_MyObject._TheObject.NeighbourGroups); // Spawning Creature
-				}
-				_MyObject._TheObject.Ammo--;
+			if (_MyObject._TheObject.Ammo == 0) {
+				_MyAnimator.SetBool (_AnimatorVariables [2], false);
 			} else {
+				if (_MyAnimator.transform.eulerAngles.y == 0) {
 
-				Bullets [0].AttackPosition.x *= -1;
-				if (BulletOrCreature == true) {
-					(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
-				} else {
-					Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity).GetComponent<AbsoluteRoot>().SetNeighbourGroup(_MyObject._TheObject.NeighbourGroups); // Spawning Creature
-				}
-				Bullets [0].AttackPosition.x *= -1;
-				_MyObject._TheObject.Ammo--;
-			}
-			_BulletCounter++;
-
-			if (_BulletCounter >= Bullets.Length) {
-				_BulletCounter = 0;
-			}
-			_MyAnimator.SetBool (_AnimatorVariables [2], false);//When Shot, Set Bool To False
-
-			if (ChangeMovementOnShot == true) {
-				if (Movement [_MovementIndex].TheResetState == ResetState.ResetWhenComplete) {//Reseting MovementBehaviour Used
-					Movement [_MovementIndex].Reset ();
-				}
-				_MovementIndex = Movement [_MovementIndex].GetInt (2);
-				if (_MovementIndex < Movement.Length) {
-					Movement [_MovementIndex].OnEnter ();
-					_MyAnimator.speed = _MyObject._TheObject.AttackSpeed;
-				} else {
-					if (TheResetState == ResetState.ResetWhenComplete) {
-						Reset ();
+					if (BulletOrCreature == true) {
+						(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
+					} else {
+						Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity).GetComponent<AbsoluteRoot> ().SetNeighbourGroup (_MyObject._TheObject.NeighbourGroups); // Spawning Creature
 					}
-					_MyObject.SetMovementBehaviour (WhenCompleteChangeToBehaviourIndex);//If All Movement Behaviours In The AttackBehaviour Are Complete, Then The Behaviour Change To The Next
+					_MyObject._TheObject.Ammo--;
+				} else {
+
+					Bullets [0].AttackPosition.x *= -1;
+					if (BulletOrCreature == true) {
+						(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
+					} else {
+						Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity).GetComponent<AbsoluteRoot> ().SetNeighbourGroup (_MyObject._TheObject.NeighbourGroups); // Spawning Creature
+					}
+					Bullets [0].AttackPosition.x *= -1;
+					_MyObject._TheObject.Ammo--;
+				}
+				_BulletCounter++;
+
+				if (_BulletCounter >= Bullets.Length) {
+					_BulletCounter = 0;
+				}
+				_MyAnimator.SetBool (_AnimatorVariables [2], false);//When Shot, Set Bool To False
+
+				if (ChangeMovementOnShot == true) {
+					if (Movement [_MovementIndex].TheResetState == ResetState.ResetWhenComplete) {//Reseting MovementBehaviour Used
+						Movement [_MovementIndex].Reset ();
+					}
+					_MovementIndex = Movement [_MovementIndex].GetInt (2);
+					if (_MovementIndex < Movement.Length) {
+						Movement [_MovementIndex].OnEnter ();
+						_MyAnimator.speed = _MyObject._TheObject.MovementSpeed;
+					} else {
+						if (TheResetState == ResetState.ResetWhenComplete) {
+							Reset ();
+						}
+						_MyObject.SetMovementBehaviour (WhenCompleteChangeToBehaviourIndex);//If All Movement Behaviours In The AttackBehaviour Are Complete, Then The Behaviour Change To The Next
+						return;
+					}
 				}
 			}
 
@@ -87,18 +92,20 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 				Movement [_MovementIndex].Reset ();
 			}
 			_MovementIndex = Movement [_MovementIndex].GetInt (2);
+		
 			if (_MovementIndex < Movement.Length) {
 				Movement [_MovementIndex].OnEnter ();
-				_MyAnimator.speed = _MyObject._TheObject.AttackSpeed;
+				_MyAnimator.speed = _MyObject._TheObject.MovementSpeed;
 			} else {
 				if (TheResetState == ResetState.ResetWhenComplete) {
 					Reset ();
 				}
 				_MyObject.SetMovementBehaviour (WhenCompleteChangeToBehaviourIndex);//If All Movement Behaviours In The AttackBehaviour Are Complete, Then The Behaviour Change To The Next
+				return;
 			}
 		}
 
-		Movement [_MovementIndex].BehaviourUpdate ();
+//		Movement [_MovementIndex].BehaviourUpdate ();
 
 
 	}

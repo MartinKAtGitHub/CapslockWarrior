@@ -70,7 +70,7 @@ public class The_Object_Behaviour {
 		}
 
 
-
+		MyAnimator.speed = _TheObject.MovementSpeed;
 		ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
 
 	}
@@ -102,7 +102,8 @@ public class The_Object_Behaviour {
 
 
 	void CheckIfExitRequirementsAreMet(){//Checking If I Can Change Phase
-		
+
+
 		if (ObjectPhases [_CreaturePhase].Behaviours.Length <= _BehaviourIndex [0]) {
 			for (int k = 0; k < ObjectPhases [_CreaturePhase].ExitGroups.Length; k++) {//Going Through All Exit_Requirements Groups To Check What To Do Next
 				if (ObjectPhases [ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase].ColdownTimer <= TheTime [0]) {
@@ -116,6 +117,9 @@ public class The_Object_Behaviour {
 								}
 
 
+								for (int j = 0; j < ObjectPhases.Length; j++) {
+									ObjectPhases [j].ColdownTimer = (ObjectPhases [j].ColdownTimer - TheTime [0]) + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
+								}
 								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
 
 								_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase;
@@ -127,6 +131,9 @@ public class The_Object_Behaviour {
 				}
 			}
 
+			for (int j = 0; j < ObjectPhases.Length; j++) {
+				ObjectPhases [j].ColdownTimer = (ObjectPhases [j].ColdownTimer - TheTime [0]) + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
+			}
 			ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
 
 			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {//If The Code Reaches Here, Then Non If The Exit Requirements Were Met, So Then Im reseting The Phase
@@ -145,6 +152,10 @@ public class The_Object_Behaviour {
 									ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
 								}
 
+								for (int j = 0; j < ObjectPhases.Length; j++) {
+									ObjectPhases [j].ColdownTimer = (ObjectPhases [j].ColdownTimer - TheTime [0]) + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
+								//	ObjectPhases [j].ColdownTimer += TheTime [0] + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution (Every Change Does This, So 5 Fast Changes == 50% CD)
+								}
 								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
 
 								_CreaturePhase = ObjectPhases [_CreaturePhase].ExitGroups [k].ChangeToPhase;
@@ -159,7 +170,6 @@ public class The_Object_Behaviour {
 	}
 
 	void RunResetBehaviours (){//Reseting Currently Used Behaviours
-		
 		_ResetEnum = The_Default_Behaviour.ResetState.ResetOnPhaseChange;
 		_BehaviourIndex [0] = 0;
 		
@@ -191,14 +201,17 @@ public class The_Object_Behaviour {
 			ObjectPhases [_CreaturePhase].Behaviours [_BehaviourIndex [0]].OnEnter ();
 		} else {
 
-			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
+		/*	for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {
 				ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
-			}
-			int Saver = _CreaturePhase;
+			}*/
+		//	int Saver = _CreaturePhase;
+			_BehaviourIndex [0] = theValue;
+		
 			CheckIfExitRequirementsAreMet ();
+		/*	Debug.Log ("a" );
 			if (Saver == _CreaturePhase) {//CheckIfExitRequirements Failed, Then Its The Same
 				RunResetBehaviours();//Reseting Anyway
-			}
+			}*/
 
 			return;
 		}

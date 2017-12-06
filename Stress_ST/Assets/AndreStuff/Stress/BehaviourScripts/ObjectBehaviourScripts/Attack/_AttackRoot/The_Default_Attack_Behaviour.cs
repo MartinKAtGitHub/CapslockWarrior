@@ -30,6 +30,6 @@ public class The_Default_Attack_Behaviour : The_Default_Behaviour {
 
 	public override void OnEnter (){
 		Movement [_MovementIndex].OnEnter ();
-		_MyAnimator.speed = _MyObject._TheObject.AttackSpeed;
+		_MyAnimator.speed = _MyObject._TheObject.MovementSpeed;
 	}
 }

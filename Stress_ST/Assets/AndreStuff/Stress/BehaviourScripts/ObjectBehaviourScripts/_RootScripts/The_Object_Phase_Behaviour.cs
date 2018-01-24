@@ -7,7 +7,7 @@ public class The_Object_Phase_Behaviour {
 
 	[Tooltip("The CoolDown How Long Time The Attack Phase Can Happen Again")]
 	public float ColdownTime = 0;
-	[HideInInspector]public float ColdownTimer = 0;
+	public float ColdownTimer = 0;
 	public The_Default_Transition_Info[] PhaseChangeInfo;
 
 	[Tooltip("Object Behaviour, If You Want To Run Straight To The Target Then Drag And Drop The Script To Here To Get The Behaviour Running")]

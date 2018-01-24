@@ -31,7 +31,7 @@ public class The_Object_Behaviour {
 	[HideInInspector]
 	public float[] TheTime = new float[1];//TODO Going To Add This To The GameManager, Depending On How Expensive This Is
 	Vector3[] MyMovementVector = new Vector3[1];
-	Vector3[] MyRotationVector = new Vector3[1];
+	[HideInInspector] public Vector3[] MyRotationVector = new Vector3[1];
 	The_Default_Behaviour.ResetState _ResetEnum = The_Default_Behaviour.ResetState.ResetOnPhaseChange;
 	[HideInInspector] public bool GotPushed = false;
 
@@ -118,7 +118,7 @@ public class The_Object_Behaviour {
 
 
 								for (int j = 0; j < ObjectPhases.Length; j++) {
-									ObjectPhases [j].ColdownTimer = (ObjectPhases [j].ColdownTimer - TheTime [0]) + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
+									ObjectPhases [j].ColdownTimer = ObjectPhases [j].ColdownTimer + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
 								}
 								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
 
@@ -131,11 +131,11 @@ public class The_Object_Behaviour {
 				}
 			}
 
-			for (int j = 0; j < ObjectPhases.Length; j++) {
+		/*	for (int j = 0; j < ObjectPhases.Length; j++) {
 				ObjectPhases [j].ColdownTimer = (ObjectPhases [j].ColdownTimer - TheTime [0]) + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
 			}
 			ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
-
+*/
 			for (int s = 0; s < ObjectPhases [_CreaturePhase].PhaseChangeInfo.Length; s++) {//If The Code Reaches Here, Then Non If The Exit Requirements Were Met, So Then Im reseting The Phase
 				ObjectPhases [_CreaturePhase].PhaseChangeInfo [s].OnExit ();
 			}
@@ -153,8 +153,7 @@ public class The_Object_Behaviour {
 								}
 
 								for (int j = 0; j < ObjectPhases.Length; j++) {
-									ObjectPhases [j].ColdownTimer = (ObjectPhases [j].ColdownTimer - TheTime [0]) + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
-								//	ObjectPhases [j].ColdownTimer += TheTime [0] + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution (Every Change Does This, So 5 Fast Changes == 50% CD)
+									ObjectPhases [j].ColdownTimer = ObjectPhases [j].ColdownTimer + (ObjectPhases [j].ColdownTime * 0.1f);//Adding A + 10 % Of The CD To Their Current CD Time To Prevent An Imediate State Change TODO Find A Better Solution
 								}
 								ObjectPhases [_CreaturePhase].ColdownTimer = TheTime [0] + (ObjectPhases [_CreaturePhase].ColdownTime);//TODO A CD Is A CD, Not Affected By Any Kind Off Speed Increase Except Maybe Map-Bonuses Or Difficulty
 

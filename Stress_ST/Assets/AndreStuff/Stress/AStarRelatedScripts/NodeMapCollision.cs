@@ -24,22 +24,27 @@ public class NodeMapCollision : MonoBehaviour {
 	} 
 
 	void OnTriggerEnter2D(Collider2D coll){//when this object collides with a wall, tell the parent to update
-		if (_ParentBehaviour.TheObject._TheTarget.gameObject != coll.transform.parent.gameObject) {
-			if (coll.gameObject.CompareTag (Wall)) {
-				_ParentBehaviour.AddStaticObject (coll.GetComponent<BoxCollider2D> ());
-			} else if (coll.gameObject.CompareTag (CreatureCollider)) {
-				if (coll.transform.parent.gameObject != _ParentBehaviour.gameObject)
-					_ParentBehaviour.AddEnemy (coll.GetComponent<BoxCollider2D> ());
+		if (_ParentBehaviour.TheObject._TheTarget != null) {
+			
+			if (_ParentBehaviour.TheObject._TheTarget.gameObject != coll.transform.parent.gameObject) {
+				if (coll.gameObject.CompareTag (Wall)) {
+					_ParentBehaviour.AddStaticObject (coll.GetComponent<BoxCollider2D> ());
+				} else if (coll.gameObject.CompareTag (CreatureCollider)) {
+					if (coll.transform.parent.gameObject != _ParentBehaviour.gameObject)
+						_ParentBehaviour.AddEnemy (coll.GetComponent<BoxCollider2D> ());
+				}
 			}
 		}
 	}
 	void OnTriggerExit2D(Collider2D coll){//when this object exits a wall, tell the parent to update
-		if (_ParentBehaviour.TheObject._TheTarget.gameObject != coll.transform.parent.gameObject) {
-			if (coll.gameObject.CompareTag (Wall)) {
-				_ParentBehaviour.RemoveStaticObjects (coll.GetComponent<BoxCollider2D> ());
-			} else if (coll.gameObject.CompareTag (CreatureCollider)) {
-				if (coll.transform.parent.gameObject != _ParentBehaviour.gameObject)
-					_ParentBehaviour.RemoveEnemy (coll.GetComponent<BoxCollider2D> ());
+		if (_ParentBehaviour.TheObject._TheTarget != null) {
+			if (_ParentBehaviour.TheObject._TheTarget.gameObject != coll.transform.parent.gameObject) {
+				if (coll.gameObject.CompareTag (Wall)) {
+					_ParentBehaviour.RemoveStaticObjects (coll.GetComponent<BoxCollider2D> ());
+				} else if (coll.gameObject.CompareTag (CreatureCollider)) {
+					if (coll.transform.parent.gameObject != _ParentBehaviour.gameObject)
+						_ParentBehaviour.RemoveEnemy (coll.GetComponent<BoxCollider2D> ());
+				}
 			}
 		}
 	}

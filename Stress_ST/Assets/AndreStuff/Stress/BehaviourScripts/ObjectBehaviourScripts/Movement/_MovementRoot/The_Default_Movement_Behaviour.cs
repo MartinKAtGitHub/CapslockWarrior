@@ -69,7 +69,6 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 	}
 
 	public void MovementRotations(){
-
 		if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
 			TargetVectorTargetFollow ();
 		}
@@ -119,7 +118,6 @@ public class The_Default_Movement_Behaviour : The_Default_Behaviour {
 			if (DirectionBehaviour == GameManagerTestingWhileWaiting.VectorDirection.StraightToTraget) {
 				TargetVectorTargetFollow ();
 			}
-
 			if (0 > _CurrentDirection [0].x) {
 				if (_Turned == true) {
 					RotateDirection [0].y = 180;

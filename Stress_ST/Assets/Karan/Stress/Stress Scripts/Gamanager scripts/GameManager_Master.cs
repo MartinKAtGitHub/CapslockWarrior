@@ -8,29 +8,26 @@ public class GameManager_Master : MonoBehaviour {
 	/// The nummber of keys the player has from beating the main boss.  
 	/// </summary>
 	public int BossKeys; 
-
 	public static GameManager_Master instance = null;
+
+
+	public delegate void GameManagerEventHandler();
+	public event GameManagerEventHandler MenuToggleEvent;
+	public event GameManagerEventHandler PauseEvent;
+	public event GameManagerEventHandler RestartLevelEvent;
+	public event GameManagerEventHandler GoToMainMenuSceneEvent;
+	public event GameManagerEventHandler GameOverEvent;
+
+	public bool IsGameOver;
+	public bool IsMenuOn;
+
+
 
 
 	void Awake()
 	{
-		SingeltonCheck();
+		SingeltonCheck(); // maybe make this GM static ??
 		DontDestroyOnLoad(gameObject); // This keeps the GM alive in all scenes;
-	}
-
-
-
-
-	// Use this for initialization
-	void Start () 
-	{
-		
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
 	}
 
 	private void SingeltonCheck()
@@ -45,6 +42,18 @@ public class GameManager_Master : MonoBehaviour {
 		}
 	}
 
+#region CallEventsMethods
 
-	// Need events listed down here
+	public void CallEventMenuToggle()
+	{
+		if(MenuToggleEvent != null)
+		{
+			MenuToggleEvent();
+		}
+	}
+
+
+
+#endregion
+
 }

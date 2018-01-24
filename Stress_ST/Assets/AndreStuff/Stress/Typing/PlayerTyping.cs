@@ -18,39 +18,47 @@ public class PlayerTyping : MonoBehaviour {
 	void Start (){
 		if (TextElement == null) {
 			TextElement = GameObject.Find ("Canvas").transform.GetChild(0).Find("Text").gameObject.GetComponent<Text>();
+			/*TextElement = GameObject.FindWithTag("MainCanvas").transform.Find("InputDisplay").gameObject.GetComponent<Text>(); // This will find hopfuly the Text object in the canvas where ever it is.
+			if(TextElement == null){
+				Debug.LogError("Cant find text object to display HUD");
+			}*/
 		}
+
 		keytest = new KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  (this.gameObject, new KeyValuePair<Color, string[]>(TextColor, _MyText));
 		_MyText [0] = "";
 	}
 
 	void Update () {//checking when pressing down a button, and if it's an ok letter then it goes through and the enemies recieves it
-		if (ClearText == true) {
-			ClearText = false;
-			_MyText [0] = "";
-			TextElement.text = "";
-			TypingEvents.OnStartCompareChanged (keytest);
-		}
-
-		if (Input.anyKeyDown && !(Input.GetKeyDown (KeyCode.Backspace) || Input.GetKeyDown (KeyCode.Return))) {
-			if ((string)Input.inputString != "") {//max input = 5 letters
-				for (int i = 0; i < ((string)Input.inputString).Length; i++) {
-					if (char.GetNumericValue (((string)Input.inputString) [i]) < 0) {
-						_MyText [0] += ((string)Input.inputString) [i];
-					}
-				}
-				TextElement.text = _MyText [0];
-				TypingEvents.OnStartCompareChanged (keytest);
-			}
-		} else {
-			if (Input.GetKeyDown (KeyCode.Return)) {
-				TypingEvents.OnEndCompareChanged (this.gameObject);
+		if(TextElement.IsActive())
+		{
+			if (ClearText == true) {
+				ClearText = false;
 				_MyText [0] = "";
 				TextElement.text = "";
-			} else if (Input.GetKeyDown (KeyCode.Backspace)) {
-				if (TextElement.text.Length > 0) {
-					_MyText [0] = _MyText [0].Remove (_MyText [0].Length - 1);
+				TypingEvents.OnStartCompareChanged (keytest);
+			}
+			
+			if (Input.anyKeyDown && !(Input.GetKeyDown (KeyCode.Backspace) || Input.GetKeyDown (KeyCode.Return))) {
+				if ((string)Input.inputString != "") {//max input = 5 letters
+					for (int i = 0; i < ((string)Input.inputString).Length; i++) {
+						if (char.GetNumericValue (((string)Input.inputString) [i]) < 0) {
+							_MyText [0] += ((string)Input.inputString) [i];
+						}
+					}
 					TextElement.text = _MyText [0];
 					TypingEvents.OnStartCompareChanged (keytest);
+				}
+			} else {
+				if (Input.GetKeyDown (KeyCode.Return)) {
+					TypingEvents.OnEndCompareChanged (this.gameObject);
+					_MyText [0] = "";
+					TextElement.text = "";
+				} else if (Input.GetKeyDown (KeyCode.Backspace)) {
+					if (TextElement.text.Length > 0) {
+						_MyText [0] = _MyText [0].Remove (_MyText [0].Length - 1);
+						TextElement.text = _MyText [0];
+						TypingEvents.OnStartCompareChanged (keytest);
+					}
 				}
 			}
 		}

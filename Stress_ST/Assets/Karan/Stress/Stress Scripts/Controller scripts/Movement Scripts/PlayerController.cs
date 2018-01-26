@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		}
 	}
 
-	public void Flip()
+	public void Flip() // TODO update Flip() mehid to sue the sprite flip insted of scale *-1
 	{
 		facingRigth = !facingRigth;
 		Vector3 theScale = heroGraphics.localScale;
@@ -129,8 +129,6 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 	{
 		// this is bad we need to use the rigidbody and calulate a vector to the target and move in that direction
 		//transform.position = Vector3.MoveTowards(transform.position, pos, maxSpeed * Time.deltaTime); 
-
-
 
 		if(targetSet == true)
 		{
@@ -161,23 +159,21 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 
 		playerRigBdy.velocity = new Vector2 (facing.x * maxSpeed, facing.y * maxSpeed);
 
-		//heroAnimator.SetFloat("Speed", PlayerRigBdy.velocity.x); Need to figure out how to connect anim
-
+		heroAnimator.SetBool("Running" , false);
 
 		if(Mathf.Abs(facing.x) > 0) // Might be better WITHOUT .abs()
 		{
-
+			heroAnimator.SetBool("Running" , true);
 			cancelMouseMovement = true;
 		}
 		if(Mathf.Abs(facing.y) > 0)// Might be better WITHOUT .abs()
 		{
-
+			heroAnimator.SetBool("Running" , true);
 			cancelMouseMovement = true;
 		}
 		if(!cancelMouseMovement)
 		{
 			MovePlayerMouse(mousePos);
-
 			//Debug.Log ("INSIDE = " + mousePos );
 			targetSet = false;
 		}

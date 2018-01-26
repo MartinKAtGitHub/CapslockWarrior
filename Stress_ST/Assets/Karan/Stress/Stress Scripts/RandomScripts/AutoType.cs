@@ -17,11 +17,13 @@ public class AutoType : MonoBehaviour {
 		message = Discription.text;
 		Discription.text = "";
 		StartCoroutine(TypeText ());
+		Debug.Log("Starting TypeWirter EFX");
 	}
  
 	IEnumerator TypeText () {
 		foreach (char letter in message.ToCharArray()) {
-			Discription.text += letter;
+				Debug.Log("lETTERS tyPED = ");
+				Discription.text += letter;
 			if (sound)
 			//	audio.PlayOneShot (sound);
 				yield return 0;

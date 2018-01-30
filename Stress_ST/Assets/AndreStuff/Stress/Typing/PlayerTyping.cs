@@ -17,11 +17,11 @@ public class PlayerTyping : MonoBehaviour {
 
 	void Start (){
 		if (TextElement == null) {
-			TextElement = GameObject.Find ("Canvas").transform.GetChild(0).Find("Text").gameObject.GetComponent<Text>();
-			/*TextElement = GameObject.FindWithTag("MainCanvas").transform.Find("InputDisplay").gameObject.GetComponent<Text>(); // This will find hopfuly the Text object in the canvas where ever it is.
+			//TextElement = GameObject.Find ("Canvas").transform.GetChild(0).Find("Text").gameObject.GetComponent<Text>();
+			TextElement = GameObject.FindWithTag("MainCanvas").transform.Find("InputDisplay").gameObject.GetComponent<Text>(); // This will find hopfuly the Text object in the canvas where ever it is.
 			if(TextElement == null){
 				Debug.LogError("Cant find text object to display HUD");
-			}*/
+			}
 		}
 
 		keytest = new KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  (this.gameObject, new KeyValuePair<Color, string[]>(TextColor, _MyText));

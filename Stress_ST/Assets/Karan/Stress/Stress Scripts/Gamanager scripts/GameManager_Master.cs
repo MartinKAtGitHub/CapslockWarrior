@@ -8,6 +8,7 @@ public class GameManager_Master : MonoBehaviour {
 	/// The nummber of keys the player has from beating the main boss.  
 	/// </summary>
 	public int BossKeys; 
+	public GameObject PlayerCharacter;
 	public static GameManager_Master instance = null;
 
 
@@ -30,7 +31,7 @@ public class GameManager_Master : MonoBehaviour {
 		DontDestroyOnLoad(gameObject); // This keeps the GM alive in all scenes;
 	}
 
-	private void SingeltonCheck()
+	private void SingeltonCheck() // TODO check if Gamemanger_master script Singelton is correctly done
 	{
 		if(instance == null)
 		{

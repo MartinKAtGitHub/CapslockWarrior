@@ -18,12 +18,12 @@ public class Skelly_Skeleton_Explosion : MonoBehaviour {
 		}
 		_RngTimeTic = Random.Range (1, 26) / 100;//Just To Reduce The Chance Of Everyone Refreshing At The Same Time.
 		TheTime = GameObject.FindGameObjectWithTag("GameManager").GetComponent<ClockTest>();
-		_StartTime = TheTime.TheTime [0] + _RngTimeTic;
+		_StartTime = ClockTest.TheTime[0] + _RngTimeTic;
 	}
 	void FixedUpdate(){
 		
-		if (_StartTime <= TheTime.TheTime [0]) {
-			_StartTime = TheTime.TheTime [0] + _RngTimeTic;
+		if (_StartTime <= ClockTest.TheTime[0]) {
+			_StartTime = ClockTest.TheTime[0] + _RngTimeTic;
 			FoundObject = Physics2D.CircleCastAll (transform.position, 0.1f, Vector2.zero, 0, mask);
 
 			/*for (int i = 0; i < FoundObject.Length; i++) {

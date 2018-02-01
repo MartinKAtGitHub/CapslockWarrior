@@ -15,13 +15,13 @@ public class Time_Passed_Since_Enter : The_Default_Exit_Behaviour {
 	}
 
 	public override void OnEnter (){
-		StartTime = MyTime.TheTime [0];
+		StartTime = ClockTest.TheTime[0];
 	
 	}
 
 	public override bool GetBool(int index){
 		if (index == 2) {
-			if (StartTime + TimePassed <= MyTime.TheTime[0]) {
+			if (StartTime + TimePassed <= ClockTest.TheTime[0]) {
 				return true;
 			} else {
 				return false;

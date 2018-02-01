@@ -29,6 +29,8 @@ public class Bleach_Getsuga : The_Default_Bullet {
 
 	}
 
+	float activeTime = 0.25f;
+
 	void Start(){
 
 	//	MyShootingDirection = TargetVector - transform.position;
@@ -41,13 +43,18 @@ public class Bleach_Getsuga : The_Default_Bullet {
 		transform.rotation = Quaternion.Euler (_Direction);
 		theTime = _Shooter.TheTime [0];
 		Particleeffect.GetComponent<MoveForwardFast> ().starting = true;
-
+		activeTime += _Shooter.TheTime [0];
 	}
 
 
 
 
 	void FixedUpdate () {
+		if (activeTime < _Shooter.TheTime [0]) {
+			activeTime = activeTime + 100;
+			transform.GetChild (1).gameObject.SetActive (false);
+		}
+
 		if (_Shooter._CreaturePhase > 3)//Quickfix need to look into this problem
 			Destroy (gameObject);
 		

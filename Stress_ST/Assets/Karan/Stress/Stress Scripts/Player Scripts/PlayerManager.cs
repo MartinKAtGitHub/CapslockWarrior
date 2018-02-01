@@ -67,11 +67,12 @@ public class PlayerManager : AbsoluteRoot {
 		Debug.Log("DEAD OMG");
 	}
 
-	public void RecievedDmg(int _damage)
+	public override void RecievedDmg(int _damage)
 	{
 
-		/*HealtPoints_Txt.text = (HealthPoints -= _damage).ToString ();//Normal Health Subtraction Without Percentage Subtraction
-		if (HealthPoints <= 0) {OnDestroyed ();}*/
+		HealtPoints_Txt.text = (HealthPoints -= _damage).ToString ();//Normal Health Subtraction Without Percentage Subtraction
+		if (HealthPoints <= 0) {OnDestroyed ();}
+	/*	Debug.Log ("RECIVED " + _damage + " | " + float.Parse(HealtPoints_Txt.text));
 
 
 		float PercentageDmg;
@@ -83,7 +84,7 @@ public class PlayerManager : AbsoluteRoot {
 		if(PercentageDmg == 0)
 		{
 			OnDestroyed();
-		}
+		}*/
 
 	}
 

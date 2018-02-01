@@ -8,9 +8,6 @@ public class Mouly_Spike : The_Default_Bullet {
 		if (_Shooter._MyTransform.gameObject != col.gameObject) {
 			if (col.gameObject.GetComponent<AbsoluteRoot> () != null) {
 				col.gameObject.GetComponent<AbsoluteRoot> ().RecievedDmg (Mathf.FloorToInt(_Shooter._TheObject.AttackStrength));
-				GameObject.Destroy (transform.gameObject);
-			}else {
-				GameObject.Destroy (transform.gameObject);
 			}
 		}
 	}
@@ -19,9 +16,6 @@ public class Mouly_Spike : The_Default_Bullet {
 		if (_Shooter._MyTransform.gameObject != col.gameObject) {
 			if (col.gameObject.GetComponent<AbsoluteRoot> () != null) {
 				col.gameObject.GetComponent<AbsoluteRoot> ().RecievedDmg (Mathf.FloorToInt(_Shooter._TheObject.AttackStrength));
-				GameObject.Destroy (transform.gameObject);
-			}else {
-				GameObject.Destroy (transform.gameObject);
 			}
 		}
 	}

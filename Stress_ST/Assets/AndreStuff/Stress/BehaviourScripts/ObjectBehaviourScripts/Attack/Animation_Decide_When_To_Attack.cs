@@ -43,14 +43,38 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 			} else {
 				if (_MyAnimator.transform.eulerAngles.y == 0) {
 
+				
+
+
 					if (BulletOrCreature == true) {
+						(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + (_MyObject.ObjectTargetVector[0] * Bullets [0].AttackPosition.x) - (new Vector3(0f,0,0f)), Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
+					} else {
+						Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + (_MyObject.ObjectCurrentVector[0] * Bullets [0].AttackPosition.x), Quaternion.identity).GetComponent<AbsoluteRoot> ().SetNeighbourGroup (_MyObject._TheObject.NeighbourGroups); // Spawning Creature
+					}
+					_MyObject._TheObject.Ammo--;
+
+
+
+
+				/*
+				 	if (BulletOrCreature == true) {
 						(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
 					} else {
 						Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity).GetComponent<AbsoluteRoot> ().SetNeighbourGroup (_MyObject._TheObject.NeighbourGroups); // Spawning Creature
 					}
 					_MyObject._TheObject.Ammo--;
+				*/
+				
 				} else {
 
+					if (BulletOrCreature == true) {
+						(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + (_MyObject.ObjectTargetVector[0] * Bullets [0].AttackPosition.x) - (new Vector3(0,0,0)), Quaternion.Euler(0,180,0)) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
+					} else {
+						Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + (_MyObject.ObjectCurrentVector[0] * Bullets [0].AttackPosition.x), Quaternion.identity).GetComponent<AbsoluteRoot> ().SetNeighbourGroup (_MyObject._TheObject.NeighbourGroups); // Spawning Creature
+					}
+					_MyObject._TheObject.Ammo--;
+
+				/*
 					Bullets [0].AttackPosition.x *= -1;
 					if (BulletOrCreature == true) {
 						(Instantiate (Bullets [WhichBulletToShootWhen [_BulletCounter]].Bullets, _MyObject._MyTransform.transform.position + Bullets [0].AttackPosition, Quaternion.identity) as GameObject).GetComponent<The_Default_Bullet> ().SetMethod (Bullets [WhichBulletToShootWhen [_BulletCounter]], _MyObject);
@@ -59,6 +83,8 @@ public class Animation_Decide_When_To_Attack : The_Default_Attack_Behaviour {//T
 					}
 					Bullets [0].AttackPosition.x *= -1;
 					_MyObject._TheObject.Ammo--;
+
+				*/
 				}
 				_BulletCounter++;
 

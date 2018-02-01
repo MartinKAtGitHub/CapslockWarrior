@@ -5,7 +5,7 @@ using System;
 
 public class ClockTest : MonoBehaviour {
 
-	public float[] TheTime = new float[1];
+	public static float[] TheTime = new float[1];
 	public int RoomPathsCount = 100;
 
 	// Update is called once per frame

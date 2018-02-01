@@ -11,7 +11,7 @@ public class Skelly_Worm_Beam : The_Default_Bullet {
 	public override void SetMethod (GameManagerTestingWhileWaiting.SpellAttackInfo SpellInfo, The_Object_Behaviour MySender){
 		base.SetMethod (SpellInfo, MySender);
 		TheTimer = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<ClockTest> ();
-		StartTime = TheTimer.TheTime [0];
+		StartTime = ClockTest.TheTime[0];
 		//	EggHealth = new EnemyWordChecker(MyText, this);
 
 	/*	if (_Shooter.MyAnimator.transform.eulerAngles.y == 0) {
@@ -73,7 +73,7 @@ public class Skelly_Worm_Beam : The_Default_Bullet {
 		
 		} else {
 
-			if (StartTime + (TimeToSpin * _Shooter._TheObject.AttackStrength) < TheTimer.TheTime [0]) {
+			if (StartTime + (TimeToSpin * _Shooter._TheObject.AttackStrength) < ClockTest.TheTime[0]) {
 				_LazerBeamAnimator.SetInteger (_AnimatorVariables [0], 2);
 				_Shooter.MyAnimator.SetInteger (_Shooter.MyAnimator.GetComponent<TheAnimator> ().AnimatorVariables[1], 2);
 
@@ -92,9 +92,9 @@ public class Skelly_Worm_Beam : The_Default_Bullet {
 				_RotationVector = (Quaternion.Euler (0, 0, (_RotatingValue = _RotatingSpeed * Time.deltaTime)) * _RotationVector).normalized;//Getting Rotation Vector
 
 				if (_RotationVector.y < 0) {//Setting Rotation
-					_RotatingLazerBeam.rotation = Quaternion.Euler (0, 0, 360 - Vector3.Angle (Vector3.right, _RotationVector));
+					_RotatingLazerBeam.localRotation = Quaternion.Euler (0, 0, 360 - Vector3.Angle (Vector3.right, _RotationVector));
 				} else {
-					_RotatingLazerBeam.rotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, _RotationVector));
+					_RotatingLazerBeam.localRotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, _RotationVector));
 				}
 
 

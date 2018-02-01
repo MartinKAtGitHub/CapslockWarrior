@@ -11,6 +11,7 @@ public class EnemyWordChecker {
 	public Text TextElement;
 	public ObjectStats TheCreature;
 	public string _ObjectHealth = "ObjectHealth";
+	public HealthBackShower HealthShower;
 
 //	bool _StopChecking;
 	int _WordsToRemove = 0;//a counter that is used to deside how many words to remove after the player presses enter
@@ -81,6 +82,7 @@ public class EnemyWordChecker {
 
 		TypingEvents.OnCompareStart += CompareStart;
 		TypingEvents.OnCompareEnd += CompareEnd;
+		
 	}
 
 

@@ -9,15 +9,10 @@ public class CameraSmoothMotion : MonoBehaviour {
 											 // = 20 / 2 = 10(rigth) | 10* -1(left);
 	[SerializeField] private Vector3 limitCamAt;
 
-											
 
 
-
-
-	// Use this for initialization
 	void Start () 
 	{
-
 		if(player == null)
 		{
 			Debug.Log("Camera cant find Player Object using GM.FINDTAG");

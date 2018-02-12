@@ -24,7 +24,7 @@ public class DialogueManager : MonoBehaviour { // maybe make this static/ single
 		isDialogueEnd = false;
 		DialogueBoxAnimator.SetBool("IsDialogueOpen",true);
 
-		Debug.Log("Start dialouge With = " + dialogue.CharacterName);
+		//Debug.Log("Start dialouge With = " + dialogue.CharacterName);
 		NameText.text = dialogue.CharacterName;
 		Sentences.Clear();
 

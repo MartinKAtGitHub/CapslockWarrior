@@ -74,15 +74,14 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		playerRigBdy = GetComponent<Rigidbody2D>();
 		mousePos = Vector3.zero;
 
-		 heroGraphics = transform.Find("GFX"); // use thesprite rendrer.flip(X) insted of scale maybe?
 		//Debug.LogWarning("ADD THE INTERFACE TO PLAYERCONTOLLER MOUSE");
+		heroGraphics = transform.Find("GFX"); // use thesprite rendrer.flip(X) insted of scale maybe?
 
 
 		// heroAnimator = GetComponent<Animator>();
-		heroAnimator = heroGraphics.GetComponent<Animator>();
 		if(heroAnimator == null)
 		{
-			Debug.LogWarning("SHITT IS NULL DOG");
+			heroAnimator = heroGraphics.GetComponent<Animator>();
 		}
 	}
 
@@ -94,12 +93,10 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		if(facing.x > 0 && !facingRigth)
 		{
 			Flip();
-			//cancelMouseMovement = true;
 		}
 		else if(facing.x < 0 && facingRigth)
 		{
 			Flip();
-			//cancelMouseMovement = true;
 		}
 
 	}
@@ -115,14 +112,13 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		}
 	}
 
-	public void Flip() // TODO update Flip() mehid to sue the sprite flip insted of scale *-1
+	public void Flip() // TODO update Flip() Method to use the sprite flip insted of scale *-1
 	{
 		facingRigth = !facingRigth;
 		Vector3 theScale = heroGraphics.localScale;
 		theScale.x *= -1;
 		heroGraphics.localScale = theScale;
 
-		//transform.localScale.x *= -1f;
 	}
 
 	void MovePlayerMouse(Vector3 targetPos)
@@ -133,8 +129,10 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		if(targetSet == true)
 		{
 			deltaTargetCurrentPos = targetPos - transform.position;
-		//	Debug.Log("TargetSet");
+			Debug.Log("TargetSet = start running");
+			//heroAnimator.SetBool("Running" , true);
 		}
+
 		facing.x = deltaTargetCurrentPos.normalized.x;
 		facing.y = deltaTargetCurrentPos.normalized.y;
 
@@ -150,7 +148,7 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 		Debug.DrawLine( transform.position, targetPos, Color.cyan);
 	}
 
-	public void  MovementLogic()
+	void MovePlayerArrow()
 	{
 		facing.x = Input.GetAxisRaw("MouseAndArrowsX"); // remove AD keys in input Manager
 		facing.y = Input.GetAxisRaw("MouseAndArrowsY");	// Remove WS keys in input Manager
@@ -159,23 +157,38 @@ public class PlayerController : MonoBehaviour, IMovementEngin {
 
 		playerRigBdy.velocity = new Vector2 (facing.x * maxSpeed, facing.y * maxSpeed);
 
-		heroAnimator.SetBool("Running" , false);
 
 		if(Mathf.Abs(facing.x) > 0) // Might be better WITHOUT .abs()
 		{
-			heroAnimator.SetBool("Running" , true);
+			//heroAnimator.SetBool("Running" , true);
 			cancelMouseMovement = true;
 		}
-		if(Mathf.Abs(facing.y) > 0)// Might be better WITHOUT .abs()
+		else if(Mathf.Abs(facing.y) > 0)// Might be better performance WITHOUT .abs() 
 		{
-			heroAnimator.SetBool("Running" , true);
+
 			cancelMouseMovement = true;
 		}
+
+	}
+
+	public void  MovementLogic()
+	{
+		MovePlayerArrow();
+
 		if(!cancelMouseMovement)
 		{
 			MovePlayerMouse(mousePos);
-			//Debug.Log ("INSIDE = " + mousePos );
 			targetSet = false;
 		}
+
+		if(Mathf.Abs(facing.x)> 0 || Mathf.Abs(facing.y) > 0)
+		{
+			heroAnimator.SetBool("Running" , true);
+		}
+		else
+		{
+			heroAnimator.SetBool("Running" , false);
+		}
+
 	}
 }

@@ -60,7 +60,7 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	{
 		
 		//PlayerObject = Instantiate(GameManager_Master.instance.PlayerCharacter, PlayerSpawnPoint.transform.position ,Quaternion.identity);
-		Debug.Log("Start Intro . PlayerSpawn");
+		//Debug.Log("Start Intro . PlayerSpawn");
 
 		// Player turn off all scripts.
 		TurnOffAllScriptsOnGameobject(PlayerObject);
@@ -94,7 +94,7 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	{
 		if(PlayerObject.transform.position.x <= PlayerTargetPos.transform.position.x)
 		{
-			Debug.Log("Start Running anim");
+			//Debug.Log("Start Running anim");
 			playerRigBdy.velocity = new Vector2 (1 * animSpeed, 0 * animSpeed);
 			//HeroAnimator.SetBool("Running", true); // cost .> moved under Startrunbool
 		}
@@ -126,6 +126,8 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	{
 		IntroCam.GetComponent<CameraSmoothMotion>().enabled = true;
 		TurnOnAllScriptsOnGameobject(PlayerObject); 
+		TurnOnAllScriptsOnGameobject(BossObject);
+		DisableOldMan();
 
 		// enable boss script
 
@@ -154,6 +156,12 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 
 	}
 
+	private void DisableOldMan()
+	{
+		//Start RunAwayAnim
+		//if(RunAwayAnim is done)
+		OldMan.SetActive(false);
+	}
 
 	private void TurnOffAllScriptsOnGameobject(GameObject gameObject)
 	{

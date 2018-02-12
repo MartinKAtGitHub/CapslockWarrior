@@ -26,26 +26,25 @@ public class GameManager_ToggleMenu : MonoBehaviour
 	void Update()
 	{
 		CheckForMenuToggleRequest();
-
 	}
 
 
 	void ToggleMenu()
 	{
-
 		if(menu != null)
 		{
-			menu.SetActive(!menu.activeSelf);
+			menu.SetActive(!menu.activeSelf);// This need to be changed to Start anim
 			gameManagerMaster.IsMenuOn = !gameManagerMaster.IsMenuOn;
 			gameManagerMaster.CallEventMenuToggle();
 		}
 		else
 		{
-			Debug.Log("Asigne UI GM to Sctipt");	
+			
+			Debug.LogError("Pause GameObject / UI is not Assigned on the script");	
 		}
 	}
 	/// <summary>
-	/// Checks to make sure that you can press ESC and open menu / pause the game. you dont want to be able to pause the game if the menu is already open or in game over
+	/// Checks to make sure that you can press ESC and open menu / pause the game. you dont want to be able to pause the game if the menu is already open or in "game over"
 	/// ----ADD MORE CHECKS HERE IF NEEDED---
 	/// </summary>
 	void CheckForMenuToggleRequest()

@@ -27,7 +27,7 @@ public class GameManager_Master : MonoBehaviour {
 
 	void Awake()
 	{
-		SingeltonCheck(); // maybe make this GM static ??
+		SingeltonCheck();
 		DontDestroyOnLoad(gameObject); // This keeps the GM alive in all scenes;
 	}
 

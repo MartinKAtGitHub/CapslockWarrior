@@ -1,17 +1,10 @@
 fileFormatVersion: 2
-guid: 2298ddb721748c14ab5e4c1bc0fb3a30
-timeCreated: 1518542843
+guid: d8c650855c21ec748a802b57b6d2a8ed
+timeCreated: 1518544957
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ButtonStyle1
-    21300002: ButtonStyle1_hover
-    21300004: ButtonStyle2
-    21300006: ButtonStyle2_hover
-    21300008: ButtonStyle_0
-    21300010: ButtonStyle_1
-    21300012: ButtonStyle_2
-    21300014: ButtonStyle_3
+    21300000: TabStlye_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -48,13 +41,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 8
+  spriteBorder: {x: 3, y: 6, z: 3, w: 7}
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -88,62 +81,26 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ButtonStyle_0
+      name: TabStlye_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 9
-        width: 26
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 1, z: 1, w: 7}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: ButtonStyle_1
-      rect:
-        serializedVersion: 2
-        x: 33
+        x: 0
         y: 7
-        width: 30
-        height: 19
+        width: 16
+        height: 5
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 1, z: 1, w: 2}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: ButtonStyle_2
-      rect:
-        serializedVersion: 2
-        x: 67
-        y: 9
-        width: 26
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
-    - serializedVersion: 2
-      name: ButtonStyle_3
-      rect:
-        serializedVersion: 2
-        x: 97
-        y: 7
-        width: 30
-        height: 19
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    outline: []
+    outline:
+    - - {x: -5, y: 6}
+      - {x: -8, y: 3}
+      - {x: -8, y: -4}
+      - {x: 8, y: -4}
+      - {x: 8, y: 3}
+      - {x: 5, y: 6}
     physicsShape: []
   spritePackingTag: 
   userData: 

@@ -24,7 +24,8 @@ public class GameManager_PauseToggle : MonoBehaviour
 
 	void SetInitialRefs()
 	{
-		gameManagerMaster = GetComponent<GameManager_Master>();
+		gameManagerMaster = GetComponent<GameManager_Master>(); // On the same GameObject
+		//gameManagerMaster = GameManager_Master.instance; // I do have a static/ Singolton. Maybe it is wrong to use it here
 	}
 
 	/// <summary>

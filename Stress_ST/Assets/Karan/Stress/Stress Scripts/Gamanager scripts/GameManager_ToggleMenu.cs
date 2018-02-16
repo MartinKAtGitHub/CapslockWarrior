@@ -18,10 +18,10 @@ public class GameManager_ToggleMenu : MonoBehaviour
 		gameManagerMaster.GameOverEvent -= ToggleMenu;
 	}
 
-	void Start()
+	/*void Start()
 	{
 		//ToggleMenu();
-	}
+	}*/
 
 	void Update()
 	{
@@ -29,7 +29,7 @@ public class GameManager_ToggleMenu : MonoBehaviour
 	}
 
 
-	void ToggleMenu()
+	public void ToggleMenu()
 	{
 		if(menu != null)
 		{

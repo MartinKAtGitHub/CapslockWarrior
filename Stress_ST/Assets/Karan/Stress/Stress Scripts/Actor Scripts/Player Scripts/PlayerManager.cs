@@ -18,9 +18,8 @@ public class PlayerManager : AbsoluteRoot {
 	[Tooltip(" Sets the mana Regen Rate = value per sek")]
 	public float ManaRegenRate = 1;
 
-	// TODO ask andrew about prefab and ang drag and drop GM 
-	public Text HealtPoints_Txt; // I HAVE DRAGED AND DROPED THE TXT OBJECT
-	public Text ManaPoints_Txt; // I HAVE DRAGED AND DROPED THE TXT OBJECT
+	public Text HealtPoints_Txt;
+	public Text ManaPoints_Txt; 
 
 	void Awake(){
 		
@@ -46,14 +45,6 @@ public class PlayerManager : AbsoluteRoot {
 		ManaRegen(ManaRegenRate);
 	}
 
-	public void TakeDamage(int damageAmount)
-	{
-		
-
-		HealthPoints -= damageAmount;
-
-	}
-
 	private void isPlayerAlive()
 	{
 		if(HealthPoints <= 0)
@@ -69,23 +60,11 @@ public class PlayerManager : AbsoluteRoot {
 
 	public override void RecievedDmg(int _damage)
 	{
-
 		HealtPoints_Txt.text = (HealthPoints -= _damage).ToString ();//Normal Health Subtraction Without Percentage Subtraction
-		if (HealthPoints <= 0) {OnDestroyed ();}
-	/*	Debug.Log ("RECIVED " + _damage + " | " + float.Parse(HealtPoints_Txt.text));
-
-
-		float PercentageDmg;
-		float Total;
-		PercentageDmg = _damage / HealthPoints * 100;
-		Total = float.Parse(HealtPoints_Txt.text) -  PercentageDmg;
-		HealtPoints_Txt.text = Total.ToString();
-
-		if(PercentageDmg == 0)
+		if (HealthPoints <= 0) 
 		{
-			OnDestroyed();
-		}*/
-
+			OnDestroyed ();
+		}
 	}
 
 
@@ -111,10 +90,7 @@ public class PlayerManager : AbsoluteRoot {
 	{
 		//Debug.Log ("Score " + a);
 		GetComponent<PlayerTyping> ().ResetTheText ();
-
 	}
-
-
 
 	public void ManaRegen(float manaRegenRate)// TODO Double check the ManaRegen Method in PlayerManager to see if it is not to expensive
 	{

@@ -52,6 +52,7 @@ public class GameManager_ToggleMenu : MonoBehaviour
 		if(Input.GetKeyUp(KeyCode.Escape) && !gameManagerMaster.IsGameOver)
 		{
 			ToggleMenu();
+			Debug.LogWarning("I CAN STILL PAUSE IN DIALOG");
 		}
 
 	}

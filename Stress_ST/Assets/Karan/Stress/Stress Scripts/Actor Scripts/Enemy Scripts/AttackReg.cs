@@ -12,17 +12,10 @@ public class AttackReg : MonoBehaviour
 
 		if(other.tag == transform.parent.GetComponent<EnemyCreep>().HeroTag)
 		{
-			other.GetComponent<PlayerManager>().TakeDamage(transform.parent.GetComponent<EnemyCreep>().Damage); // this doent work
+			other.GetComponent<PlayerManager>().RecievedDmg(transform.parent.GetComponent<EnemyCreep>().Damage); // this doent work
 			Debug.Log("PUNCH = " + transform.parent.GetComponent<EnemyCreep>().Damage);
 			gameObject.SetActive(false);
 		}
 	}
 
-
-
-	/*void OnTriggerStay2D(Collider2D other) 
-	{
-       Debug.Log("LOLOLOLOLOLOLOLOl");
-    }
-    */
 }

@@ -49,7 +49,7 @@ public class GameManager_ToggleMenu : MonoBehaviour
 	/// </summary>
 	void CheckForMenuToggleRequest()
 	{
-		if(Input.GetKeyUp(KeyCode.Escape) && !gameManagerMaster.IsGameOver)
+		if(Input.GetKeyUp(KeyCode.Escape) && !gameManagerMaster.IsGameOver)//TODO Add check for in MainMenu(start of game)
 		{
 			ToggleMenu();
 			Debug.LogWarning("I CAN STILL PAUSE IN DIALOG");

@@ -2,29 +2,30 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class SpellsController : MonoBehaviour {
+public class AbilityController : MonoBehaviour {
 
 
-	Spells SpellsOnKeyOne, SpellsOnKeyTwo, SpellsOnKeyThree, SpellsOnKeyFour;
+
 
 	// The finale spell(agumented/default) stored as gameobjects
-	public GameObject AgumentedSpellGameObjectKeyOne;
-	public GameObject AgumentedSpellGameObjectKeyTwo;
-	public GameObject AgumentedSpellGameObjectKeyThree;
-	public GameObject AgumentedSpellGameObjectKeyFour;
+	public GameObject AbilityKey1;
+	public GameObject AbilityKey2;
+	public GameObject AbilityKey3;
+	public GameObject AbilityKey4;
 
 	[Space (10)]
-	public GameObject AgumentedSpellGameObjectKeyOneDefaultSpell;
-	public GameObject AgumentedSpellGameObjectKeyTwoDefaultSpell;
-	public GameObject AgumentedSpellGameObjectKeyThreeDefaultSpell;
-	public GameObject AgumentedSpellGameObjectKeyFourDefaultSpell;
+	[SerializeField]private GameObject DefaultAbility1;
+	[SerializeField]private GameObject DefaultAbility2;
+	[SerializeField]private GameObject DefaultAbility3;
+	[SerializeField]private GameObject DefaultAbility4;
 
-
+	[Space (10)]
 	public Image SpellIconKey1ImgOverlay;
 	public Image SpellIconKey2ImgOverlay;
 	public Image SpellIconKey3ImgOverlay;
 	public Image SpellIconKey4ImgOverlay;
 
+	[Space (10)]
 	public Text SpellIconKey1TextTimer;
 	public Text SpellIconKey2TextTimer;
 	public Text SpellIconKey3TextTimer;
@@ -45,43 +46,33 @@ public class SpellsController : MonoBehaviour {
 	private bool spellKeyThreeReady;
 	private bool spellKeyFourReady;
 
+	Ability SpellsOnKeyOne;
+	Ability SpellsOnKeyTwo;
+	Ability SpellsOnKeyThree;
+	Ability SpellsOnKeyFour;
+
 	private PlayerManager playerManager;
 
 	private float imageAplhaTimer = 0;
-	// Use this for initialization
+
+	[Space (10)]
+	[SerializeField]private Transform abilitySpawnPoint;
+
+
 	void Start () 
 	{
 		playerManager = GetComponent<PlayerManager>();
 
-		Debug.Log(" HEALT IS =" + playerManager.HealthPoints);
-		Debug.Log("Mana is = " + playerManager.CurrentMana);
+		//TODO Check save(Player prefs) data, restore preveious Abilitys
+		AbilityNullCheck(ref AbilityKey1, DefaultAbility1 ,"Key 1");
+		AbilityNullCheck(ref AbilityKey2, DefaultAbility2 ,"Key 2");
+		AbilityNullCheck(ref AbilityKey3, DefaultAbility3 ,"Key 3");
+		AbilityNullCheck(ref AbilityKey4, DefaultAbility4 ,"Key 4");
 
-
-		if(AgumentedSpellGameObjectKeyOne == null)
-		{
-			Debug.LogWarning("No spell Set on Key 1, Setting default spells");
-			AgumentedSpellGameObjectKeyOne = AgumentedSpellGameObjectKeyOneDefaultSpell;
-		}
-		if(AgumentedSpellGameObjectKeyTwo == null)
-		{
-			Debug.LogWarning("No spell Set on Key 2, Setting default spells");
-			AgumentedSpellGameObjectKeyTwo = AgumentedSpellGameObjectKeyTwoDefaultSpell;
-		}
-		if(AgumentedSpellGameObjectKeyThree == null)
-		{
-			Debug.LogWarning("No spell Set on Key 3, Setting default spells");
-			AgumentedSpellGameObjectKeyThree = AgumentedSpellGameObjectKeyThreeDefaultSpell;
-		}
-		if(AgumentedSpellGameObjectKeyFour == null)
-		{
-			Debug.LogWarning("No spell Set on Key 4, Setting default spells");
-			AgumentedSpellGameObjectKeyFour = AgumentedSpellGameObjectKeyFourDefaultSpell;
-		}
-
-		SpellsOnKeyOne = AgumentedSpellGameObjectKeyOne.GetComponent<Spells>(); 
-		SpellsOnKeyTwo = AgumentedSpellGameObjectKeyTwo.GetComponent<Spells>();
-		SpellsOnKeyThree = AgumentedSpellGameObjectKeyThree.GetComponent<Spells>();
-		SpellsOnKeyFour = AgumentedSpellGameObjectKeyFour.GetComponent<Spells>();
+		SpellsOnKeyOne = AbilityKey1.GetComponent<Ability>(); 
+		SpellsOnKeyTwo = AbilityKey2.GetComponent<Ability>();
+		SpellsOnKeyThree = AbilityKey3.GetComponent<Ability>();
+		SpellsOnKeyFour = AbilityKey4.GetComponent<Ability>();
 
 
 		/*
@@ -115,11 +106,12 @@ public class SpellsController : MonoBehaviour {
 		SpellsOnKeyThree.PlayerGameObject = this.gameObject;
 		SpellsOnKeyFour.PlayerGameObject = this.gameObject;
 
-		Transform SpellsSpawn = transform.Find("ProjectileSpawn");//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob
-		SpellsOnKeyOne.SpellSpawnPos = SpellsSpawn;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
-		SpellsOnKeyTwo.SpellSpawnPos = SpellsSpawn;
-		SpellsOnKeyThree.SpellSpawnPos = SpellsSpawn;
-		SpellsOnKeyFour.SpellSpawnPos = SpellsSpawn;
+		//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob
+
+		SpellsOnKeyOne.SpellSpawnPos = abilitySpawnPoint;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
+		SpellsOnKeyTwo.SpellSpawnPos = abilitySpawnPoint;
+		SpellsOnKeyThree.SpellSpawnPos = abilitySpawnPoint;
+		SpellsOnKeyFour.SpellSpawnPos = abilitySpawnPoint;
 
 		if(SpellsOnKeyOne.SpellSpawnPos == null)
 		{
@@ -134,81 +126,66 @@ public class SpellsController : MonoBehaviour {
 			foreach spell on this key select the on that the player selected
 		*/
 
-		// TODO Make a default spell if no spell is slected by player.
 		// TODO Find a way so this can be used on multiable players, MULTIPLAYER style
 
-//		SpellIconKey1TextTimer.GetComponent<Text>().text = "45";
-//
-//		Color Alpha = SpellIconKey1ImgOverlay.GetComponent<Image>().color;
-//		Alpha.a = 255f;
-//		SpellIconKey1ImgOverlay.GetComponent<Image>().color = Alpha;
 	}	
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		CheckKeyPress();
-		//CheckKeyPressSecondVersion();
+		//CheckKeyPress();
+		OnAbilityTrigger(KeyCode.Alpha1, KeyCode.Keypad1, "Key 1");
+		OnAbilityTrigger(KeyCode.Alpha2, KeyCode.Keypad2, "Key 2");
+		OnAbilityTrigger(KeyCode.Alpha3, KeyCode.Keypad3, "Key 3");
+		OnAbilityTrigger(KeyCode.Alpha4, KeyCode.Keypad4, "Key 4");
 	}
 
-	/*void CheckKeyPressSecondVersion()
+
+	/// <summary>
+	/// Abilities the null check. Sets a Default spell to the key that has no spell selected
+	/// </summary>
+	private void AbilityNullCheck(ref GameObject ability, GameObject defaultAbility, string key)
 	{
-		Debug.Log("TIMER SPELL K1 = " + timerForSpellOnKeyOne);
-		NoCheckForSpellIsUsed();
-		//if(SpellsOnKeyOne.InGameSpellRef != null)
-		//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name + " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer);
-
-		if(Input.GetKeyDown(KeyCode.Alpha1))
+		if(ability == null)
 		{
-			if(timerForSpellOnKeyOne <= 0)
-			{
-				SpellsOnKeyOne.Cast();
-				spellKeyOneReady = false;
-				//timerForSpellOnKeyOne = SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer; // dont think we can cache this yet. leav it for now
-				//timerForSpellOnKeyOne = saveTimerKeyOne;
-				//Debug.Log("olololololololol");
-			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer);
-			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.CoolDownTimer);
-			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().IsSpellCasted);
-			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.IsSpellCasted);
-			}
-			else
-			{
-			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().CoolDownTimer);
-			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.CoolDownTimer);
-			//	Debug.Log( SpellsOnKeyOne.InGameSpellRef.name+ " <Timerk1 -> " + SpellsOnKeyOne.InGameSpellRef.GetComponent<Spells>().IsSpellCasted);
-			//	Debug.Log(SpellsOnKeyOne.name + " <NO REF > " +SpellsOnKeyOne.IsSpellCasted);
-			}
-		}
-		if(Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			if(timerForSpellOnKeyTwo < 0)
-			{
-				SpellsOnKeyTwo.Cast();
-				spellKeyTwoReady = false;
-				timerForSpellOnKeyTwo = saveTimerKeyTwo;
-			}
-		}
-		if(Input.GetKeyDown(KeyCode.Alpha3))
-		{
-			if(timerForSpellOnKeyThree < 0)
-			{
-				SpellsOnKeyThree.Cast();
-				spellKeyThreeReady = false;
-				timerForSpellOnKeyThree = saveTimerKeyThree;
-			}
-		}
-		if(Input.GetKeyDown(KeyCode.Alpha4))
-		{
-			if(timerForSpellOnKeyFour < 0)
-			{
-				SpellsOnKeyFour.Cast();
-				spellKeyTwoReady = false;
-				timerForSpellOnKeyFour = saveTimerKeyFour;
-			}
+			Debug.Log("<color=#800080ff> No spell Set on "+ key +" Setting default spells</color>");
+			ability = defaultAbility;
 		}
 	}
-	*/
+
+	private void AbilityReady()
+	{
+		
+	}
+
+	private void CoolDown()
+	{
+
+	}
+
+	private void OnAbilityTrigger(KeyCode key, KeyCode altKey, string keyID)
+	{
+		
+		// if(CD == TRUE)
+			// if(Mana)
+			if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
+			{
+				Debug.Log("Casting ability on " + keyID);
+				bool isCastSuccsesful = SpellsOnKeyOne.Cast();
+
+				if(isCastSuccsesful)
+				{
+					//RestartCD
+				}
+				else
+				{
+					//NO CD
+				}
+
+			}
+		//Else
+			//Count down CD
+	} 
 
 	void CheckKeyPress()
 	{
@@ -221,7 +198,7 @@ public class SpellsController : MonoBehaviour {
 				if(SpellsOnKeyOne.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyOneReady = false;
-					if(SpellsOnKeyOne.CastBoolienReturn())
+					if(SpellsOnKeyOne.Cast())
 					{
 						timerForSpellOnKeyOne = saveTimerKeyOne;
 						playerManager.CurrentMana -= SpellsOnKeyOne.ManaCost;	
@@ -247,7 +224,7 @@ public class SpellsController : MonoBehaviour {
 				if(SpellsOnKeyTwo.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyTwoReady = false;
-					if(SpellsOnKeyTwo.CastBoolienReturn())
+					if(SpellsOnKeyTwo.Cast())
 					{
 						timerForSpellOnKeyTwo = saveTimerKeyTwo;
 						playerManager.CurrentMana -= SpellsOnKeyTwo.ManaCost;
@@ -271,7 +248,7 @@ public class SpellsController : MonoBehaviour {
 				if(SpellsOnKeyThree.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyThreeReady = false;
-					if(SpellsOnKeyThree.CastBoolienReturn())
+					if(SpellsOnKeyThree.Cast())
 					{
 						timerForSpellOnKeyThree = saveTimerKeyThree;
 						playerManager.CurrentMana -= SpellsOnKeyThree.ManaCost;
@@ -291,7 +268,7 @@ public class SpellsController : MonoBehaviour {
 				if(SpellsOnKeyFour.ManaCost <= playerManager.CurrentMana)
 				{
 					spellKeyTwoReady = false;
-					if(SpellsOnKeyFour.CastBoolienReturn())
+					if(SpellsOnKeyFour.Cast())
 					{
 						timerForSpellOnKeyFour = saveTimerKeyFour;
 						playerManager.CurrentMana -= SpellsOnKeyFour.ManaCost;

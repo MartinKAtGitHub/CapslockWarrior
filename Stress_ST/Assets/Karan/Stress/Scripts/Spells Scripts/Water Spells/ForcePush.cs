@@ -9,6 +9,12 @@ public class ForcePush : Water {
 
 	private bool isSpellCasted;
 
+	[SerializeField]private float coolDownTimer;
+	[SerializeField]private Sprite abilityImageIcon;
+	[SerializeField]private int manaCost;
+	private GameObject playerGameObject;
+	private Transform spellSpawnPos;
+
 	public override bool IsSpellCasted 
 	{
 		get
@@ -20,6 +26,63 @@ public class ForcePush : Water {
 			isSpellCasted = value;
 		}
 	}
+
+	public override Sprite AbilityImageIcon {
+		get {
+			return abilityImageIcon;
+		}
+		set {
+			abilityImageIcon = value;
+		}
+	}
+
+	public override float CoolDownTimer {
+		get {
+			return coolDownTimer;
+		}
+		set {
+			coolDownTimer = value;
+		}
+	}
+
+	public override GameObject InGameSpellRef {
+		get {
+			throw new System.NotImplementedException ();
+		}
+		set {
+			throw new System.NotImplementedException ();
+	
+		}
+	}
+
+	public override int ManaCost {
+		get {
+			return manaCost;
+		}
+		set {
+			manaCost = value;
+		}
+	}
+
+	public override GameObject PlayerGameObject {
+		get {
+			return playerGameObject;
+		}
+		set {
+			playerGameObject = value;
+		}
+	}
+
+	public override Transform SpellSpawnPos {
+		get{
+			return spellSpawnPos;
+		}
+		set{
+			spellSpawnPos = value;	
+		}
+	}
+
+	public override AudioClip AbilityActivation{get;set;}
 
 	// Use this for initialization
 	void Start()
@@ -37,13 +100,7 @@ public class ForcePush : Water {
 		}
 	}
 
-	public override void Cast()
-	{
-		// Why did i do this, saving the GM
-		ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
-	}
-
-	public override bool CastBoolienReturn ()
+	public override bool Cast ()
 	{
 		ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
 		return true;

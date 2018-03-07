@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SlowFieldSpell : Earth {
+public class SlowFieldSpell : Ability {
 
 
 	public float SpellRadius; 
 	private float OriginalSpeed;
 	public float SlowRate;
-	private bool isSpellCasted;
 
 	private CircleCollider2D cC2d;
 	//private ParticleSystem.ShapeModule particalSys;
 	private ParticleSystem test;
+
+	private bool isSpellCasted;
+	[SerializeField]private float coolDownTimer;
+	[SerializeField]private Sprite abilityImageIcon;
+	[SerializeField]private int manaCost;
+	private GameObject playerGameObject;
+	private Transform spellSpawnPos;
 
 	public override bool IsSpellCasted 
 	{
@@ -24,6 +30,63 @@ public class SlowFieldSpell : Earth {
 			isSpellCasted = value;
 		}
 	}
+
+	public override Sprite AbilityImageIcon {
+		get {
+			return abilityImageIcon;
+		}
+		set {
+			abilityImageIcon = value;
+		}
+	}
+
+	public override float CoolDownTimer {
+		get {
+			return coolDownTimer;
+		}
+		set {
+			coolDownTimer = value;
+		}
+	}
+
+	public override GameObject InGameSpellRef {
+		get {
+			throw new System.NotImplementedException ();
+		}
+		set {
+			throw new System.NotImplementedException ();
+	
+		}
+	}
+
+	public override int ManaCost {
+		get {
+			return manaCost;
+		}
+		set {
+			manaCost = value;
+		}
+	}
+
+	public override GameObject PlayerGameObject {
+		get {
+			return playerGameObject;
+		}
+		set {
+			playerGameObject = value;
+		}
+	}
+
+	public override Transform SpellSpawnPos {
+		get{
+			return spellSpawnPos;
+		}
+		set{
+			spellSpawnPos = value;	
+		}
+	}
+
+	public override AudioClip AbilityActivation{get;set;}
 	// Use this for initialization
 	void Start () 
 	{
@@ -42,11 +105,6 @@ public class SlowFieldSpell : Earth {
 	void Update () 
 	{
 	
-	}
-
-	public override void Cast()
-	{
-		Instantiate(this, SpellSpawnPos.position,Quaternion.identity);
 	}
 
 	// TODO Ask how this works little confused dose how the trigger retains info on what speeds to give back to the enemy
@@ -81,7 +139,7 @@ public class SlowFieldSpell : Earth {
 	}
 
 
-	public override bool CastBoolienReturn()
+	public override bool Cast()
 	{
 		Instantiate(this, SpellSpawnPos.position,Quaternion.identity);
 		return true;

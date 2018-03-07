@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PC : MonoBehaviour {
 
-	Spells SpellsOnKeyOne, SpellsOnKeyTwo, SpellsOnKeyThree, SpellsOnKeyFour;
+	Ability SpellsOnKeyOne, SpellsOnKeyTwo, SpellsOnKeyThree, SpellsOnKeyFour;
 
 	public GameObject SpellOnKeyOne;
 	public GameObject SpellOnKeyTwo;
@@ -22,7 +22,7 @@ public class PC : MonoBehaviour {
 	void Start () 
 	{
 
-		SpellsOnKeyOne = SpellOnKeyOne.GetComponent<Spells>(); // SINCE 
+		SpellsOnKeyOne = SpellOnKeyOne.GetComponent<Ability>(); // SINCE 
 
 		if(SpellsOnKeyOne == null)
 		{

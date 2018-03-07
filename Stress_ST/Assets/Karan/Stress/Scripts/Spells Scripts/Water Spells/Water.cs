@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Water : Spells {
+public abstract class Water : Ability {
 
 /*
 	public Water()

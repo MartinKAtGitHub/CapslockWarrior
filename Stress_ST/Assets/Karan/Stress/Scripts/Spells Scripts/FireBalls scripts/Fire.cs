@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Fire : Spells {
+public abstract class Fire : Ability {
 
 	/*public Fire()
 	{

@@ -21,7 +21,7 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 
 
 	private GameManagerSpellDistributer GMSpellDist;
-	private SpellsController spellsController;
+	private AbilityController spellsController;
 	private Animator animController;
 	private Spawnmanaging Spawner;
 
@@ -37,7 +37,7 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		if(GM != null && MainHero != null)
 		{
 			GMSpellDist = GM.GetComponent<GameManagerSpellDistributer>();
-			spellsController = MainHero.GetComponent<SpellsController>();
+			spellsController = MainHero.GetComponent<AbilityController>();
 		}
 		else
 		{ 
@@ -71,10 +71,10 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		// we chnage the prefab
 		Instantiate(MainHero,Vector3.zero, Quaternion.identity); // we spawn the defaul hero first. Sould have deafult spells. OR we can send it before we spawn and the prefab wil change.
 
-		spellsController.AgumentedSpellGameObjectKeyOne = GMSpellDist.SpellOnKeyOne;
-		spellsController.AgumentedSpellGameObjectKeyTwo = GMSpellDist.SpellOnKeyTwo;
-		spellsController.AgumentedSpellGameObjectKeyThree = GMSpellDist.SpellOnKeyThree;
-		spellsController.AgumentedSpellGameObjectKeyFour = GMSpellDist.SpellOnKeyFour;
+		spellsController.AbilityKey1 = GMSpellDist.SpellOnKeyOne;
+		spellsController.AbilityKey2 = GMSpellDist.SpellOnKeyTwo;
+		spellsController.AbilityKey3 = GMSpellDist.SpellOnKeyThree;
+		spellsController.AbilityKey4 = GMSpellDist.SpellOnKeyFour;
 
 		// we change the clone
 		/*HeroClone =	(GameObject)Instantiate(MainHero,Vector3.zero, Quaternion.identity);  
@@ -116,10 +116,10 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		spellsController.SpellIconKey4TextTimer = SpellIconKey4.transform.GetChild(1).gameObject.GetComponent<Text>();
 
 
-		SpellIconKey1.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyOne.GetComponent<Spells>().SpellIcon;
-		SpellIconKey2.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyTwo.GetComponent<Spells>().SpellIcon;
-		SpellIconKey3.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyThree.GetComponent<Spells>().SpellIcon;
-		SpellIconKey4.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyFour.GetComponent<Spells>().SpellIcon;
+		SpellIconKey1.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyOne.GetComponent<Ability>().AbilityImageIcon;
+		SpellIconKey2.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyTwo.GetComponent<Ability>().AbilityImageIcon;
+		SpellIconKey3.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyThree.GetComponent<Ability>().AbilityImageIcon;
+		SpellIconKey4.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyFour.GetComponent<Ability>().AbilityImageIcon;
 
 
 

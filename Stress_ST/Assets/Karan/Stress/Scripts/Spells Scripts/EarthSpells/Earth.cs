@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Wind : Spells {
+public abstract class Earth : Ability {
 
 	
 }

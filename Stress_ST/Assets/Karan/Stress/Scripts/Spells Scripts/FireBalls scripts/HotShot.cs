@@ -50,7 +50,7 @@ public class HotShot : Ability {
 		}
 	}
 
-	public override float CoolDownTimer {
+	public override float BaseCoolDownTimer {
 		get {
 			return coolDownTimer;
 		}
@@ -86,7 +86,7 @@ public class HotShot : Ability {
 		}
 	}
 
-	public override Transform SpellSpawnPos {
+	public override Transform AbilitySpawnPos {
 		get{
 			return spellSpawnPos;
 		}
@@ -155,7 +155,7 @@ public class HotShot : Ability {
 
 	private bool ScanForClosesTargetBoolienCheck()
 	{
-		enemiesInRange = Physics2D.OverlapCircleAll(SpellSpawnPos.position, DetectionRange, FireBallDetectionLayer);
+		enemiesInRange = Physics2D.OverlapCircleAll(AbilitySpawnPos.position, DetectionRange, FireBallDetectionLayer);
 
 		if(enemiesInRange.Length > 0) // I get back an array of targets if in range, so if > 0 then i got someone in range
 		{
@@ -166,10 +166,10 @@ public class HotShot : Ability {
 
 			for (int i = 0; i < enemiesInRange.Length; i++) 
 			{
-				Debug.Log("ALL ENEMIS IN RANGE ----------->" + enemiesInRange[i].name + " LENGTH = " + enemiesInRange.Length );
+				//Debug.Log("ALL ENEMIS IN RANGE ----------->" + enemiesInRange[i].name + " LENGTH = " + enemiesInRange.Length );
 		
 				//The Vector3.distance() uses oprations that is expenicv, so we just do it manualy
-				Vector3 vectorToTarget = enemiesInRange[i].gameObject.transform.position -SpellSpawnPos.position;
+				Vector3 vectorToTarget = enemiesInRange[i].gameObject.transform.position -AbilitySpawnPos.position;
 				distance = vectorToTarget.sqrMagnitude;
 
 				if(distance < minDistance)
@@ -179,7 +179,7 @@ public class HotShot : Ability {
 					IsSpellCasted = true;
 				}
 			}
-			InGameSpellRef = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
+			InGameSpellRef = (GameObject)Instantiate(this.gameObject, AbilitySpawnPos.position,Quaternion.identity);
 			InGameSpellRef.GetComponent<HotShot>().fireBallTarget = fireBallTarget;
 			return true;
 		}

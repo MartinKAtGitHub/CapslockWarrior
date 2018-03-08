@@ -125,7 +125,7 @@ public class PlayerManager : AbsoluteRoot {
 	{
 		Debug.Log("Player Gameobject has been destroyed");
 	}
-	public void MovementSpeedChange(float a)//TODO TODO Speed Change Logic
+	public override void MovementSpeedChange(float a)//TODO Speed Change Logic
 	{
 		totalmovementdecrease += a;
 

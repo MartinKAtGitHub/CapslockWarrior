@@ -37,7 +37,7 @@ public class TeleportSmallDistance : Wind {
 		}
 	}
 
-	public override float CoolDownTimer {
+	public override float BaseCoolDownTimer {
 		get {
 			return coolDownTimer;
 		}
@@ -74,7 +74,7 @@ public class TeleportSmallDistance : Wind {
 		}
 	}
 
-	public override Transform SpellSpawnPos {
+	public override Transform AbilitySpawnPos {
 		get{
 			return spellSpawnPos;
 		}
@@ -125,8 +125,8 @@ public class TeleportSmallDistance : Wind {
 			Debug.Log(MoveData.Direction);
 			//HeroPos = HeroPos + test.Direction * TeleportRange;
 			
-			GameObject ChildeToHero = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position, Quaternion.identity);
-			ChildeToHero.transform.SetParent(SpellSpawnPos.transform.parent);
+			GameObject ChildeToHero = (GameObject)Instantiate(this.gameObject, AbilitySpawnPos.position, Quaternion.identity);
+			ChildeToHero.transform.SetParent(AbilitySpawnPos.transform.parent);
 			ChildeToHero.gameObject.transform.localScale = new Vector3(1,1); // Need this so the smoke effect flys in the right direction
 			//SmokeTrailEffect();
 			//IsSpellCasted = true;

@@ -71,10 +71,10 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		// we chnage the prefab
 		Instantiate(MainHero,Vector3.zero, Quaternion.identity); // we spawn the defaul hero first. Sould have deafult spells. OR we can send it before we spawn and the prefab wil change.
 
-		spellsController.AbilityKey1 = GMSpellDist.SpellOnKeyOne;
-		spellsController.AbilityKey2 = GMSpellDist.SpellOnKeyTwo;
-		spellsController.AbilityKey3 = GMSpellDist.SpellOnKeyThree;
-		spellsController.AbilityKey4 = GMSpellDist.SpellOnKeyFour;
+		spellsController.AbilityObjectKey1 = GMSpellDist.SpellOnKeyOne;
+		spellsController.AbilityObjectKey2 = GMSpellDist.SpellOnKeyTwo;
+		spellsController.AbilityObjectKey3 = GMSpellDist.SpellOnKeyThree;
+		spellsController.AbilityObjectKey4 = GMSpellDist.SpellOnKeyFour;
 
 		// we change the clone
 		/*HeroClone =	(GameObject)Instantiate(MainHero,Vector3.zero, Quaternion.identity);  
@@ -105,7 +105,7 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		SpellIconKey3 = spellBar.transform.GetChild(2).gameObject;
 		SpellIconKey4 = spellBar.transform.GetChild(3).gameObject;
 
-		spellsController.SpellIconKey1ImgOverlay = SpellIconKey1.transform.GetChild(0).gameObject.GetComponent<Image>();
+	/*	spellsController.SpellIconKey1ImgOverlay = SpellIconKey1.transform.GetChild(0).gameObject.GetComponent<Image>();
 		spellsController.SpellIconKey2ImgOverlay = SpellIconKey2.transform.GetChild(0).gameObject.GetComponent<Image>();
 		spellsController.SpellIconKey3ImgOverlay = SpellIconKey3.transform.GetChild(0).gameObject.GetComponent<Image>();
 		spellsController.SpellIconKey4ImgOverlay = SpellIconKey4.transform.GetChild(0).gameObject.GetComponent<Image>();
@@ -113,7 +113,7 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		spellsController.SpellIconKey1TextTimer = SpellIconKey1.transform.GetChild(1).gameObject.GetComponent<Text>();
 		spellsController.SpellIconKey2TextTimer = SpellIconKey2.transform.GetChild(1).gameObject.GetComponent<Text>();
 		spellsController.SpellIconKey3TextTimer = SpellIconKey3.transform.GetChild(1).gameObject.GetComponent<Text>();
-		spellsController.SpellIconKey4TextTimer = SpellIconKey4.transform.GetChild(1).gameObject.GetComponent<Text>();
+		spellsController.SpellIconKey4TextTimer = SpellIconKey4.transform.GetChild(1).gameObject.GetComponent<Text>();*/
 
 
 		SpellIconKey1.GetComponent<Image>().sprite = GMSpellDist.SpellOnKeyOne.GetComponent<Ability>().AbilityImageIcon;

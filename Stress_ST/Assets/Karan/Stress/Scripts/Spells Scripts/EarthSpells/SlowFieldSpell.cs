@@ -40,7 +40,7 @@ public class SlowFieldSpell : Ability {
 		}
 	}
 
-	public override float CoolDownTimer {
+	public override float BaseCoolDownTimer {
 		get {
 			return coolDownTimer;
 		}
@@ -77,7 +77,7 @@ public class SlowFieldSpell : Ability {
 		}
 	}
 
-	public override Transform SpellSpawnPos {
+	public override Transform AbilitySpawnPos {
 		get{
 			return spellSpawnPos;
 		}
@@ -141,7 +141,7 @@ public class SlowFieldSpell : Ability {
 
 	public override bool Cast()
 	{
-		Instantiate(this, SpellSpawnPos.position,Quaternion.identity);
+		Instantiate(this, AbilitySpawnPos.position,Quaternion.identity);
 		return true;
 	}
 }

@@ -36,7 +36,7 @@ public class ForcePush : Water {
 		}
 	}
 
-	public override float CoolDownTimer {
+	public override float BaseCoolDownTimer {
 		get {
 			return coolDownTimer;
 		}
@@ -73,7 +73,7 @@ public class ForcePush : Water {
 		}
 	}
 
-	public override Transform SpellSpawnPos {
+	public override Transform AbilitySpawnPos {
 		get{
 			return spellSpawnPos;
 		}
@@ -102,7 +102,7 @@ public class ForcePush : Water {
 
 	public override bool Cast ()
 	{
-		ForcePushArea = (GameObject)Instantiate(this.gameObject, SpellSpawnPos.position,Quaternion.identity);
+		ForcePushArea = (GameObject)Instantiate(this.gameObject, AbilitySpawnPos.position,Quaternion.identity);
 		return true;
 	}
 	void OnTriggerEnter2D(Collider2D other)

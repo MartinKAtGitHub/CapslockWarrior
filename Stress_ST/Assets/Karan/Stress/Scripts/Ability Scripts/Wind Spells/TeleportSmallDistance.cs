@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TeleportSmallDistance : Wind {
+public class TeleportSmallDistance : Ability {
 
 
 	IMovementEngin MoveData;
@@ -15,18 +15,6 @@ public class TeleportSmallDistance : Wind {
 	[SerializeField]private int manaCost;
 	private GameObject playerGameObject;
 	private Transform spellSpawnPos;
-
-	public override bool IsSpellCasted 
-	{
-		get
-		{
-			return isSpellCasted;
-		} 
-		set
-		{
-			isSpellCasted = value;
-		}
-	}
 
 	public override Sprite AbilityImageIcon {
 		get {
@@ -104,11 +92,7 @@ public class TeleportSmallDistance : Wind {
 	public override bool Cast ()
 	{
 
-		if(PlayerGameObject.GetComponent<PlayerControllerCTRL>().enabled)
-		{
-			MoveData = PlayerGameObject.GetComponent<PlayerControllerCTRL>();
-		}
-		else if(PlayerGameObject.GetComponent<PlayerController>().enabled)
+		if(PlayerGameObject.GetComponent<PlayerController>().enabled)
 		{
 			MoveData = PlayerGameObject.GetComponent<PlayerController>();
 		}
@@ -134,7 +118,7 @@ public class TeleportSmallDistance : Wind {
 		}
 		else
 		{
-			Debug.LogWarning("TELEPORT IS NOT USED YOU ARE STANDING STILL");
+//			Debug.LogWarning("TELEPORT IS NOT USED YOU ARE STANDING STILL");
 			//IsSpellCasted = false;
 			return false;
 		}

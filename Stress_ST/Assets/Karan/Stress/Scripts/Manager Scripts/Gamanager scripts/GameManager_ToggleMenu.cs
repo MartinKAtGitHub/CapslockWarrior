@@ -18,10 +18,10 @@ public class GameManager_ToggleMenu : MonoBehaviour
 		gameManagerMaster.GameOverEvent -= ToggleMenu;
 	}
 
-	/*void Start()
+	void Start()
 	{
 		//ToggleMenu();
-	}*/
+	}
 
 	void Update()
 	{
@@ -33,6 +33,8 @@ public class GameManager_ToggleMenu : MonoBehaviour
 	{
 		if(menu != null)
 		{
+			//if(!menu.activeSelf)
+			// play anim IN or OUT
 			menu.SetActive(!menu.activeSelf);// This need to be changed to Start anim
 			gameManagerMaster.IsMenuOn = !gameManagerMaster.IsMenuOn;
 			gameManagerMaster.CallEventMenuToggle();
@@ -52,7 +54,7 @@ public class GameManager_ToggleMenu : MonoBehaviour
 		if(Input.GetKeyUp(KeyCode.Escape) && !gameManagerMaster.IsGameOver)//TODO Add check for in MainMenu(start of game)
 		{
 			ToggleMenu();
-			Debug.LogWarning("I CAN STILL PAUSE IN DIALOG");
+			Debug.Log("I CAN STILL PAUSE IN DIALOG + NO RETURN ANIM");
 		}
 
 	}

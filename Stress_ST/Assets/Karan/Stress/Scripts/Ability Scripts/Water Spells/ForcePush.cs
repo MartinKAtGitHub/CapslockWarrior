@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ForcePush : Water {
+public class ForcePush : Ability {
 
 	public float ForcePushDestroyAfter;
 	GameObject ForcePushArea;
@@ -14,18 +14,6 @@ public class ForcePush : Water {
 	[SerializeField]private int manaCost;
 	private GameObject playerGameObject;
 	private Transform spellSpawnPos;
-
-	public override bool IsSpellCasted 
-	{
-		get
-		{
-			return isSpellCasted;
-		} 
-		set
-		{
-			isSpellCasted = value;
-		}
-	}
 
 	public override Sprite AbilityImageIcon {
 		get {

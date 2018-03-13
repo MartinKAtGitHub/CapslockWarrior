@@ -29,18 +29,6 @@ public class HotShot : Ability {
 	private Transform spellSpawnPos;
 	private GameObject inGameSpellRef;
 
-	public override bool IsSpellCasted 
-	{
-		get
-		{
-			return isSpellCasted;
-		} 
-		set
-		{
-			isSpellCasted = value;
-		}
-	}
-
 	public override Sprite AbilityImageIcon {
 		get {
 			return abilityImageIcon;
@@ -176,7 +164,6 @@ public class HotShot : Ability {
 				{
 					minDistance = distance;
 					fireBallTarget = enemiesInRange[i].gameObject;
-					IsSpellCasted = true;
 				}
 			}
 			InGameSpellRef = (GameObject)Instantiate(this.gameObject, AbilitySpawnPos.position,Quaternion.identity);

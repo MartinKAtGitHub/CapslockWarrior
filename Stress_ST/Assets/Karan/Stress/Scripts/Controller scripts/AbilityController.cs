@@ -6,8 +6,8 @@ public class AbilityController : MonoBehaviour {
 
 
 
+	//Kit class -->Ability 1,2,3
 
-	// The finale spell(agumented/default) stored as gameobjects
 	public GameObject AbilityObjectKey1;
 	public GameObject AbilityObjectKey2;
 	public GameObject AbilityObjectKey3;
@@ -40,28 +40,6 @@ public class AbilityController : MonoBehaviour {
 	private Ability abilityKey3;
 	private Ability abilityKey4;
 
-	/*[Space (10)]
-	public Image SpellIconKey1ImgOverlay;
-	public Image SpellIconKey2ImgOverlay;
-	public Image SpellIconKey3ImgOverlay;
-	public Image SpellIconKey4ImgOverlay;
-
-	[Space (10)]
-	public Text SpellIconKey1TextTimer;
-	public Text SpellIconKey2TextTimer;
-	public Text SpellIconKey3TextTimer;
-	public Text SpellIconKey4TextTimer;*/
-	
-	/*private float timerForSpellOnKeyOne;
-	private float timerForSpellOnKeyTwo;
-	private float timerForSpellOnKeyThree;
-	private float timerForSpellOnKeyFour;*/
-
-	/*private bool spellKeyOneReady;
-	private bool spellKeyTwoReady;
-	private bool spellKeyThreeReady;
-	private bool spellKeyFourReady;*/
-
 	private PlayerManager playerManager;
 
 	private float imageAplhaTimer = 0;
@@ -90,27 +68,21 @@ public class AbilityController : MonoBehaviour {
 		ability3Cooldown = abilityKey3.BaseCoolDownTimer;
 		ability4Cooldown = abilityKey4.BaseCoolDownTimer;
 
-
-		//Debug.Log("Timers -> k1, k2, k3, k4  =" +"( " + timerForSpellOnKeyOne +", " + timerForSpellOnKeyTwo + ", " + timerForSpellOnKeyThree + ", " + timerForSpellOnKeyFour + " )");
-
 		//////////////// Problemetic code //////////////////
-		// TODO find a smarter solution SpellsController
+
+		// TODO find a smarter solution SpellsController -> maybe singelton Gamemanger
 		abilityKey1.PlayerGameObject = this.gameObject;
 		abilityKey2.PlayerGameObject = this.gameObject;
 		abilityKey3.PlayerGameObject = this.gameObject;
 		abilityKey4.PlayerGameObject = this.gameObject;
 
-		//.GetComponent<Transform>(); // Getting type missmatch on spell gameobjects. I dont know why But its is not cousing prob
-
-		abilityKey1.AbilitySpawnPos = abilitySpawnPoint;  // TODO i need this to spawn spells in the rigth places. but might be to heavy
+		abilityKey1.AbilitySpawnPos = abilitySpawnPoint;
 		abilityKey2.AbilitySpawnPos = abilitySpawnPoint;
 		abilityKey3.AbilitySpawnPos = abilitySpawnPoint;
 		abilityKey4.AbilitySpawnPos = abilitySpawnPoint;
 
-		//////////////// END//////////////////////////////
+		//////////////// END //////////////////////////////
 
-
-		// TODO Find a way so this can be used on multiable players, MULTIPLAYER style
 
 	}	
 	
@@ -118,10 +90,10 @@ public class AbilityController : MonoBehaviour {
 	void Update () 
 	{
 		//CheckKeyPress();
-		OnAbilityTrigger(KeyCode.Alpha1, KeyCode.Keypad1, "Key 1", ability1Cooldown, ref nextReadyTimeKey1, coolDownTimeLeftKey1);
-		OnAbilityTrigger(KeyCode.Alpha2, KeyCode.Keypad2, "Key 2", ability1Cooldown, ref nextReadyTimeKey2, coolDownTimeLeftKey2);
-		OnAbilityTrigger(KeyCode.Alpha3, KeyCode.Keypad3, "Key 3", ability1Cooldown, ref nextReadyTimeKey3, coolDownTimeLeftKey3);
-		OnAbilityTrigger(KeyCode.Alpha4, KeyCode.Keypad4, "Key 4", ability1Cooldown, ref nextReadyTimeKey4, coolDownTimeLeftKey4);
+		OnAbilityTrigger(abilityKey1, KeyCode.Alpha1, KeyCode.Keypad1, "Key 1", ability1Cooldown, ref nextReadyTimeKey1, coolDownTimeLeftKey1);
+		OnAbilityTrigger(abilityKey2, KeyCode.Alpha2, KeyCode.Keypad2, "Key 2", ability2Cooldown, ref nextReadyTimeKey2, coolDownTimeLeftKey2);
+		OnAbilityTrigger(abilityKey3, KeyCode.Alpha3, KeyCode.Keypad3, "Key 3", ability3Cooldown, ref nextReadyTimeKey3, coolDownTimeLeftKey3);
+		OnAbilityTrigger(abilityKey4, KeyCode.Alpha4, KeyCode.Keypad4, "Key 4", ability4Cooldown, ref nextReadyTimeKey4, coolDownTimeLeftKey4);
 
 	}
 
@@ -139,7 +111,7 @@ public class AbilityController : MonoBehaviour {
 	}
 
 
-	private void OnAbilityTrigger(KeyCode key, KeyCode altKey, string keyID, float abilityCoolDown, ref float nextReadyTime, float coolDownTimeLeft )
+	private void OnAbilityTrigger(Ability ability, KeyCode key, KeyCode altKey, string keyID, float abilityCoolDown, ref float nextReadyTime, float coolDownTimeLeft )
 	{
 		bool coolDownComplet = (Time.time > nextReadyTime);
 
@@ -148,26 +120,21 @@ public class AbilityController : MonoBehaviour {
 			if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
 			{
 				Debug.Log("Casting ability on " + keyID);
-				bool isCastSuccsesful = abilityKey1.Cast();
+				bool isCastSuccsesful = ability.Cast();
 
 				if(isCastSuccsesful)
 				{
 					//RestartCD
 					AbilityCastSuccsesful(abilityCoolDown, ref nextReadyTime, coolDownTimeLeft);
-					Debug.Log("CAST =  Succsesfull");
+					//Debug.Log("CAST =  Succsesfull");
 				}
-				else
-				{
-					//NO CD
-					Debug.Log("CAST = NOT succsesfull");
-				}
-
 			}
 		}else
 		{
 			CoolDown(coolDownTimeLeft);
 		}
 	} 
+
 	private void AbilityCastSuccsesful(float abilityCoolDown, ref float nextReadyTime, float coolDownTimeLeft)
 	{
 		nextReadyTime = abilityCoolDown + Time.time;
@@ -183,7 +150,8 @@ public class AbilityController : MonoBehaviour {
 
 	private void CoolDown(float coolDownTimeLeft)
 	{
-		coolDownTimeLeft -= Time.deltaTime; 
+		coolDownTimeLeft -= Time.deltaTime;
+		//Debug.Log("Missing CD Ability Icon");
 //		float roundedCd = Mathf.Round (coolDownTimeLeft);
 //      coolDownTextDisplay.text = roundedCd.ToString ();
 //      darkMask.fillAmount = (coolDownTimeLeft / coolDownDuration);
@@ -194,6 +162,12 @@ public class AbilityController : MonoBehaviour {
         darkMask.enabled = false;*/
     }
 
+    private void IsAbilityPassiv()
+    {
+    	// If(isAbilityPassiv)
+    		// Start passivAbility
+    		//Else dont do anythig
+    }
 	
 }
 

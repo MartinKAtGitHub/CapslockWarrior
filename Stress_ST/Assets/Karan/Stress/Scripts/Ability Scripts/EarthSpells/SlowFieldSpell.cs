@@ -4,30 +4,47 @@ using System.Collections;
 public class SlowFieldSpell : Ability {
 
 
-	public float SpellRadius; 
-	private float OriginalSpeed;
-	public float SlowRate;
 
+
+	[SerializeField]private float abilityRadius; 
+	[SerializeField]private float slowRate;
+	[SerializeField]private float coolDownTimer;
+	[SerializeField]private float slowFieldDuration;
+	[SerializeField]private Sprite abilityImageIcon;
+	[SerializeField]private int manaCost;
+
+	private float  slowFieldDurationCounDown;
 	private CircleCollider2D cC2d;
 	//private ParticleSystem.ShapeModule particalSys;
 	private ParticleSystem test;
-
-	private bool isSpellCasted;
-	[SerializeField]private float coolDownTimer;
-	[SerializeField]private Sprite abilityImageIcon;
-	[SerializeField]private int manaCost;
 	private GameObject playerGameObject;
 	private Transform spellSpawnPos;
 
-	public override bool IsSpellCasted 
+
+
+	public float SlowRate
 	{
 		get
 		{
-			return isSpellCasted;
-		} 
+			return slowRate;
+		}
 		set
 		{
-			isSpellCasted = value;
+			Debug.Log("SlowField SlowRate Set = " + value);
+			slowRate = value;
+		}
+	}
+
+	public float AbilityRadius
+	{
+		get
+		{
+			return abilityRadius;
+		}
+		set 
+		{
+			Debug.Log("SlowField Ability Radius Set = " + value);
+			abilityRadius = value;
 		}
 	}
 
@@ -90,35 +107,53 @@ public class SlowFieldSpell : Ability {
 	// Use this for initialization
 	void Start () 
 	{
+		slowFieldDurationCounDown = slowFieldDuration; 
 		cC2d = GetComponent<CircleCollider2D>();
-		cC2d.radius = SpellRadius;
+		cC2d.radius = AbilityRadius;
 
 		//particalSys = GetComponentInChildren<ParticleSystem.ShapeModule>();
 		//particalSys.radius = SpellRadius;
 
 		test = GetComponentInChildren<ParticleSystem>();
 		var sh = test.shape;
-		sh.radius = SpellRadius;
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
+		sh.radius = AbilityRadius;
 	}
 
+	void Update()
+	{
+		SlowAbilityDuration();
+	}
+
+	void SlowAbilityDuration()
+	{
+		
+
+		if((slowFieldDurationCounDown -= Time.deltaTime) <= 0)
+		{
+			slowFieldDurationCounDown = slowFieldDuration;
+			Destroy(this.gameObject);
+			Debug.Log("SlowField ---> Destroyed BUT PEOPLE STILL SLOWED SINCE ONTRIGGEREXIT()");
+		}
+		else
+		{
+			Debug.Log(Mathf.RoundToInt(Time.time));
+		}
+
+	}
 	// TODO Ask how this works little confused dose how the trigger retains info on what speeds to give back to the enemy
 	void OnTriggerEnter2D(Collider2D other)
 	{
+		// TODO Add all enemys in list. Slow them. On Effect duration over, Reset all enemy speed values
+
+
 		if(other.tag == "Enemy")
 		{
 			//TODO we must replace ENEMYCREEP with a class hierarchy so every ENEMY is effected by the slow
-			if(other.GetComponent<ObjectStats>() != null){
+			if(other.GetComponent<ObjectStats>() != null){ // THIS needs to be reuerd on enemy
 			//	other.GetComponent<DefaultBehaviour>().Turnoffwithforcestuff = true;
 				other.GetComponent<ObjectStats>().MovementSpeedChange(-SlowRate);
 			}
-			//other.GetComponent<GolumMovementTest>().speed *= SlowRate; 
-	//		Debug.Log("Enemy name STAY -> "+ other.name);
+
 		}
 	}
 

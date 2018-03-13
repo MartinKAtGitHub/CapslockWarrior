@@ -12,7 +12,6 @@ public abstract class Ability : MonoBehaviour{
 	// This code i feel to be convinent 
 	public abstract Transform AbilitySpawnPos{get;set;}
 	public abstract GameObject PlayerGameObject{get;set;}
-	public abstract bool IsSpellCasted {get;set;}
 	public abstract GameObject InGameSpellRef{get;set;}
 	public abstract AudioClip AbilityActivation{get;set;}
 	//----------

@@ -4,7 +4,7 @@ using System.Collections;
 public class TeleportSmallDistance : Ability {
 
 
-	IMovementEngin MoveData;
+	PlayerController MoveData;
 	public float TeleportRange;
 	private Vector2 StadingStill = new Vector2(0,0);
 	private ParticleSystem TPParticalSystem;

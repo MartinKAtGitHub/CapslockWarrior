@@ -130,9 +130,9 @@ public class PlayerManager : AbsoluteRoot {
 		totalmovementdecrease += a;
 
 		if (totalmovementdecrease < 0) {
-			GetComponent<PlayerController> ().Speed = 0.1f;
+			GetComponent<PlayerController> ().MaxSpeed = 0.1f;
 		} else {
-			GetComponent<PlayerController> ().Speed = totalmovementdecrease;
+			GetComponent<PlayerController> ().MaxSpeed = totalmovementdecrease;
 		}
 
 	}

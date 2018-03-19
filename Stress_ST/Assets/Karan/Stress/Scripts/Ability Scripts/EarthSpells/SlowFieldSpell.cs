@@ -134,11 +134,6 @@ public class SlowFieldSpell : Ability {
 			Destroy(this.gameObject);
 			Debug.Log("SlowField ---> Destroyed BUT PEOPLE STILL SLOWED SINCE ONTRIGGEREXIT()");
 		}
-		else
-		{
-			Debug.Log(Mathf.RoundToInt(Time.time));
-		}
-
 	}
 	// TODO Ask how this works little confused dose how the trigger retains info on what speeds to give back to the enemy
 	void OnTriggerEnter2D(Collider2D other)

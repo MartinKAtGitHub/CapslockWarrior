@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour{
 	}
 
 
-	private void ArrowsAutoRun()
+	private void ArrowsAutoRun() // UNDONE ArrowsAutoRun() GetKeyDown --> creats a bug where you need to Re-press buttons if you hold opposit buttons Not really a bug but
 	{
 		if(KeyLock) // when i press this
 		{

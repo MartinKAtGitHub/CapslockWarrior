@@ -103,14 +103,14 @@ public class HotShot : Ability {
 		if(fireBallTarget != null)
 		{
 			transform.position = Vector3.MoveTowards(transform.position,fireBallTarget.transform.position, speed*Time.deltaTime);
-			// TODO HOTSHOT This is heavy i think Check this out
+			// PERFORMANCE HOTSHOT This is heavy i think Check this out
 			Vector3 dir = fireBallTarget.transform.position - transform.position;
 			float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		}
 		else
 		{
-			//OnHotShotMissleDeath();//I want to do this 1 time
+			//OnHotShotMissleDeath();//UNDONE HOTSHOT needs to selfDestroy if target dies while missle is in transit 
 			Debug.Log("Target Died WHAT DO I DO NOW ?!?");
 		}
 	}

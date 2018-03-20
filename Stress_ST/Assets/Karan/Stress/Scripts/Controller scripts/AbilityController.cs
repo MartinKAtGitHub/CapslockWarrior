@@ -110,12 +110,11 @@ public class AbilityController : MonoBehaviour {
 		}
 	}
 
-
 	private void OnAbilityTrigger(Ability ability, KeyCode key, KeyCode altKey, string keyID, float abilityCoolDown, ref float nextReadyTime, float coolDownTimeLeft )
 	{
 		bool coolDownComplet = (Time.time > nextReadyTime);
-
-		if(coolDownComplet)
+	
+		if(coolDownComplet && playerManager.CurrentManaPoints >= ability.ManaCost) // TODO PERFORMANCE ability.ManaCost every frame maybe chache ?
 		{
 			if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
 			{
@@ -126,6 +125,7 @@ public class AbilityController : MonoBehaviour {
 				{
 					//RestartCD
 					AbilityCastSuccsesful(abilityCoolDown, ref nextReadyTime, coolDownTimeLeft);
+					playerManager.AbilityManaCost(ability.ManaCost);
 					//Debug.Log("CAST =  Succsesfull");
 				}
 			}
@@ -156,6 +156,7 @@ public class AbilityController : MonoBehaviour {
 //      coolDownTextDisplay.text = roundedCd.ToString ();
 //      darkMask.fillAmount = (coolDownTimeLeft / coolDownDuration);
 	}
+
 	private void AbilityReady()
     {
         /*coolDownTextDisplay.enabled = false;

@@ -14,11 +14,28 @@ public class AbilityController : MonoBehaviour {
 	public GameObject AbilityObjectKey4;
 
 	[Space (10)]
-	[SerializeField]private GameObject DefaultAbility1;
-	[SerializeField]private GameObject DefaultAbility2;
-	[SerializeField]private GameObject DefaultAbility3;
-	[SerializeField]private GameObject DefaultAbility4;
+	[SerializeField]private GameObject defaultAbility1;
+	[SerializeField]private GameObject defaultAbility2;
+	[SerializeField]private GameObject defaultAbility3;
+	[SerializeField]private GameObject defaultAbility4;
 
+	[Space (10)]
+	[SerializeField]private Image ability1Icon;
+	[SerializeField]private Image ability2Icon;
+	[SerializeField]private Image ability3Icon;
+	[SerializeField]private Image ability4Icon;
+
+	[Space (10)]
+	[SerializeField]private Image ability1IconMask;
+	[SerializeField]private Image ability2IconMask;
+	[SerializeField]private Image ability3IconMask;
+	[SerializeField]private Image ability4IconMask;
+
+	[Space (10)]
+	[SerializeField]private Text Ability1Txt;
+	[SerializeField]private Text Ability2Txt;
+	[SerializeField]private Text Ability3Txt;
+	[SerializeField]private Text Ability4Txt;
 
 	private float nextReadyTimeKey1;
 	private float nextReadyTimeKey2;
@@ -53,10 +70,10 @@ public class AbilityController : MonoBehaviour {
 		playerManager = GetComponent<PlayerManager>();
 
 		//TODO Check save(Player prefs) data, restore preveious Abilitys
-		AbilityNullCheck(ref AbilityObjectKey1, DefaultAbility1 ,"Key 1");
-		AbilityNullCheck(ref AbilityObjectKey2, DefaultAbility2 ,"Key 2");
-		AbilityNullCheck(ref AbilityObjectKey3, DefaultAbility3 ,"Key 3");
-		AbilityNullCheck(ref AbilityObjectKey4, DefaultAbility4 ,"Key 4");
+		AbilityNullCheck(ref AbilityObjectKey1, defaultAbility1 ,"Key 1");
+		AbilityNullCheck(ref AbilityObjectKey2, defaultAbility2 ,"Key 2");
+		AbilityNullCheck(ref AbilityObjectKey3, defaultAbility3 ,"Key 3");
+		AbilityNullCheck(ref AbilityObjectKey4, defaultAbility4 ,"Key 4");
 
 		abilityKey1 = AbilityObjectKey1.GetComponent<Ability>(); 
 		abilityKey2 = AbilityObjectKey2.GetComponent<Ability>();
@@ -67,9 +84,8 @@ public class AbilityController : MonoBehaviour {
 		ability2Cooldown = abilityKey2.BaseCoolDownTimer;
 		ability3Cooldown = abilityKey3.BaseCoolDownTimer;
 		ability4Cooldown = abilityKey4.BaseCoolDownTimer;
-
+	
 		//////////////// Problemetic code //////////////////
-
 		// TODO find a smarter solution SpellsController -> maybe singelton Gamemanger
 		abilityKey1.PlayerGameObject = this.gameObject;
 		abilityKey2.PlayerGameObject = this.gameObject;
@@ -82,7 +98,20 @@ public class AbilityController : MonoBehaviour {
 		abilityKey4.AbilitySpawnPos = abilitySpawnPoint;
 
 		//////////////// END //////////////////////////////
+		ability1Icon.sprite = abilityKey1.AbilityImageIcon;
+		ability2Icon.sprite = abilityKey2.AbilityImageIcon;
+		ability3Icon.sprite = abilityKey3.AbilityImageIcon;
+		ability4Icon.sprite = abilityKey4.AbilityImageIcon;
 
+		ability1IconMask.sprite = abilityKey1.AbilityImageIcon;
+		ability2IconMask.sprite = abilityKey2.AbilityImageIcon;
+		ability3IconMask.sprite = abilityKey3.AbilityImageIcon;
+		ability4IconMask.sprite = abilityKey4.AbilityImageIcon;
+
+		AbilityReady(ref Ability1Txt, ref ability1IconMask);
+		AbilityReady(ref Ability2Txt, ref ability2IconMask);
+		AbilityReady(ref Ability3Txt, ref ability3IconMask);
+		AbilityReady(ref Ability4Txt, ref ability4IconMask);
 
 	}	
 	
@@ -90,10 +119,10 @@ public class AbilityController : MonoBehaviour {
 	void Update () 
 	{
 		//CheckKeyPress();
-		OnAbilityTrigger(abilityKey1, KeyCode.Alpha1, KeyCode.Keypad1, "Key 1", ability1Cooldown, ref nextReadyTimeKey1, coolDownTimeLeftKey1);
-		OnAbilityTrigger(abilityKey2, KeyCode.Alpha2, KeyCode.Keypad2, "Key 2", ability2Cooldown, ref nextReadyTimeKey2, coolDownTimeLeftKey2);
-		OnAbilityTrigger(abilityKey3, KeyCode.Alpha3, KeyCode.Keypad3, "Key 3", ability3Cooldown, ref nextReadyTimeKey3, coolDownTimeLeftKey3);
-		OnAbilityTrigger(abilityKey4, KeyCode.Alpha4, KeyCode.Keypad4, "Key 4", ability4Cooldown, ref nextReadyTimeKey4, coolDownTimeLeftKey4);
+		OnAbilityTrigger(abilityKey1, KeyCode.Alpha1, KeyCode.Keypad1, "Key 1", ability1Cooldown, ref nextReadyTimeKey1, ref coolDownTimeLeftKey1, ref Ability1Txt, ref ability1IconMask);
+		OnAbilityTrigger(abilityKey2, KeyCode.Alpha2, KeyCode.Keypad2, "Key 2", ability2Cooldown, ref nextReadyTimeKey2, ref coolDownTimeLeftKey2, ref Ability2Txt, ref ability2IconMask);
+		OnAbilityTrigger(abilityKey3, KeyCode.Alpha3, KeyCode.Keypad3, "Key 3", ability3Cooldown, ref nextReadyTimeKey3, ref coolDownTimeLeftKey3, ref Ability3Txt, ref ability3IconMask);
+		OnAbilityTrigger(abilityKey4, KeyCode.Alpha4, KeyCode.Keypad4, "Key 4", ability4Cooldown, ref nextReadyTimeKey4, ref coolDownTimeLeftKey4, ref Ability4Txt, ref ability4IconMask);
 
 	}
 
@@ -110,57 +139,69 @@ public class AbilityController : MonoBehaviour {
 		}
 	}
 
-	private void OnAbilityTrigger(Ability ability, KeyCode key, KeyCode altKey, string keyID, float abilityCoolDown, ref float nextReadyTime, float coolDownTimeLeft )
+	private void OnAbilityTrigger(Ability ability, KeyCode key, KeyCode altKey,
+								 string keyID, float abilityCoolDown, ref float nextReadyTime, ref float coolDownTimeLeft,
+								 ref Text abilityIconText, ref Image abilityIconMask )
 	{
 		bool coolDownComplet = (Time.time > nextReadyTime);
 	
-		if(coolDownComplet && playerManager.CurrentManaPoints >= ability.ManaCost) // TODO PERFORMANCE ability.ManaCost every frame maybe chache ?
+		if(coolDownComplet) // TODO PERFORMANCE ability.ManaCost every frame maybe chache ?
 		{
+			AbilityReady(ref abilityIconText, ref abilityIconMask);
+
 			if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
 			{
-				Debug.Log("Casting ability on " + keyID);
-				bool isCastSuccsesful = ability.Cast();
-
-				if(isCastSuccsesful)
+				if(playerManager.CurrentManaPoints >= ability.ManaCost)
 				{
-					//RestartCD
-					AbilityCastSuccsesful(abilityCoolDown, ref nextReadyTime, coolDownTimeLeft);
-					playerManager.AbilityManaCost(ability.ManaCost);
-					//Debug.Log("CAST =  Succsesfull");
+					Debug.Log("Casting ability on " + keyID);
+					bool isCastSuccsesful = ability.Cast();
+					
+					if(isCastSuccsesful)
+					{
+						//RestartCD
+						AbilityCastSuccsesful(abilityCoolDown, ref nextReadyTime, ref coolDownTimeLeft, ref abilityIconMask, ref abilityIconText);
+						playerManager.AbilityManaCost(ability.ManaCost);
+						//Debug.Log("CAST =  Succsesfull");
+					}
+				}
+				else
+				{
+					Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
 				}
 			}
-		}else
+		}
+		else
 		{
-			CoolDown(coolDownTimeLeft);
+			CoolDown(ref coolDownTimeLeft, ref abilityIconText, ref abilityIconMask, ref abilityCoolDown);
 		}
 	} 
 
-	private void AbilityCastSuccsesful(float abilityCoolDown, ref float nextReadyTime, float coolDownTimeLeft)
+	private void AbilityCastSuccsesful(float abilityCoolDown, ref float nextReadyTime, ref float coolDownTimeLeft , ref Image abilityIconMask, ref Text abilityIconText)
 	{
 		nextReadyTime = abilityCoolDown + Time.time;
 		coolDownTimeLeft = abilityCoolDown;
 
-		/*darkMask.enabled = true;
-        coolDownTextDisplay.enabled = true;
+		abilityIconText.enabled = true;
+		abilityIconMask.enabled = true;
 
-		abilitySource.clip = ability.abilitySound;
-        abilitySource.Play ();
-        ability.TriggerAbility ();*/
+		//abilitySource.clip = ability.abilitySound;
+       // abilitySource.Play ();
+        //ability.TriggerAbility ();
 	}
 
-	private void CoolDown(float coolDownTimeLeft)
+	private void CoolDown(ref float coolDownTimeLeft, ref Text abilityIconText, ref Image abilityIconMask, ref float abilityCoolDown )
 	{
 		coolDownTimeLeft -= Time.deltaTime;
-		//Debug.Log("Missing CD Ability Icon");
-//		float roundedCd = Mathf.Round (coolDownTimeLeft);
-//      coolDownTextDisplay.text = roundedCd.ToString ();
-//      darkMask.fillAmount = (coolDownTimeLeft / coolDownDuration);
+		float roundedCd = Mathf.Round (coolDownTimeLeft);
+	    abilityIconText.text = roundedCd.ToString ();
+		
+		abilityIconMask.fillAmount = (coolDownTimeLeft / abilityCoolDown);
 	}
 
-	private void AbilityReady()
+	private void AbilityReady(ref Text abilityIconText, ref Image abilityIconMask )
     {
-        /*coolDownTextDisplay.enabled = false;
-        darkMask.enabled = false;*/
+		abilityIconText.enabled = false;
+		abilityIconMask.enabled = false;
     }
 
     private void IsAbilityPassiv()

@@ -19,6 +19,8 @@ public class PlayerManager : AbsoluteRoot {
 
 	[Tooltip(" Sets the mana Regen Rate = value per sek")]
 	public float ManaRegenRate = 1;
+	public int ManaGainPerTick = 1;
+	float regenTick;
 
 	//public Text HealtPoints_Txt;
 	//public Text ManaPoints_Txt; 
@@ -29,7 +31,7 @@ public class PlayerManager : AbsoluteRoot {
 	private int currentHealtPoints;
 	private int maxManaPoints;
 	private int currentManaPoints;
-	[SerializeField]private int PointsPerContainer = 4;
+	private const int PointsPerContainer = 4;
 	[SerializeField]private Image [] HeartContainers;
 	[SerializeField]private Image [] ManaContainers;
 
@@ -70,10 +72,6 @@ public class PlayerManager : AbsoluteRoot {
 		CalculateMaxHealthOrMana(ref maxHealtPoints, ref currentHealtPoints, PointsPerContainer, HeartContainers);
 		CalculateMaxHealthOrMana(ref maxManaPoints, ref currentManaPoints, PointsPerContainer, ManaContainers);
 
-	/*	maxHealtPoints = PointsPerContainer * HeartContainers.Length;
-		currentHealtPoints = maxHealtPoints;
-		*/
-
 		Debug.Log(currentHealtPoints);
 
 		UIContainerChecks(HeartContainers);
@@ -88,10 +86,8 @@ public class PlayerManager : AbsoluteRoot {
 
 	void Update () 
 	{
-	//	myPos [0, 0] = transform.position.x;
-	//	myPos [0, 1] = transform.position.y;
 		isPlayerAlive();
-		ManaRegen(ManaRegenRate);
+		ManaRegen(ManaRegenRate, ManaGainPerTick);
 	}
 
 	private void UIContainerChecks(Image [] containers)
@@ -110,11 +106,13 @@ public class PlayerManager : AbsoluteRoot {
 		maxPoints = pointsPerContainer * containers.Length;
 		currentPoints = maxPoints;
 	}
+
 	private void ClampHealth()
 	{
 		currentHealtPoints = Mathf.Clamp(currentHealtPoints, 0 , maxHealtPoints);
 		OnHealthOrManaChanged(currentHealtPoints, HeartContainers);
 	}
+
 	private void ClampMana()
 	{
 		currentManaPoints = Mathf.Clamp(currentManaPoints, 0 , maxManaPoints);
@@ -124,9 +122,9 @@ public class PlayerManager : AbsoluteRoot {
 	private void OnHealthOrManaChanged(int currentValue, Image[] container)
 	{
 		int containerIndex = currentValue / PointsPerContainer;
-		Debug.Log("Current Container (" + containerIndex + ")");
+		//Debug.Log("Current Container (" + containerIndex + ")");
 		int fill = currentValue % PointsPerContainer;
-		Debug.Log("Current Fill (" + fill + ")");
+		//Debug.Log("Current Fill (" + fill + ")");
 
 
 		if(fill == 0)
@@ -162,7 +160,7 @@ public class PlayerManager : AbsoluteRoot {
 
 	public override void RecievedDmg(int damage) // TODO Matf.Clamp the HP
 	{
-		Debug.Log(gameObject.name + " Recived = " + damage);
+		//Debug.Log(gameObject.name + " Recived = " + damage);
 
 		for (int i = 0; i < damage; i++) //PERFORMANCE the system only works for 1 dmg(value)... so i need to calulate for every instance of dmg
 		{
@@ -172,17 +170,39 @@ public class PlayerManager : AbsoluteRoot {
 
 	}
 
-	public void HealDmg(int _heal) // TODO Matf.Clamp the HP
+	public void HealDmg(int heal)
 	{
-		currentHealtPoints += _heal;
-		ClampHealth();
+		for (int i = 0; i < heal; i++)
+		{	
+			currentHealtPoints += 1;
+			ClampHealth();
+		}
 	}
 
 	public void AbilityManaCost(int manaCost)
 	{
-		for (int i = 0; i < manaCost; i++) {
+		for (int i = 0; i < manaCost; i++) 
+		{
 			currentManaPoints -= 1;
 			ClampMana();
+		}
+	}
+	public void AbilityManaGain(int amountGain)
+	{
+		for (int i = 0; i < amountGain; i++) 
+		{
+			currentManaPoints += 1;
+			ClampMana();
+		}
+	}
+
+	public void ManaRegen(float manaRegenRate, int amountGainPerTick)// TODO Double check the ManaRegen Method in PlayerManager to see if it is not to expensive
+	{
+		
+		if( Time.time > regenTick)
+		{
+			AbilityManaGain(amountGainPerTick);
+			regenTick = Time.time + manaRegenRate;
 		}
 	}
 
@@ -214,10 +234,7 @@ public class PlayerManager : AbsoluteRoot {
 		GetComponent<PlayerTyping> ().ResetTheText ();
 	}
 
-	public void ManaRegen(float manaRegenRate)// TODO Double check the ManaRegen Method in PlayerManager to see if it is not to expensive
-	{
-		
-	}
+
 
 
 

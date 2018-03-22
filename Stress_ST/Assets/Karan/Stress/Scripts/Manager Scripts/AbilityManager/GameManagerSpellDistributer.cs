@@ -14,6 +14,10 @@ public class GameManagerSpellDistributer : MonoBehaviour {
 	public GameObject SpellOnKeyFour;
 
 
+	void Start()
+	{
+		MainHero = GameManager_Master.instance.PlayerCharacter.GetComponent<AbilityController>();
+	}
 	/// <summary>
 	/// Loads spells Data to the MAIN HERO when hero spawns so put this method when you want the hero to spawn and have the new spells selected
 	/// </summary>
@@ -22,7 +26,6 @@ public class GameManagerSpellDistributer : MonoBehaviour {
 
 		//MainHero = GameObject.FindGameObjectWithTag("Player1").GetComponent<AbilityController>();
 
-		MainHero = GameManager_Master.instance.PlayerCharacter.GetComponent<AbilityController>();
 		MainHero.AbilityObjectKey1= SpellOnKeyOne;
 		MainHero.AbilityObjectKey2 = SpellOnKeyTwo;
 		MainHero.AbilityObjectKey3 = SpellOnKeyThree;

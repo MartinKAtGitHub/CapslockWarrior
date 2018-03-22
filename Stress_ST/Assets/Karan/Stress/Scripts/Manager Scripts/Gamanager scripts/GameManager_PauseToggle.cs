@@ -6,13 +6,13 @@ public class GameManager_PauseToggle : MonoBehaviour
 {
 
 	private GameManager_Master gameManagerMaster;
-	[SerializeField]
-	private bool isPaused;
+
+	[SerializeField] private bool isPaused;
 
 	void OnEnable()
 	{
 	 	SetInitialRefs();
-	 	gameManagerMaster.MenuToggleEvent += TogglePause;
+		gameManagerMaster.MenuToggleEvent += TogglePause; // When the MenuToggleEvent happens TogglePause() also
 
 	}
 
@@ -29,7 +29,7 @@ public class GameManager_PauseToggle : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Pause toggle, This only Stops the game, and i call it when i need to Stop the game. By saparating this we can stop time whenever we want. 
+	/// Pause toggle, method used to set time scale set 0. Can be called for other purpose 
 	/// </summary>
 	void TogglePause()
 	{

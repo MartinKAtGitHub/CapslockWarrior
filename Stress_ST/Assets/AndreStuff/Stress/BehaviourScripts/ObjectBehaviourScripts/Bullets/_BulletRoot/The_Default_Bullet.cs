@@ -13,5 +13,9 @@ public class The_Default_Bullet : MonoBehaviour {
 		_Shooter = MySender;
 	}
 
+	public virtual void SetMethod (EnemyManaging manager){
+
+	}
+
 
 }

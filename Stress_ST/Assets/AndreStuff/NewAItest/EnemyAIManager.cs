@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class EnemyAIManager : MonoBehaviour {
 	 
-	public FillAndEmpty EnergyBar;
+	public EnergyBar EnergyBar;
 
-	public AbilityInfo[] Spells;
-
-	float TheTime = 0;
-
+	public AbilityInfo Spells;
 
 	
 	// Update is called once per frame
 	void Update () {
-		TheTime += Time.deltaTime;
+
+
+	/*	TheTime += Time.deltaTime;
 
 		for(int i = 0; i < 6; i++){
 			if (Spells [i].SpellCost <= EnergyBar.CurrentEnergy) {
@@ -27,7 +26,7 @@ public class EnemyAIManager : MonoBehaviour {
 				}
 			}
 		}
-
+*/
 
 
 	}

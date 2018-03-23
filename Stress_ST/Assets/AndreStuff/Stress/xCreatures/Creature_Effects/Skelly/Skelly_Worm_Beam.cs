@@ -110,7 +110,7 @@ public class Skelly_Worm_Beam : The_Default_Bullet {
 								break;//Dont Want To Deal Dmg To Objects Behind The Wall
 							} else {//TODO Improve
 								if (_RaycastValues [i].transform.CompareTag ("Player1")) {
-									_RaycastValues [i].transform.GetComponent<PlayerManager> ().RecievedDmg (1);
+									_RaycastValues [i].transform.GetComponent<CreatureRoot> ().TookDmg (1);
 								} else {
 									Debug.LogWarning ("The Object Didnt Take Dmg??? " + _RaycastValues [i].transform.name);
 								}

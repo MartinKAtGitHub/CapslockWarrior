@@ -49,7 +49,7 @@ public class Naruto_Rasengan : The_Default_Bullet {
 			foreach (RaycastHit2D s in Physics2D.CircleCastAll (transform.position, AoeRadius, Vector2.zero, 0, WhatCanIHit)) {
 				if (s.transform.CompareTag ("Player1")) {
 					Debug.Log ("SEDNGING DMG");
-					s.transform.GetComponent<PlayerManager> ().RecievedDmg (Mathf.RoundToInt (1));
+					s.transform.GetComponent<CreatureRoot> ().TookDmg (1);
 				}
 
 			}

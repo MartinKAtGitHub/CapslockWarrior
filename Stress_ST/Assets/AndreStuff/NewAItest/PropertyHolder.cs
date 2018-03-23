@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PropertyHolder : MonoBehaviour {
 	public enum Status { A, B, C };
@@ -14,7 +15,6 @@ public class PropertyHolder : MonoBehaviour {
 	public bool controllable;
 
 	void Start () {
-
 	}
 
 	void Update () {

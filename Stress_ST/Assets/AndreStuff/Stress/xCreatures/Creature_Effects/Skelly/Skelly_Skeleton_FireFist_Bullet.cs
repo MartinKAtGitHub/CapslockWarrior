@@ -83,7 +83,7 @@ public class Skelly_Skeleton_FireFist_Bullet : The_Default_Bullet {
 				Destroy (this.gameObject);
 			} else {
 				if (Col.transform.CompareTag ("Player1")) {
-					Col.GetComponent<PlayerManager> ().RecievedDmg (1);
+					Col.GetComponent<CreatureRoot> ().TookDmg (1);
 					_Shooter.MyAnimator.SetInteger(_Shooter.AnimatorVariables [1], 1);
 			//		Instantiate (OnCollisionExplotion, transform.position, Quaternion.identity);
 					Destroy (this.gameObject);

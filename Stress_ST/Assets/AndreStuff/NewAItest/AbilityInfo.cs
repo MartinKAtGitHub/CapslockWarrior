@@ -5,189 +5,67 @@ using System.Reflection;
 using System;
 using UnityEngine.Events;
 
-public class AbilityInfo : MonoBehaviour {
+//Holds All Spells Of The Object. 
+//To Check If A Spell Can Be Used The SpellCD Is Checked On First.
+//Next The Spell checks Its Own Spell Criteria And If All Of Them Are True Then The Next Part Happends.
+//The Final Part Is Just To Change The AnimatorStage To Let It Know That A New Animation Need To Play.
+//If Something Needs To Be Changed Then That Is Done In The Animator. (stop moving, cant rotate, start scenario logic....)
 
-	[System.Serializable]
-	public struct spellnumbers{
+[System.Serializable]
+public class AbilityInfo {
 
-		[HeaderAttribute("Spell Criteria To Enter")]
-		public UnityEvent CriteriaToBeMet;
+	[HideInInspector]
+	public EnemyManaging MyManager;	
+	public StressCommonlyUsedInfo.TransitionGrouped[] TransitionAbilities;
 
-		[HeaderAttribute("Spell Needed Numbers")]
-		public float[] floatNumbers;
-		public int[] intNmbers;
-		public Vector3[] vector3Numbers;
-	}
+	int _AbilityArrayLength = 0;
 
+	int AbilityCheck = 0;
+	int AbilityUsed = 0;
+	float OldTime = 0;
 
+	public void AbilitySetter(){
 
-
-
-	public spellnumbers[] test11;
-	public SpellCriteria test12;
-
-	[Space(10)]
-	public EnemyManaging MyManager;
-
-	public float SpellCD = 10;
-	public float SpellCurrentCD = 10;
-	public float SpellCost = 4;
-
-	public delegate void FiringDelegate();
-	FiringDelegate firingMethod;
-
-	public void test1 (float a){}
-	public void test2 (){}
-
-	public float GetCurrentTime (){
-		return SpellCurrentCD;
-	}
-
-	public void SetCurrentTime (float val){
-		SpellCurrentCD = val + SpellCD;
-	}
-
-
-
-	public SpriteRenderer FillingBar;
-	public float FillingSpeed = 1;
-	public float EnergyMax = 10;
-	public float CurrentEnergy = 0;
-
-	float FillingMaxSize = 0;
-	Vector2 FillingSize = Vector2.zero;
-	public bool StartFill = true;
-	public bool PlayOnce = false;
-	public float AnimatorStageSetTo = 0;
-
-	// Use this for initialization
-	void Start () {
-		SpellCurrentCD = SpellCD;
-		FillingSize = FillingBar.size;
-		FillingMaxSize = FillingBar.size.x;
-		FillingBar.size = FillingSize;
-	}
-
-	// Update is called once per frame
-	bool ResetedOnce = false;
-	public bool StartFilling = false;
-
-	public bool RunSpellCheck(){
-
-		//Logic
-		//if true
-		StartFilling = true;
-		return true;
-	}
-
-
-
-
-	public bool CheckIfCriteriasMet(){
-		//MethodsToRun.Invoke ();
-		
-		return false;
-	}
-
-
-
-	public void StartingAbilityLogic(){
-		
-		MyManager.MyAnimator.SetFloat ("AnimatorStage", AnimatorStageSetTo);
+		_AbilityArrayLength = TransitionAbilities[0].AllAbilities.Length;//Just So That I Dont Have To Do This Every Update
+		SetSpellCD ();
 
 	}
 
+	public void AbilityChecker () {//Checking If An Ability Can Be Used. 
 
+		for (int i = 0; i < _AbilityArrayLength; i++) {
+			if (TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCurrentCD < ClockTest.TheTimes) {//If The Spell Dont Have A CD.
+				AbilityCheck = TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellInfo.RunCriteriaCheck (MyManager);
 
+				if (AbilityCheck > 0) {//If True The An Ability Starts To Run
+					MyManager.MyAnimatorVariables.SetAnimatorStage (AbilityCheck);
+					AbilityUsed = i;
+					MyManager.MyAnimatorVariables.AbilityRunning = true;
+					OldTime = ClockTest.TheTimes;
+					break;
+				}
+			}
 
+		}
 
+	}
 
+	public void SetSpellCD(){//Reseting The Spell CD
 
+		for (int i = 0; i < _AbilityArrayLength; i++) {
+			TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCurrentCD = ClockTest.TheTimes + TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCD;
+		}
 
+	}
 
+	public void AddLostTime(){//When SpellAnimation Cycle Is Complete, Add The Time Between Spell Used And Spell Complete To The Other Spells, Then Reseting The Used Spell
 
+		for (int i = 0; i < _AbilityArrayLength; i++) {
+			TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCurrentCD += ClockTest.TheTimes - OldTime;
+		}
+		TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [AbilityUsed].SpellCurrentCD = ClockTest.TheTimes + TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [AbilityUsed].SpellCD;
+
+	}
 
 
 }
-// 1st iteration ability pseudocode logic
-/*
- 	public float SpellCD = 10;
-	public float SpellCurrentCD = 10;
-	public float SpellCost = 4;
-
-	public float GetCurrentTime (){
-		return SpellCurrentCD;
-	}
-
-	public void SetCurrentTime (float val){
-		SpellCurrentCD = val + SpellCD;
-	}
-
-
-
-	public SpriteRenderer FillingBar;
-	public float FillingSpeed = 1;
-	public float EnergyMax = 10;
-	public float CurrentEnergy = 0;
-
-	float FillingMaxSize = 0;
-	Vector2 FillingSize = Vector2.zero;
-	public bool StartFill = true;
-	public bool PlayOnce = false;
-
-	// Use this for initialization
-	void Start () {
-		SpellCurrentCD = SpellCD;
-		FillingSize = FillingBar.size;
-		FillingMaxSize = FillingBar.size.x;
-		FillingBar.size = FillingSize;
-	}
-
-	// Update is called once per frame
-	bool ResetedOnce = false;
-	public bool StartFilling = false;
-
-	public bool RunSpellCheck(){
-
-		//Logic
-
-		//if true
-		StartFilling = true;
-		return true;
-	}
-
-
-
-	void Update () {
-
-		if (StartFilling == true) {
-			if (ResetedOnce == true) {
-				if (FillingSize.x >= FillingMaxSize) {
-					StartFilling = false;
-					ResetedOnce = false;
-					FillingSize.x = FillingMaxSize;
-					FillingBar.size = FillingSize;
-				} else {
-
-					FillingSize.x += Time.deltaTime * FillingSpeed;
-					FillingBar.size = FillingSize;
-
-				}
-
-			} else {
-
-				if (FillingSize.x >= FillingMaxSize) {
-
-					FillingSize.x = 0;
-					if (CurrentEnergy < EnergyMax)
-						CurrentEnergy++;
-					ResetedOnce = true;
-				}
-
-				FillingSize.x += Time.deltaTime * FillingSpeed;
-				FillingBar.size = FillingSize;
-
-			}
-		}
-	}
- */

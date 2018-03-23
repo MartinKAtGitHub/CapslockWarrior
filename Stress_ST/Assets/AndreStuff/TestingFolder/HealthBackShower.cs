@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthBackShower : MonoBehaviour {
+public class HealthBackShower : MonoBehaviour {//All Types Are Working Atm So For Better Performance Take Away The Other That Isnt Used
 	public enum HealthDisplayType {CurrentEndabled, Testing1, Testing2, Testing3};
 	public HealthDisplayType WhichDisplayType;
 
@@ -26,7 +26,7 @@ public class HealthBackShower : MonoBehaviour {
 	Vector2 ShieldWidth = Vector2.zero;
 	Vector2 ShieldXPos = Vector2.zero;
 
-	ObjectWords myinfo;
+	CreatureRoot myinfo;
 
 	float MaxHP = 0;
 	float CurrentHP = 1;
@@ -37,7 +37,7 @@ public class HealthBackShower : MonoBehaviour {
 
 	void Start () {
 
-		myinfo = transform.parent.parent.GetComponent<ObjectWords> ();
+		myinfo = transform.parent.parent.GetComponent<CreatureRoot> ();
 		myScale = HealthSprite.transform.localScale;
 		MyPosition = HealthSprite.transform.localPosition;
 		SpriteWidth = HealthSprite.size;
@@ -46,7 +46,7 @@ public class HealthBackShower : MonoBehaviour {
 		} else {
 			HealthSprite2.enabled = false;
 
-			MaxHP = myinfo.HealthWords;
+			MaxHP = myinfo.Stats.Health;
 			ShieldXPos = HealthSprite2.transform.localPosition;
 			ShieldWidth = HealthSprite2.size;
 		}
@@ -66,13 +66,12 @@ public class HealthBackShower : MonoBehaviour {
 	public void StartHealthChange(){
 
 		if (WhichDisplayType == HealthDisplayType.CurrentEndabled) {
-
 			if (SpriteWidth.x > ((StartXPos * 2) + (StartXWidt * 1.5f))) {
-				SpriteWidth.x = (StartXWidt * ((myinfo.HealthWords + 1)));
+				SpriteWidth.x = (StartXWidt * ((myinfo.Stats.Health )));
 				MyPosition.x = 0;
 
 			} else {
-				SpriteWidth.x = (StartXWidt * ((myinfo.HealthWords + 1)));
+				SpriteWidth.x = (StartXWidt * ((myinfo.Stats.Health)));
 				MyPosition.x = StartXPos - (SpriteWidth.x * (myScale.x / 2)) + (StartXWidt * (myScale.x / (2 * myScale.x)));
 
 			}
@@ -86,12 +85,12 @@ public class HealthBackShower : MonoBehaviour {
 					HealthSprite2.enabled = true;
 
 				if (SpriteWidth.x > ((StartXPos * 2) + (StartXWidt * 1.5f))) {
-					ShieldXPos.x = (SpriteWidth.x / -2) - (StartXWidt * 0.5f) - ((ShieldPower * StartXWidt) * 0.5f);
+					ShieldXPos.x = (SpriteWidth.x / -2) - (StartXWidt * 0.5f) - ((myinfo.Stats.Shield * StartXWidt) * 0.5f);
 				} else {
-					ShieldXPos.x = StartXPos - SpriteWidth.x - (StartXWidt / DistanceBetween) - ((ShieldPower * StartXWidt) * 0.5f);
+					ShieldXPos.x = StartXPos - SpriteWidth.x - (StartXWidt / DistanceBetween) - ((myinfo.Stats.Shield * StartXWidt) * 0.5f);
 				}
 
-				ShieldWidth.x = StartXWidt * ShieldPower;
+				ShieldWidth.x = StartXWidt * myinfo.Stats.Shield;
 
 				HealthSprite2.size = ShieldWidth;
 				HealthSprite2.transform.localPosition = ShieldXPos;
@@ -104,28 +103,28 @@ public class HealthBackShower : MonoBehaviour {
 			}
 		} else if (WhichDisplayType == HealthDisplayType.Testing1) {
 
-			if (myinfo.HealthWords < 31) {//Goes to 31
+			if (myinfo.Stats.Health < 31) {//Goes to 31
 
 				if (myScale.x != 1) {
 					myScale.x = 1;
 					HealthSprite.transform.localScale = myScale;	
 				}
 
-			} else if (myinfo.HealthWords > 30 && myinfo.HealthWords < 62) {//goes to 62
+			} else if (myinfo.Stats.Health > 30 && myinfo.Stats.Health < 62) {//goes to 62
 
 				if (myScale.x != 0.5f) {
 					myScale.x = 0.5f;
 					HealthSprite.transform.localScale = myScale;	
 				}
 
-			} else if ((myinfo.HealthWords > 61 && myinfo.HealthWords < 124)) {//goes to 124
+			} else if ((myinfo.Stats.Health > 61 && myinfo.Stats.Health < 124)) {//goes to 124
 
 				if (myScale.x != 0.25f) {
 					myScale.x = 0.25f;
 					HealthSprite.transform.localScale = myScale;	
 				}
 
-			} else if (myinfo.HealthWords > 123 && myinfo.HealthWords < 248) {//goes to 248
+			} else if (myinfo.Stats.Health > 123 && myinfo.Stats.Health < 248) {//goes to 248
 
 				if (myScale.x != 0.1275f) {
 					myScale.x = 0.1275f;
@@ -134,7 +133,7 @@ public class HealthBackShower : MonoBehaviour {
 
 			}
 
-			SpriteWidth.x = (StartXWidt * (myinfo.HealthWords + 1));
+			SpriteWidth.x = (StartXWidt * (myinfo.Stats.Health ));
 			MyPosition.x = StartXPos - (SpriteWidth.x * (myScale.x / 2)) + (StartXWidt * (myScale.x / (2 * myScale.x)));
 
 			HealthSprite.size = SpriteWidth;
@@ -142,9 +141,9 @@ public class HealthBackShower : MonoBehaviour {
 
 		} else if (WhichDisplayType == HealthDisplayType.Testing2) {
 
-			if (myinfo.HealthWords > -1) {
+			if (myinfo.Stats.Health > -1) {
 
-				CurrentColors = Mathf.FloorToInt ((myinfo.HealthWords + 1) / howmanybeforefull);
+				CurrentColors = Mathf.FloorToInt ((myinfo.Stats.Health ) / howmanybeforefull);
 				Overflowing = Mathf.FloorToInt (CurrentColors / TEST.Length); 
 
 				if (CurrentColors == 0) {
@@ -154,7 +153,7 @@ public class HealthBackShower : MonoBehaviour {
 						HealthSprite2.enabled = false;
 					}
 
-					SpriteWidth.x = (StartXWidt * ((myinfo.HealthWords + 1) - (howmanybeforefull * CurrentColors)));
+					SpriteWidth.x = (StartXWidt * ((myinfo.Stats.Health ) - (howmanybeforefull * CurrentColors)));
 					MyPosition.x = StartXPos - (SpriteWidth.x * (myScale.x / 2)) + (StartXWidt * (myScale.x / (2 * myScale.x)));
 
 					HealthSprite.size = SpriteWidth;
@@ -181,7 +180,7 @@ public class HealthBackShower : MonoBehaviour {
 
 					}
 
-					SpriteWidth.x = (StartXWidt * ((myinfo.HealthWords + 1) - (howmanybeforefull * CurrentColors)));
+					SpriteWidth.x = (StartXWidt * ((myinfo.Stats.Health ) - (howmanybeforefull * CurrentColors)));
 					MyPosition.x = StartXPos - (SpriteWidth.x * (myScale.x / 2)) + (StartXWidt * (myScale.x / (2 * myScale.x)));
 
 					HealthSprite2.size = SpriteWidth;
@@ -196,11 +195,11 @@ public class HealthBackShower : MonoBehaviour {
 
 		} else if (WhichDisplayType == HealthDisplayType.Testing3) {
 	
-			if (MaxHP < myinfo.HealthWords + 1) {
-				MaxHP = myinfo.HealthWords + 1;
+			if (MaxHP < myinfo.Stats.Health ) {
+				MaxHP = myinfo.Stats.Health ;
 				CurrentHP = 1;
 			} else {
-				CurrentHP = (myinfo.HealthWords + 1) / MaxHP;
+				CurrentHP = (myinfo.Stats.Health ) / MaxHP;
 			}
 
 			SpriteWidth.x = (StartXWidt * (CurrentHP));

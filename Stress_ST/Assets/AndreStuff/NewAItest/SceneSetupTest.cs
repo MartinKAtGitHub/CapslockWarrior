@@ -15,7 +15,7 @@ public class SceneSetupTest : MonoBehaviour {
 	void Awake(){
 		CollisionMapAttacher.NewSceen ();
 		CollisionMapAttacher.testin = testin;
-		testin.Setup (this);
+		testin.Setup ();
 		Application.targetFrameRate = 60;//Makes Update Run 60 Times A Sec
 
 	}

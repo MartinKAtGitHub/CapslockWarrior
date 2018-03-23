@@ -47,7 +47,7 @@ public class AStarTest : MonoBehaviour {
 	int	_NodeYPos = 0;
 
 
-	public void Setup(SceneSetupTest sceneStartup){
+	public void Setup(){
 
 	//	_WalkCost.SetNodeSize (sceneStartup);//Creating Node Cost Array
 
@@ -192,9 +192,15 @@ public class AStarTest : MonoBehaviour {
 	}
 
 	float one,two;
+	bool SetupDone = false;
 
 	public void StartRunning (EnemyManaging myManager){
 	
+		if (SetupDone == false) {
+			Setup ();
+			SetupDone = true;
+		}
+
 		#region Startup Phase
 
 		_MyManager = myManager;

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2298ddb721748c14ab5e4c1bc0fb3a30
-timeCreated: 1518457799
+timeCreated: 1518542843
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -50,11 +50,11 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 8
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -96,8 +96,8 @@ TextureImporter:
         width: 26
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 1, y: 1, z: 1, w: 1}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 7}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -110,8 +110,8 @@ TextureImporter:
         width: 30
         height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 2}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -124,7 +124,7 @@ TextureImporter:
         width: 26
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -138,7 +138,7 @@ TextureImporter:
         width: 30
         height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

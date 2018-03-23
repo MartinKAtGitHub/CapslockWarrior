@@ -36,6 +36,8 @@ public class PlayerManager : CreatureRoot {
 	[SerializeField]private Image [] HeartContainers;
 	[SerializeField]private Image [] ManaContainers;
 
+	public int Test {get;set;}
+
 	public int CurrentHealtPoints
 	{
 		get
@@ -48,26 +50,25 @@ public class PlayerManager : CreatureRoot {
 		}
 	}
 
+
 	public int CurrentManaPoints
 	{
 		get
 		{
 			return currentManaPoints;
 		}
-
 	}
 
 
-	void Awake(){
+	void Awake()
+	{
 		
 		Node.MyCollisionInfo.CalculateNodePos (transform.position);
 		//HealtPoints_Txt.text = HealthPoints.ToString();
 	}
 
-
 	void Start()
-	{
-		
+	{		
 		CalculateMaxHealthOrMana(ref maxHealtPoints, ref currentHealtPoints, PointsPerContainer, HeartContainers);
 		CalculateMaxHealthOrMana(ref maxManaPoints, ref currentManaPoints, PointsPerContainer, ManaContainers);
 
@@ -75,10 +76,10 @@ public class PlayerManager : CreatureRoot {
 
 		UIContainerChecks(HeartContainers);
 		UIContainerChecks(ManaContainers);
-
 	}
 
-	void FixedUpdate(){
+	void FixedUpdate()
+	{
 		Node.MyCollisionInfo.CalculateNodePos (transform.position);
 	}
 

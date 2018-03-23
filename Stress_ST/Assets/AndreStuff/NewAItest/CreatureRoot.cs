@@ -30,8 +30,9 @@ public class CreatureRoot : MonoBehaviour {
 		} else {
 			Stats.Health -= Mathf.FloorToInt(dmg);
 
-			if (Stats.Health < 0) {
+			if (Stats.Health <= 0) {
 				Stats.Health = 0;
+				Destroy (this.gameObject);
 			}
 		}
 	}
@@ -42,6 +43,21 @@ public class CreatureRoot : MonoBehaviour {
 
 	public virtual void GainHealth(float health){
 		Stats.Health += Mathf.FloorToInt(health);
+	}
+
+
+
+
+	public virtual void MovementSpeedChange(float a)//TODO Speed Change Logic
+	{
+	/*	totalmovementdecrease += a;
+
+		if (totalmovementdecrease < 0) {
+			GetComponent<PlayerController> ().MaxSpeed = 0.1f;
+		} else {
+			GetComponent<PlayerController> ().MaxSpeed = totalmovementdecrease;
+		}*/
+
 	}
 
 }

@@ -216,7 +216,6 @@ public class AStarTest : MonoBehaviour {
 		_OpenListAtIndex = 0;
 		_ClosedListAtIndex = 0;
 
-
 		_NodeXPos = Mathf.FloorToInt(_TheStartNode.PosX + (_MyManager.Targeting.MyMovementTarget.MyCollisionInfo.XNode - _MyManager.Node.MyCollisionInfo.XNode));
 		_NodeYPos = Mathf.FloorToInt(_TheStartNode.PosY + (_MyManager.Targeting.MyMovementTarget.MyCollisionInfo.YNode - _MyManager.Node.MyCollisionInfo.YNode));
 

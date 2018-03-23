@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 
-public class PlayerManager : AbsoluteRoot {
+public class PlayerManager : CreatureRoot {
 
+	public ObjectNodeInfo Node;
 	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center
 	const float _NodeDimentions = 0.08f;
 	/*
@@ -59,9 +60,7 @@ public class PlayerManager : AbsoluteRoot {
 
 	void Awake(){
 		
-		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
-		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
-		MyNode [0] = new Nodes (MyPos, 0);
+		Node.MyCollisionInfo.CalculateNodePos (transform.position);
 		//HealtPoints_Txt.text = HealthPoints.ToString();
 	}
 
@@ -80,8 +79,7 @@ public class PlayerManager : AbsoluteRoot {
 	}
 
 	void FixedUpdate(){
-		MyPos [0, 0] = ((transform.position.x - _NewMapCenter) / _NodeDimentions) - (((transform.position.x - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
-		MyPos [0, 1] = ((transform.position.y - _NewMapCenter) / _NodeDimentions) - (((transform.position.y - _NewMapCenter) / _NodeDimentions) % 1);//Calculating Object World Position In The Node Map
+		Node.MyCollisionInfo.CalculateNodePos (transform.position);
 	}
 
 	void Update () 
@@ -158,11 +156,11 @@ public class PlayerManager : AbsoluteRoot {
 	}
 
 
-	public override void RecievedDmg(int damage) // TODO Matf.Clamp the HP
+	public override void TookDmg(float damage) // TODO Matf.Clamp the HP
 	{
 		//Debug.Log(gameObject.name + " Recived = " + damage);
 
-		for (int i = 0; i < damage; i++) //PERFORMANCE the system only works for 1 dmg(value)... so i need to calulate for every instance of dmg
+		for (int i = 0; i < (Mathf.FloorToInt(damage)); i++) //PERFORMANCE the system only works for 1 dmg(value)... so i need to calulate for every instance of dmg
 		{
 			currentHealtPoints -= 1;
 			ClampHealth();
@@ -216,8 +214,10 @@ public class PlayerManager : AbsoluteRoot {
 		totalmovementdecrease += a;
 
 		if (totalmovementdecrease < 0) {
+		//	Stats.Speed = 0.1f;
 			GetComponent<PlayerController> ().MaxSpeed = 0.1f;
 		} else {
+			//	Stats.Speed = totalmovementdecrease;
 			GetComponent<PlayerController> ().MaxSpeed = totalmovementdecrease;
 		}
 

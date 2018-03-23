@@ -12,7 +12,7 @@ public class AttackReg : MonoBehaviour
 
 		if(other.tag == transform.parent.GetComponent<EnemyCreep>().HeroTag)
 		{
-			other.GetComponent<PlayerManager>().RecievedDmg(transform.parent.GetComponent<EnemyCreep>().Damage); // this doent work
+			other.GetComponent<CreatureRoot>().TookDmg(transform.parent.GetComponent<EnemyCreep>().Damage); // this doent work
 			Debug.Log("PUNCH = " + transform.parent.GetComponent<EnemyCreep>().Damage);
 			gameObject.SetActive(false);
 		}

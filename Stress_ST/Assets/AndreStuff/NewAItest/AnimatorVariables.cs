@@ -14,12 +14,12 @@ public class AnimatorVariables : MonoBehaviour {
 	[HideInInspector]
 	public int SpellTransition = 0;
 
-	[HideInInspector]
+//	[HideInInspector]
 	public bool FlipToTarget = false;//Flip sprite 180* to look at the target. if target to the left of the sprite turn left.
-	[HideInInspector]
+//	[HideInInspector]
 	public bool RotateToTarget = false;//rotate the sprite to look at the target. if target is 27.5* to the rigth, rotate the sprite 27.5* to the right.
 
-	[HideInInspector]
+//	[HideInInspector]
 	public bool CanIMove = false;//rotate the sprite to look at the target. if target is 27.5* to the rigth, rotate the sprite 27.5* to the right.
 
 	int AnimatorStageHash = Animator.StringToHash ("AnimatorStages");

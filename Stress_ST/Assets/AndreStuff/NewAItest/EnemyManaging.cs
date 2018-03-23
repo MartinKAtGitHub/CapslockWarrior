@@ -64,14 +64,19 @@ public class EnemyManaging : CreatureRoot {
 
 				if (Targeting.MyMovementTarget == null) {
 					Targeting.SearchAfterTarget (transform.position);	
+					Debug.Log (Targeting.MyMovementTarget);
 				}
+				Debug.Log (Targeting.MyMovementTarget);
 
 				MyNodeInfo.MyAStar.StartRunning (this);
+				Debug.Log ("here1 " + MyAnimatorVariables.CanIMove);
 
 				if (MyAnimatorVariables.CanIMove == true) {
 					//TODO Make Movement Script That Handles Stuff + Rotations
+					Debug.Log ("here1");
 
 					if (!(MyNodeInfo.MyNodePath [1].PosX == 39 && MyNodeInfo.MyNodePath [1].PosY == 39)) {
+						Debug.Log ("here");
 
 						targetPoint.x = ((Node.MyCollisionInfo.XNode + (MyNodeInfo.MyNodePath [1].PosX - 39)) * 0.0625f);//Finding My Position In The World As A Node, then Adding The Next Node Direction To Find The New Position In WoldPos
 						targetPoint.y = ((Node.MyCollisionInfo.YNode + (MyNodeInfo.MyNodePath [1].PosY - 39)) * 0.0625f);//Finding My Position In The World As A Node, then Adding The Next Node Direction To Find The New Position In WoldPos

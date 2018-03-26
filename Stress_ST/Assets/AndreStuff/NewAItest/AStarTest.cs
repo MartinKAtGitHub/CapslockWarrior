@@ -192,13 +192,11 @@ public class AStarTest : MonoBehaviour {
 	}
 
 	float one,two;
-	bool SetupDone = false;
 
 	public void StartRunning (EnemyManaging myManager){
 	
-		if (SetupDone == false) {
+		if (_TheStartNode == null) {
 			Setup ();
-			SetupDone = true;
 		}
 
 		#region Startup Phase

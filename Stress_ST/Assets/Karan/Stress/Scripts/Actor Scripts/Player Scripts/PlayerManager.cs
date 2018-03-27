@@ -72,7 +72,7 @@ public class PlayerManager : CreatureRoot {
 		CalculateMaxHealthOrMana(ref maxHealtPoints, ref currentHealtPoints, PointsPerContainer, HeartContainers);
 		CalculateMaxHealthOrMana(ref maxManaPoints, ref currentManaPoints, PointsPerContainer, ManaContainers);
 
-		Debug.Log(currentHealtPoints);
+		//Debug.Log(currentHealtPoints);
 
 		UIContainerChecks(HeartContainers);
 		UIContainerChecks(ManaContainers);

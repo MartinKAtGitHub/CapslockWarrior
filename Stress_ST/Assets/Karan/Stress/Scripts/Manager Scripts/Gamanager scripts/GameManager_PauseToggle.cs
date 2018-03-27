@@ -36,12 +36,24 @@ public class GameManager_PauseToggle : MonoBehaviour
 		if(isPaused)
 		{
 			Time.timeScale = 1;
+			//StartCoroutine(DelayPauseResum(1));// Dose not work with delay
+			Debug.Log("Pause False");
 			isPaused = false;
 		} 
 		else 
 		{
+			Debug.Log("Pause True");
 			Time.timeScale = 0;
 			isPaused = true;
 		}
+	}
+
+
+	IEnumerator DelayPauseResum(float waitTime)
+	{
+		yield return new WaitForSeconds(waitTime);
+		Time.timeScale = 1;
+		Debug.Log("Game Resumed");
+		//yield return null;
 	}
 }

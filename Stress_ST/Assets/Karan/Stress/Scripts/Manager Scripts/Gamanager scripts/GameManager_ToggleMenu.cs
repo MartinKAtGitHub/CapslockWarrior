@@ -11,6 +11,7 @@ public class GameManager_ToggleMenu : MonoBehaviour
 {
 	private GameManager_Master gameManagerMaster;
 	public GameObject menu;
+	private Animator pauseAnimator;
 
 	void OnEnable()
 	{
@@ -39,8 +40,10 @@ public class GameManager_ToggleMenu : MonoBehaviour
 		if(menu != null)
 		{
 			//if(!menu.activeSelf)
-			// play anim IN or OUT
-			menu.SetActive(!menu.activeSelf);// This need to be changed to Start anim
+			menu.SetActive(!menu.activeSelf);
+
+			//PauseWithAnimations(); //TODO SpamPause will break the Logic, paused when menu is not actv
+
 			gameManagerMaster.IsMenuOn = !gameManagerMaster.IsMenuOn;
 			gameManagerMaster.CallEventMenuToggle();
 		}
@@ -69,5 +72,20 @@ public class GameManager_ToggleMenu : MonoBehaviour
 	void SetInitialRefs()
 	{
 		gameManagerMaster = GetComponent<GameManager_Master>();
+		pauseAnimator = menu.GetComponent<Animator>();
+	}
+
+	void PauseWithAnimations()
+	{
+		bool pauseMenuToggle = !menu.activeSelf;
+		// TODO The pause Pnl needs to be turned on and off. To that i turn it on here but off in a animation event
+		if(pauseMenuToggle == true)
+		{
+			menu.SetActive(true);
+		}
+		else
+		{
+			pauseAnimator.SetTrigger("Close"); // menu.SetActive(False); in a Anim Event, has its own script
+		}
 	}
 }

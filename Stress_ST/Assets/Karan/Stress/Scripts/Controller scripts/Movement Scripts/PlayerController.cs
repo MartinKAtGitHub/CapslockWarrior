@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour{
 			//heroAnimator = heroGraphics.GetComponent<Animator>();
 			heroAnimator = GetComponent<Animator>();
 		}
-		Debug.Log(heroAnimator.name);
+		//Debug.Log(heroAnimator.name);
 	}
 
 
@@ -293,12 +293,12 @@ public class PlayerController : MonoBehaviour{
 		if(Mathf.Abs(Direction.x)> 0 || Mathf.Abs(Direction.y) > 0)
 		{
 			heroAnimator.SetBool("Running" , true);
-			Debug.Log("Run Anim");
+			//Debug.Log("Run Anim");
 		}
 		else
 		{
 			heroAnimator.SetBool("Running" , false);
-			Debug.Log("Idle Anim");
+			//Debug.Log("Idle Anim");
 		}
 
 	}

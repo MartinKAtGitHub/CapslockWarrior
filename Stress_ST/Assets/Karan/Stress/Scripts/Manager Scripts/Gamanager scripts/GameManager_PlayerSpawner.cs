@@ -10,5 +10,6 @@ public class GameManager_PlayerSpawner : MonoBehaviour
 		// instantiate player
 		// set the Ability Data to the spawned player
 		// signel the level the player has spawed 
+		GameManager_Master.instance.PlayerObject = Instantiate(GameManager_Master.instance.PlayerPrefab);
 	}
 }

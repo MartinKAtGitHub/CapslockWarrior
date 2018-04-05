@@ -1,16 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class LevelManager_Master : MonoBehaviour {
 
-	// Use this for initialization
+	[SerializeField]private GameObject player;
+	[SerializeField]private GameObject Spawner;
+
+	[SerializeField]private GameObject introBackground;
+	[SerializeField]private Text introLevelText;
+	[SerializeField]private Text introFluffText;
+
+	[SerializeField]private ScriptedEvent LevelScriptedEvent;
+
+
+	void Awake()
+	{
+		initializeLevel();
+	}
+
 	void Start () 
 	{
-		
+		//StartCutScene();
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
 	{
 		
@@ -24,6 +39,17 @@ public class LevelManager_Master : MonoBehaviour {
 
 	public void StartCutScene()
 	{
-		// startCutscene
+		StartCoroutine(LevelScriptedEvent.ScriptedEventScene());
+	}
+
+	private void initializeLevel()
+	{
+		GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer();
+		LevelScriptedEvent.SetInitalRefs();
+		if(LevelScriptedEvent == null)
+		{
+			LevelScriptedEvent = GetComponent<ScriptedEvent>();
+		}
+		Debug.Log("StartingLevel");
 	}
 }

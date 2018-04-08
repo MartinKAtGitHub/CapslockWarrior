@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour{
 	void FixedUpdate()
 	{
 
-
+		//IF(!cutscene)
 		Movement();
 
 		/*switch (SelectedControllerType) 
@@ -155,6 +155,12 @@ public class PlayerController : MonoBehaviour{
 	{
 		Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
 		playerRigBdy.velocity = new Vector2 (Direction.x * MaxSpeed, Direction.y * MaxSpeed);
+	}
+	public void ScriptedEventMove(Transform actorPos, Transform targetPos ) // iknow this is redundant but easier to understand
+	{
+		Vector2 deltaVec = targetPos.position - actorPos.position;
+		Direction = deltaVec.normalized;
+		playerRigBdy.velocity = deltaVec.normalized * maxSpeed;
 	}
 
 

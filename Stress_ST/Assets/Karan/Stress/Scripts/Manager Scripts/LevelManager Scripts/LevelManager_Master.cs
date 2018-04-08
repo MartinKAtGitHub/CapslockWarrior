@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class LevelManager_Master : MonoBehaviour {
 
+	public Transform PlayerSpawnPosition;
+
 	[SerializeField]private GameObject player;
 	[SerializeField]private GameObject Spawner;
 
@@ -23,7 +25,7 @@ public class LevelManager_Master : MonoBehaviour {
 
 	void Start () 
 	{
-		//StartCutScene();
+		StartLevel();
 	}
 
 	void Update () 
@@ -31,25 +33,29 @@ public class LevelManager_Master : MonoBehaviour {
 		
 	}
 
+	#region LevelManager_ScriptedEventsManager
+		// TODO make a new script to handle all the ScriptedEvents
 	public void StartLevel()
 	{
 		// StartCutscene
+		LevelScriptedEvent.StartScriptedEvent(); // TODO make sure Cutscene works on all Resolution, spawnpoint out of can view
 		// SpawnPlayer
 	}
 
-	public void StartCutScene()
-	{
-		StartCoroutine(LevelScriptedEvent.ScriptedEventScene());
-	}
+
 
 	private void initializeLevel()
 	{
-		GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer();
-		LevelScriptedEvent.SetInitalRefs();
+		GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
 		if(LevelScriptedEvent == null)
 		{
 			LevelScriptedEvent = GetComponent<ScriptedEvent>();
 		}
-		Debug.Log("StartingLevel");
+
+		LevelScriptedEvent.SetInitalRefs();
+
+		Debug.Log("initializeLevel...");
 	}
+	#endregion
 }
+

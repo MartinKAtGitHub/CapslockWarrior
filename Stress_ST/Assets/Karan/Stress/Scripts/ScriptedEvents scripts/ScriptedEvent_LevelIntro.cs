@@ -19,16 +19,6 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	private GameObject OldMan;
 	private GameObject IntroCam;
 
-	/*
-	public GameObject PlayerSpawnPoint;
-	public GameObject ActorSpawnPoint;
-	public GameObject PlayerTargetPos;
-	public Transform CamTargetPos;
-	*/
-
-	public Vector3 OldManPosFromPlayer;
-	public DialogueManager DManager;
-
 	[SerializeField] private bool playerReady;
 	[SerializeField] private bool StartRun;
 	private bool StartCamPan;
@@ -38,7 +28,19 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	[SerializeField]
 	private float camPanSpeed;
 
+	public Vector3 OldManPosFromPlayer;
+	public DialogueManager DManager;
 
+	public override bool ScriptedEventEnd{get;set;}
+
+
+
+	/*
+	public GameObject PlayerSpawnPoint;
+	public GameObject ActorSpawnPoint;
+	public GameObject PlayerTargetPos;
+	public Transform CamTargetPos;
+	*/
 
 	void FixedUpdate()
 	{
@@ -48,8 +50,8 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 
 	public override void  SetInitalRefs()
 	{
-
 		playerReady = false;
+		ScriptedEventEnd = false;
 		levelManagerMaster = GetComponent<LevelManager_Master>(); // TODO make LevelManager Static ?
 
 		player = GameManager_Master.instance.PlayerObject; // FindTag(Player1) // levelManagerMaster.player
@@ -58,28 +60,34 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		playerController = player.GetComponent<PlayerController>();
 
 		levelIntroAnimator.gameObject.SetActive(false);
+
 		/*
 		OldMan.SetActive(true);
 		OldMan.transform.SetParent(player.transform);
 		OldMan.transform.localPosition = OldManPosFromPlayer;
 		*/
 		//IntroCam.GetComponent<CameraSmoothMotion>().enabled = false;
-		StartRun = false;
 
+		StartRun = false;
 	}
 
-	public override IEnumerator ScriptedEventScene()
+	public override IEnumerator ScriptedEventScene() // TODO change this to scriptable object så we can swape cutscenes
 	{
-		Debug.Log("Scripted event Started....");
-		TurnOffCompnants(player);
+		//Debug.Log("Scripted event Started....");
+		AreComponentActiv(player, false);
 		StartRun = true;
 		yield return new WaitForSeconds(1f);
 		StartIntroBox();
 		yield return new WaitUntil(IsPlayerReady);
 		EndintroBox();
-		Debug.Log("Scripted event END SYSTEM.GO");
-	}
+		AreComponentActiv(player, true);
 
+		ScriptedEventEnd = true;
+		OnScriptedEventEndEvent();
+		//levelManagerMaster.StartSpawner();
+
+		//Debug.Log("Scripted event END SYSTEM.GO");
+	}
 
 	private void MoveActorToPositionVelocity(GameObject actor, Transform target, Animator animation, string runAnimName)
 	{
@@ -125,18 +133,20 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	private void StartIntroBox()
 	{
 		levelIntroAnimator.gameObject.SetActive(true);
-		Debug.Log("Start INtro .....");
+		Debug.Log("Start Intro .....");
 	}
 
 	private void EndintroBox()
 	{
 		levelIntroAnimator.SetBool("Fade", true);
+		Debug.Log("End Intro .....");
 	}
 
 	private bool IsPlayerReady()
 	{
 		return playerReady;
 	}
+
 	public void SetPlayerReady()
 	{
 		playerReady = true;

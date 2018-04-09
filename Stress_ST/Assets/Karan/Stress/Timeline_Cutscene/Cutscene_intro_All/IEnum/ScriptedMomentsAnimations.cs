@@ -129,8 +129,6 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 		DisableOldMan();
 
 		// enable boss script
-
-		//MY GOD GAME.SYSTEM.GO
 	}
 
 	private bool IsDialogueFinished()// This checks to see if the Chasracter talking has ended the Dialogue he has.

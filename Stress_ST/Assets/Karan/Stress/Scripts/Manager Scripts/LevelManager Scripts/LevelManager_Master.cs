@@ -17,7 +17,6 @@ public class LevelManager_Master : MonoBehaviour {
 
 	[SerializeField]private ScriptedEvent LevelScriptedEvent;
 
-
 	void Awake()
 	{
 		initializeLevel();
@@ -28,10 +27,14 @@ public class LevelManager_Master : MonoBehaviour {
 		StartLevel();
 	}
 
-	void Update () 
+	public void StartSpawner()
 	{
-		
+		Debug.Log("Spawner Enabled");
+		LevelScriptedEvent.OnScriptedEventEndEvent -= StartSpawner;
 	}
+
+
+
 
 	#region LevelManager_ScriptedEventsManager
 		// TODO make a new script to handle all the ScriptedEvents
@@ -39,10 +42,9 @@ public class LevelManager_Master : MonoBehaviour {
 	{
 		// StartCutscene
 		LevelScriptedEvent.StartScriptedEvent(); // TODO make sure Cutscene works on all Resolution, spawnpoint out of can view
+		LevelScriptedEvent.OnScriptedEventEndEvent += StartSpawner;
 		// SpawnPlayer
 	}
-
-
 
 	private void initializeLevel()
 	{
@@ -54,8 +56,7 @@ public class LevelManager_Master : MonoBehaviour {
 
 		LevelScriptedEvent.SetInitalRefs();
 
-		Debug.Log("initializeLevel...");
+		Debug.Log("initialize Level...");
 	}
 	#endregion
 }
-

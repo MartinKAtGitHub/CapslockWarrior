@@ -4,11 +4,15 @@ using UnityEngine;
 
 public abstract class ScriptedEvent : MonoBehaviour 
 {
+	public abstract bool ScriptedEventEnd{get;set;}
 	// Maybe make this justa regualr class, these things dont need to be public but all SScenes will need them
 	public abstract void  SetInitalRefs();
 	public abstract IEnumerator ScriptedEventScene();
 
-	public virtual void TurnOffCompnants(GameObject actorGameObject) // Can this be protected ?
+	public delegate void OnScriptedEventEndDelegate();
+	public OnScriptedEventEndDelegate OnScriptedEventEndEvent;
+
+	public virtual void AreComponentActiv(GameObject actorGameObject, bool status) // Can this be protected ?
 	{
 		foreach (MonoBehaviour Scripts in actorGameObject.GetComponents<MonoBehaviour>()) 
 		{
@@ -19,7 +23,7 @@ public abstract class ScriptedEvent : MonoBehaviour
 				Scripts.enabled = false;
 			}
 			*/
-			Scripts.enabled = false;
+			Scripts.enabled = status;
 		}
 	}
 
@@ -31,6 +35,6 @@ public abstract class ScriptedEvent : MonoBehaviour
 	public virtual void StopScriptedEvent()
 	{
 		StopCoroutine(ScriptedEventScene());
+		Debug.Log("CutScene Skiped ---- What to do when you skipped ?");
 	}
-
 }

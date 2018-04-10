@@ -26,23 +26,26 @@ public class Spawnmanaging : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (StartSpawn == true) {
-			
+		if (StartSpawn == true) 
+		{
 			StartCoroutine ("SpawnWave");
 			StartSpawn = false;
-			
 		}
 	}
 
 	private IEnumerator SpawnWave()
 	{
 		Debug.Log("Starting Ienmuerator spawning");
-		for (int i = 0; i < _WaveNumber; i++) {
+		for (int i = 0; i < _WaveNumber; i++) 
+		{
 			TheSmallWaves = TheWaves [i].MiniWaves;//henter wave 1.
-			for (int j = 0; j < TheSmallWaves.Length; j++) {
+			for (int j = 0; j < TheSmallWaves.Length; j++) 
+			{
 				ObjectsToSpawn = TheSmallWaves [j].Wave;//finner miniwave 1.
-				for (int k = 0; k < ObjectsToSpawn.Length; k++) {
-					for (int l = 0; l < ObjectsToSpawn [k].SpawnAmount; l++) {
+				for (int k = 0; k < ObjectsToSpawn.Length; k++) 
+				{
+					for (int l = 0; l < ObjectsToSpawn [k].SpawnAmount; l++) 
+					{
 						if (_SpawnSpot >= SpawnPoints.Length) {
 							_SpawnSpot = 0;
 						}
@@ -54,7 +57,6 @@ public class Spawnmanaging : MonoBehaviour {
 				yield return new WaitForSeconds(SpawnRate);
 			}
 		}
-
 
 		yield break;
 	}

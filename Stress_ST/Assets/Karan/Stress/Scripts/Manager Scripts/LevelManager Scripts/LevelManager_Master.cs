@@ -9,7 +9,7 @@ public class LevelManager_Master : MonoBehaviour {
 	public Transform PlayerSpawnPosition;
 
 	[SerializeField]private GameObject player;
-	[SerializeField]private GameObject Spawner;
+	[SerializeField]private Spawnmanaging Spawner; // TODO Create new spawner
 
 	[SerializeField]private GameObject introBackground;
 	[SerializeField]private Text introLevelText;
@@ -24,12 +24,15 @@ public class LevelManager_Master : MonoBehaviour {
 
 	void Start () 
 	{
+		
+
 		StartLevel();
 	}
 
 	public void StartSpawner()
 	{
 		Debug.Log("Spawner Enabled");
+		Spawner.StartSpawn = true;
 		LevelScriptedEvent.OnScriptedEventEndEvent -= StartSpawner;
 	}
 
@@ -48,6 +51,7 @@ public class LevelManager_Master : MonoBehaviour {
 
 	private void initializeLevel()
 	{
+		FindObjectsWithTag();
 		GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
 		if(LevelScriptedEvent == null)
 		{
@@ -59,4 +63,14 @@ public class LevelManager_Master : MonoBehaviour {
 		Debug.Log("initialize Level...");
 	}
 	#endregion
+
+
+	private void FindObjectsWithTag()
+	{
+		// TODO Add stuff you need to find with Tag / findtypeoff.
+		// Spawner
+		// UI ?
+		// 
+		Debug.Log("Trying to find stuff with TAG");
+	}
 }

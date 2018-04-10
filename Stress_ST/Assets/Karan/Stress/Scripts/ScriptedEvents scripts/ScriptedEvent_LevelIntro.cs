@@ -77,10 +77,13 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		AreComponentActiv(player, false);
 		StartRun = true;
 		yield return new WaitForSeconds(1f);
+
 		StartIntroBox();
 		yield return new WaitUntil(IsPlayerReady);
+
 		EndintroBox();
 		AreComponentActiv(player, true);
+		yield return new WaitForSeconds(2f);
 
 		ScriptedEventEnd = true;
 		OnScriptedEventEndEvent();

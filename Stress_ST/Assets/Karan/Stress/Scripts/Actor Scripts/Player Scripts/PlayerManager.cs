@@ -235,8 +235,13 @@ public class PlayerManager : CreatureRoot {
 		GetComponent<PlayerTyping> ().ResetTheText ();
 	}
 
-
-
-
-
+	public override void VelocityChange (float moveValue, Vector3 goDirection){
+		//base.VelocityChange (moveValue, goDirection);//Isnt Used, Base Is Empty
+		/*if (StunImmunity <= ClockTest.TheTimes) {
+			StunImmunity = ClockTest.TheTimes + 1;
+			velocityPushback = true;
+			_MyRigidbody.velocity = goDirection.normalized * moveValue;
+		}*/
+		GetComponent<Rigidbody2D>().velocity = goDirection.normalized * moveValue;
+	}
 }

@@ -84,8 +84,8 @@ public class PlayerController : MonoBehaviour{
 	void FixedUpdate()
 	{
 
-		//IF(!cutscene)
-		Movement();
+		//IF(!cutscene && CC)
+		//Movement();
 
 		/*switch (SelectedControllerType) 
 		{

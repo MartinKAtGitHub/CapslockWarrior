@@ -8,7 +8,8 @@ public class GameManager_Master : MonoBehaviour {
 	/// The nummber of keys the player has from beating the main boss.  
 	/// </summary>
 	public int BossKeys; 
-	public GameObject PlayerCharacter;
+	public GameObject PlayerPrefab;
+	public GameObject PlayerObject;
 	public static GameManager_Master instance = null;
 
 

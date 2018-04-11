@@ -74,15 +74,17 @@ public class PlayerController : MonoBehaviour{
 		// heroAnimator = GetComponent<Animator>();
 		if(heroAnimator == null)
 		{
-			heroAnimator = heroGraphics.GetComponent<Animator>();
+			//heroAnimator = heroGraphics.GetComponent<Animator>();
+			heroAnimator = GetComponent<Animator>();
 		}
+		//Debug.Log(heroAnimator.name);
 	}
 
 
 	void FixedUpdate()
 	{
 
-
+		//IF(!cutscene)
 		Movement();
 
 		/*switch (SelectedControllerType) 
@@ -153,6 +155,12 @@ public class PlayerController : MonoBehaviour{
 	{
 		Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
 		playerRigBdy.velocity = new Vector2 (Direction.x * MaxSpeed, Direction.y * MaxSpeed);
+	}
+	public void ScriptedEventMove(Transform actorPos, Transform targetPos ) // iknow this is redundant but easier to understand
+	{
+		Vector2 deltaVec = targetPos.position - actorPos.position;
+		Direction = deltaVec.normalized;
+		playerRigBdy.velocity = deltaVec.normalized * maxSpeed;
 	}
 
 
@@ -291,10 +299,12 @@ public class PlayerController : MonoBehaviour{
 		if(Mathf.Abs(Direction.x)> 0 || Mathf.Abs(Direction.y) > 0)
 		{
 			heroAnimator.SetBool("Running" , true);
+			//Debug.Log("Run Anim");
 		}
 		else
 		{
 			heroAnimator.SetBool("Running" , false);
+			//Debug.Log("Idle Anim");
 		}
 
 	}

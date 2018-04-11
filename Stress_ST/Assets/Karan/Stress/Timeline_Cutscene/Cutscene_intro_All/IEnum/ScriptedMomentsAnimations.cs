@@ -105,7 +105,6 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 			HeroAnimator.SetBool("Running", false);
 			StartRun = false;
 		}
-
 	}
 
 	private void StartDialog(GameObject character)
@@ -130,8 +129,6 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 		DisableOldMan();
 
 		// enable boss script
-
-		//MY GOD GAME.SYSTEM.GO
 	}
 
 	private bool IsDialogueFinished()// This checks to see if the Chasracter talking has ended the Dialogue he has.
@@ -141,7 +138,7 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 
 	private void RefSetup()
 	{
-		PlayerObject = Instantiate(GameManager_Master.instance.PlayerCharacter, PlayerSpawnPoint.transform.position ,Quaternion.identity);
+		PlayerObject = Instantiate(GameManager_Master.instance.PlayerPrefab, PlayerSpawnPoint.transform.position ,Quaternion.identity);
 		//Instantiate(BossObject, ActorSpawnPoint.transform.position, Quaternion.identity);
 
 		playerRigBdy = PlayerObject.GetComponent<Rigidbody2D>();

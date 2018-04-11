@@ -134,7 +134,7 @@ public class AbilityController : MonoBehaviour {
 	{
 		if(ability == null)
 		{
-			Debug.Log("<color=#800080ff> No spell Set on "+ key +" Setting default spells</color>");
+//			Debug.Log("<color=#800080ff> No spell Set on "+ key +" Setting default spells</color>");
 			ability = defaultAbility;
 		}
 	}

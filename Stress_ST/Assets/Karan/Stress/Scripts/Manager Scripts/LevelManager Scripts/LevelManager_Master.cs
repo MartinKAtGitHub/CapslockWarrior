@@ -17,16 +17,17 @@ public class LevelManager_Master : MonoBehaviour {
 
 	[SerializeField]private ScriptedEvent LevelScriptedEvent;
 
-	void Awake()
-	{
-		initializeLevel();
-	}
-
-	void Start () 
+	void Awake() // Called even if the GM is disabeld
 	{
 		
+	}
 
+	void Start () // calling logic at start of game, only activ if activ
+	{
+		initializeLevel(); // Set up refs
+		//GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
 		StartLevel();
+
 	}
 
 	public void StartSpawner()
@@ -44,6 +45,7 @@ public class LevelManager_Master : MonoBehaviour {
 	public void StartLevel()
 	{
 		// StartCutscene
+	
 		LevelScriptedEvent.StartScriptedEvent(); // TODO make sure Cutscene works on all Resolution, spawnpoint out of can view
 		LevelScriptedEvent.OnScriptedEventEndEvent += StartSpawner;
 		// SpawnPlayer
@@ -52,6 +54,7 @@ public class LevelManager_Master : MonoBehaviour {
 	private void initializeLevel()
 	{
 		FindObjectsWithTag();
+
 		GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
 		if(LevelScriptedEvent == null)
 		{

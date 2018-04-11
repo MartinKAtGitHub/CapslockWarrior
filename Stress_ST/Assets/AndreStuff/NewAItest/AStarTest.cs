@@ -47,7 +47,6 @@ public class AStarTest : MonoBehaviour {
 	public void Setup(){
 
 	//	_WalkCost.SetNodeSize (sceneStartup);//Creating Node Cost Array
-
 		int Added = 0;
 
 		for (int x = 0; x < StressCommonlyUsedInfo.NodesWidth; x++) {//Creating Middle Nodes

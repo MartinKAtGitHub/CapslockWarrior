@@ -20,6 +20,8 @@ public class TheWordChecker : MonoBehaviour {
 	int NullCheck = 0;
 	bool IgnoreTyping = false;
 
+	public Color32 FreeCharacterColor;
+
 
 	public void SetupFirstWord(EnemyManaging val){
 
@@ -70,8 +72,7 @@ public class TheWordChecker : MonoBehaviour {
 									_OriginalWord = _ObjectHealth;
 
 									MyManager.CreatureWords.TextElement.text = "";//Removing Text So That I Can Add It Again With New Colors
-									PlayerColor = (Color32)Color.black;
-									ColorValue = PlayerColor.r.ToString ("X2") + PlayerColor.g.ToString ("X2") + PlayerColor.b.ToString ("X2") + PlayerColor.a.ToString ("X2");
+									ColorValue = FreeCharacterColor.r.ToString ("X2") + FreeCharacterColor.g.ToString ("X2") + FreeCharacterColor.b.ToString ("X2") + FreeCharacterColor.a.ToString ("X2");
 
 									for (int k = 0; k < _ObjectHealth.Length; k++) {
 										MyManager.CreatureWords.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [k]);
@@ -130,8 +131,7 @@ public class TheWordChecker : MonoBehaviour {
 				} 
 			}
 
-			PlayerColor = (Color32)Color.black;
-			ColorValue = PlayerColor.r.ToString ("X2") + PlayerColor.g.ToString ("X2") + PlayerColor.b.ToString ("X2") + PlayerColor.a.ToString ("X2");
+			ColorValue = FreeCharacterColor.r.ToString ("X2") + FreeCharacterColor.g.ToString ("X2") + FreeCharacterColor.b.ToString ("X2") + FreeCharacterColor.a.ToString ("X2");
 
 			for (int i = _WordsToRemove; i < _ObjectHealth.Length; i++) {
 				MyManager.CreatureWords.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);

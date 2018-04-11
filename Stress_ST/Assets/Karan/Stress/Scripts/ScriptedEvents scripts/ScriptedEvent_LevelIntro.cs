@@ -83,7 +83,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 
 		EndintroBox();
 		AreComponentActiv(player, true);
-		yield return new WaitForSeconds(2f);
+		//yield return new WaitForSeconds(2f);
 
 		ScriptedEventEnd = true;
 		OnScriptedEventEndEvent();
@@ -112,13 +112,13 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	}
 
 	//TODO Actor might not have a animator, So i dont know if i sould start the animation here or let the event handle it
-	private void MoveActorToPositionTransform(GameObject actor, Transform target, float speed, Animator animation, string runAnimName, bool isMoving)
+	private void MoveActorToPositionTransform(GameObject actor, Transform target, float speed, Animator animation, string runAnimName, bool isMoving) //TODO ADD SKIP LOGIC TO CUTSCENE
 	{
 		if(isMoving)
 		{
 			float distance = Vector3.Distance(actor.transform.position, target.position); // PERFORMANCE change to use Hotshot logic to find 
 			//Debug.Log(distance);
-			if(distance > 0)// anim can get stuck 0,9999 runs 24 times ?
+			if(distance > 0 && ScriptedEventEnd == false) // anim can get stuck 0,9999 runs 24 times ? // TODO ADD SKIP LOGIC 
 			{
 				//Debug.Log("Start Running anim");
 				actor.transform.position = Vector3.MoveTowards(actor.transform.position, target.position, speed * Time.deltaTime);

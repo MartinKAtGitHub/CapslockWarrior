@@ -36,10 +36,12 @@ public class GameManager_Master : MonoBehaviour {
 	{
 		if(instance == null)
 		{
+			Debug.Log("GM is NULL");
 			instance = this;
 		}
 		else if(instance != this)
 		{
+			Debug.LogError("GM Duplicate, destroying ");
 			Destroy(gameObject);
 		}
 	}

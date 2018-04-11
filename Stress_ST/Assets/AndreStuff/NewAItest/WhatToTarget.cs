@@ -8,9 +8,9 @@ public class WhatToTarget  {
 	[HideInInspector]
 	public bool AttackClass = false;
 
-	[HideInInspector]
+//	[HideInInspector]
 	public CreatureRoot MyAttackTarget;
-	[HideInInspector]
+//	[HideInInspector]
 	public ObjectNodeInfo MyMovementTarget;
 
 	public string[] TargetHierarchy;//This List Contains The Current TargetList, Which Is 

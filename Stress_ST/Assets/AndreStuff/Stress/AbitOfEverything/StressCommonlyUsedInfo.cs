@@ -3,14 +3,13 @@ using System.Collections;
 
 public class StressCommonlyUsedInfo {
 
-	public const int UnityMeterToCover = 5;//This Is Nodes To Fill In Unity Meter, This Need To Be An Odd Number. 3-5-7-9.....
-	public const float DistanceBetweenNodes = 0.0625f;//== 1 / 0.0625 == 16.    That Means 16 Nodes Each Unity Meter. //IMPORTANT The WalkingCollider On Moving Object Needs To Be - (NodeDistance / 2) xy To Compensate For And Even Number Of Nodes
-	public const int NodeDimentions = (int)(UnityMeterToCover / DistanceBetweenNodes); 
-	public const int TotalNodes = NodeDimentions * NodeDimentions; 
-
+	public const int NodesInUnityMeter = 20;
+	public const float DistanceBetweenNodes = 0.05f;
+	public const int NodesWidth = (int)(NodesInUnityMeter / DistanceBetweenNodes);
+	public const int NodesTotal = NodesWidth * NodesWidth;
+	public const int Nodes3D = 10;
+	public const int AmountOfDifferentNodes = 10;
 	public const int PathCostSize = 3;
-
-
 
 
 	public enum BulletStyle {AttachToSender = 0, AttachToTarget = 1, PlaceOnGroundAtVector = 2}
@@ -28,10 +27,20 @@ public class StressCommonlyUsedInfo {
 	[System.Serializable]
 	public struct TheAbility{
 
+		[Tooltip("This Is The Criteria Which The Spell Needs To Be Used/Initialized")]
+		public SpellRoot SpellInfo;
+		[Tooltip("The Spell Refrence. Just In Case Of An Unexpected Overlap Of Abilities")]
+		public The_Default_Bullet SpellRef;
+		[Tooltip("The Cooldown Of The Spell")]
 		public float SpellCD;
+		[Tooltip("Where Does The Spell Spawn From The Center Of The Object And Looking Vector.Right")]
+		public Vector3 SpawnPosition;
+		[Tooltip("How Much Energy Does The Ability Need")]
+		public int AbilityCost;
+		[Tooltip("If You Need Info About The Different Variables In The Array, Go To The Spell You Want To Add These Values To And Look At The Very Top Of The Script For More Info")]
+		public float[] SpellVariables;
 		[HideInInspector]
 		public float SpellCurrentCD;
-		public SpellRoot SpellInfo;
 
 	}
 

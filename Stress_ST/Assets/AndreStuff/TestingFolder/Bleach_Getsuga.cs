@@ -17,23 +17,122 @@ public class Bleach_Getsuga : The_Default_Bullet {
 	
 
 
+	int theX = 0;
+	int theY = 0;
+	byte iterations = 0; 
+	public int AnimatorStateCheck = 0;
 
+	public LayerMask WhatNotToHit;
 
+	Vector3 test = Vector3.zero;
+	RaycastHit2D[] hitted;
+	public float TeleportDistance = 2;
+
+	int rngtries = 4;
+	bool foundIt = false;
+
+	EnemyManaging _MyObject;
+	StressCommonlyUsedInfo.TheAbility[] teste = new StressCommonlyUsedInfo.TheAbility[1];
+	Quaternion parentRotaitons;
+	public LayerMask StopOnHit;
 
 	public override void SetMethod (GameManagerTestingWhileWaiting.SpellAttackInfo SpellInfo, The_Object_Behaviour MySender){
 		base.SetMethod (SpellInfo, MySender);
 
-
 		TargetVector = _Shooter.ObjectCurrentVector[0];
 
+	}
+
+	public override void SetMethod (EnemyManaging objectChecking){
+
+	/*	_MyObject = objectChecking;
+		parentRotaitons = _MyObject.transform.Find("GFX").rotation;
+
+		for (int t = 0; t < _MyObject.MyAbilityInfo.tes.Count; t++) {//Goint Through The Transitions To Find This Spell Transition
+			for (int g = 0; g < _MyObject.MyAbilityInfo.tes [t].AllAbilities.Length; g++) {//Going Through This Spells Transition To Find The Spell
+				if (_MyObject.MyAbilityInfo.tes [t].AllAbilities [g].SpellRef.bulletID == bulletID) {//If SpellRef ID == This SpellID. Then This Is That Spell
+					teste [0] = _MyObject.MyAbilityInfo.tes [t].AllAbilities [g];
+				}
+			}
+		}
+
+
+
+
+
+
+		foundIt = false;
+
+		for (int i = 0; i < rngtries; i++) {
+			test = (Quaternion.Euler (0, 0, Random.Range (1, rngtries + 1) * Random.Range (0, 90)) * (Vector3.right * TeleportDistance));//Deviding The Circle In 4, Then I Make Choose A RNG Side To Check
+
+			hitted = Physics2D.LinecastAll (objectChecking.Targeting.MyMovementTarget.transform.position + test, objectChecking.Targeting.MyMovementTarget.transform.position, WhatNotToHit);
+			if (hitted.Length > 0) {
+				//		Debug.Log ("Hit Something " + hitted [hitted.Length - 1].point.x + " | " + hitted [hitted.Length - 1].point.y + " | " + test.normalized);
+			} else {
+				foundIt = true;
+				//		Debug.Log ("No Wall Found");
+				test = objectChecking.Targeting.MyMovementTarget.transform.position + test;
+				i = rngtries;
+			}
+
+		}
+
+		if (foundIt == false) {
+			test = (Quaternion.Euler (0, 0, Random.Range (1, rngtries + 1) * Random.Range (0, 90)) * (Vector3.right * TeleportDistance));
+			hitted = Physics2D.LinecastAll (objectChecking.Targeting.MyMovementTarget.transform.position + test, objectChecking.Targeting.MyMovementTarget.transform.position, WhatNotToHit);
+			if (hitted.Length > 0) {
+				hitted = Physics2D.LinecastAll (objectChecking.Targeting.MyMovementTarget.transform.position, (Vector3)hitted [hitted.Length - 1].point, WhatNotToHit);
+				//	Debug.Log ( "Oposite Side Of Wall ");
+				test = (Vector3)(hitted [0].point) - (test.normalized * 0.05f);
+
+			} else {
+				//	Debug.Log ("No New Wall Found");
+				test = objectChecking.Targeting.MyMovementTarget.transform.position + test;
+			}
+		}
+
+		objectChecking.transform.position = test;
+		transform.position = objectChecking.transform.position + Quaternion.Euler (0, parentRotaitons.y, parentRotaitons.z) * teste [0].SpawnPosition;//Setting The Start Location
+
+		_Direction.z = Vector3.Angle (Vector3.right, (objectChecking.Targeting.MyMovementTarget.transform.position - objectChecking.transform.position));
+
+		if ((objectChecking.Targeting.MyMovementTarget.transform.position - objectChecking.transform.position).y < 0) {
+			_Direction.z = _Direction.z * -1.0f;
+		}  
+		transform.rotation = Quaternion.Euler (_Direction);
+
+		gameObject.SetActive(true);
+		Particleeffect.GetComponent<MoveForwardFast> ().starting = true;
+
+
+		hitted = Physics2D.LinecastAll (transform.position, ((objectChecking.Targeting.MyMovementTarget.transform.position - objectChecking.transform.position).normalized * teste[0].SpellVariables[1]), WhatNotToHit);
+
+		hitted = Physics2D.BoxCastAll (transform.position, boxSize, _Direction.z,  ((Vector2)transform.position - hitted[0].point).normalized, 0, StopOnHit );
+		Debug.Log ("HIT " + hitted.Length);*/
+
+		//	Physics2D.BoxCastAll();
+	
+	//	_MyObject = GameObject.Find ("Otaku_Boss").GetComponent<EnemyManaging>();
+
+		hitted = Physics2D.LinecastAll (transform.position, (Vector2)transform.position + (Vector2.right * 3), WhatNotToHit);
+		hitted = Physics2D.BoxCastAll (transform.position, boxSize, 0,  Vector2.right, 0, StopOnHit );
+	//	hitted = Physics2D.BoxCastAll (transform.position, boxSize, 0,  ((Vector2)transform.position - hitted[0].point).normalized, 0, StopOnHit );
 
 	}
+
+
+	Vector2 boxSize = new Vector2(5,0.125f);
+
+
+
+
 
 	float activeTime = 0.25f;
 
 	void Start(){
 
-	//	MyShootingDirection = TargetVector - transform.position;
+/*	//	MyShootingDirection = TargetVector - transform.position;
 		MyShootingDirection = _Shooter.ObjectTargetVector[0];
 		_Direction.z = Vector3.Angle (Vector3.right, MyShootingDirection);
 
@@ -43,14 +142,100 @@ public class Bleach_Getsuga : The_Default_Bullet {
 		transform.rotation = Quaternion.Euler (_Direction);
 		theTime = _Shooter.TheTime [0];
 		Particleeffect.GetComponent<MoveForwardFast> ().starting = true;
-		activeTime += _Shooter.TheTime [0];
+		activeTime += _Shooter.TheTime [0];*/
+
+	/*	hitted = Physics2D.LinecastAll (transform.position, (Vector2)transform.position + (Vector2.right * 5), WhatNotToHit);
+		for(int i = 0; i < hitted.Length; i++)
+			Debug.Log ("wall" + hitted[i].point);
+		if (hitted.Length > 0) {
+		
+			_Direction.z = Vector3.Angle (Vector3.right, (Vector2)transform.position, hitted[0].point);
+
+			if (((Vector2)transform.position, hitted[0].point)).y < 0) {
+				_Direction.z = _Direction.z * -1.0f;
+			}  
+
+
+			hitted = Physics2D.BoxCastAll (transform.position, new Vector2(Vector2.Distance((Vector2)transform.position, hitted[0].point), 0.5f), _Direction.z,  Vector2.right, 1, StopOnHit );
+		}
+	//	hitted = Physics2D.BoxCastAll (transform.position, new Vector2(hitted[0].point.x - transform.position.x, 0.125f), 0,  Vector2.right, 1, StopOnHit );
+
+		for(int i = 0; i < hitted.Length; i++)
+			Debug.Log ("object" + hitted[i].point);*/
+		startpos = transform.position;
 	}
 
 
+	Vector3 startpos = Vector3.zero;
+	Vector3 middlePos = Vector3.zero;
 
+
+	Vector3 newPos = Vector3.zero;
+	public float linesize = 2;
 
 	void FixedUpdate () {
-		if (activeTime < _Shooter.TheTime [0]) {
+
+//		transform.localPosition = Quaternion.Euler (0, transform.parent.rotation.y, transform.parent.rotation.z) * test [0].SpawnPosition;//Setting The Start Location
+
+
+	/*	if ((_MyObject.Targeting.MyMovementTarget.transform.position - transform.position).y < 0) {
+			transform.rotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, (_MyObject.Targeting.MyMovementTarget.transform.position - transform.position)) * -1);
+		} else {
+			transform.rotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, (_MyObject.Targeting.MyMovementTarget.transform.position - transform.position)));
+		}*/
+
+
+		hitted = Physics2D.LinecastAll (transform.position, transform.position + (Quaternion.Euler(0,0,transform.eulerAngles.z) * Vector2.right * linesize), WhatNotToHit);
+		for (int i = 0; i < hitted.Length; i++) {
+			Debug.Log ("wall" + hitted[i].point);
+		}
+
+
+
+		if (hitted.Length > 0) {
+
+
+
+			_Direction.z = Vector3.Angle (Vector3.right, hitted[0].point - (Vector2)startpos);
+
+			if ((hitted[0].point - (Vector2)startpos).y < 0) {
+				_Direction.z = _Direction.z * -1.0f;
+			}  
+
+			middlePos = startpos + ((Vector3)(hitted [0].point - (Vector2)transform.position) / 2);
+
+
+		//	transform.position = startpos + ((Vector3)(hitted[0].point - (Vector2)transform.position) / 2);
+			hitted = Physics2D.BoxCastAll (startpos, new Vector2(Vector2.Distance((Vector2)startpos, hitted[0].point), 0.1f), _Direction.z,  (hitted[0].point - (Vector2)startpos), 1, StopOnHit );
+		
+			Debug.Log (startpos + " | " +  middlePos + " | " + hitted[0].point + " § " + (new Vector2(Vector2.Distance((Vector2)startpos, hitted[0].point), 0.1f)));
+
+		}
+		//	hitted = Physics2D.BoxCastAll (transform.position, new Vector2(hitted[0].point.x - transform.position.x, 0.125f), 0,  Vector2.right, 1, StopOnHit );
+
+		for(int i = 0; i < hitted.Length; i++)
+			Debug.Log ("object" + hitted[i].point);
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*	if (_MyObject.MyAnimatorVariables.AnimatorStage == 1000) {
+			gameObject.SetActive(true);
+			Particleeffect.GetComponent<MoveForwardFast> ().starting = true;
+		}*/
+
+	/*	if (activeTime < _Shooter.TheTime [0]) {
 			activeTime = activeTime + 100;
 			transform.GetChild (1).gameObject.SetActive (false);
 		}
@@ -74,10 +259,10 @@ public class Bleach_Getsuga : The_Default_Bullet {
 				Destroy (gameObject);
 			
 			}
-		}
+		}*/
 	}
 
-void OnTriggerEnter2D(Collider2D col){//objects without rigidbody and box2d ontrigger true
+/*void OnTriggerEnter2D(Collider2D col){//objects without rigidbody and box2d ontrigger true
 	if (_Shooter._MyTransform.gameObject != col.gameObject) {
 		if(col.CompareTag("Wall"))
 			GameObject.Destroy (transform.gameObject);
@@ -101,6 +286,6 @@ void OnCollisionEnter2D(Collision2D col){//objects with rigidbody and box2d ontr
 
 
 }
-
+*/
 
 }

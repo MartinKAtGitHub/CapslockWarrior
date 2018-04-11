@@ -15,10 +15,10 @@ public class NodeInfo  {
 
 
 	[HideInInspector]
-	public int[,] MyNodes = new int[StressCommonlyUsedInfo.NodeDimentions, StressCommonlyUsedInfo.NodeDimentions];//Holds The Collision ID Of the NodeMAp
+	public int[,] MyNodes = new int[StressCommonlyUsedInfo.NodesWidth, StressCommonlyUsedInfo.NodesWidth];//Holds The Collision ID Of the NodeMAp
 
 	[HideInInspector]
-	public NodeTest[] MyNodePath = new NodeTest[StressCommonlyUsedInfo.TotalNodes + 1];
+	public NodeTest[] MyNodePath = new NodeTest[StressCommonlyUsedInfo.NodesTotal + 1];
 
 
 	public void AddOrRemoveNodeCost(int index, float cost){//Add/Remove Cost

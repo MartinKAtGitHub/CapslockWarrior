@@ -2,54 +2,101 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Spell Index Values. 
+//0 - Damage
+//1 - Speed
+//2 - ColliderRadius
+
 public class Ghosty_Bullet : The_Default_Bullet {
 	
-	Vector3 MyShootingDirection;
-
 	public Animator MyAnimator;
-	public Rigidbody2D MyRigidbody2D;
+	public LayerMask WhatCanIHit;
 
+	Vector3 MyShootingDirection;
 	bool _StartMoving = false;
-	Vector3 _Direction = Vector3.zero;
+	bool Dieing = false;
+	bool RemoveParent = false;
 
+	EnemyManaging _MyObject;
+	StressCommonlyUsedInfo.TheAbility[] test = new StressCommonlyUsedInfo.TheAbility[1];
+	RaycastHit2D[] _ObjectHit;
+
+
+	public void StartMoving(){
+		_StartMoving = true;
+		MyShootingDirection = MyShootingDirection.normalized;
+	}
+
+
+	public override void SetMethod (EnemyManaging manager){
+		_MyObject = manager;
+		MyAnimator = GetComponent < Animator> ();
+		transform.parent = _MyObject.transform.Find("GFX");
+
+		for (int t = 0; t < _MyObject.MyAbilityInfo.tes.Count; t++) {//Goint Through The Transitions To Find This Spell Transition
+			for (int g = 0; g < _MyObject.MyAbilityInfo.tes [t].AllAbilities.Length; g++) {//Going Through This Spells Transition To Find The Spell
+				if (_MyObject.MyAbilityInfo.tes [t].AllAbilities [g].SpellRef.bulletID == bulletID) {//If SpellRef ID == This SpellID. Then This Is That Spell
+					test [0] = _MyObject.MyAbilityInfo.tes [t].AllAbilities [g];
+				}
+			}
+		}
+
+		transform.localPosition = Quaternion.Euler (0, transform.parent.rotation.y, transform.parent.rotation.z) * test [0].SpawnPosition;//Setting The Start Location
+	
+		if ((_MyObject.Targeting.MyMovementTarget.transform.position - transform.position).y < 0) {
+			transform.rotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, (_MyObject.Targeting.MyMovementTarget.transform.position - transform.position)) * -1);
+		} else {
+			transform.rotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, (_MyObject.Targeting.MyMovementTarget.transform.position - transform.position)));
+		}
+
+
+
+	}
 
 	void FixedUpdate () {
 
-		if (_StartMoving == true) {
-			transform.position += MyShootingDirection * Time.deltaTime;
+	if (_StartMoving == true) {
+			if (Dieing == false) {
+
+				if (RemoveParent == false) {
+					RemoveParent = true;
+					transform.parent = null;
+					MyShootingDirection = MyShootingDirection.normalized;
+				}
+
+				transform.position += MyShootingDirection * test [0].SpellVariables [1] * Time.deltaTime;
+
+				_ObjectHit = Physics2D.CircleCastAll (transform.position + (Vector3.right * 0.02f), test [0].SpellVariables [2], Vector2.zero, 1, WhatCanIHit);
+
+				if (_ObjectHit.Length > 0) {
+					foreach (RaycastHit2D s in _ObjectHit) {
+						if (s.transform.gameObject.layer == 8 || s.transform.gameObject.layer == 15) {
+							s.transform.GetComponent<CreatureRoot> ().TookDmg (test [0].SpellVariables [0]);
+						} 
+					}
+
+					Dieing = true;
+					MyAnimator.SetInteger ("SpellState", 1);
+				}
+
+			} else {
+			
+				transform.position += (MyShootingDirection * Time.deltaTime) / 2;
+			
+			}
+
 		} else {
 
-			MyShootingDirection = _Shooter._TheTarget.transform.position - transform.position;
-			_Direction.z = Vector3.Angle (Vector3.right, MyShootingDirection);
+			MyShootingDirection = _MyObject.Targeting.MyMovementTarget.transform.position - transform.position;
 
 			if (MyShootingDirection.y < 0) {
-				_Direction.z = _Direction.z * -1;
-			}  
-			transform.rotation = Quaternion.Euler (_Direction);
-
-			if (MyAnimator.GetBool ("Done") == true) {
-				MyShootingDirection = MyShootingDirection.normalized;
-				_StartMoving = true;
+				transform.rotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, MyShootingDirection) * -1);
+			} else {
+				transform.rotation = Quaternion.Euler (0, 0, Vector3.Angle (Vector3.right, MyShootingDirection));
 			}
+			transform.localPosition = Quaternion.Euler (0, transform.parent.rotation.y, transform.parent.rotation.z) * test [0].SpawnPosition;
 		}
+
 	}
-
-	void OnTriggerEnter2D(Collider2D col){//objects without rigidbody and box2d ontrigger true
-		if (_Shooter._MyTransform.gameObject != col.gameObject) {
-			if(col.CompareTag("Wall"))
-				GameObject.Destroy (transform.gameObject);
-
-			col.gameObject.GetComponent<AbsoluteRoot> ().RecievedDmg (Mathf.FloorToInt (_Shooter._TheObject.AttackStrength));
-			GameObject.Destroy (transform.gameObject);
-		}
-	}
-
-	void OnCollisionEnter2D(Collision2D col){//objects with rigidbody and box2d ontrigger false
-		if (_Shooter._MyTransform.gameObject != col.gameObject) {
-			col.gameObject.GetComponent<AbsoluteRoot> ().RecievedDmg (Mathf.FloorToInt (_Shooter._TheObject.AttackStrength));
-			GameObject.Destroy (transform.gameObject);
-		}
-	}
-
-
+		
 }

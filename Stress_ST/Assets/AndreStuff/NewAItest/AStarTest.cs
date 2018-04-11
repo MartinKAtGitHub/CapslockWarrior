@@ -6,16 +6,13 @@ public class AStarTest : MonoBehaviour {
 
 //	public DefaultGroundNodesCost GroundNodeCost;
 
-//	public NodeWalkcostSetter _WalkCost;
-	EnemyManaging _MyManager;
+	public NodeWalkcostSetter _WalkCost;
 
-	public EnemyManaging test1;
-	public ObjectNodeInfo test2;
 
 
 	float[] PathfindingNodeID = new float[StressCommonlyUsedInfo.PathCostSize];//Currently Normalground 0 - Wall 1 - Other Creatures 2. TODO add More And Remember To Update
-	NodeTest[] _OpenList = new NodeTest[StressCommonlyUsedInfo.TotalNodes];//list that holds nodes that i havent searched through
-	NodeTest[] _ClosedList = new NodeTest[StressCommonlyUsedInfo.TotalNodes];//list that have been searched through
+	NodeTest[] _OpenList = new NodeTest[StressCommonlyUsedInfo.NodesTotal];//list that holds nodes that i havent searched through
+	NodeTest[] _ClosedList = new NodeTest[StressCommonlyUsedInfo.NodesTotal];//list that have been searched through
 
 	public NodeTest[] ol(){//Delete this
 		return _OpenList;
@@ -24,7 +21,7 @@ public class AStarTest : MonoBehaviour {
 		return _ClosedList;
 	}
 
-	NodeTest[,] _NodeMap = new NodeTest[StressCommonlyUsedInfo.NodeDimentions, StressCommonlyUsedInfo.NodeDimentions];
+	NodeTest[,] _NodeMap = new NodeTest[StressCommonlyUsedInfo.NodesWidth , StressCommonlyUsedInfo.NodesWidth];
 
 
 	NodeTest _TheStartNode; //Will hold the refrence to the startnode 
@@ -53,11 +50,11 @@ public class AStarTest : MonoBehaviour {
 
 		int Added = 0;
 
-		for (int x = 0; x < StressCommonlyUsedInfo.NodeDimentions; x++) {//Creating Middle Nodes
-			for (int y = 0; y < StressCommonlyUsedInfo.NodeDimentions; y++) {
-				if ((x == 0 && y == 0) || (x == 0 && y == StressCommonlyUsedInfo.NodeDimentions - 1) || (x == StressCommonlyUsedInfo.NodeDimentions - 1 && y == 0) || (x == StressCommonlyUsedInfo.NodeDimentions - 1 && y == StressCommonlyUsedInfo.NodeDimentions - 1)) {
+		for (int x = 0; x < StressCommonlyUsedInfo.NodesWidth; x++) {//Creating Middle Nodes
+			for (int y = 0; y < StressCommonlyUsedInfo.NodesWidth; y++) {
+				if ((x == 0 && y == 0) || (x == 0 && y == StressCommonlyUsedInfo.NodesWidth - 1) || (x == StressCommonlyUsedInfo.NodesWidth - 1 && y == 0) || (x == StressCommonlyUsedInfo.NodesWidth - 1 && y == StressCommonlyUsedInfo.NodesWidth - 1)) {
 					_NodeMap [x, y] = new NodeTest (x, y, 0);
-				} else if (x == 0 || x == StressCommonlyUsedInfo.NodeDimentions - 1 || y == 0 || y == StressCommonlyUsedInfo.NodeDimentions - 1) {
+				} else if (x == 0 || x == StressCommonlyUsedInfo.NodesWidth - 1 || y == 0 || y == StressCommonlyUsedInfo.NodesWidth - 1) {
 					_NodeMap [x, y] = new NodeTest (x, y, 1);
 				} else {
 					_NodeMap [x, y] = new NodeTest (x, y, 2);
@@ -68,8 +65,8 @@ public class AStarTest : MonoBehaviour {
 		}
 
 
-		for (int x = 1; x < StressCommonlyUsedInfo.NodeDimentions - 1; x++) {//Giving Middle Nodes Neighbour Nodes
-			for (int y = 1; y < StressCommonlyUsedInfo.NodeDimentions - 1; y++) {
+		for (int x = 1; x < StressCommonlyUsedInfo.NodesWidth - 1; x++) {//Giving Middle Nodes Neighbour Nodes
+			for (int y = 1; y < StressCommonlyUsedInfo.NodesWidth - 1; y++) {
 				Added = 0;
 				for (int k = -1; k < 2; k++) {
 					for (int h = -1; h < 2; h++) {
@@ -82,8 +79,8 @@ public class AStarTest : MonoBehaviour {
 		}
 
 
-		for (int x = 0; x < StressCommonlyUsedInfo.NodeDimentions; x += (StressCommonlyUsedInfo.NodeDimentions - 1)) {//Giving Corner Nodes Neighbour Nodes
-			for (int y = 0; y < StressCommonlyUsedInfo.NodeDimentions; y += (StressCommonlyUsedInfo.NodeDimentions - 1)) {
+		for (int x = 0; x < StressCommonlyUsedInfo.NodesWidth; x += (StressCommonlyUsedInfo.NodesWidth - 1)) {//Giving Corner Nodes Neighbour Nodes
+			for (int y = 0; y < StressCommonlyUsedInfo.NodesWidth; y += (StressCommonlyUsedInfo.NodesWidth - 1)) {
 
 				Added = 0;
 				if (x == 0) {
@@ -126,8 +123,8 @@ public class AStarTest : MonoBehaviour {
 			}
 		}
 
-		for (int x = 1; x < StressCommonlyUsedInfo.NodeDimentions - 1; x++) {//Giving X-Side Nodes Neighbour Nodes
-			for (int y = 0; y < StressCommonlyUsedInfo.NodeDimentions; y += (StressCommonlyUsedInfo.NodeDimentions - 1)) {
+		for (int x = 1; x < StressCommonlyUsedInfo.NodesWidth - 1; x++) {//Giving X-Side Nodes Neighbour Nodes
+			for (int y = 0; y < StressCommonlyUsedInfo.NodesWidth; y += (StressCommonlyUsedInfo.NodesWidth - 1)) {
 
 				Added = 0;
 				if (y == 0) {
@@ -154,8 +151,8 @@ public class AStarTest : MonoBehaviour {
 			}
 		}
 
-		for (int x = 0; x < StressCommonlyUsedInfo.NodeDimentions; x += (StressCommonlyUsedInfo.NodeDimentions - 1)) {//Creating Y-SideNodes
-			for (int y = 1; y < StressCommonlyUsedInfo.NodeDimentions - 1; y++) {
+		for (int x = 0; x < StressCommonlyUsedInfo.NodesWidth; x += (StressCommonlyUsedInfo.NodesWidth - 1)) {//Creating Y-SideNodes
+			for (int y = 1; y < StressCommonlyUsedInfo.NodesWidth - 1; y++) {
 		
 				Added = 0;
 				if (x == 0) {
@@ -185,7 +182,8 @@ public class AStarTest : MonoBehaviour {
 
 	
 
-		_TheStartNode = _NodeMap [StressCommonlyUsedInfo.NodeDimentions / 2 - 1,StressCommonlyUsedInfo.NodeDimentions / 2 - 1];
+	//	_TheStartNode = _NodeMap [StressCommonlyUsedInfo.NodeDimentions / 2 - 1,StressCommonlyUsedInfo.NodeDimentions / 2 - 1];
+		_TheStartNode = _NodeMap [((StressCommonlyUsedInfo.NodesWidth - 1) / 2),((StressCommonlyUsedInfo.NodesWidth - 1) / 2)];
 		_OpenListAtIndex = 0;
 		_ClosedListAtIndex = 0;
 
@@ -193,7 +191,7 @@ public class AStarTest : MonoBehaviour {
 
 	float one,two;
 
-	public void StartRunning (EnemyManaging myManager){
+	public void StartRunning (ObjectNodeInfo me, NodeInfo meNodeInfo, ObjectNodeInfo taget){
 	
 		if (_TheStartNode == null) {
 			Setup ();
@@ -201,11 +199,10 @@ public class AStarTest : MonoBehaviour {
 
 		#region Startup Phase
 
-		_MyManager = myManager;
-		CollisionID = _MyManager.MyNodeInfo.MyNodes;
+		CollisionID = meNodeInfo.MyNodes;
 
 		for (int i = 0; i < PathfindingNodeID.Length; i++) {//'Copying' Over The Objects Pathfinding Node Cost Over
-			PathfindingNodeID [i] = myManager.MyNodeInfo.PathfindingNodeID [i];
+			PathfindingNodeID [i] = meNodeInfo.PathfindingNodeID [i];
 		}
 
 
@@ -220,16 +217,16 @@ public class AStarTest : MonoBehaviour {
 		_OpenListAtIndex = 0;
 		_ClosedListAtIndex = 0;
 
-		_NodeXPos = Mathf.FloorToInt(_TheStartNode.PosX + (_MyManager.Targeting.MyMovementTarget.MyCollisionInfo.XNode - _MyManager.Node.MyCollisionInfo.XNode));
-		_NodeYPos = Mathf.FloorToInt(_TheStartNode.PosY + (_MyManager.Targeting.MyMovementTarget.MyCollisionInfo.YNode - _MyManager.Node.MyCollisionInfo.YNode));
+		_NodeXPos = Mathf.FloorToInt(_TheStartNode.PosX + (taget.MyCollisionInfo.XNode - me.MyCollisionInfo.XNode));
+		_NodeYPos = Mathf.FloorToInt(_TheStartNode.PosY + (taget.MyCollisionInfo.YNode - me.MyCollisionInfo.YNode));
 
-		if (_NodeXPos >= StressCommonlyUsedInfo.NodeDimentions) {
-			_NodeXPos = StressCommonlyUsedInfo.NodeDimentions - 1;
+		if (_NodeXPos >= StressCommonlyUsedInfo.NodesWidth) {
+			_NodeXPos = StressCommonlyUsedInfo.NodesWidth - 1;
 		}else if(_NodeXPos < 0){
 			_NodeXPos = 0;
 		}
-		if (_NodeYPos >= StressCommonlyUsedInfo.NodeDimentions) {
-			_NodeYPos = StressCommonlyUsedInfo.NodeDimentions - 1;
+		if (_NodeYPos >= StressCommonlyUsedInfo.NodesWidth) {
+			_NodeYPos = StressCommonlyUsedInfo.NodesWidth - 1;
 		}else if(_NodeYPos < 0){
 			_NodeYPos = 0;
 		}
@@ -244,7 +241,7 @@ public class AStarTest : MonoBehaviour {
 
 		#region A* Algorythm
 
-		while (_ClosedListAtIndex < StressCommonlyUsedInfo.TotalNodes) {//If The ClosedListAtIndex Is Equalt To Or Greater The Total Amount Of Nodes Then This Is False And The Search Is Stopped
+		while (_ClosedListAtIndex < StressCommonlyUsedInfo.NodesTotal) {//If The ClosedListAtIndex Is Equalt To Or Greater The Total Amount Of Nodes Then This Is False And The Search Is Stopped
 			_LowerstFScore = 10000000;
 
 			for (int i = 0; i < _OpenListAtIndex; i++) {//Iterating Through The List With Unused Nodes To Find The Node With The Lowerst FCost
@@ -261,7 +258,7 @@ public class AStarTest : MonoBehaviour {
 
 
 			if (_CurrentNode == _EndNode) {//If True Then A Path Was Found And The Search Is Complete
-				RemakePath ();
+				RemakePath (meNodeInfo);
 				return;
 			}
 
@@ -291,12 +288,12 @@ public class AStarTest : MonoBehaviour {
 
 	}
 
-	void RemakePath() {//Backtracking From The EndNode. When The Backtracking Reaches The StartNode, Then The Path Is Set
+	void RemakePath(NodeInfo meNodeInfo) {//Backtracking From The EndNode. When The Backtracking Reaches The StartNode, Then The Path Is Set
 
 		ArrayLengthSaver = 0;//Just A Reused Variable For Holding The Index Number For The Next Node To Enter In The Path
 
 		_CurrentNode = _EndNode;
-		_MyManager.MyNodeInfo.MyNodePath [ArrayLengthSaver++] = _CurrentNode;
+		meNodeInfo.MyNodePath [ArrayLengthSaver++] = _CurrentNode;
 
 
 		if (_EndNode == _TheStartNode) {
@@ -307,16 +304,16 @@ public class AStarTest : MonoBehaviour {
 
 		while (true) {//Going Backwards Parent To Parent To Parent.....
 			if (_CurrentNode._ParentNode != _TheStartNode) {
-				_MyManager.MyNodeInfo.MyNodePath [ArrayLengthSaver++] = _CurrentNode._ParentNode;
+				meNodeInfo.MyNodePath [ArrayLengthSaver++] = _CurrentNode._ParentNode;
 				_CurrentNode = _CurrentNode._ParentNode;
 			} else {
-				_MyManager.MyNodeInfo.MyNodePath [ArrayLengthSaver++] = _CurrentNode._ParentNode;
-				_MyManager.MyNodeInfo.MyNodePath [ArrayLengthSaver--] = null;//Setting This To Be 'null' To Symbolize That This Is The End
+				meNodeInfo.MyNodePath [ArrayLengthSaver++] = _CurrentNode._ParentNode;
+				meNodeInfo.MyNodePath [ArrayLengthSaver--] = null;//Setting This To Be 'null' To Symbolize That This Is The End
 
 				for (int i = 0; i < ArrayLengthSaver / 2; i++){//Turning The List Around
-					_CurrentNode = _MyManager.MyNodeInfo.MyNodePath [i];
-					_MyManager.MyNodeInfo.MyNodePath [i] = _MyManager.MyNodeInfo.MyNodePath [ArrayLengthSaver - i];
-					_MyManager.MyNodeInfo.MyNodePath [ArrayLengthSaver - i] = _CurrentNode;
+					_CurrentNode = meNodeInfo.MyNodePath [i];
+					meNodeInfo.MyNodePath [i] = meNodeInfo.MyNodePath [ArrayLengthSaver - i];
+					meNodeInfo.MyNodePath [ArrayLengthSaver - i] = _CurrentNode;
 				}
 
 				return;

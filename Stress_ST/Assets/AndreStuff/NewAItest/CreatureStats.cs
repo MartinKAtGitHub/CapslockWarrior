@@ -19,7 +19,7 @@ public class CreatureStats {
 	public int EnergyRegeneration = 1;
 	public float Speed = 1f;
 	public float Range = 1;
-
+	public float VelocityResist = 0.25f;
 /*	[Space(25)]
 	[Header("Attack")]//Maybe Just Physical And Magical. But Since The Player Have Those 4 Elements Then It Might Work
 	public float Earth = 1;

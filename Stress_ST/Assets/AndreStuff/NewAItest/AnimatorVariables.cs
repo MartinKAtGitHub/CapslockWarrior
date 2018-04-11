@@ -14,39 +14,49 @@ public class AnimatorVariables : MonoBehaviour {
 	[HideInInspector]
 	public int SpellTransition = 0;
 
-//	[HideInInspector]
-	public bool FlipToTarget = false;//Flip sprite 180* to look at the target. if target to the left of the sprite turn left.
-//	[HideInInspector]
-	public bool RotateToTarget = false;//rotate the sprite to look at the target. if target is 27.5* to the rigth, rotate the sprite 27.5* to the right.
+	[HideInInspector]
+	public int MovementType = 0;
+	[HideInInspector]
+	public int RotationType = 0;
+
 
 //	[HideInInspector]
 	public bool CanIMove = false;//rotate the sprite to look at the target. if target is 27.5* to the rigth, rotate the sprite 27.5* to the right.
+	public bool CanIRotate = false;//rotate the sprite to look at the target. if target is 27.5* to the rigth, rotate the sprite 27.5* to the right.
 
 	int AnimatorStageHash = Animator.StringToHash ("AnimatorStages");
 
 
 
-	public void SetRotateRotation(int s){
+	public void SetRotationType(int s){
+		RotationType = s;
+	}
+
+	public void SetMovementType(int s){
+		MovementType = s;
+	}
+
+	public void SetCanRotate(int s){
 		if (s == 0) {
-			RotateToTarget = false;
+			CanIRotate = false;
 		} else {
-			RotateToTarget = true;
+			CanIRotate = true;
 		}
 	}
 
-	public void SetFlipRotation(int s){
-		if (s == 0) {
-			FlipToTarget = false;
-		} else {
-			FlipToTarget = true;
-		}
-	}
-
-	public void SetMovement(int s){
+	public void SetCanMove(int s){
 		if (s == 0) {
 			CanIMove = false;
 		} else {
 			CanIMove = true;
+		}
+	}
+
+	public void ActivateScinematic(int val){
+		if (val == 0) {
+			MyManager.DissableForScenario = false;
+		} else {
+			MyManager.DissableForScenario = true;
 		}
 	}
 
@@ -64,8 +74,8 @@ public class AnimatorVariables : MonoBehaviour {
 		MyManager.MyAbilityInfo.SetSpellCD ();//Setting CD Timers
 	}
 
-	public void AbilityCompleted (){
-		MyManager.MyAbilityInfo.AddLostTime ();
+	public void AbilityCompleted (The_Default_Bullet AbilityID){
+		MyManager.MyAbilityInfo.AddLostTime (AbilityID.bulletID);
 		AbilityRunning = false;
 		SetAnimatorStage (0);
 	}

@@ -11,7 +11,7 @@ public class DefaultGroundNodesCost {
 //	public CollisionMapInfo[] NodeCost = new CollisionMapInfo[SceneSetupTest.AmountOfDifferentNodes];//How Many Different NodeValues. Sand, Water, Mud....... You Get It
 
 	[Tooltip("Base Level Node Strength. Sets An Overall 'Strength' To The Node, Which Tells The Nodes How Expensive It Is To Walk On")]
-	public byte[] TheNodeCost = new byte[SceneSetupTest.AmountOfDifferentNodes];//How Many Different NodeValues. Sand, Water, Mud....... You Get It
+	public byte[] TheNodeCost = new byte[StressCommonlyUsedInfo.AmountOfDifferentNodes];//How Many Different NodeValues. Sand, Water, Mud....... You Get It
 
 	/*
 	Grass
@@ -30,7 +30,7 @@ public class DefaultGroundNodesCost {
 
 	public DefaultGroundNodesCost(){
 	
-		for (int i = 0; i < SceneSetupTest.AmountOfDifferentNodes; i++) {//Giving The First Node A ValueIndex. So That When Sand Is Present On The Map, It Knows Its Index And The NodeCost Is Set(When Calculating Suff).
+		for (int i = 0; i < StressCommonlyUsedInfo.AmountOfDifferentNodes; i++) {//Giving The First Node A ValueIndex. So That When Sand Is Present On The Map, It Knows Its Index And The NodeCost Is Set(When Calculating Suff).
 		//	NodeCost [i] = new CollisionMapInfo ();
 		//	NodeCost [i].NodesCollisionID = (byte)i;
 		}

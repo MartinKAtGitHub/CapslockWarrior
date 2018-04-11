@@ -14,22 +14,22 @@ public class NodeWalkcostSetter {
 	CollisionMapInfo DefaultCost = new CollisionMapInfo();
 
 
-	public byte[,] CollisionAmount = new byte[(SceneSetupTest.TotalNodes),(SceneSetupTest.TotalNodes)];//This Holds NodeCost Length To Easely Update And Read The CollisoinMap
-	public CollisionMapInfo[,,] CollisionMap = new CollisionMapInfo[(SceneSetupTest.TotalNodes),(SceneSetupTest.TotalNodes), 10];//This Holds NodeCostInfo
-	public byte[,] BaseGroundLayer = new byte[(SceneSetupTest.TotalNodes),(SceneSetupTest.TotalNodes)];//SpriteInfo. This Will Never Change Untill The Sprite Is Changed/New Scenario Started Or Scene Loaded
+	public byte[,] CollisionAmount = new byte[(StressCommonlyUsedInfo.NodesWidth),(StressCommonlyUsedInfo.NodesWidth)];//This Holds NodeCost Length To Easely Update And Read The CollisoinMap
+	public CollisionMapInfo[,,] CollisionMap = new CollisionMapInfo[StressCommonlyUsedInfo.NodesWidth,StressCommonlyUsedInfo.NodesWidth, StressCommonlyUsedInfo.Nodes3D];//This Holds NodeCostInfo
+	public byte[,] BaseGroundLayer = new byte[(StressCommonlyUsedInfo.NodesWidth),(StressCommonlyUsedInfo.NodesWidth)];//SpriteInfo. This Will Never Change Untill The Sprite Is Changed/New Scenario Started Or Scene Loaded
 
 
-
+	public Vector2 WorldCornerPosition = new Vector2();
 
 	public void SetNodeSize(SceneSetupTest sceneStartup){//Only Happends Once + Can Be Changed On Every Map, Maybe Even Multiple Times Each Map
 
 
 		ZeroCost.NodesCollisionID = 0;
 		DefaultCost.NodesCollisionID = 1;
-
-		for (int i = 0; i < (SceneSetupTest.TotalNodes); i++) {
-			for (int j = 0; j < (SceneSetupTest.TotalNodes); j++) {
-				for (int h = 0; h < SceneSetupTest.Nodes3D; h++) {
+	
+		for (int i = 0; i < (StressCommonlyUsedInfo.NodesWidth); i++) {
+			for (int j = 0; j < (StressCommonlyUsedInfo.NodesWidth); j++) {
+				for (int h = 0; h < StressCommonlyUsedInfo.Nodes3D; h++) {
 					if (h == 0) {
 						CollisionMap [i, j, h] = DefaultCost;
 					} else {
@@ -93,13 +93,13 @@ public class NodeWalkcostSetter {
 		}
 
 		RightNodePos = spell.XNode + spell.NodesRight;
-		if (RightNodePos >= (SceneSetupTest.TotalNodes - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
-			RightNodePos = (SceneSetupTest.TotalNodes) - 2;
+		if (RightNodePos >= (StressCommonlyUsedInfo.NodesWidth - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
+			RightNodePos = (StressCommonlyUsedInfo.NodesWidth) - 2;
 		}
 
 		UpNodePos = spell.YNode + spell.NodesUp;
-		if (UpNodePos >= (SceneSetupTest.TotalNodes - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
-			UpNodePos = (SceneSetupTest.TotalNodes) - 2;
+		if (UpNodePos >= (StressCommonlyUsedInfo.NodesWidth - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
+			UpNodePos = (StressCommonlyUsedInfo.NodesWidth) - 2;
 		}
 
 		DownNodePos = spell.YNode - spell.NodesDown;
@@ -127,13 +127,13 @@ public class NodeWalkcostSetter {
 		}
 
 		RightNodePos = ground.XNode + ground.NodesRight;
-		if (RightNodePos >= (SceneSetupTest.TotalNodes - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
-			RightNodePos = (SceneSetupTest.TotalNodes) - 2;
+		if (RightNodePos >= (StressCommonlyUsedInfo.NodesWidth - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
+			RightNodePos = (StressCommonlyUsedInfo.NodesWidth) - 2;
 		}
 
 		UpNodePos = ground.YNode + ground.NodesUp;
-		if (UpNodePos >= (SceneSetupTest.TotalNodes - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
-			UpNodePos = (SceneSetupTest.TotalNodes) - 2;
+		if (UpNodePos >= (StressCommonlyUsedInfo.NodesWidth - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
+			UpNodePos = (StressCommonlyUsedInfo.NodesWidth) - 2;
 		}
 
 		DownNodePos = ground.YNode - ground.NodesDown;
@@ -161,13 +161,13 @@ public class NodeWalkcostSetter {
 		}
 
 		RightNodePos = ground.XNode + ground.NodesRight;
-		if (RightNodePos >= (SceneSetupTest.TotalNodes - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
-			RightNodePos = (SceneSetupTest.TotalNodes) - 2;
+		if (RightNodePos >= (StressCommonlyUsedInfo.NodesWidth - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
+			RightNodePos = (StressCommonlyUsedInfo.NodesWidth) - 2;
 		}
 
 		UpNodePos = ground.YNode + ground.NodesUp;
-		if (UpNodePos >= (SceneSetupTest.TotalNodes - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
-			UpNodePos = (SceneSetupTest.TotalNodes) - 2;
+		if (UpNodePos >= (StressCommonlyUsedInfo.NodesWidth - 1)) {//The SceneSetupTest.TotalNodes - 1 Node Is The Edge Which Is Closed Off
+			UpNodePos = (StressCommonlyUsedInfo.NodesWidth) - 2;
 		}
 
 		DownNodePos = ground.YNode - ground.NodesDown;
@@ -184,6 +184,64 @@ public class NodeWalkcostSetter {
 			}
 		}
 
+	}
+
+	int thePos = 0;
+	int theY = 0;
+
+	public int CornerNodePosX = 0;
+	public int CornerNodePosY = 0;
+
+	public void Setups(){
+		CornerNodePosX = (int)(WorldCornerPosition.x / StressCommonlyUsedInfo.DistanceBetweenNodes);
+		CornerNodePosY = (int)(WorldCornerPosition.y / StressCommonlyUsedInfo.DistanceBetweenNodes);
+	}
+
+	public bool ValidPositions(int x, int y){
+		if (x < CornerNodePosX) {
+			return false;
+		} 
+		if (x >= StressCommonlyUsedInfo.NodesWidth + CornerNodePosX) {
+			return false;
+		}
+
+		if (y < CornerNodePosY) {
+			return false;
+		}
+		if (y >= StressCommonlyUsedInfo.NodesWidth + CornerNodePosY) {
+			return false;
+		}
+
+		return true;
+
+	}
+
+	public int GetXPos(int x){//Getting The Base Node Of The Position
+
+		if (x < CornerNodePosX) {
+			thePos = 0;
+		} else if (x >= StressCommonlyUsedInfo.NodesWidth + CornerNodePosX) {
+			thePos = StressCommonlyUsedInfo.NodesWidth - 1;
+		} else {
+			thePos = x - CornerNodePosX;
+		}
+
+	
+		return thePos;
+	}
+
+	public int GetYPos(int y){//Getting The Base Node Of The Position
+
+		if (y < CornerNodePosY) {
+			thePos = 0;
+		} else if (y >= StressCommonlyUsedInfo.NodesWidth + CornerNodePosY) {
+			thePos = StressCommonlyUsedInfo.NodesWidth - 1;
+		} else {
+			thePos = y - CornerNodePosY;
+		}
+
+
+		return thePos;
 	}
 
 

@@ -45,6 +45,7 @@ public class CreatureRoot : MonoBehaviour {
 		Stats.Health += Mathf.FloorToInt(health);
 	}
 
+	public virtual void VelocityChange (float moveValue, Vector3 goDirection){}//If The Object Is Suseptable To This Then Add The Logic In The Parent Script
 
 
 

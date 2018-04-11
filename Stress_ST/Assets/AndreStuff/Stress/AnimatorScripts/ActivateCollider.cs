@@ -6,6 +6,7 @@ public class ActivateCollider : StateMachineBehaviour {
 	public int whichcollider = 0;
 	BoxCollider2D[] Colliders;
 
+	public AnimationEvent test;
 	
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

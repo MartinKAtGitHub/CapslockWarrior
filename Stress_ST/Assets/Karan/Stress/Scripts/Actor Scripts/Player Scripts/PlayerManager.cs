@@ -242,6 +242,7 @@ public class PlayerManager : CreatureRoot {
 			velocityPushback = true;
 			_MyRigidbody.velocity = goDirection.normalized * moveValue;
 		}*/
+		//GetComponent<PlayerController>().canPlayerMove = false;
 		GetComponent<Rigidbody2D>().velocity = goDirection.normalized * moveValue;
 	}
 }

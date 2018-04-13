@@ -63,7 +63,7 @@ public class LevelManager_Master : MonoBehaviour {
 
 		LevelScriptedEvent.SetInitalRefs();
 
-		Debug.Log("initialize Level...");
+		//Debug.Log("initialize Level...");
 	}
 	#endregion
 
@@ -74,6 +74,6 @@ public class LevelManager_Master : MonoBehaviour {
 		// Spawner
 		// UI ?
 		// 
-		Debug.Log("Trying to find stuff with TAG");
+		//Debug.Log("Trying to find stuff with TAG");
 	}
 }

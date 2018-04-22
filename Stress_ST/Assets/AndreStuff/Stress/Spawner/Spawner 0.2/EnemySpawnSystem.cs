@@ -10,13 +10,10 @@ public class EnemySpawnSystem : MonoBehaviour {
 	//public EnemyGroupSetup eg;
 	public EnemyWave [] EnemyWaves;
 
-
-
-
 	void Start()
 	{
 		init();
-		//StartCoroutine(StartSpawner());
+		StartCoroutine(StartSpawner());
 	}
 
 	private void init()
@@ -26,23 +23,22 @@ public class EnemySpawnSystem : MonoBehaviour {
 		{
 			EnemyWaves[i].InitWave();
 
-			for (int j = 0; j < EnemyWaves[i].enemyWaveOrder.Count; j++) 
+		/*	for (int j = 0; j < EnemyWaves[i].enemyWaveOrder.Count; j++) 
 			{
 				Debug.Log("<color=red>" + EnemyWaves[i].enemyWaveOrder[j].name + "</color>");
-			}
+			}*/
 		}
 	}
-
-
-
 
 	public IEnumerator StartSpawner()
 	{
 		for (int i = 0; i < EnemyWaves.Length; i++) 
 		{
 			Debug.Log("Spawning Wave " + (i + 1) );
-			StartCoroutine(EnemyWaves[i].SpawnCurrentWave(SpawnLocation[0]));
+			//StartCoroutine(EnemyWaves[i].SpawnCurrentWave(SpawnLocation[0]));
 			//EnemyWaves[i].SpawnCurrentWaveINSTA(SpawnLocation[0]);
+			StartCoroutine(EnemyWaves[i].SpawnCurrentWaveRandomEnemyType(SpawnLocation[0]));
+
 			yield return new WaitForSeconds(TimeToNextWave);
 		}
 	}
@@ -50,9 +46,9 @@ public class EnemySpawnSystem : MonoBehaviour {
 	[CreateAssetMenu(menuName = "SpawnSystem/EnemyWave")]
 	public class EnemyWave : ScriptableObject // This can be merged into the spawn main system array og Groupds insted of waves.
 	{
-		public Vector2 RandomSmallDelaybetweenSpawnsMinMax;
+		public Vector2 RandomDelay;
 		public EnemyGroupSetup Wave; // public GameObject[] EnemyTypes;
-		public List<GameObject> enemyWaveOrder;
+		public List<GameObject> enemyWaveOrder; //TODO change SPAWN LIST it to struct / class we want to spawn the full object in the future not just Gameobject
 
 
 		public void InitWave()
@@ -103,28 +99,20 @@ public class EnemySpawnSystem : MonoBehaviour {
 					//Instantiate(EnemyGroup.EnemyData[i].EnemyType, spawnPosition.position, Quaternion.identity);
 					Debug.Log("<color=green>" + Wave.EnemiesInWave[i].EnemyType.name + "</color>");// TODO SPAWNER the objects are not the same. i get diffrent message from first object spawn Wave1 then in wave 2
 
-					yield return new WaitForSeconds(Random.Range(RandomSmallDelaybetweenSpawnsMinMax.x , RandomSmallDelaybetweenSpawnsMinMax.y));// Delay between amount
+					yield return new WaitForSeconds(Random.Range(RandomDelay.x , RandomDelay.y));// Delay between amount
 				}
-				yield return new WaitForSeconds(Random.Range(RandomSmallDelaybetweenSpawnsMinMax.x , RandomSmallDelaybetweenSpawnsMinMax.y));// Delay whole group
+				yield return new WaitForSeconds(Random.Range(RandomDelay.x , RandomDelay.y));// Delay whole group
 				//yield return null;
 			}	
 		}
 
 		public IEnumerator SpawnCurrentWaveRandomEnemyType(Transform spawnPosition /*, int amount*/)
 		{
-		/*	for (int i = 0; i < Enemies.EnemyGrouping.Length; i++) 
+			for (int i = 0; i < enemyWaveOrder.Count; i++) 
 			{
-				for (int j = 0; j < Enemies.EnemyGrouping[i].Amount; j++) 
-				{
-					Instantiate(Enemies.EnemyGrouping[i].EnemyType, spawnPosition.position, Quaternion.identity);
-					Debug.Log("<color=green>" + Enemies.EnemyGrouping[i].EnemyType.name + "</color>");// TODO SPAWNER the objects are not the same. i get diffrent message from first object spawn Wave1 then in wave 2
-
-					yield return new WaitForSeconds(Random.Range(RandomSmallDelaybetweenSpawnsMinMax.x , RandomSmallDelaybetweenSpawnsMinMax.y));// Delay between amount
-				}
-				yield return new WaitForSeconds(Random.Range(RandomSmallDelaybetweenSpawnsMinMax.x , RandomSmallDelaybetweenSpawnsMinMax.y));// lay whole group
-				//yield return null;
-			}	*/
-			yield return null;
+				Instantiate(enemyWaveOrder[i], spawnPosition.position, Quaternion.identity);
+				yield return new WaitForSeconds(Random.Range(RandomDelay.x , RandomDelay.y));
+			}
 		}
 
 		public void SpawnCurrentWaveINSTA(Transform spawnPosition /*, int amount*/)

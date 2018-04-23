@@ -59,7 +59,7 @@ public class AbilityController : MonoBehaviour {
 
 	private PlayerManager playerManager;
 
-	private float imageAplhaTimer = 0;
+	//private float imageAplhaTimer = 0;
 
 	[Space (10)]
 	[SerializeField]private Transform abilitySpawnPoint;

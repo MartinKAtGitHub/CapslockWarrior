@@ -94,7 +94,7 @@ public class Tooltips : MonoBehaviour {
 
     // -----------------------------------
 	
-    float lifeTimer = 0;
+   // float lifeTimer = 0;
     // Use this for initialization
     void Start ()
     {
@@ -256,7 +256,7 @@ public class Tooltips : MonoBehaviour {
             uiSettings.opening = false;
             animSettings.Initialize();
             uiSettings.Initialize();
-            lifeTimer = 0;
+           // lifeTimer = 0;
         }
     }
 

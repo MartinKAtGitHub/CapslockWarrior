@@ -13,7 +13,7 @@ public class EnemySpawnSystem : MonoBehaviour {
 	void Start()
 	{
 		init();
-		StartCoroutine(StartSpawner());
+		//StartCoroutine(StartSpawner());
 	}
 
 	private void init()
@@ -30,14 +30,19 @@ public class EnemySpawnSystem : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator StartSpawner()
+
+	public void StartSpawner()
+	{
+		StartCoroutine(SpawnWaves());
+	}
+	public IEnumerator SpawnWaves()
 	{
 		for (int i = 0; i < EnemyWaves.Length; i++) 
 		{
 			Debug.Log("Spawning Wave " + (i + 1) );
 			//StartCoroutine(EnemyWaves[i].SpawnCurrentWave(SpawnLocation[0]));
 			//EnemyWaves[i].SpawnCurrentWaveINSTA(SpawnLocation[0]);
-			StartCoroutine(EnemyWaves[i].SpawnCurrentWaveRandomEnemyType(SpawnLocation[0]));
+			StartCoroutine(EnemyWaves[i].SpawnCurrentWaveRandomEnemyType(SpawnLocation[Random.Range(0, SpawnLocation.Length)]));// TODO SpawnLocation[Random.Range(0, SpawnLocation.Length) maybe change to make more randome
 
 			yield return new WaitForSeconds(TimeToNextWave);
 		}
@@ -48,7 +53,7 @@ public class EnemySpawnSystem : MonoBehaviour {
 	{
 		public Vector2 RandomDelay;
 		public EnemyGroupSetup Wave; // public GameObject[] EnemyTypes;
-		public List<GameObject> enemyWaveOrder; //TODO change SPAWN LIST it to struct / class we want to spawn the full object in the future not just Gameobject
+		private List<GameObject> enemyWaveOrder; //TODO change SPAWN LIST it to struct / class we want to spawn the full object in the future not just Gameobject
 
 
 		public void InitWave()
@@ -56,7 +61,6 @@ public class EnemySpawnSystem : MonoBehaviour {
 			EnemyDataTransfer();
 			ShuffleList(enemyWaveOrder);
 		}
-
 
 		public void EnemyDataTransfer()
 		{
@@ -131,7 +135,6 @@ public class EnemySpawnSystem : MonoBehaviour {
 	public class EnemyGroupSetup : ScriptableObject // THIS IS 1 WAVE
 	{
 		//public EnemyTypeSetup[] EnemyGrouping;
-
 		public EnemySetupStruct[] EnemiesInWave;
 
 		[System.Serializable]

@@ -42,7 +42,7 @@ public class MenuManager : MonoBehaviour {
         p.transform.SetParent(transform, false);
 		//p.transform.SetParent(transform); // Original
         
-        RectTransform rt = p.GetComponent<RectTransform>();
+       // RectTransform rt = p.GetComponent<RectTransform>();
         //Transition t = p.GetComponent<Transition>(); //  each page is going to have a transition page on it
 
 

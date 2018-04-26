@@ -34,7 +34,7 @@ public class Transition : MonoBehaviour {
 
     // variabels to handle bringing the new page in
 
-    private bool transitionInitialized = false;
+   // private bool transitionInitialized = false;
     private bool startTransition = false;
     
     private float inColorAlpha = 0;
@@ -47,7 +47,7 @@ public class Transition : MonoBehaviour {
     private Image[] images;
 
     private RectTransform transitionPage;
-    private RectTransform thisPage;
+   // private RectTransform thisPage;
 
 
     // Use this for initialization
@@ -57,7 +57,7 @@ public class Transition : MonoBehaviour {
         {
             outColorAlpha = 1;
         }
-        thisPage = GetComponent<RectTransform>();
+       // thisPage = GetComponent<RectTransform>();
         // hold images and texts that are going to be faded
        images = GetComponentsInChildren<Image>();
        texts = GetComponentsInChildren<Text>();
@@ -140,7 +140,7 @@ public class Transition : MonoBehaviour {
             img.color = new Vector4(img.color.r, img.color.g, img.color.b, 0);
         }
 
-        transitionInitialized = true;
+        //transitionInitialized = true;
 
         return transitionPage.gameObject;
     }

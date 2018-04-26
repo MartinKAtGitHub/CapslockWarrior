@@ -53,13 +53,19 @@ public class CreatureRoot : MonoBehaviour {
 
 	public virtual void MovementSpeedChange(float a)//TODO Speed Change Logic
 	{
-	/*	totalmovementdecrease += a;
+		/*	
+		totalmovementdecrease += a;
 
 		if (totalmovementdecrease < 0) {
 			GetComponent<PlayerController> ().MaxSpeed = 0.1f;
 		} else {
 			GetComponent<PlayerController> ().MaxSpeed = totalmovementdecrease;
-		}*/
+		}
+		*/
+	}
+
+	public virtual void OnCharacterDeath()
+	{
 
 	}
 

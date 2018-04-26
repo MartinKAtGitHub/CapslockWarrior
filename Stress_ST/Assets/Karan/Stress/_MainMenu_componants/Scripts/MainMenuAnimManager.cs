@@ -25,11 +25,11 @@ public class MainMenuAnimManager : MonoBehaviour {
 	public string PCMonitorName = "PC Monitor";
 	public string OptionsTableName = "OptionsTable";
 
-	private Animator animatorExitPower;
+	/*private Animator animatorExitPower;
 	private Animator animatorEndlessModePhone;
 	private Animator animatorPCMonitor;
 	private Animator animatorOptionsTable;
-
+*/
 	private Button btn_ExitPower;
 	private Button btn_EndlessModePhone;
 	private Button btn_PCMonitor;
@@ -51,11 +51,12 @@ public class MainMenuAnimManager : MonoBehaviour {
 		NullCheckGameObject.NullCheckFindWithName(ref UI_PCMonitor , PCMonitorName);
 		NullCheckGameObject.NullCheckFindWithName(ref UI_OptionsTable , OptionsTableName);
 
-		animatorExitPower = UI_ExitPower.GetComponent<Animator>();
+
+		/*animatorExitPower = UI_ExitPower.GetComponent<Animator>();
 		animatorEndlessModePhone = UI_EndlessModePhone.GetComponent<Animator>();
 		animatorPCMonitor = UI_PCMonitor.GetComponent<Animator>();
 		animatorOptionsTable = UI_OptionsTable.GetComponent<Animator>();
-
+*/
 		btn_ExitPower = UI_ExitPower.GetComponentInChildren<Button>();
 		btn_EndlessModePhone = UI_EndlessModePhone.GetComponentInChildren<Button>();
 		btn_PCMonitor = UI_PCMonitor.GetComponentInChildren<Button>();

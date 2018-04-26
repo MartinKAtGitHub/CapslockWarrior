@@ -4,7 +4,7 @@ using System.Collections;
 public class ForcePush : Ability {
 
 	public float ForcePushDestroyAfter;
-	GameObject ForcePushArea;
+	//GameObject ForcePushArea;
 	private ParticleSystem ForceParticalSystem;
 
 	private bool isSpellCasted;
@@ -90,7 +90,7 @@ public class ForcePush : Ability {
 
 	public override bool Cast ()
 	{
-		ForcePushArea = (GameObject)Instantiate(this.gameObject, AbilitySpawnPos.position,Quaternion.identity);
+		/*ForcePushArea = (GameObject)*/Instantiate(this.gameObject, AbilitySpawnPos.position,Quaternion.identity);
 		return true;
 	}
 	void OnTriggerEnter2D(Collider2D other)

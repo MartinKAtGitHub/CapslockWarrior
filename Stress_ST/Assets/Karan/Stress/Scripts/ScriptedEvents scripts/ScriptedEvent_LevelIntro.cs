@@ -5,15 +5,15 @@ using UnityEngine;
 public class ScriptedEvent_LevelIntro : ScriptedEvent 
 {
 
-	[SerializeField] private LevelManager_Master levelManagerMaster;
+	//[SerializeField] private LevelManager_Master levelManagerMaster;
 
 	private GameObject player;
-	private Animator heroAnimator;
+	private Animator playerAnimator;
 
 
 	[SerializeField]private Animator levelIntroAnimator;
 	[SerializeField]private Transform moveTarget;
-	private PlayerController playerController;
+//	private PlayerController playerController;
 
 	private Rigidbody2D playerRigBdy;
 	private GameObject OldMan;
@@ -45,19 +45,19 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	void FixedUpdate()
 	{
 			//MoveActorToPositionVelocity(player, moveTarget);
-			MoveActorToPositionTransform(player, moveTarget, 1, heroAnimator, "Running", StartRun ); // move to Update() ?
+			MoveActorToPositionTransform(player, moveTarget, 1, playerAnimator, "Running", StartRun ); // move to Update() ?
 	}
 
 	public override void  SetInitalRefs()
 	{
 		playerReady = false;
 		ScriptedEventEnd = false;
-		levelManagerMaster = GetComponent<LevelManager_Master>(); // TODO make LevelManager Static ?
+		//levelManagerMaster = GetComponent<LevelManager_Master>(); // TODO make LevelManager Static ?
 
 		player = GameManager_Master.instance.PlayerObject; // FindTag(Player1) // levelManagerMaster.player
 		playerRigBdy = player.GetComponent<Rigidbody2D>();
-		heroAnimator = player.GetComponentInChildren<Animator>();
-		playerController = player.GetComponent<PlayerController>();
+		playerAnimator = player.GetComponentInChildren<Animator>();
+		//playerController = player.GetComponent<PlayerController>();
 
 		levelIntroAnimator.gameObject.SetActive(false);
 

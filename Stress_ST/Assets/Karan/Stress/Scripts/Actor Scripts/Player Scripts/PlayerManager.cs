@@ -157,11 +157,11 @@ public class PlayerManager : CreatureRoot {
 	}
 
 
-	public override void TookDmg(int damage) // TODO Matf.Clamp the HP
+	public override void TookDmg(float damage) // TODO Matf.Clamp the HP
 	{
 		//Debug.Log(gameObject.name + " Recived = " + damage);
 
-		for (int i = 0; i < damage; i++) //PERFORMANCE the system only works for 1 dmg(value)... so i need to calulate for every instance of dmg
+		for (int i = 0; i < (Mathf.FloorToInt(damage)); i++) //PERFORMANCE the system only works for 1 dmg(value)... so i need to calulate for every instance of dmg
 		{
 			currentHealtPoints -= 1;
 			ClampHealth();
@@ -235,13 +235,14 @@ public class PlayerManager : CreatureRoot {
 		GetComponent<PlayerTyping> ().ResetTheText ();
 	}
 
-	public override void VelocityChange (float movePwer){
+	public override void VelocityChange (float moveValue, Vector3 goDirection){
 		//base.VelocityChange (moveValue, goDirection);//Isnt Used, Base Is Empty
 		/*if (StunImmunity <= ClockTest.TheTimes) {
 			StunImmunity = ClockTest.TheTimes + 1;
 			velocityPushback = true;
 			_MyRigidbody.velocity = goDirection.normalized * moveValue;
 		}*/
-	//	GetComponent<Rigidbody2D>().velocity = goDirection.normalized * movePwer;
+		//GetComponent<PlayerController>().canPlayerMove = false;
+		GetComponent<Rigidbody2D>().velocity = goDirection.normalized * moveValue;
 	}
 }

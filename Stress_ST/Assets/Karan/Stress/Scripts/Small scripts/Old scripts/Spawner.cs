@@ -21,7 +21,7 @@ public class Spawner : MonoBehaviour {
 
 // --------------------------------------------- END ---------------------------------------------------
 
-	private IEnumerator Test;
+//	private IEnumerator Test;
 
 	public GameObject[] SpawnPatterns;
 
@@ -41,7 +41,7 @@ public class Spawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		Test = SpawnEnemyMiniWaves();
+		//Test = SpawnEnemyMiniWaves();
 
 		spawnPositions = new List<Transform>();
 

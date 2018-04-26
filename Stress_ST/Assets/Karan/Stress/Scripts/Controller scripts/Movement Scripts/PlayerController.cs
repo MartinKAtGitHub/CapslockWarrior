@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour{
 	[SerializeField]private float maxSpeed = 10f;
 	public Animator heroAnimator;
 	public bool MouseControll;
+	public bool canPlayerMove;
 	bool AutoRun;
 	bool InputRecived; 
 	bool KeyLock;
@@ -56,7 +57,7 @@ public class PlayerController : MonoBehaviour{
 	// Use this for initialization
 	void Awake () 
 	{
-
+		canPlayerMove = true;
 		AutoRun = false;
 		InputRecived = false;
 		KeyLock = false;
@@ -85,7 +86,10 @@ public class PlayerController : MonoBehaviour{
 	{
 
 		//IF(!cutscene && CC)
-		//Movement();
+		if(canPlayerMove)
+		{
+			Movement();
+		}
 
 		/*switch (SelectedControllerType) 
 		{

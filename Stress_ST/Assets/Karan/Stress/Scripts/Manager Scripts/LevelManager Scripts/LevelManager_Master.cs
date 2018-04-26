@@ -9,7 +9,7 @@ public class LevelManager_Master : MonoBehaviour {
 	public Transform PlayerSpawnPosition;
 
 	[SerializeField]private GameObject player;
-	[SerializeField]private Spawnmanaging Spawner; // TODO Create new spawner
+	[SerializeField]private EnemySpawnSystem Spawner;
 
 	[SerializeField]private GameObject introBackground;
 	[SerializeField]private Text introLevelText;
@@ -33,7 +33,7 @@ public class LevelManager_Master : MonoBehaviour {
 	public void StartSpawner()
 	{
 		Debug.Log("Spawner Enabled");
-		Spawner.StartSpawn = true;
+		Spawner.StartSpawner(); // Invoke(Spawner.StartSpawner(), Delay);
 		LevelScriptedEvent.OnScriptedEventEndEvent -= StartSpawner;
 	}
 
@@ -63,7 +63,7 @@ public class LevelManager_Master : MonoBehaviour {
 
 		LevelScriptedEvent.SetInitalRefs();
 
-		Debug.Log("initialize Level...");
+		//Debug.Log("initialize Level...");
 	}
 	#endregion
 
@@ -74,6 +74,6 @@ public class LevelManager_Master : MonoBehaviour {
 		// Spawner
 		// UI ?
 		// 
-		Debug.Log("Trying to find stuff with TAG");
+		//Debug.Log("Trying to find stuff with TAG");
 	}
 }

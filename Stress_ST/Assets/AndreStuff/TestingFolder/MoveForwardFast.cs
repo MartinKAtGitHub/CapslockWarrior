@@ -7,7 +7,7 @@ public class MoveForwardFast : MonoBehaviour {
 	public float DistanceForward = 1;
 	public float TravelSpeed = 1;
 
-	float traveled = 0;
+//	float traveled = 0;
 	Vector3 startpoint = Vector3.zero;
 	public bool starting = false;
 	public bool StartParticle = false;
@@ -15,7 +15,7 @@ public class MoveForwardFast : MonoBehaviour {
 	void Start(){
 		startpoint = transform.position;
 	}
-	int a = 0;
+//	int a = 0;
 	// Update is called once per frame
 	void Update () {
 

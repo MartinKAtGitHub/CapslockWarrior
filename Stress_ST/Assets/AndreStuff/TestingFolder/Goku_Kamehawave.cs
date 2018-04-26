@@ -7,7 +7,7 @@ public class Goku_Kamehawave : The_Default_Bullet {
 	Vector3 MyShootingDirection;
 
 
-	bool _StartMoving = false;
+//	bool _StartMoving = false;
 	Vector3 _Direction = Vector3.zero;
 
 	public float TimeToPlay = 1;

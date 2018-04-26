@@ -14,7 +14,7 @@ public class CollisionMapInfo {//Where 1 is just this one node. 2 for going out 
 
 	[Tooltip("These 4 Variables Tells The NodeMap That This Object Take x,y Amount Of Nodes From Center. Where 1,1,1,1 == One Node, 2,2,2,2 == 4 Nodes")]
 	[HideInInspector]public int NodesLeft = 1;
-	[HideInInspector]	public int NodesRight = 1;
+	[HideInInspector]public int NodesRight = 1;
 	[HideInInspector]public int NodesUp = 1;
 	[HideInInspector]public int NodesDown = 1;
 

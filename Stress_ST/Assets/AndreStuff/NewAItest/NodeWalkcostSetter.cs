@@ -187,7 +187,6 @@ public class NodeWalkcostSetter {
 	}
 
 	int thePos = 0;
-	int theY = 0;
 
 	public int CornerNodePosX = 0;
 	public int CornerNodePosY = 0;

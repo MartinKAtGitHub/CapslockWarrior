@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Goku_SpearCharge : The_Default_Bullet {
 
-	Vector3 MyShootingDirection;
+//	Vector3 MyShootingDirection;
 
 
-	bool _StartMoving = false;
-	Vector3 _Direction = Vector3.zero;
+//	bool _StartMoving = false;
+//	Vector3 _Direction = Vector3.zero;
 
 	public float TimeToPlay = 1;
 	public LayerMask WhatCanIHit;
 
-	Vector3 TargetVector = Vector3.zero;
+//	Vector3 TargetVector = Vector3.zero;
 
 
 	float TimeStarted = 0;
@@ -25,7 +25,7 @@ public class Goku_SpearCharge : The_Default_Bullet {
 	public override void SetMethod (GameManagerTestingWhileWaiting.SpellAttackInfo SpellInfo, The_Object_Behaviour MySender){
 		base.SetMethod (SpellInfo, MySender);
 
-		TargetVector = transform.position + _Shooter.ObjectCurrentVector [0];
+	//	TargetVector = transform.position + _Shooter.ObjectCurrentVector [0];
 
 		transform.parent = _Shooter._MyTransform.transform;
 
@@ -34,7 +34,7 @@ public class Goku_SpearCharge : The_Default_Bullet {
 	void Start(){
 
 		StartPos = transform.position;
-		MyShootingDirection = TargetVector - transform.position;
+//		MyShootingDirection = TargetVector - transform.position;
 
 		TimeStarted = _Shooter.TheTime [0];
 

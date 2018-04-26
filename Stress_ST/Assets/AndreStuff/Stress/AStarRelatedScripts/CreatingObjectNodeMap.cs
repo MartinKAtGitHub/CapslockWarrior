@@ -7,7 +7,7 @@ public class CreatingObjectNodeMap {
 	AStarPathFinding_Nodes _AStar;
 
 	List<BoxCollider2D> _WallColliders = new List<BoxCollider2D> ();
-	List<BoxCollider2D> _EnemyColliders = new List<BoxCollider2D>(); 
+	List<BoxCollider2D> _EnemyColliders = new List<BoxCollider2D>();  
 
 	Vector3 _ColliderBoundsPoint = Vector3.zero;
 	Vector3 WallOffset = Vector3.zero;//Offset From The Wall So That I Can Calculate The Distance from The Wall Which The Object Needs To Be

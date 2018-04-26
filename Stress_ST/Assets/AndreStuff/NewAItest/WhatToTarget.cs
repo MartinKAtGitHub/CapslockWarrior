@@ -19,6 +19,8 @@ public class WhatToTarget  {
 	GameObject[] _Targets;
 	GameObject _Closest;
 
+	public Vector3 TargetVector = Vector3.right;
+
 	public void SearchAfterTarget(Vector3 myPos){
 
 		for (int i = 0; i < TargetHierarchy.Length; i++) {//Going Through The TargetHierarchy List.
@@ -61,6 +63,10 @@ public class WhatToTarget  {
 		TargetHierarchy [index [0]] = TargetHierarchy [index [1]];
 		TargetHierarchy [index [1]] = saver;
 
+	}
+
+	public void SetTargetVectorToTarget(){
+		TargetVector = MyMovementTarget.transform.position;
 	}
 
 }

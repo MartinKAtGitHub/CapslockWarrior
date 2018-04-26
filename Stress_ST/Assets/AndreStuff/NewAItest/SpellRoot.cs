@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class SpellRoot : MonoBehaviour {
 
-	public virtual int RunCriteriaCheck(EnemyManaging objectChecking){
+	public virtual int RunCriteriaCheck(CreatureRoot objectChecking){
 
 		return 0;
 	}

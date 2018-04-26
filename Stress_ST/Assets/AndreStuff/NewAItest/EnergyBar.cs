@@ -12,15 +12,15 @@ using UnityEngine;
 
 public class EnergyBar {
 
-	public EnemyManaging MyManager;
+	public CreatureRoot myVariables;
 	float TimeSaved = 0;
 
 	public void RunEnergyBar(){//Just A Time Saver + If Current Time Is More Then Saved Time, Then The Creature Gain 1 Energy
 
-		if (TimeSaved + (4 / MyManager.Stats.EnergyRegeneration) < ClockTest.TheTimes) {
+		if (TimeSaved + (4 / myVariables.Stats.EnergyRegeneration) < ClockTest.TheTimes) {
 		
 			TimeSaved = ClockTest.TheTimes;
-			MyManager.Stats.Energy += 1;
+			myVariables.Stats.Energy += 1;
 		}
 
 	}

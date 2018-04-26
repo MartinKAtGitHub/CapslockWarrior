@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimatorVariables : MonoBehaviour {
 
-	public EnemyManaging MyManager;
+	public CreatureRoot myVariables;
 	public Animator MyAnimator;
 
 	[HideInInspector]
@@ -30,10 +30,12 @@ public class AnimatorVariables : MonoBehaviour {
 
 	public void SetRotationType(int s){
 		RotationType = s;
+
 	}
 
 	public void SetMovementType(int s){
 		MovementType = s;
+
 	}
 
 	public void SetCanRotate(int s){
@@ -54,14 +56,14 @@ public class AnimatorVariables : MonoBehaviour {
 
 	public void ActivateScinematic(int val){
 		if (val == 0) {
-			MyManager.DissableForScenario = false;
+			myVariables.DissableForScenario = false;
 		} else {
-			MyManager.DissableForScenario = true;
+			myVariables.DissableForScenario = true;
 		}
 	}
 
 	public void ShootBullet(The_Default_Bullet s){
-		(Instantiate (s, transform.position, Quaternion.identity)).SetMethod(MyManager);
+		(Instantiate (s, transform.position, Quaternion.identity)).SetMethod(myVariables);
 	}
 
 	public void SetAnimatorStage(int animatorStageValue){
@@ -71,14 +73,17 @@ public class AnimatorVariables : MonoBehaviour {
 
 	public void SetTransitionValue(int transitionStage){//New Transition, Means New Spells, Which Means New CD's
 		SpellTransition = transitionStage; 
-		MyManager.MyAbilityInfo.SetSpellCD ();//Setting CD Timers
+		myVariables.GetAbilityInfo().SetSpellCD ();//Setting CD Timers
 	}
 
 	public void AbilityCompleted (The_Default_Bullet AbilityID){
-		MyManager.MyAbilityInfo.AddLostTime (AbilityID.bulletID);
+		myVariables.GetAbilityInfo().AddLostTime (AbilityID.bulletID);
 		AbilityRunning = false;
 		SetAnimatorStage (0);
 	}
 
+	public void SetTargetVectorToTarget(){
+		myVariables.GetWhatToTarget ().SetTargetVectorToTarget ();
+	}
 
 }

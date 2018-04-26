@@ -8,8 +8,7 @@ public class Skelly_Skeleton_Explosion : MonoBehaviour {
 	public LayerMask mask;
 	float _RngTimeTic = 0;
 	public	float _StartTime = 0;
-	ClockTest TheTime;
-	RaycastHit2D[] FoundObject;
+//	RaycastHit2D[] FoundObject;
 	public int Dmg = 5;
 
 	void Awake(){
@@ -17,14 +16,13 @@ public class Skelly_Skeleton_Explosion : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 		_RngTimeTic = Random.Range (1, 26) / 100;//Just To Reduce The Chance Of Everyone Refreshing At The Same Time.
-		TheTime = GameObject.FindGameObjectWithTag("GameManager").GetComponent<ClockTest>();
 		_StartTime = ClockTest.TheTime[0] + _RngTimeTic;
 	}
 	void FixedUpdate(){
 		
 		if (_StartTime <= ClockTest.TheTime[0]) {
 			_StartTime = ClockTest.TheTime[0] + _RngTimeTic;
-			FoundObject = Physics2D.CircleCastAll (transform.position, 0.1f, Vector2.zero, 0, mask);
+		//	FoundObject = Physics2D.CircleCastAll (transform.position, 0.1f, Vector2.zero, 0, mask);
 
 			/*for (int i = 0; i < FoundObject.Length; i++) {
 				if (FoundObject [i].transform.CompareTag ("Player1")) {

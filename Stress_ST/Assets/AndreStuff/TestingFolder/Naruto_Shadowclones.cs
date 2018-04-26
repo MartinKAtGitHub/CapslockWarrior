@@ -12,7 +12,7 @@ public class Naruto_Shadowclones : The_Default_Bullet {
 	public GameObject Clones;
 
 	int summoned = 0;
-	float theTime = 0;
+//	float theTime = 0;
 
 	void Start(){
 

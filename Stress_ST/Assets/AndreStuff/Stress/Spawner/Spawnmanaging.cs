@@ -8,8 +8,9 @@ public class Spawnmanaging : MonoBehaviour {
 	public int SpawnRate;
 	[Space(10f)]
 	public GameObject[] SpawnPoints;
+	#pragma warning disable 
 	GameObject _SpawnedObject;
-
+	#pragma warning restored 
 
 	int _WaveNumber = 0;	
 	int _SpawnSpot = 0;

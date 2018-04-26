@@ -27,7 +27,8 @@ public class AStarTest : MonoBehaviour {
 	NodeTest _TheStartNode; //Will hold the refrence to the startnode 
 	NodeTest _EndNode; //Will hold the refrence to the endnode
 
-	int[,] CollisionID;
+
+//	int[,] CollisionID;
 
 
 	int _NodeIndexSaved = 0; //used to store the index of a node
@@ -198,7 +199,7 @@ public class AStarTest : MonoBehaviour {
 
 		#region Startup Phase
 
-		CollisionID = meNodeInfo.MyNodes;
+//		CollisionID = meNodeInfo.MyNodes;
 
 		for (int i = 0; i < PathfindingNodeID.Length; i++) {//'Copying' Over The Objects Pathfinding Node Cost Over
 			PathfindingNodeID [i] = meNodeInfo.PathfindingNodeID [i];

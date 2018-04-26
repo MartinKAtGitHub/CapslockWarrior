@@ -15,13 +15,13 @@ using UnityEngine.Events;
 public class AbilityInfo {
 
 	[HideInInspector]
-	public EnemyManaging MyManager;	
+	public CreatureRoot myVariables;	
 	public StressCommonlyUsedInfo.TransitionGrouped[] TransitionAbilities;
 
 	int _AbilityArrayLength = 0;
 
 	int AbilityCheck = 0;
-	float OldTime = 0;
+//	float OldTime = 0;
 
 	public List<StressCommonlyUsedInfo.TransitionGrouped> tes = new List<StressCommonlyUsedInfo.TransitionGrouped>();
 
@@ -36,16 +36,16 @@ public class AbilityInfo {
 
 		for (int i = 0; i < _AbilityArrayLength; i++) {
 		
-			if (TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCurrentCD < ClockTest.TheTimes) {//If The Spell Dont Have A CD.
+			if (TransitionAbilities [myVariables.GetAnimatorVariables().SpellTransition].AllAbilities [i].SpellCurrentCD < ClockTest.TheTimes) {//If The Spell Dont Have A CD.
 			
-				AbilityCheck = TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellInfo.RunCriteriaCheck (MyManager);
+				AbilityCheck = TransitionAbilities [myVariables.GetAnimatorVariables().SpellTransition].AllAbilities [i].SpellInfo.RunCriteriaCheck (myVariables);
 
 				if (AbilityCheck > 0) {//If True The An Ability Starts To Run
-					TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCurrentCD = ClockTest.TheTimes;//Setting Inisiated Time
-					tes.Add(TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition]);
-					MyManager.MyAnimatorVariables.SetAnimatorStage (AbilityCheck);
-					MyManager.MyAnimatorVariables.AbilityRunning = true;
-					OldTime = ClockTest.TheTimes;
+					TransitionAbilities [myVariables.GetAnimatorVariables().SpellTransition].AllAbilities [i].SpellCurrentCD = ClockTest.TheTimes;//Setting Inisiated Time
+					tes.Add(TransitionAbilities [myVariables.GetAnimatorVariables().SpellTransition]);
+					myVariables.GetAnimatorVariables().SetAnimatorStage (AbilityCheck);
+					myVariables.GetAnimatorVariables().AbilityRunning = true;
+				//	OldTime = ClockTest.TheTimes;
 					break;
 				}
 			}
@@ -74,7 +74,7 @@ public class AbilityInfo {
 	public void SetSpellCD(){//Reseting The Spell CD
 
 		for (int i = 0; i < _AbilityArrayLength; i++) {
-			TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCurrentCD = ClockTest.TheTimes + TransitionAbilities [MyManager.MyAnimatorVariables.SpellTransition].AllAbilities [i].SpellCD;
+			TransitionAbilities [myVariables.GetAnimatorVariables().SpellTransition].AllAbilities [i].SpellCurrentCD = ClockTest.TheTimes + TransitionAbilities [myVariables.GetAnimatorVariables().SpellTransition].AllAbilities [i].SpellCD;
 		}
 
 	}

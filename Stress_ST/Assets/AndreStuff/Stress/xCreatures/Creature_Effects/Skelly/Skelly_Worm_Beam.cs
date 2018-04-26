@@ -6,11 +6,9 @@ public class Skelly_Worm_Beam : The_Default_Bullet {
 
 	public float TimeToSpin = 1;
 	float StartTime = 0;
-	ClockTest TheTimer;
 
 	public override void SetMethod (GameManagerTestingWhileWaiting.SpellAttackInfo SpellInfo, The_Object_Behaviour MySender){
 		base.SetMethod (SpellInfo, MySender);
-		TheTimer = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<ClockTest> ();
 		StartTime = ClockTest.TheTime[0];
 		//	EggHealth = new EnemyWordChecker(MyText, this);
 

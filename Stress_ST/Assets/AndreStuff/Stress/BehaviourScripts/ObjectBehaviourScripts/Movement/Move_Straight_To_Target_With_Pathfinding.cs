@@ -36,7 +36,10 @@ public class Move_Straight_To_Target_With_Pathfinding : The_Default_Movement_Beh
 	float _TheDistance = 1000;
 	float _DistanceHolder = 0;
 
+	#pragma warning disable 
 	RoomConnectorCreating _PreviourRoom;
+	#pragma warning restor 
+
 	RoomConnectorCreating _CurrentRoom;
 
 	List<Nodes> _ListOfNodes;

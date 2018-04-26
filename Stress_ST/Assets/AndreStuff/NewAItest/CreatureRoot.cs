@@ -6,6 +6,8 @@ public class CreatureRoot : MonoBehaviour {
 
 	public CreatureStats Stats;
 
+	public Rigidbody2D MyRigidBody;
+
 /*	public virtual void TookDmg(float dmg){
 		
 	}
@@ -19,16 +21,16 @@ public class CreatureRoot : MonoBehaviour {
 	}*/
 
 
-	public virtual void TookDmg(float dmg){
+	public virtual void TookDmg(int dmg){
 		if (Stats.Shield > 0) {
-			Stats.Shield -= Mathf.FloorToInt(dmg);
+			Stats.Shield -= dmg;
 
 			if (Stats.Shield < 0) {
 				Stats.Health += Stats.Shield;
 				Stats.Shield = 0;
 			}
 		} else {
-			Stats.Health -= Mathf.FloorToInt(dmg);
+			Stats.Health -= dmg;
 
 			if (Stats.Health <= 0) {
 				Stats.Health = 0;
@@ -45,7 +47,7 @@ public class CreatureRoot : MonoBehaviour {
 		Stats.Health += Mathf.FloorToInt(health);
 	}
 
-	public virtual void VelocityChange (float moveValue, Vector3 goDirection){}//If The Object Is Suseptable To This Then Add The Logic In The Parent Script
+	public virtual void VelocityChange (float movePower){}//If The Object Is Suseptable To This Then Add The Logic In The Parent Script
 
 
 
@@ -60,5 +62,57 @@ public class CreatureRoot : MonoBehaviour {
 		}*/
 
 	}
+
+
+	[Tooltip("This Dissables Everything Related To Creature AI/Behaviour/Logic.")]
+	public bool DissableForScenario = false;
+
+	[Tooltip("Dissables Movement If False. (Including A* Search")]
+	public bool CanIDoMovement = true;
+
+	[Tooltip("Update Node Position, Every Single Frame. Always Runs If True (Used For Testing Mainly Atm)")]
+	public bool UpdatePosition = true;
+
+	[Tooltip("All Creature That Have Abilities Also Have An Energy 'Bar'. So Abilities Cost Energy And Have A CD (Might Remove The CD)")]
+	public bool CanIRegenEnergy = true;
+
+	[Tooltip("Can The Creature Use Its Abilities")]
+	public bool CanIUseAbilities = true;
+
+
+	public virtual ObjectNodeInfo GetObjectNodeInfo (){
+		return null;
+	}
+
+	public virtual AnimatorVariables GetAnimatorVariables (){
+		Debug.Log ("Retungnins");
+		return null;
+	}
+
+	public virtual AbilityInfo GetAbilityInfo (){
+		return null;
+	}
+
+	public virtual EnergyBar GetEnergyBar (){
+		return null;
+	}
+
+	public virtual NodeInfo GetNodeInfo (){
+		return null;
+	}
+
+	public virtual WhatToTarget GetWhatToTarget (){
+		return null;
+	}
+
+	public virtual CreatureWordCheckInfo GetCreatureWordCheckInfo (){
+		return null;
+	}
+
+	public virtual ObjectMovement GetObjectMovement (){
+		return null;
+	}
+
+
 
 }

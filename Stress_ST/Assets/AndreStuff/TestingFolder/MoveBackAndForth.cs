@@ -11,7 +11,7 @@ public class MoveBackAndForth : MonoBehaviour {
 	bool turnaround = false;
 	public float TurnAtSpeedValue = 1;
 	public float RotatingSpeed = 1;
-	Vector3 RotatingVector = Vector3.right;
+//	Vector3 RotatingVector = Vector3.right;
 	// Use this for initialization
 	void Start () {
 		

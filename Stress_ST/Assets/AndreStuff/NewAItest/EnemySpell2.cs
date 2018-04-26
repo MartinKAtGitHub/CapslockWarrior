@@ -9,11 +9,11 @@ public class EnemySpell2 : SpellRoot {
 	public LayerMask WhatToNotGoThrough;//If There Is A Wall Between The Object And The Target, Return False
 	public float DistanceToTarget = 2.0f;
 
-	public override int RunCriteriaCheck(EnemyManaging objectChecking){//This Return True If All Criteria To Start Is Met.
+	public override int RunCriteriaCheck(CreatureRoot objectChecking){//This Return True If All Criteria To Start Is Met.
 	
-		if (Vector3.Distance (objectChecking.transform.position, objectChecking.Targeting.MyMovementTarget.transform.position) < DistanceToTarget) {
-			if (Physics2D.LinecastAll (objectChecking.transform.position, objectChecking.Targeting.MyMovementTarget.transform.position, WhatToNotGoThrough).Length == 0) {
-				if(objectChecking.MyAnimatorVariables.AnimatorStage == 0)
+		if (Vector3.Distance (objectChecking.transform.position, objectChecking.GetWhatToTarget().MyMovementTarget.transform.position) < DistanceToTarget) {
+			if (Physics2D.LinecastAll (objectChecking.transform.position, objectChecking.GetWhatToTarget().MyMovementTarget.transform.position, WhatToNotGoThrough).Length == 0) {
+				if(objectChecking.GetAnimatorVariables().AnimatorStage == 0)
 					return 2;
 			}
 			return 0;

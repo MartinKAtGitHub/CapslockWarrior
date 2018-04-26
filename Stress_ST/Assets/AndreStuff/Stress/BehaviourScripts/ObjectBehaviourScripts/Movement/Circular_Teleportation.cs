@@ -5,11 +5,11 @@ using UnityEngine;
 //Designed As A CircularTeleport
 public class Circular_Teleportation : The_Default_Movement_Behaviour {
 
-	float[] _TheTime;
-	bool _Attacking = false;
+//	float[] _TheTime;
+//	bool _Attacking = false;
 
-	float _TimeStarted = 0;
-	float _ValueWhenLastUpdated = 0;
+//	float _TimeStarted = 0;
+//	float _ValueWhenLastUpdated = 0;
 
 	public int AngleMinimum = 50;
 	int currentTeleport = 0;
@@ -27,7 +27,7 @@ public class Circular_Teleportation : The_Default_Movement_Behaviour {
 
 		_TargetTransform = myTransform._TheTarget;
 
-		_TheTime = _MyObject.GetTheTime ();
+	//	_TheTime = _MyObject.GetTheTime ();
 
 	}
 
@@ -38,7 +38,7 @@ public class Circular_Teleportation : The_Default_Movement_Behaviour {
 		if (TheResetState == ResetState.ResetOnEnter) {
 			Reset ();
 		} else {
-			_TimeStarted = _TheTime [0];
+	//		_TimeStarted = _TheTime [0];
 		}
 
 		MoveDirection [0] = Vector3.zero;
@@ -76,8 +76,8 @@ public class Circular_Teleportation : The_Default_Movement_Behaviour {
 	}
 
 	public override void Reset (){
-		_TimeStarted = _TheTime [0];
-		_ValueWhenLastUpdated = 0;
+	//	_TimeStarted = _TheTime [0];
+	//	_ValueWhenLastUpdated = 0;
 
 	}
 
@@ -86,11 +86,11 @@ public class Circular_Teleportation : The_Default_Movement_Behaviour {
 		if (index == 5) {//Attack Uses This To Do The Movement. Index 5 Is Reserved For Attack Call To Movement
 			MovementRotations ();
 			return false;
-			_Attacking = true;
+		/*	_Attacking = true;
 			BehaviourUpdate ();
 			_Attacking = false;
 
-			return true;
+			return true;*/
 		}
 
 		return false;

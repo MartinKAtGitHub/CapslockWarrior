@@ -13,7 +13,7 @@ public class The_Default_Bullet : MonoBehaviour {
 		_Shooter = MySender;
 	}
 
-	public virtual void SetMethod (EnemyManaging manager){
+	public virtual void SetMethod (CreatureRoot manager){
 
 	}
 

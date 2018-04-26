@@ -6,11 +6,9 @@ public class Time_Passed_Since_Enter : The_Default_Exit_Behaviour {
 
 	public float TimePassed = 1;
 	float StartTime = 0;
-	ClockTest MyTime;
 
 
 	public override void SetMethod (The_Object_Behaviour myTransform){
-		MyTime = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<ClockTest> ();
 	
 	}
 

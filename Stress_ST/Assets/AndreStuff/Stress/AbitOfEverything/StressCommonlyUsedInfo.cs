@@ -52,3 +52,17 @@ public class StressCommonlyUsedInfo {
 	}
 
 }
+
+
+[System.Serializable]
+public struct TheAbility{
+
+	public SpellRoot SpellInfo;
+	public The_Default_Bullet SpellRef;
+	public float SpellCD;
+	public Vector3 SpawnPosition;
+	public int AbilityCost;
+	public float[] SpellVariables;
+	public float SpellCurrentCD;
+
+}

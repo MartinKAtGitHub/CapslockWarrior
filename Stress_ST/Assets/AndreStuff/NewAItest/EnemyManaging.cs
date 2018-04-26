@@ -9,6 +9,8 @@ using UnityEngine;
 //* Change Player And Enemy, To Teams. Then We Can Make It So That Spells Dont Hit My Team But Everything Else. 
 //* And If Something Is Confused/Mindcontrolled Then We Can Simply Change Its State To Frendly To Red Team And So On 
 
+
+//This Class Is Formed With The Needs Of The Object In Mind. A Bunker Cannot Move And Therefore Dont Need MovementLogic. 
 public class EnemyManaging : CreatureRoot {
 
 	public ObjectNodeInfo Node;
@@ -25,20 +27,7 @@ public class EnemyManaging : CreatureRoot {
 
 	public ObjectMovement MyMovement;
 
-	[Tooltip("This Dissables Everything Related To Creature AI/Behaviour/Logic.")]
-	public bool DissableForScenario = false;
 
-	[Tooltip("Dissables Movement If False. (Including A* Search")]
-	public bool CanIDoMovement = true;
-
-	[Tooltip("Update Node Position, Every Single Frame. Always Runs If True (Used For Testing Mainly Atm)")]
-	public bool UpdatePosition = true;
-
-	[Tooltip("All Creature That Have Abilities Also Have An Energy 'Bar'. So Abilities Cost Energy And Have A CD (Might Remove The CD)")]
-	public bool CanIRegenEnergy = true;
-
-	[Tooltip("Can The Creature Use Its Abilities")]
-	public bool CanIUseAbilities = true;
 
 	[HideInInspector]
 	public Vector3 targetPoint = Vector3.zero;
@@ -47,15 +36,12 @@ public class EnemyManaging : CreatureRoot {
 	float StunImmunity = 0;
 
 	void Awake(){//Just Setting Stuff Here So That We Dont Have To Drag And Drop So Much In The Inspector
-		MyEnergyBar.MyManager = this;
-		MyAbilityInfo.MyManager = this;
-	    CreatureWords.myManager = this;
+		MyEnergyBar.myVariables = this;
+		MyAbilityInfo.myVariables = this;
+		CreatureWords.myVariables = this;
 		_MyRigidbody = GetComponent<Rigidbody2D> ();
 
-		MyMovement.CheckVariables1 = MyAnimatorVariables;
-		MyMovement.CheckVariables2 = Targeting;
-		MyMovement.CheckVariables3 = MyNodeInfo;
-		MyMovement.CheckVariables4 = Node;
+		MyMovement.Setup (this);
 	}
 
 	void Start(){
@@ -125,13 +111,88 @@ public class EnemyManaging : CreatureRoot {
 	
 	}
 
-	public override void VelocityChange (float moveValue, Vector3 goDirection){
+	public override void VelocityChange (float velocityPower){
+
+		velocityPushback = true;
+
+
 		if (StunImmunity <= ClockTest.TheTimes) {
 			StunImmunity = ClockTest.TheTimes + 1;
 			velocityPushback = true;
-			_MyRigidbody.velocity = goDirection.normalized * moveValue;
+	//		_MyRigidbody.velocity = goDirection.normalized * moveValue;
 		}
 	}
+
+
+
+
+
+
+
+	//Cuz Different Creature Need Different Things, Then This Makes It Work
+	//Calling Method From Child -> Override To Get From Parent (Other Script Logic. (Basic Use Of Virtual))
+
+	public override ObjectNodeInfo GetObjectNodeInfo (){
+		return Node;
+	}
+
+	public override AnimatorVariables GetAnimatorVariables (){
+		return MyAnimatorVariables;
+	}
+
+	public override AbilityInfo GetAbilityInfo (){
+		return MyAbilityInfo;
+	}
+
+	public override EnergyBar GetEnergyBar (){
+		return MyEnergyBar;
+	}
+
+	public override NodeInfo GetNodeInfo (){
+		return MyNodeInfo;
+	}
+
+	public override WhatToTarget GetWhatToTarget (){
+		return Targeting;
+	}
+
+	public override CreatureWordCheckInfo GetCreatureWordCheckInfo (){
+		return CreatureWords;
+	}
+
+	public override ObjectMovement GetObjectMovement (){
+		return MyMovement;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	void OnDrawGizmosSelected(){
@@ -141,7 +202,7 @@ public class EnemyManaging : CreatureRoot {
 
 			if (s != null && s.NodeSearchedThrough == true) {
 				Gizmos.color = new Color (100,100,100, 0.5f);
-				Gizmos.DrawSphere (new Vector3((Node.MyCollisionInfo.XNode + (s.PosX - 39)) * StressCommonlyUsedInfo.DistanceBetweenNodes, (Node.MyCollisionInfo.YNode + (s.PosY - 39)) * StressCommonlyUsedInfo.DistanceBetweenNodes, 0), 0.025f);
+				Gizmos.DrawSphere (new Vector3((Node.MyCollisionInfo.XNode + (s.PosX - ((StressCommonlyUsedInfo.NodesWidth - 1) / 2))) * StressCommonlyUsedInfo.DistanceBetweenNodes, (Node.MyCollisionInfo.YNode + (s.PosY - ((StressCommonlyUsedInfo.NodesWidth - 1) / 2))) * StressCommonlyUsedInfo.DistanceBetweenNodes, 0), 0.025f);
 			}
 
 		}
@@ -150,7 +211,7 @@ public class EnemyManaging : CreatureRoot {
 
 			if (s != null && s.NodeSearchedThrough == true) {
 				Gizmos.color = new Color (1, 0, 0, 0.5f);
-				Gizmos.DrawSphere (new Vector3((Node.MyCollisionInfo.XNode + (s.PosX - 39)) * StressCommonlyUsedInfo.DistanceBetweenNodes, (Node.MyCollisionInfo.YNode + (s.PosY - 39)) * StressCommonlyUsedInfo.DistanceBetweenNodes, 0), 0.025f);
+				Gizmos.DrawSphere (new Vector3((Node.MyCollisionInfo.XNode + (s.PosX - ((StressCommonlyUsedInfo.NodesWidth - 1) / 2))) * StressCommonlyUsedInfo.DistanceBetweenNodes, (Node.MyCollisionInfo.YNode + (s.PosY - ((StressCommonlyUsedInfo.NodesWidth - 1) / 2))) * StressCommonlyUsedInfo.DistanceBetweenNodes, 0), 0.025f);
 			}
 
 		}
@@ -159,7 +220,7 @@ public class EnemyManaging : CreatureRoot {
 
 			if (s != null && s.NodeSearchedThrough == true) {
 				Gizmos.color = new Color (255,255,255, 0.5f);
-				Gizmos.DrawSphere (new Vector3((Node.MyCollisionInfo.XNode + (s.PosX - 39)) * StressCommonlyUsedInfo.DistanceBetweenNodes, (Node.MyCollisionInfo.YNode + (s.PosY - 39)) * StressCommonlyUsedInfo.DistanceBetweenNodes, 0), 0.025f);
+				Gizmos.DrawSphere (new Vector3((Node.MyCollisionInfo.XNode + (s.PosX - ((StressCommonlyUsedInfo.NodesWidth - 1) / 2))) * StressCommonlyUsedInfo.DistanceBetweenNodes, (Node.MyCollisionInfo.YNode + (s.PosY - ((StressCommonlyUsedInfo.NodesWidth - 1) / 2))) * StressCommonlyUsedInfo.DistanceBetweenNodes, 0), 0.025f);
 			}
 
 		}

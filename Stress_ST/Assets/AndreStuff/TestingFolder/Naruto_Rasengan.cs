@@ -8,8 +8,8 @@ public class Naruto_Rasengan : The_Default_Bullet {
 
 	public Animator MyAnimator;
 
-	bool ChangeToExplotion = false;
-	Vector3 _Direction = Vector3.zero;
+//	bool ChangeToExplotion = false;
+//	Vector3 _Direction = Vector3.zero;
 
 	public float MovementSpeed = 1;
 	public float DistanceToTravel = 5;
@@ -18,10 +18,10 @@ public class Naruto_Rasengan : The_Default_Bullet {
 
 	public GameObject Ball;
 	public GameObject Explotion;
-	Vector3 Target  = Vector3.zero;
+//	Vector3 Target  = Vector3.zero;
 	public CircleCollider2D MyCollider;
 
-	float thetime = 0;
+//	float thetime = 0;
 	public float AoeRadius = 0.5f;
 	public float MoveSpeed = 1;
 

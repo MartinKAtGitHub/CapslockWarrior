@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TheWordChecker : MonoBehaviour {
 
-	EnemyManaging MyManager;
+	CreatureWordCheckInfo myVariables;
 	KeyValuePair<GameObject, KeyValuePair<Color, string[]>> _LongestPlayer;
 	KeyValuePair<GameObject, KeyValuePair<Color, string[]>> _2ndLongestPlayer;
 
@@ -18,40 +18,39 @@ public class TheWordChecker : MonoBehaviour {
 	List<bool> PlayersTypedCorrect = new List<bool>();
 	int _WordLengths = 0;
 	int NullCheck = 0;
-	bool IgnoreTyping = false;
 
 	public Color32 FreeCharacterColor;
 
 
-	public void SetupFirstWord(EnemyManaging val){
+	public void SetupFirstWord(CreatureRoot val){
 
 		_ObjectHealth = ListOfWords.GetRandomWords ((int)val.Stats.WordDifficulty);
 		_OriginalWord = _ObjectHealth;
 
-		val.CreatureWords.TextElement.text = _ObjectHealth;
+		val.GetCreatureWordCheckInfo().TextElement.text = _ObjectHealth;
 
 	}
 
 
-	public void CompareStart(KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  InputString, EnemyManaging val){//Is Called When The Player Types Something 
+	public void CompareStart(KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  InputString, CreatureRoot val){//Is Called When The Player Types Something 
 		
-			MyManager = val;
+		myVariables = val.GetCreatureWordCheckInfo ();
 
-			if (!MyManager.CreatureWords._Players.Contains (InputString)) {//Adding New Players To The List
-				MyManager.CreatureWords._Players.Add (InputString);
+		if (!myVariables._Players.Contains (InputString)) {//Adding New Players To The List
+			myVariables._Players.Add (InputString);
 				PlayersTypedCorrect.Add (true);
 			}
 
-			for (int i = 0; i < MyManager.CreatureWords._Players.Count; i++) {//Checking If The InputString/CurrentPlayer Is Corrent And Need Update
-				if (MyManager.CreatureWords._Players [i].Key == InputString.Key) {
-					_WordLengths = MyManager.CreatureWords._Players [i].Value.Value [0].Length;
+		for (int i = 0; i < myVariables._Players.Count; i++) {//Checking If The InputString/CurrentPlayer Is Corrent And Need Update
+			if (myVariables._Players [i].Key == InputString.Key) {
+				_WordLengths = myVariables._Players [i].Value.Value [0].Length;
 
 					if (_WordLengths > _ObjectHealth.Length) {
 						_WordLengths = _ObjectHealth.Length;
 					}
 
 					for (int j = (_WordLengths - 1); j >= 0; j--) {
-						if (MyManager.CreatureWords._Players [i].Value.Value [0] [j] != _ObjectHealth [j]) {
+					if (myVariables._Players [i].Value.Value [0] [j] != _ObjectHealth [j]) {
 							PlayersTypedCorrect [i] = false;
 							break;
 						}
@@ -59,29 +58,29 @@ public class TheWordChecker : MonoBehaviour {
 							PlayersTypedCorrect [i] = true;
 							if (_WordLengths == _ObjectHealth.Length) {
 
-								if (MyManager.Stats.Health > 0) {
-									MyManager.Stats.Health--;
+							if (val.Stats.Health > 0) {
+								val.Stats.Health--;
 
 
 
 
-									MyManager.CreatureWords._Players [i].Key.GetComponent<PlayerManager> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
-									MyManager.CreatureWords._Players [i].Key.GetComponent<PlayerManager> ().ResetWord ();//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+								myVariables._Players [i].Key.GetComponent<PlayerManager> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+								myVariables._Players [i].Key.GetComponent<PlayerManager> ().ResetWord ();//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
 
-									_ObjectHealth = ListOfWords.GetRandomWords ((int)MyManager.Stats.WordDifficulty);
+								_ObjectHealth = ListOfWords.GetRandomWords ((int)val.Stats.WordDifficulty);
 									_OriginalWord = _ObjectHealth;
 
-									MyManager.CreatureWords.TextElement.text = "";//Removing Text So That I Can Add It Again With New Colors
+								myVariables.TextElement.text = "";//Removing Text So That I Can Add It Again With New Colors
 									ColorValue = FreeCharacterColor.r.ToString ("X2") + FreeCharacterColor.g.ToString ("X2") + FreeCharacterColor.b.ToString ("X2") + FreeCharacterColor.a.ToString ("X2");
 
 									for (int k = 0; k < _ObjectHealth.Length; k++) {
-										MyManager.CreatureWords.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [k]);
+									myVariables.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [k]);
 									}
 
 									return;
 								} else {
-									MyManager.CreatureWords._Players [i].Key.GetComponent<PlayerManager> ().ResetWord ();//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
-									MyManager.CreatureWords._Players [i].Key.GetComponent<PlayerManager> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+								myVariables._Players [i].Key.GetComponent<PlayerManager> ().ResetWord ();//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
+								myVariables._Players [i].Key.GetComponent<PlayerManager> ().GotTheKill (_OriginalWord.Length);//Giving The Player That Wrote The Last Word The Score  //TODO Give Each Player Tagged Score?
 
 									//TheCreature.OnDestroyed ();TODO Destroy/SendDestroy Request
 								}
@@ -96,18 +95,18 @@ public class TheWordChecker : MonoBehaviour {
 			_WordLengths = 0;
 			NullCheck = 0;
 
-			for (int i = 0; i < MyManager.CreatureWords._Players.Count; i++) {//Iterating Through Once To Find The Two Players That Have Typed The Most. If Two Are The Same The The One That Tagged It Is The Leader
+		for (int i = 0; i < myVariables._Players.Count; i++) {//Iterating Through Once To Find The Two Players That Have Typed The Most. If Two Are The Same The The One That Tagged It Is The Leader
 				if (PlayersTypedCorrect [i] == true) {
-					if (MyManager.CreatureWords._Players [i].Value.Value [0].Length > _WordLengths) {
+				if (myVariables._Players [i].Value.Value [0].Length > _WordLengths) {
 						_2ndLongestPlayer = _LongestPlayer;
-						_LongestPlayer = MyManager.CreatureWords._Players [i];
+					_LongestPlayer = myVariables._Players [i];
 						NullCheck++;
 					}
 				}
 			}
 
 			_WordsToRemove = 0;
-			MyManager.CreatureWords.TextElement.text = "";//Removing Text So That I Can Add It Again With New Colors
+		myVariables.TextElement.text = "";//Removing Text So That I Can Add It Again With New Colors
 
 			if (NullCheck > 1) {//Adding 2nd Place Player Color
 				_WordLengths = _2ndLongestPlayer.Value.Value [0].Length;//Length Of Player Word
@@ -116,7 +115,7 @@ public class TheWordChecker : MonoBehaviour {
 
 				for (int i = 0; i < _WordLengths; i++) {//Iterates Through And Adds The Letter Again But With Different Color
 					_WordsToRemove++;
-					MyManager.CreatureWords.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);
+				myVariables.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);
 				} 
 			}
 
@@ -127,14 +126,14 @@ public class TheWordChecker : MonoBehaviour {
 
 				for (int i = _WordsToRemove; i < _WordLengths; i++) {
 					_WordsToRemove++;
-					MyManager.CreatureWords.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);
+				myVariables.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);
 				} 
 			}
 
 			ColorValue = FreeCharacterColor.r.ToString ("X2") + FreeCharacterColor.g.ToString ("X2") + FreeCharacterColor.b.ToString ("X2") + FreeCharacterColor.a.ToString ("X2");
 
 			for (int i = _WordsToRemove; i < _ObjectHealth.Length; i++) {
-				MyManager.CreatureWords.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);
+			myVariables.TextElement.text += string.Format ("<color=#" + ColorValue + ">{0}</color>", _ObjectHealth [i]);
 			}
 		}
 

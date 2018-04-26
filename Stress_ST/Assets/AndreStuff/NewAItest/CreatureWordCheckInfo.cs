@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class CreatureWordCheckInfo {
 
 	[HideInInspector]
-	public EnemyManaging myManager;
+	public CreatureRoot myVariables;
 	public Text TextElement;//Showing Text Health
 	public HealthBackShower HealthShower;
 	public TheWordChecker WordChecker;
@@ -19,11 +19,11 @@ public class CreatureWordCheckInfo {
 
 	public void Setup(){
 		TypingEvents.OnCompareStart += CompareStart;
-		WordChecker.SetupFirstWord (myManager);
+		WordChecker.SetupFirstWord (myVariables);
 	}
 
 	void CompareStart(KeyValuePair<GameObject, KeyValuePair<Color, string[]>>  InputString){//Is Called When The Player Types Something 
-		WordChecker.CompareStart(InputString,myManager);
+		WordChecker.CompareStart(InputString,myVariables);
 	}
 
 }

@@ -16,10 +16,10 @@ public class EnemySpell1 : SpellRoot {//If Within Distance To The Target, Return
 
 	public float DistanceToTarget = 0.15f;
 
-	public override int RunCriteriaCheck(EnemyManaging objectChecking){//This Return 'True' (Which Is AnimatorState Number) If All Criteria To Start Is Met.
+	public override int RunCriteriaCheck(CreatureRoot objectChecking){//This Return 'True' (Which Is AnimatorState Number) If All Criteria To Start Is Met.
 
-		if (Vector3.Distance (objectChecking.transform.position, objectChecking.Targeting.MyMovementTarget.transform.position) < DistanceToTarget) {
-			if (objectChecking.MyAnimatorVariables.AnimatorStage == 0) {
+		if (Vector3.Distance (objectChecking.transform.position, objectChecking.GetWhatToTarget().MyMovementTarget.transform.position) < DistanceToTarget) {
+			if (objectChecking.GetAnimatorVariables().AnimatorStage == 0) {
 				return 1;
 			} else {
 				return 0;

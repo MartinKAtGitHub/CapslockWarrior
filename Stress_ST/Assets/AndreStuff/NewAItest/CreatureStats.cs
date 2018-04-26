@@ -19,7 +19,19 @@ public class CreatureStats {
 	public int EnergyRegeneration = 1;
 	public float Speed = 1f;
 	public float Range = 1;
+
+	/// <summary>
+	/// Velocity Resistence Is A Precentage Of The Dmg/PushBack Value.
+	/// </summary>
 	public float VelocityResist = 0.25f;
+	/// <summary>
+	/// Velocity Absorb Is The Rest Of The Dmg/PushBack After Resistance Is Calculated And Subtracted Of That Value.
+	/// </summary>
+	public float VelocityAbsorb = 1;//Used For Creatures With High Resist To Nullify Low PushBack Abilities
+
+	public float PhysicalResistence = 1;
+
+
 /*	[Space(25)]
 	[Header("Attack")]//Maybe Just Physical And Magical. But Since The Player Have Those 4 Elements Then It Might Work
 	public float Earth = 1;
@@ -35,5 +47,11 @@ public class CreatureStats {
 	public float WaterResistence = 1;
 	public float FireResistence = 1;
 	public float PhysicalResistence = 1;*/
+
+	public bool TotalImmunity = false;//For Scinematics And Stuff
+
+
+	public bool HealthImmunity = false;//??
+	public bool VelocityImmunity = false;//??
 
 }

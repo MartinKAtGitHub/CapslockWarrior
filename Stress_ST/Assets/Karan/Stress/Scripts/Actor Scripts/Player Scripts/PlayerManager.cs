@@ -157,7 +157,7 @@ public class PlayerManager : CreatureRoot {
 	}
 
 
-	public override void TookDmg(float damage) // TODO Matf.Clamp the HP
+	public override void TookDmg(int damage) // TODO Matf.Clamp the HP
 	{
 		//Debug.Log(gameObject.name + " Recived = " + damage);
 
@@ -235,7 +235,11 @@ public class PlayerManager : CreatureRoot {
 		GetComponent<PlayerTyping> ().ResetTheText ();
 	}
 
-	public override void VelocityChange (float moveValue, Vector3 goDirection){
+	public override void VelocityChange (float moveValue){
+	
+		//Do Some Player Spesific Stuff If You Want
+
+
 		//base.VelocityChange (moveValue, goDirection);//Isnt Used, Base Is Empty
 		/*if (StunImmunity <= ClockTest.TheTimes) {
 			StunImmunity = ClockTest.TheTimes + 1;
@@ -243,6 +247,6 @@ public class PlayerManager : CreatureRoot {
 			_MyRigidbody.velocity = goDirection.normalized * moveValue;
 		}*/
 		//GetComponent<PlayerController>().canPlayerMove = false;
-		GetComponent<Rigidbody2D>().velocity = goDirection.normalized * moveValue;
+	//	GetComponent<Rigidbody2D>().velocity = goDirection.normalized * moveValue;
 	}
 }

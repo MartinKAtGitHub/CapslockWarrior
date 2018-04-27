@@ -10,9 +10,11 @@ public abstract class ScriptedEvent : MonoBehaviour
 	public abstract IEnumerator ScriptedEventScene();
 
 	public delegate void OnScriptedEventEndDelegate();//TODO ScriptedEvent OnScriptedEventEndEvent sould be a Action or func
-	public OnScriptedEventEndDelegate OnScriptedEventEndEvent;
+	public /*event*/ OnScriptedEventEndDelegate OnScriptedEventEndEvent;
 
-	public virtual void AreComponentActiv(GameObject actorGameObject, bool status) // Can this be protected ?
+
+	//TODO In cut scene i just turn off all Componants(scripts), only igoring types maybe a better way
+	protected virtual void AreComponentActiv(GameObject actorGameObject, bool status) // Can this be protected ?
 	{
 		foreach (MonoBehaviour Scripts in actorGameObject.GetComponents<MonoBehaviour>()) 
 		{
@@ -26,9 +28,25 @@ public abstract class ScriptedEvent : MonoBehaviour
 			Scripts.enabled = status;
 		}
 	}
+	//TODO In cut scene i just turn off all GOs, only igoring string "GFX" maybe a better way
+	protected virtual void AreChildeGameObjectsActiv(GameObject actorGameObject, bool status, string ignore)
+	{
+		foreach (Transform Child in actorGameObject.transform) 
+		{
+			
+			// If you ever need to turn of all but specific component ps: might not find componant
+			if(Child.gameObject.name != "GFX") 
+			{
+				Child.gameObject.SetActive(status);
+			}
+		
+			//Child.gameObject.SetActive(status);
+		}
+	}
 
 	public virtual void StartScriptedEvent()
 	{
+		Debug.Log("Starting Intro cutscene");
 		StartCoroutine(ScriptedEventScene());
 	}
 

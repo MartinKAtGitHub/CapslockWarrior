@@ -33,14 +33,18 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 
 	public override bool ScriptedEventEnd{get;set;}
 
-
-
 	/*
 	public GameObject PlayerSpawnPoint;
 	public GameObject ActorSpawnPoint;
 	public GameObject PlayerTargetPos;
 	public Transform CamTargetPos;
 	*/
+
+	void Start()
+	{
+		SetInitalRefs();
+		LevelManager_Master.instance.StartScriptedEvent.AddListener(StartScriptedEvent);
+	}
 
 	void FixedUpdate()
 	{
@@ -53,21 +57,14 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		playerReady = false;
 		ScriptedEventEnd = false;
 		//levelManagerMaster = GetComponent<LevelManager_Master>(); // TODO make LevelManager Static ?
-
-		player = GameManager_Master.instance.PlayerObject; // FindTag(Player1) // levelManagerMaster.player
-		playerRigBdy = player.GetComponent<Rigidbody2D>();
-		playerAnimator = player.GetComponentInChildren<Animator>();
 		//playerController = player.GetComponent<PlayerController>();
-
 		levelIntroAnimator.gameObject.SetActive(false);
-
 		/*
 		OldMan.SetActive(true);
 		OldMan.transform.SetParent(player.transform);
 		OldMan.transform.localPosition = OldManPosFromPlayer;
 		*/
 		//IntroCam.GetComponent<CameraSmoothMotion>().enabled = false;
-
 		StartRun = false;
 	}
 
@@ -75,6 +72,8 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	{
 		//Debug.Log("Scripted event Started....");
 		AreComponentActiv(player, false);
+		AreChildeGameObjectsActiv(player, false ,"GFX");
+
 		StartRun = true;
 		yield return new WaitForSeconds(1f);
 
@@ -82,14 +81,14 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		yield return new WaitUntil(IsPlayerReady);
 
 		EndintroBox();
+
+		yield return new WaitForSeconds((levelIntroAnimator.GetCurrentAnimatorClipInfo(0).Length + 1f));
 		AreComponentActiv(player, true);
-		//yield return new WaitForSeconds(2f);
+		AreChildeGameObjectsActiv(player, true ,"GFX");
 
 		ScriptedEventEnd = true;
-		OnScriptedEventEndEvent();
-		//levelManagerMaster.StartSpawner();
-
-		//Debug.Log("Scripted event END SYSTEM.GO");
+		LevelManager_Master.instance.OnIntroEventEnd.Invoke();
+		LevelManager_Master.instance.OnIntroEventEnd.RemoveListener(EndintroBox);
 	}
 
 	private void MoveActorToPositionVelocity(GameObject actor, Transform target, Animator animation, string runAnimName)
@@ -153,6 +152,25 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	public void SetPlayerReady()
 	{
 		playerReady = true;
+	}
+
+	void OnDisable()
+	{
+		LevelManager_Master.instance.StartScriptedEvent.RemoveListener(StartScriptedEvent);      
+    }
+
+	public override void StartScriptedEvent()
+	{
+		GetPlayerDataForCutscene();
+		Debug.Log("Starting Intro cutscene");
+		StartCoroutine(ScriptedEventScene());
+	}
+
+	private void GetPlayerDataForCutscene()
+	{
+		player = GameManager_Master.instance.PlayerObject; // FindTag(Player1) // levelManagerMaster.player
+		playerRigBdy = player.GetComponent<Rigidbody2D>();
+		playerAnimator = player.GetComponentInChildren<Animator>();
 	}
 }
 

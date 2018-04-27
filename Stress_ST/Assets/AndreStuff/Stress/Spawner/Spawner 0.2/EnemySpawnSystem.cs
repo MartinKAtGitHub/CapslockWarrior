@@ -22,12 +22,9 @@ public class EnemySpawnSystem : MonoBehaviour {
 		for (int i = 0; i < EnemyWaves.Length; i++) 
 		{
 			EnemyWaves[i].InitWave();
-
-		/*	for (int j = 0; j < EnemyWaves[i].enemyWaveOrder.Count; j++) 
-			{
-				Debug.Log("<color=red>" + EnemyWaves[i].enemyWaveOrder[j].name + "</color>");
-			}*/
 		}
+
+		LevelManager_Master.instance.EnableSpawnSystem.AddListener(StartSpawner);
 	}
 
 
@@ -35,6 +32,7 @@ public class EnemySpawnSystem : MonoBehaviour {
 	{
 		StartCoroutine(SpawnWaves());
 	}
+
 	public IEnumerator SpawnWaves()
 	{
 		for (int i = 0; i < EnemyWaves.Length; i++) 

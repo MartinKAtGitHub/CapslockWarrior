@@ -31,11 +31,12 @@ public class EnemySpell3 : SpellRoot {
 	public override int RunCriteriaCheck(CreatureRoot objectChecking){//This Return True If All Criteria To Start Is Met. TODO Setup The New Collision System
 
 
-		if (objectChecking.GetAnimatorVariables ().AnimatorStage == AnimatorStateCheck) {
+		if (objectChecking.GetAnimatorVariables ().AnimatorStage == AnimatorStateCheck) {//If The Animator Have Reached The Correct Point Then This Is False
 			return 0;
 		
 		} else {
 
+			//Searching If There Is A Free Spot On A Rng Based Rotation.
 
 			foundIt = false;
 
@@ -45,24 +46,32 @@ public class EnemySpell3 : SpellRoot {
 
 				if (hitted.Length == 0) {//Didnt Hit Anything
 					foundIt = true;
-					objectChecking.transform.position = objectChecking.GetWhatToTarget ().MyMovementTarget.transform.position + test;
+					test = objectChecking.GetWhatToTarget ().MyMovementTarget.transform.position + test;
 					i = rngtries;
 				} 
 
 			}
 
-			if (foundIt == false) {//If It Still Is busy/taken Then Search Through Another Time And Go As Close To The Target As Possible
+			if (foundIt == false) {//If There Were No Free Location To Teleport To, Do 1 More And Then If Still False, Force Teleport As Close To The Target As Possible
 				test = (Quaternion.Euler (0, 0, Random.Range (1, rngtries + 1) * Random.Range (0, 90)) * (Vector3.right * TeleportDistance));
 				hitted = Physics2D.LinecastAll (objectChecking.GetWhatToTarget ().MyMovementTarget.transform.position + test, objectChecking.GetWhatToTarget ().MyMovementTarget.transform.position, WhatNotToHit);
 
 				if (hitted.Length > 0) {//Hit Something
 					hitted = Physics2D.LinecastAll (objectChecking.GetWhatToTarget ().MyMovementTarget.transform.position, (Vector3)hitted [hitted.Length - 1].point, WhatNotToHit);
-					objectChecking.transform.position = (Vector3)(hitted [0].point) - (test.normalized * 0.05f);
+					test = (Vector3)(hitted [0].point) - (test.normalized * 0.05f);
 				} else {//Didnt Hit Anything
-					objectChecking.transform.position = objectChecking.GetWhatToTarget ().MyMovementTarget.transform.position + test;
+					test = objectChecking.GetWhatToTarget ().MyMovementTarget.transform.position + test;
 				}
+
 			}
 	
+			//Then A Check Needs To Be Made If The Ground Is Walkable Or Not, A Cliff Edge Or A Sea Of Magma ETC..
+			if (objectChecking.GetNodeInfo ().MyAStar._WalkCost.ValidPositions (objectChecking.GetNodeInfo ().MyAStar._WalkCost.GetXPos(Mathf.RoundToInt( test.x / StressCommonlyUsedInfo.DistanceBetweenNodes)), objectChecking.GetNodeInfo ().MyAStar._WalkCost.GetYPos(Mathf.RoundToInt(test.y / StressCommonlyUsedInfo.DistanceBetweenNodes))) == false)
+				return 0;
+		//	if (objectChecking.GetNodeInfo ().MyAStar._WalkCost.ValidPositions (objectChecking.GetObjectNodeInfo ().MyCollisionInfo.XNode, objectChecking.GetObjectNodeInfo ().MyCollisionInfo.YNode) == false)
+		//		return 0;
+
+			//If A Spot Was Found, 
 
 		
 			/*

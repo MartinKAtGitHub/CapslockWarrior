@@ -45,8 +45,11 @@ public class Skra_HeadButt_Spell : The_Default_Bullet {
 	float vectorPower = 0;
 
 	void FixedUpdate(){//If I Hit Something I Do A Pushback On Everything Within (CircleRadius * 2.5f) 
-
+		if (_MyObject == null)
+			Destroy (this.gameObject);
+		
 		if (Collided == false) {
+			
 			if (_TimeToComplete > ClockTest.TheTimes) {
 		
 				_ObjectHit = Physics2D.CircleCastAll (transform.position, test [0].SpellVariables [1], Vector2.zero, 1, WhatCanIHit);//If Collided

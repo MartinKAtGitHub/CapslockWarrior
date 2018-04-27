@@ -42,7 +42,9 @@ public class Mouly_Spike_Grouped : The_Default_Bullet {
 
 
 	void FixedUpdate(){
-	
+		if (_MyObject == null)//When Shooting Object Dies, Destroy This Object
+			Destroy (this.gameObject);
+		
 		if (TargetClose == false) {
 
 			if (Vector3.Distance (transform.position, _MyObject.GetWhatToTarget().MyMovementTarget.transform.position) < test [0].SpellVariables [4]) {

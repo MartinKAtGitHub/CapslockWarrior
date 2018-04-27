@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 
@@ -8,72 +9,82 @@ public class LevelManager_Master : MonoBehaviour {
 
 	public Transform PlayerSpawnPosition;
 
+
 	[SerializeField]private GameObject player;
-	[SerializeField]private EnemySpawnSystem Spawner;
+	//[SerializeField]private EnemySpawnSystem Spawner;
 
-	[SerializeField]private GameObject introBackground;
-	[SerializeField]private Text introLevelText;
-	[SerializeField]private Text introFluffText;
+	//[SerializeField]private GameObject introBackground;
+	//[SerializeField]private GameObject introPnl;
+	//[SerializeField]private Text introLevelText;
+	//[SerializeField]private Text introFluffText;
 
-	[SerializeField]private ScriptedEvent LevelScriptedEvent;
+	//[SerializeField]private ScriptedEvent LevelScriptedEvent;
+
+	//TODO ask what is best To connect events in the inspector or through code
+	[HideInInspector]public UnityEvent OnIntroEventEnd;
+	[HideInInspector]public UnityEvent StartScriptedEvent;
+	[HideInInspector]public UnityEvent EnableSpawnSystem;
+
+	//public Animator introAnimator;
+
+	public static LevelManager_Master instance = null;
 
 	void Awake() // Called even if the GM is disabeld
 	{
-		
+		SingeltonCheck();	
+		OnIntroEventEnd.AddListener(StartSpawner);
 	}
 
 	void Start () // calling logic at start of game, only activ if activ
 	{
-		initializeLevel(); // Set up refs
-		//GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
 		StartLevel();
-
 	}
+
+	// Dont think we need singelton check for this, Its is NOT DontDestroyOnLoad
+	private void SingeltonCheck() // TODO check if LevelManager_master script Singelton is correctly
+	{
+		if(instance == null)
+		{
+			Debug.Log("LM is NULL");
+			instance = this;
+		}
+		else if(instance != this)
+		{
+			Debug.LogError("LM Duplicate, destroying ");
+			Destroy(gameObject);
+		}
+	}
+
+
+	#region LevelManager OLD
 
 	public void StartSpawner()
 	{
-		Debug.Log("Spawner Enabled");
-		Spawner.StartSpawner(); // Invoke(Spawner.StartSpawner(), Delay);
-		LevelScriptedEvent.OnScriptedEventEndEvent -= StartSpawner;
+		//OnIntroEventEnd.RemoveListener(StartSpawner);
+		//EnableSpawnSystem.RemoveAllListeners();
+		EnableSpawnSystem.Invoke();
 	}
-
-
-
 
 	#region LevelManager_ScriptedEventsManager
 		// TODO make a new script to handle all the ScriptedEvents
 	public void StartLevel()
 	{
-		// StartCutscene
-	
-		LevelScriptedEvent.StartScriptedEvent(); // TODO make sure Cutscene works on all Resolution, spawnpoint out of can view
-		LevelScriptedEvent.OnScriptedEventEndEvent += StartSpawner;
-		// SpawnPlayer
-	}
-
-	private void initializeLevel()
-	{
-		FindObjectsWithTag();
-
+		Debug.Log("Starting Level....");
 		GameManager_Master.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
-		if(LevelScriptedEvent == null)
-		{
-			LevelScriptedEvent = GetComponent<ScriptedEvent>();
-		}
-
-		LevelScriptedEvent.SetInitalRefs();
-
-		//Debug.Log("initialize Level...");
+		StartScriptedEvent.Invoke(); // TODO make sure Cutscene works on all Resolution, spawnpoint out of can view
+		StartScriptedEvent.RemoveAllListeners();
 	}
+
+
 	#endregion
 
-
-	private void FindObjectsWithTag()
+	void OnDisable() // PERFORMANCE do we need LevelManger events RemoveAllListeners() OnDisble 
 	{
-		// TODO Add stuff you need to find with Tag / findtypeoff.
-		// Spawner
-		// UI ?
-		// 
-		//Debug.Log("Trying to find stuff with TAG");
+		Debug.Log("Level Man Disabled");
+		OnIntroEventEnd.RemoveAllListeners();
+		StartScriptedEvent.RemoveAllListeners();
+		EnableSpawnSystem.RemoveAllListeners();
 	}
+
+	#endregion
 }

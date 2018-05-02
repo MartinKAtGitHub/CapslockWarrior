@@ -6,7 +6,7 @@ public abstract class ScriptedEvent : MonoBehaviour
 {
 	public abstract bool ScriptedEventEnd{get;set;}
 	// Maybe make this justa regualr class, these things dont need to be public but all SScenes will need them
-	public abstract void  SetInitalRefs();
+	protected abstract void  SetInitalRefs();
 	public abstract IEnumerator ScriptedEventScene();
 
 	public delegate void OnScriptedEventEndDelegate();//TODO ScriptedEvent OnScriptedEventEndEvent sould be a Action or func

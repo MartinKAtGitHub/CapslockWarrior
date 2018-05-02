@@ -46,6 +46,8 @@ public class EnemySpawnSystem : MonoBehaviour {
 		}
 	}
 
+	//TODO -------------- Scripteable objects, we might need to splitt the classes into own files. The Objects are beeing corrupted and not accsesable and this neste classes might be the problem. Also names need to be the same for file and object maybe
+
 	[CreateAssetMenu(menuName = "SpawnSystem/EnemyWave")]
 	public class EnemyWave : ScriptableObject // This can be merged into the spawn main system array og Groupds insted of waves.
 	{

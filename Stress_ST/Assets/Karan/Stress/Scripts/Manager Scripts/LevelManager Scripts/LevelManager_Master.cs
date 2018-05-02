@@ -10,14 +10,12 @@ public class LevelManager_Master : MonoBehaviour {
 	public Transform PlayerSpawnPosition;
 
 
-	[SerializeField]private GameObject player;
+	//[SerializeField]private GameObject player;
 	//[SerializeField]private EnemySpawnSystem Spawner;
-
 	//[SerializeField]private GameObject introBackground;
 	//[SerializeField]private GameObject introPnl;
 	//[SerializeField]private Text introLevelText;
 	//[SerializeField]private Text introFluffText;
-
 	//[SerializeField]private ScriptedEvent LevelScriptedEvent;
 
 	//TODO ask what is best To connect events in the inspector or through code

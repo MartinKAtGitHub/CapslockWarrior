@@ -40,10 +40,14 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	public Transform CamTargetPos;
 	*/
 
+	void Awake()
+	{
+		LevelManager_Master.instance.StartScriptedEvent.AddListener(StartScriptedEvent);
+	}
+
 	void Start()
 	{
 		SetInitalRefs();
-		LevelManager_Master.instance.StartScriptedEvent.AddListener(StartScriptedEvent);
 	}
 
 	void FixedUpdate()
@@ -52,7 +56,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 			MoveActorToPositionTransform(player, moveTarget, 1, playerAnimator, "Running", StartRun ); // move to Update() ?
 	}
 
-	public override void  SetInitalRefs()
+	protected override void  SetInitalRefs()
 	{
 		playerReady = false;
 		ScriptedEventEnd = false;
@@ -65,7 +69,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		OldMan.transform.localPosition = OldManPosFromPlayer;
 		*/
 		//IntroCam.GetComponent<CameraSmoothMotion>().enabled = false;
-		StartRun = false;
+		//StartRun = false; // This is buged
 	}
 
 	public override IEnumerator ScriptedEventScene() // TODO change this to scriptable object så we can swape cutscenes
@@ -73,8 +77,8 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		//Debug.Log("Scripted event Started....");
 		AreComponentActiv(player, false);
 		AreChildeGameObjectsActiv(player, false ,"GFX");
-
 		StartRun = true;
+
 		yield return new WaitForSeconds(1f);
 
 		StartIntroBox();
@@ -89,6 +93,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		ScriptedEventEnd = true;
 		LevelManager_Master.instance.OnIntroEventEnd.Invoke();
 		LevelManager_Master.instance.OnIntroEventEnd.RemoveListener(EndintroBox);
+
 	}
 
 	private void MoveActorToPositionVelocity(GameObject actor, Transform target, Animator animation, string runAnimName)
@@ -98,7 +103,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		if(distance >= 0)
 		{
 			Debug.Log("Start Running anim");
-			playerRigBdy.velocity = new Vector2 (1 * animSpeed, 0 * animSpeed);
+			//playerRigBdy.velocity = new Vector2 (1 * animSpeed, 0 * animSpeed);
 			animation.SetBool(runAnimName, true);
 		}
 		else
@@ -162,8 +167,8 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	public override void StartScriptedEvent()
 	{
 		GetPlayerDataForCutscene();
-		Debug.Log("Starting Intro cutscene");
 		StartCoroutine(ScriptedEventScene());
+		Debug.Log("Starting Intro cutscene");
 	}
 
 	private void GetPlayerDataForCutscene()

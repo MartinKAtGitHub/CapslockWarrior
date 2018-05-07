@@ -5,16 +5,16 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
+
 public class LevelManager_Master : MonoBehaviour {
 
 	public Transform PlayerSpawnPosition;
-
+	public GameObject PlayerCam;
 
 	//[SerializeField]private GameObject player;
 	//[SerializeField]private EnemySpawnSystem Spawner;
 	//[SerializeField]private GameObject introBackground;
 	//[SerializeField]private GameObject introPnl;
-	//[SerializeField]private Text introLevelText;
 	//[SerializeField]private Text introFluffText;
 	//[SerializeField]private ScriptedEvent LevelScriptedEvent;
 
@@ -23,7 +23,6 @@ public class LevelManager_Master : MonoBehaviour {
 	[HideInInspector]public UnityEvent StartScriptedEvent;
 	[HideInInspector]public UnityEvent EnableSpawnSystem;
 
-	//public Animator introAnimator;
 
 	public static LevelManager_Master instance = null;
 
@@ -36,6 +35,7 @@ public class LevelManager_Master : MonoBehaviour {
 	void Start () // calling logic at start of game, only activ if activ
 	{
 		StartLevel();
+		SpawnPlayerCam();
 	}
 
 	// Dont think we need singelton check for this, Its is NOT DontDestroyOnLoad
@@ -53,9 +53,6 @@ public class LevelManager_Master : MonoBehaviour {
 		}
 	}
 
-
-	#region LevelManager OLD
-
 	public void StartSpawner()
 	{
 		//OnIntroEventEnd.RemoveListener(StartSpawner);
@@ -64,7 +61,7 @@ public class LevelManager_Master : MonoBehaviour {
 	}
 
 	#region LevelManager_ScriptedEventsManager
-		// TODO make a new script to handle all the ScriptedEvents
+		// TODO make a new script to handle all the ScriptedEvents <---- i forgot what this is :P
 	public void StartLevel()
 	{
 		Debug.Log("Starting Level....");
@@ -76,6 +73,14 @@ public class LevelManager_Master : MonoBehaviour {
 
 	#endregion
 
+	private void SpawnPlayerCam()
+	{
+		Vector3 orgin = Vector3.zero;
+		PlayerCam = (GameObject)Instantiate(PlayerCam, orgin , Quaternion.identity);
+		PlayerCam.GetComponent<CameraSmoothMotion>().SetPlayer = GameManager_Master.instance.PlayerObject.transform;
+		PlayerCam.SetActive(false);
+	}
+
 	void OnDisable() // PERFORMANCE do we need LevelManger events RemoveAllListeners() OnDisble 
 	{
 		Debug.Log("Level Man Disabled");
@@ -83,6 +88,4 @@ public class LevelManager_Master : MonoBehaviour {
 		StartScriptedEvent.RemoveAllListeners();
 		EnableSpawnSystem.RemoveAllListeners();
 	}
-
-	#endregion
 }

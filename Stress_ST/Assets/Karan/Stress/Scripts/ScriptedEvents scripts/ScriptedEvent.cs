@@ -9,6 +9,7 @@ public abstract class ScriptedEvent : MonoBehaviour
 	protected abstract void  SetInitalRefs();
 	public abstract IEnumerator ScriptedEventScene();
 
+
 	public delegate void OnScriptedEventEndDelegate();//TODO ScriptedEvent OnScriptedEventEndEvent sould be a Action or func
 	public /*event*/ OnScriptedEventEndDelegate OnScriptedEventEndEvent;
 

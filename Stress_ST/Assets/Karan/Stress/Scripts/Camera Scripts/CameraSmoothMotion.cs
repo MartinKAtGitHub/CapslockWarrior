@@ -8,6 +8,13 @@ public class CameraSmoothMotion : MonoBehaviour {
 	[SerializeField] private Vector2 mapSize;// i can create logic to automate finding the map size my doing (imgSize in pixels / pixel per units) -> 2000/100  // = 20 / 2 = 10(rigth) | 10* -1(left);
 	[SerializeField] private Vector3 limitCamAt;
 
+	public Transform SetPlayer
+	{
+		set
+		{
+			player = value;
+		}
+	}
 
 	void OnEnable()
 	{
@@ -15,15 +22,14 @@ public class CameraSmoothMotion : MonoBehaviour {
 
 		if(player == null)
 		{
-			Debug.LogError("Can not Find Player To TRACK.....");
+			player = GameObject.FindGameObjectWithTag("Player1").transform;
+			if(player == null)
+			{
+				Debug.LogWarning("Cam cant find a player to track");
+			}
 		}
 	}
 
-	/*void Start () 
-	{
-
-	}
-	*/
 	// Update is called once per frame
 	void Update () 
 	{

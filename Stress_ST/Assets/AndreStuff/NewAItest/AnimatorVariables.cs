@@ -63,6 +63,7 @@ public class AnimatorVariables : MonoBehaviour {
 	}
 
 	public void ShootBullet(The_Default_Bullet s){
+		Debug.Log (myVariables);
 		(Instantiate (s, transform.position, Quaternion.identity)).SetMethod(myVariables);
 	}
 

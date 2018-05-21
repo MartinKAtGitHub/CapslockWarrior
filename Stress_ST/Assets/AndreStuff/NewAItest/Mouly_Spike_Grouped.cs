@@ -22,7 +22,8 @@ public class Mouly_Spike_Grouped : The_Default_Bullet {
 	public The_Default_Bullet MoulySpikes;
 
 	public override void SetMethod (CreatureRoot manager){
-		
+
+
 		_MyObject = manager;
 		transform.parent = _MyObject.transform.Find("GFX");
 
@@ -42,8 +43,8 @@ public class Mouly_Spike_Grouped : The_Default_Bullet {
 
 
 	void FixedUpdate(){
-		if (_MyObject == null)//When Shooting Object Dies, Destroy This Object
-			Destroy (this.gameObject);
+	//	if (_MyObject == null)//When Shooting Object Dies, Destroy This Object
+	//		Destroy (this.gameObject);
 		
 		if (TargetClose == false) {
 

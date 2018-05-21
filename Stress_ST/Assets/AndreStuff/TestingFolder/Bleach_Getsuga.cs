@@ -142,10 +142,11 @@ public class Bleach_Getsuga : The_Default_Bullet {
 			_Direction.z = _Direction.z * -1.0f;
 		}  
 		transform.rotation = Quaternion.Euler (_Direction);
+	
 		theTime = _Shooter.TheTime [0];
 		Particleeffect.GetComponent<MoveForwardFast> ().starting = true;
-		activeTime += _Shooter.TheTime [0];*/
-
+		activeTime += _Shooter.TheTime [0];
+		Particleeffect.GetComponent<MoveForwardFast> ().EndPoint = ShootingVector;*/
 	/*	hitted = Physics2D.LinecastAll (transform.position, (Vector2)transform.position + (Vector2.right * 5), WhatNotToHit);
 		for(int i = 0; i < hitted.Length; i++)
 			Debug.Log ("wall" + hitted[i].point);
@@ -164,12 +165,11 @@ public class Bleach_Getsuga : The_Default_Bullet {
 
 		for(int i = 0; i < hitted.Length; i++)
 			Debug.Log ("object" + hitted[i].point);*/
-		startpos = transform.position;
 
-		//TODO Set Rotation From TargetVector And My Spawning Vector
 
-		ShootingVector = Vector3.zero - transform.position;//Vector from My Position To The Target
 
+
+	/*	ShootingVector = targetposiiont.position - transform.position;//This Is The Vector That The Ability Is Going To Have. This Is Updated Through The Animator->Animation->"Event"
 		if (ShootingVector.y < 0) {
 			_Directions.z = 180 + Vector3.Angle (Vector3.left, ShootingVector);
 		}  else{
@@ -177,10 +177,69 @@ public class Bleach_Getsuga : The_Default_Bullet {
 		}
 
 		transform.eulerAngles = _Directions;
+		hitted = Physics2D.LinecastAll (transform.position, (Vector2)(((ShootingVector - transform.position).normalized * attackDistance) + transform.position), StopOnHit);
+
+		if (hitted.Length > 0) {
+			Debug.Log ("wall here or after so stop at that point");
+			ShootingVector = hitted [0].transform.position - transform.position; 
+		//	attackDistance = Vector3.Distance (hitted [0].transform.position - transform.position, Vector3.zero);
+		} else {
+			ShootingVector = ShootingVector.normalized * attackDistance;
+		}
+
+		//Doing The BoxCast To Find The Point Where The Ability Need To Stop
+		//	hitted = Physics2D.BoxCastAll (transform.position + (((Quaternion.AngleAxis (transform.eulerAngles.z, Vector3.forward) * Vector3.right).normalized * attackDistance) / 2),
+		//		new Vector2(Vector3.Distance ((((Quaternion.AngleAxis (transform.eulerAngles.z, Vector3.forward) * Vector3.right).normalized * attackDistance)), 
+		//			Vector3.zero), YDimention), transform.eulerAngles.z, Vector3.zero , 1, StopOnHit);
+
+		effect = Particleeffect.GetComponent<MoveForwardFast> ();
+		effect.EndPoint = ShootingVector;
+		effect.starting = true;
+		effect.gameObject.SetActive (true);
+
+		hitted = Physics2D.BoxCastAll (transform.position + (ShootingVector / 2), new Vector2(Vector3.Distance (Vector3.zero, ShootingVector), YDimention), transform.eulerAngles.z, Vector3.zero , 1, WhatNotToHit);
+
+
+		*/
+
+
+		ShootingVector = targetposiiont.position - transform.position;//This Is The Vector That The Ability Is Going To Have. This Is Updated Through The Animator->Animation->"Event"
+
+
+		if (ShootingVector.y < 0) {
+			_Directions.z = 180 + Vector3.Angle (Vector3.left, ShootingVector);
+		} else {
+			_Directions.z = Vector3.Angle (Vector3.right, ShootingVector);
+		}
+
+		transform.eulerAngles = _Directions;
+		hitted = Physics2D.LinecastAll (transform.position, (Vector2)(((ShootingVector - transform.position).normalized * attackDistance) + transform.position), StopOnHit);
+
+		if (hitted.Length > 0) {
+			Debug.Log ("wall here or after so stop at that point");
+			ShootingVector = (Vector3)hitted [0].point - transform.position; 
+		} else {
+			Debug.Log ("hit nothing");
+			ShootingVector = ShootingVector.normalized * attackDistance;
+		}
+
+		hitted = Physics2D.BoxCastAll (transform.position + (ShootingVector / 2), new Vector2 (Vector3.Distance (Vector3.zero, ShootingVector), YDimention), transform.eulerAngles.z, Vector3.zero, 1, WhatNotToHit);
+
+		if (hitted.Length > 0) {
+			for (int i = 0; i < hitted.Length; i++) {
+				Debug.Log (hitted [i].transform.name);
+			}
+		}
+
+		effect = Particleeffect.GetComponent<MoveForwardFast> ();
+		effect.EndPoint = transform.position + ShootingVector;
+		effect.starting = true;
+		effect.gameObject.SetActive (true);
 
 	}
 
-	Vector3 ShootingVector = Vector3.zero;
+	MoveForwardFast effect;
+	public Vector3 ShootingVector = Vector3.zero;
 
 	Vector3 startpos = Vector3.zero;
 	Vector3 middlePos = Vector3.zero;
@@ -192,14 +251,43 @@ public class Bleach_Getsuga : The_Default_Bullet {
 
 	public Vector3 _Directions = Vector3.zero;
 
+	public float attackDistance = 1;
+
+
+	public Transform targetposiiont;
 
 	void FixedUpdate () {
 
-		hitted = Physics2D.BoxCastAll (transform.position, new Vector2(XDimention, YDimention), transform.eulerAngles.z, ShootingVector , 1, StopOnHit);
-		if(hitted.Length > 0)
-			Debug.Log (startpos + " | " +  middlePos + " | " + hitted[0].point + " § " + (new Vector2(Vector2.Distance((Vector2)startpos, hitted[0].point), YDimention)));
+		if (effect.starting == true) {
+		/*	ShootingVector = targetposiiont.position - transform.position;//This Is The Vector That The Ability Is Going To Have. This Is Updated Through The Animator->Animation->"Event"
+			if (ShootingVector.y < 0) {
+				_Directions.z = 180 + Vector3.Angle (Vector3.left, ShootingVector);
+			} else {
+				_Directions.z = Vector3.Angle (Vector3.right, ShootingVector);
+			}
 
+			transform.eulerAngles = _Directions;
+			hitted = Physics2D.LinecastAll (transform.position, (Vector2)(((ShootingVector - transform.position).normalized * attackDistance) + transform.position), StopOnHit);
 	
+			if (hitted.Length > 0) {
+				ShootingVector = (Vector3)hitted [0].point - transform.position; 
+			} else {
+				ShootingVector = ShootingVector.normalized * attackDistance;
+			}
+			
+			hitted = Physics2D.BoxCastAll (transform.position + (ShootingVector / 2), new Vector2 (Vector3.Distance (Vector3.zero, ShootingVector), YDimention), transform.eulerAngles.z, Vector3.zero, 1, WhatNotToHit);
+
+			if (hitted.Length > 0) {
+				for (int i = 0; i < hitted.Length; i++) {
+					Debug.Log (hitted [i].transform.name);
+				}
+			}*/
+
+		} else {
+			Destroy (this.gameObject);
+		}
+
+
 		//		transform.localPosition = Quaternion.Euler (0, transform.parent.rotation.y, transform.parent.rotation.z) * test [0].SpawnPosition;//Setting The Start Location
 		
 		

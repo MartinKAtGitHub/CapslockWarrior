@@ -10,6 +10,9 @@ using UnityEngine;
 //* And If Something Is Confused/Mindcontrolled Then We Can Simply Change Its State To Frendly To Red Team And So On 
 
 
+//unityacitons test; test = ping;
+//https://docs.unity3d.com/ScriptReference/Events.UnityEvent_1.html
+
 //This Class Is Formed With The Needs Of The Object In Mind. A Bunker Cannot Move And Therefore Dont Need MovementLogic. 
 public class EnemyManaging : CreatureRoot {
 
@@ -39,6 +42,7 @@ public class EnemyManaging : CreatureRoot {
 		MyEnergyBar.myVariables = this;
 		MyAbilityInfo.myVariables = this;
 		CreatureWords.myVariables = this;
+		MyAnimatorVariables.myVariables = this;
 		_MyRigidbody = GetComponent<Rigidbody2D> ();
 
 		MyMovement.Setup (this);
@@ -52,6 +56,7 @@ public class EnemyManaging : CreatureRoot {
 
 		CreatureWords.Setup();
 
+	
 	}
 
 

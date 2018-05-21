@@ -8,16 +8,41 @@ public class MoveForwardFast : MonoBehaviour {
 	public float TravelSpeed = 1;
 
 //	float traveled = 0;
-	Vector3 startpoint = Vector3.zero;
+	public 	Vector3 startpoint = Vector3.zero;
 	public bool starting = false;
 	public bool StartParticle = false;
 
+	public Vector3 EndPoint = Vector3.zero;
+
 	void Start(){
-		startpoint = transform.position;
+//		startpoint = transform.position;
+//		startpoint = (EndPoint - transform.position).normalized * Time.deltaTime * TravelSpeed;
+	//	EndPoint = EndPoint - transform.position;
 	}
 //	int a = 0;
 	// Update is called once per frame
 	void Update () {
+
+		if (starting == true) {
+			if (StartParticle == false) {
+		//		EndPoint = transform.position - EndPoint;
+				startpoint = (EndPoint - transform.position).normalized * TravelSpeed;
+				StartParticle = true;
+				GetComponent<ParticleSystem> ().Play ();
+			}
+			Debug.Log (Vector3.Distance (transform.position, transform.position + (startpoint * Time.deltaTime)) + " | " + Vector3.Distance (transform.position, EndPoint));
+			if (Vector3.Distance (transform.position, transform.position + startpoint) > Vector3.Distance (transform.position, EndPoint)) {
+				Debug.Log ("TRUE");
+				transform.position = EndPoint;
+				GetComponent<ParticleSystem> ().Stop();
+			//	starting = false;
+			} else {
+				transform.position += startpoint * Time.deltaTime;
+			}
+
+		}
+
+	/*	transform.position += Vector3.MoveTowards (transform.position, EndPoint);
 
 		if (starting == true) {
 			if (StartParticle == false) {
@@ -45,7 +70,7 @@ public class MoveForwardFast : MonoBehaviour {
 					transform.position = startpoint;
 				}
 			}
-		}
+		}*/
 
 
 	}

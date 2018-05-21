@@ -232,7 +232,7 @@ public class PlayerManager : CreatureRoot {
 	public void ResetWord()
 	{
 		//Debug.Log ("Score " + a);
-		GetComponent<PlayerTyping> ().ResetTheText ();
+//		GetComponent<PlayerTyping> ().ResetTheText ();
 	}
 
 	public override void VelocityChange (float moveValue){

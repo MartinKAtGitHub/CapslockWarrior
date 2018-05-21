@@ -24,9 +24,9 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	private bool StartCamPan;
 
 	[SerializeField]
-	private float animSpeed;
+	private float animSpeed = 0;
 	[SerializeField]
-	private float camPanSpeed;
+	private float camPanSpeed = 0;
 
 	/// <summary>
 	/// This whole scene was made without PixelPerfect script And 1920/1080 (16:9) res. Cam size is 2.7
@@ -40,7 +40,6 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	{
 		
 		RefSetup();
-
 		StartCoroutine(Cutscene());
 	}
 
@@ -117,7 +116,7 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	{
 		if(StartCamPan)
 		{
-			IntroCam.transform.position = Vector3.Lerp(IntroCam.transform.position, CamTargetPos.position, camPanSpeed * Time.deltaTime);
+			IntroCam.transform.position = Vector3.Lerp(IntroCam.transform.position, CamTargetPos.position, camPanSpeed * Time.deltaTime); // Can be animated
 		}
 	}
 

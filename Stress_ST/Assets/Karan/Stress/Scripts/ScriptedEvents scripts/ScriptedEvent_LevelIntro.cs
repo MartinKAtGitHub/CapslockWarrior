@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ScriptedEvent_LevelIntro : ScriptedEvent 
 {
+	public Vector3 OldManPosFromPlayer;
+	public DialogueManager DManager;
 
+	public override bool ScriptedEventEnd{get;set;}
 	//[SerializeField] private LevelManager_Master levelManagerMaster;
-
 	private GameObject player;
 	private Animator playerAnimator;
-
 
 	[SerializeField]private Animator levelIntroAnimator;
 	[SerializeField]private Transform moveTarget;
@@ -17,7 +18,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 
 	private Rigidbody2D playerRigBdy;
 	private GameObject OldMan;
-	private GameObject IntroCam;
+	[SerializeField] private GameObject IntroCam;
 
 	[SerializeField] private bool playerReady;
 	[SerializeField] private bool StartRun;
@@ -28,10 +29,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	[SerializeField]
 	private float camPanSpeed;
 
-	public Vector3 OldManPosFromPlayer;
-	public DialogueManager DManager;
-
-	public override bool ScriptedEventEnd{get;set;}
+	private IEnumerator ScriptedEvent;
 
 	/*
 	public GameObject PlayerSpawnPoint;
@@ -40,9 +38,13 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	public Transform CamTargetPos;
 	*/
 
-	void Start()
+	void Awake()
 	{
 		SetInitalRefs();
+	}
+
+	void Start()
+	{
 		LevelManager_Master.instance.StartScriptedEvent.AddListener(StartScriptedEvent);
 	}
 
@@ -52,8 +54,9 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 			MoveActorToPositionTransform(player, moveTarget, 1, playerAnimator, "Running", StartRun ); // move to Update() ?
 	}
 
-	public override void  SetInitalRefs()
+	protected override void  SetInitalRefs()
 	{
+		ScriptedEvent = ScriptedEventScene();
 		playerReady = false;
 		ScriptedEventEnd = false;
 		//levelManagerMaster = GetComponent<LevelManager_Master>(); // TODO make LevelManager Static ?
@@ -65,7 +68,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		OldMan.transform.localPosition = OldManPosFromPlayer;
 		*/
 		//IntroCam.GetComponent<CameraSmoothMotion>().enabled = false;
-		StartRun = false;
+		//StartRun = false; // This is buged
 	}
 
 	public override IEnumerator ScriptedEventScene() // TODO change this to scriptable object så we can swape cutscenes
@@ -73,8 +76,8 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		//Debug.Log("Scripted event Started....");
 		AreComponentActiv(player, false);
 		AreChildeGameObjectsActiv(player, false ,"GFX");
-
 		StartRun = true;
+
 		yield return new WaitForSeconds(1f);
 
 		StartIntroBox();
@@ -86,9 +89,13 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		AreComponentActiv(player, true);
 		AreChildeGameObjectsActiv(player, true ,"GFX");
 
+		IntroCam.SetActive(false);
+		LevelManager_Master.instance.PlayerCam.SetActive(true);
+
 		ScriptedEventEnd = true;
 		LevelManager_Master.instance.OnIntroEventEnd.Invoke();
 		LevelManager_Master.instance.OnIntroEventEnd.RemoveListener(EndintroBox);
+
 	}
 
 	private void MoveActorToPositionVelocity(GameObject actor, Transform target, Animator animation, string runAnimName)
@@ -98,7 +105,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		if(distance >= 0)
 		{
 			Debug.Log("Start Running anim");
-			playerRigBdy.velocity = new Vector2 (1 * animSpeed, 0 * animSpeed);
+			//playerRigBdy.velocity = new Vector2 (1 * animSpeed, 0 * animSpeed);
 			animation.SetBool(runAnimName, true);
 		}
 		else
@@ -110,6 +117,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		}
 	}
 
+	//TODO Insted of coding and cutscene animation, why not just animate it 
 	//TODO Actor might not have a animator, So i dont know if i sould start the animation here or let the event handle it
 	private void MoveActorToPositionTransform(GameObject actor, Transform target, float speed, Animator animation, string runAnimName, bool isMoving) //TODO ADD SKIP LOGIC TO CUTSCENE
 	{
@@ -162,8 +170,14 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	public override void StartScriptedEvent()
 	{
 		GetPlayerDataForCutscene();
+		StartCoroutine(ScriptedEvent);
 		Debug.Log("Starting Intro cutscene");
-		StartCoroutine(ScriptedEventScene());
+	}
+
+	public override void StopScriptedEvent() // Use this to skip cutscene
+	{
+		StopCoroutine(ScriptedEvent);
+		Debug.Log("CutScene Skiped ---- What to do when you skipped ?");
 	}
 
 	private void GetPlayerDataForCutscene()

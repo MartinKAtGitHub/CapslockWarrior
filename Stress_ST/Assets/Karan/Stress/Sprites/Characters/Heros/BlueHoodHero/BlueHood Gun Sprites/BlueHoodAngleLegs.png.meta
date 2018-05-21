@@ -1,12 +1,17 @@
 fileFormatVersion: 2
-guid: e1088c5e10eafb04495871276359147b
-timeCreated: 1516038479
+guid: 7b569f010533d244bba08897492eb82b
+timeCreated: 1526489747
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Hero_MainPlayer_0
-    21300002: Hero_MainPlayer_1
-    21300004: Hero_MainPlayer_2
+    21300000: BlueHoodAngleLegs_0
+    21300002: BlueHoodAngleLegs_1
+    21300004: BlueHoodAngleLegs_2
+    21300006: BlueHoodAngleLegs_3
+    21300008: BlueHoodAngleLegs_4
+    21300010: BlueHoodAngleLegs_5
+    21300012: BlueHoodAngleLegs_6
+    21300014: BlueHoodAngleLegs_7
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -45,7 +50,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -83,11 +88,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hero_MainPlayer_0
+      name: BlueHoodAngleLegs_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -97,25 +102,95 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Hero_MainPlayer_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Hero_MainPlayer_2
+      name: BlueHoodAngleLegs_1
       rect:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BlueHoodAngleLegs_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BlueHoodAngleLegs_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BlueHoodAngleLegs_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BlueHoodAngleLegs_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BlueHoodAngleLegs_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BlueHoodAngleLegs_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
         width: 32
         height: 32
       alignment: 0

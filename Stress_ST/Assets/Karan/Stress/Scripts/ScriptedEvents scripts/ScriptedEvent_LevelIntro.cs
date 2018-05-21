@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ScriptedEvent_LevelIntro : ScriptedEvent 
 {
-
-
 	public Vector3 OldManPosFromPlayer;
 	public DialogueManager DManager;
 
@@ -30,8 +28,6 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 	private float animSpeed;
 	[SerializeField]
 	private float camPanSpeed;
-
-
 
 	private IEnumerator ScriptedEvent;
 

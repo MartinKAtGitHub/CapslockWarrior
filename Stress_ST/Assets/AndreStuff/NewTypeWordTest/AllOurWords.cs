@@ -82,7 +82,8 @@ public static class AllOurWords {
 		TheSentence.Add ("Corp");
 		return TheSentence;*/
 
-		TheSentence.Add (TTest1 [Random.Range (0, TTest1.Length)]);
+
+	/*	TheSentence.Add (TTest1 [Random.Range (0, TTest1.Length)]);
 		TheSentence.Add (TTest2 [Random.Range (0, TTest2.Length)]);
 
 		saver = TTest3 [Random.Range (0, TTest3.Length)];
@@ -94,7 +95,34 @@ public static class AllOurWords {
 		}
 		TheSentence.Add (saver);
 
-		TheSentence.Add (TTest4 [Random.Range (0, TTest4.Length)]);
+		TheSentence.Add (TTest4 [Random.Range (0, TTest4.Length)]);*/
+
+
+
+
+
+/*		TheSentence.Add ("The");
+		TheSentence.Add (nonLivingObjects [Random.Range (0, nonLivingObjects.Length)]);
+		TheSentence.Add (nonLivingBehaviour [Random.Range (0, nonLivingBehaviour.Length)]);
+		TheSentence.Add (placements [Random.Range (0, placements.Length)]);
+		TheSentence.Add ("the");
+		TheSentence.Add (nonLivingObjects [Random.Range (0, nonLivingObjects.Length)]);
+*/
+
+	
+
+	/*	TheSentence.Add ("of");
+
+		TheSentence.Add (Adjective [Random.Range (0, Adjective.Length)]);
+		TheSentence.Add (describingss [Random.Range (0, describingss.Length)]);*/
+
+
+	
+		string a = "";
+		foreach (string s in TheSentence){
+			a += s + " ";
+		}
+		Debug.Log(a);
 		return TheSentence;
 
 		if (Random.Range (0, 4) == 0) {//the bear | smelled | sinseraly | awfully | good
@@ -131,9 +159,12 @@ public static class AllOurWords {
 
 		} else {
 		
-			TheSentence.Add (Adjective [Random.Range (0, Adjective.Length)]);
-			TheSentence.Add (AdjectivePast [Random.Range (0, AdjectivePast.Length)]);
-			TheSentence.Add (Adjective [Random.Range (0, Adjective.Length)]);
+			TheSentence.Add ("The");
+			TheSentence.Add (nonLivingObjects [Random.Range (0, nonLivingObjects.Length)]);
+			TheSentence.Add (nonLivingBehaviour [Random.Range (0, nonLivingBehaviour.Length)]);
+			TheSentence.Add (placements [Random.Range (0, placements.Length)]);
+			TheSentence.Add ("the");
+			TheSentence.Add (nonLivingObjects [Random.Range (0, nonLivingObjects.Length)]);
 
 		}
 
@@ -142,14 +173,361 @@ public static class AllOurWords {
 	//	return "The " + TheObjects [Random.Range (0, TheObjects.Length)] + " " + RelativePronoun [Random.Range (0, RelativePronoun.Length)] + " " + PersonName [Random.Range (0, PersonName.Length)] 
 //			    + " " + Verbs2 [Random.Range (0, Verbs2.Length)] + ", " + CorrelativeConjunctions [placement] + " " + Verbs [Random.Range (0, Verbs.Length)] + " " + CorrelativeConjunctions [placement + 1] + " " + Verbs [Random.Range (0, Verbs.Length)];
 	}
+		
+
+
+	static string[] helpingVerbs = new string[] {
+		"be",
+		"am",
+		"is",
+		"are",
+		"was",
+		"were",
+		"been",
+		"being",
+		"have",
+		"has",
+		"had",
+		"could",
+		"should",
+		"would",
+		"may",
+		"might",
+		"must",
+		"shall",
+		"can",
+		"will",
+		"do",
+		"did",
+		"does",
+		"having",
+	};
+
+		static string[] actionVerbs = new string[] {
+		"clean",
+		"drive",
+		"eat",
+		"fly",
+		"go",
+		"live",
+		"make",
+		"play",
+		"read",
+		"run",
+		"shower",
+		"sleep",
+		"smile",
+		"stop",
+	};
+
+
+	static string[] subjects = new string[] {
+		"pierre",
+		"the class",
+		"the paste",
+		"the salad",
+		"the milk",
+		"the school",
+		"the milk",
+		"olaf",
+		"the table",
+		"Mr smith",
+		"my son",
+		"uncle tom",
+	};
+
+		static string[] transitiveActiveVerb = new string[] {//
+		"bring",
+		"send",
+		"owe",
+		"contain",	
+		"buy",
+		"show",
+		"take",
+		"tell",	
+		"verify",
+		"check",
+		"get",
+		"wash",
+	};
+
+		static string[] linkingVerbs = new string[] {//
+		"appear",
+		"become",
+		"feel",
+		"grow",	
+		"look",
+		"seem",
+		"remain",
+		"smell",	
+		"sound",
+		"stay",
+		"taste",
+		"turn",
+	};
+
+		static string[] linkingVerbsToBe = new string[] {//
+		"be",
+		"am",
+		"is",
+		"are",	
+		"was",
+		"were",
+		"been",
+		"being",	
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	static string[] nonLivingObjects = new string[] {
+		"train",
+		"floor",
+		"roof",
+		"wall",
+		"tree",
+		"lamp",
+		"tent",
+		"ball",
+		"achelousaurus",
+		"alamosaurus",
+		"ammosaurus",
+		"wamble",
+		"glabella",
+		"lunule",
+		"ferrule",
+		"lemniscate",
+		"car",
+		"blanket",
+		"mountain",
+		"Mamihlapinatapai",
+		"Gynecomastia",
+	};
+
+		static string[] livingObjects = new string[] {
+		"man",
+		"woman",
+		"kid",
+		"dog",
+		"cat",
+		"dragon",
+		"lizard",
+		"bacteria",
+		"insect",
+		"bird",
+		"achelousaurus",
+		"alamosaurus",
+		"ammosaurus",
+	};
+
+	static string[] nonLivingBehaviour = new string[] {
+		"fell",
+		"levitated",
+		"flew",
+		"dissapeared",
+		"rolled",
+		"spinned",
+		"exploded",
+		"vanished",
+		"desintegrated",
+		"grew",
+		"lay",
+	};
+
+
+	static string[] livingBehaviour = new string[] {
+		"ran",
+		"walked",
+		"cycled",
+		"drove",
+		"lied",
+		"slept",
+		"woke",
+		"ate",
+		"thought",
+		"whispered",
+		"yelled",
+		"pointed",
+		"talked",
+		"scratched",
+	};
+
+
+
+
+	static string[] placements = new string[] {
+		"onto",
+		"into",
+		"over",
+		"under",
+		"beside",
+		"between",
+		"behind",
+		/*	"to the right of",
+		"to the left of",
+		"far from",
+		"in front of",
+		"on top of",
+		"close to",
+		"next to",*/
+	};
+
+	static string[] helpingVerbs1 = new string[]{
+		"is",
+		"was",
+	};
+
+	static string[] helpingVerbs2 = new string[]{
+		"are",
+		"were",
+		"do",
+		"did",
+	};
+
+
+	static string[] helpingVerbPerson = new string[]{
+		"has",
+	};
+	static string[] helpingVerbPersons = new string[]{
+		"have",
+	};
+
+	static string[] helpingVerbs3 = new string[]{
+		"has",
+		"have",
+	};
+
+	static string[] helpingVerbs3v1 = new string[]{
+		"been",
+		"had",
+	};
+
+
+	static string[] helpingVerbslast = new string[]{
+		"could",
+		"should",
+		"would",
+		"may",
+		"might",
+		"must",
+		"shall",
+		"can",
+		"will",
+		"do",
+		"did",
+		"does",
+	};
+
+	static string[] helpingVerbs4 = new string[]{
+		"is",
+		"was",
+
+		"are",
+		"were",
+
+
+		"being",
+		"having",
+
+	
+	};
+
+	static string[] helpingVerbs5= new string[]{
+		"is",
+		"was",
+		"has",
+
+		"have",
+		"are",
+		"were",
+
+		"had",
+		"do",
+		"did",
+
+
+		"be",
+		"been",
+		"being",
+		"could",
+		"should",
+		"would",
+		"may",
+		"might",
+		"must",
+		"shall",
+		"can",
+		"will",
+		"does",
+		"having",
+
+	};
+
+
+
+
+
+
+
+
+	static string[] describingss = new string[] {
+		"Aitgas",
+		"Alcoa",
+		"Americo",
+		"Broadwing",
+		"Centex",
+		"Unity",
+		"Apple",
+		"HTC",
+		"Comerica",
+		"Cooper",
+		"Earthlink",
+		"Edison",
+	};
+
+	static string[] describings = new string[] {
+		"CEO",
+		"janitor",
+		"worker",
+		"VIP guest",
+		"VIP",
+		"host",
+		"employee",
+		"doctor",
+		"shoplifter"
+	};
 
 	static string[] TTest1 = new string[] {
-		"Vita",
-		"Coop",
-		"StarWars",
-		"DDC designs",
-		"Clank blanks CCS",
-		"ZQP foods",
+		"system",
+		"stabilizer",
+		"liquid",
+		"fire",
+		"nerve",
+		"production",
+		"concern",
+		"issue",
+		"conduct",
+		"stocks",
+		"appartment",
+		"property",
+		"concept",
+		"court",
+		"vain",
+		"coast",
 	};
 
 	static string[] TTest2 = new string[] {

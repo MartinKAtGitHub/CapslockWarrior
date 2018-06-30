@@ -17,7 +17,6 @@ public class DialogueManager : MonoBehaviour { // maybe make this static/ single
 	{
 		Sentences = new Queue<string>();
 		//isDialogueEnd = false; // dose not create null error
-
 	}
 
 	public void StartDialogue(Dialogue dialogue)
@@ -41,9 +40,7 @@ public class DialogueManager : MonoBehaviour { // maybe make this static/ single
 	{
 		if(Sentences.Count == 0)
 		{
-
 			EndDialogue();
-
 			return;
 		}
 

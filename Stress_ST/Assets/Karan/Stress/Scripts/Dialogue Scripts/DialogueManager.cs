@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour { // maybe make this static/ single
 	{
 		Sentences = new Queue<string>();
 		//isDialogueEnd = false; // dose not create null error
+
 	}
 
 	public void StartDialogue(Dialogue dialogue)

@@ -40,9 +40,7 @@ public class DialogueManager : MonoBehaviour { // maybe make this static/ single
 	{
 		if(Sentences.Count == 0)
 		{
-
 			EndDialogue();
-
 			return;
 		}
 

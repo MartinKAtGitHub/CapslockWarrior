@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
  
-public class AutoType : MonoBehaviour {
+public class TypeWriterEffect : MonoBehaviour {
  
 	public float letterPause = 0.2f;
 	public AudioClip sound;

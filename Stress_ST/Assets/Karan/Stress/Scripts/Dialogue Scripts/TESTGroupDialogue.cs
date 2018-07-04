@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class TESTGroupDialogue : MonoBehaviour
 {
 
+    public GameObject TESTPNL;
+
+
     public string PlayerTag;
     public float TypeingEffectSpeed;
     [Space(10)]
@@ -18,18 +21,20 @@ public class TESTGroupDialogue : MonoBehaviour
     private List<GameObject> ActiveTextBoxElement;
 
 
-    private List<GameObject> TEXTBOXQUEUE;
+    //private List<GameObject> activeTextBoxElements;
     private bool inDialogue;
 
     private int index;
+    private Vector3 WorldTextPos;
+    private GameObject textBoxClone;
 
     [SerializeField] private float TxtBoxOffset = 10;
     [SerializeField] private Camera MainCam;
 
     void Start()
     {
-      
-        TEXTBOXQUEUE = new List<GameObject>();
+        
+        //activeTextBoxElements = new List<GameObject>();
 
         for (int i = 0; i < NPCObjects.Count; i++)
         {
@@ -47,7 +52,8 @@ public class TESTGroupDialogue : MonoBehaviour
 
     void Update()
     {
-
+        //CenterTextBoxOverNPC();
+        CenterPANEL();
     }
 
     private void CreateTextBoxElements() 
@@ -82,41 +88,35 @@ public class TESTGroupDialogue : MonoBehaviour
     {
         for (int i = 0; i < NPCObjects.Count; i++)
         {
-            var textPos = MainCam.WorldToScreenPoint(NPCObjects[i].NPCOPosition.position);
-           // textPos.y += offset;
-           // textPos.y += NPCGroup[i].Textoffset;
+            WorldTextPos = MainCam.WorldToScreenPoint(NPCObjects[i].NPCOPosition.position);
+            // textPos.y += offset;
+            // textPos.y += NPCGroup[i].Textoffset;
+
+            textBoxClone.transform.position = WorldTextPos;
+
+            for (int j = 0; j < NPCObjects[i].activeTextBoxElements.Count; j++)
+            {
+                // activeTextBoxElements[j].transform.position = new Vector3(textPos.x + activeTextBoxElements[j].transform.position.x, textPos.y + activeTextBoxElements[j].transform.position.y, 0);
+                NPCObjects[i].activeTextBoxElements[j].transform.position = new Vector3(WorldTextPos.x, WorldTextPos.y, 0);
+            }
 
             // textPos.y = NPCGroup[i].Textoffset;
             //For loop all boxes
-           // NPCObjects[i].TextObject.transform.position = textPos;
+            // NPCObjects[i].TextObject.transform.position = textPos;
         }
     }
 
-    IEnumerator TypeWriterEffect(string sentence)
+    private void CenterPANEL()
     {
-        /*
-        //DialogueText.text = "";
-        TextBoxElements[index].text = string.Empty;
-
-        foreach (char letter in sentence.ToCharArray())
-        {
-            TextBoxElements[index].text += letter;
-            // play typing sound
-
-            yield return new WaitForSeconds(TypeingEffectSpeed);
-        }
-
-        index++;*/
-
-        yield return new WaitForSeconds(TypeingEffectSpeed);
+           var PnlWorld = MainCam.WorldToScreenPoint(transform.position);
+            TESTPNL.transform.position = PnlWorld;
     }
-
-
 
     IEnumerator PlayDialogue()
     {
         var breakCounterFORINFINITLOOPLOL = 0;
 
+        var CurrentOffset = 0f;
         while (inDialogue) // maybe use range if the whisper
         {
 
@@ -131,12 +131,7 @@ public class TESTGroupDialogue : MonoBehaviour
                 Debug.Log("NO MORE NPC DIALOG ENDING LOOP");
                 inDialogue = false;
             }
-            //if (DialogEndCount == NPCObjects.Length)
-            //{
-            //    inDialogue = false;
-            //    Debug.Log("All NPC HAS NO MORE TO SAY");
-            //}
-   
+            
             for (int i = 0; i < NPCObjects.Count; i++)
             {
                 var sentence = string.Empty;
@@ -151,23 +146,37 @@ public class TESTGroupDialogue : MonoBehaviour
                 }
                 else
                 {
-                    // REMOVE THAT NPC FROM LIST ?? maybe
-                    // DialogEndCount++;
                     NPCObjects.RemoveAt(i);
-                   // Debug.Log(NPCObjects[i].NPCOPosition.gameObject.name + " = is Dont Talking REMOVED");
-                    continue;
+                    continue; // This will skip to the next cycle, since we kind of removed this cycle
                 }
 
-               
+                CurrentOffset += TxtBoxOffset;
 
-                for (int j = 0; j < TEXTBOXQUEUE.Count; j++)
-                {
-                    TEXTBOXQUEUE[j].transform.position = new Vector3(TEXTBOXQUEUE[j].transform.position.x, TEXTBOXQUEUE[j].transform.position.y + TxtBoxOffset, 0);
-                }
+                //for (int j = 0; j < NPCObjects[i].activeTextBoxElements.Count; j++)
+                //{
+                //    NPCObjects[i].activeTextBoxElements[j].transform.position = new Vector3(NPCObjects[i].activeTextBoxElements[j].transform.position.x, NPCObjects[i].activeTextBoxElements[j].transform.position.y /* + TxtBoxOffset*/, 0);
+                //    // Maybe add to Offset in here ONLY, becuse we need this to be in the update
+                //}
 
-                var textBoxClone = Instantiate(TextBoxPrefab, TextBoxParantCanvas);
-                textBoxClone.transform.position = new Vector3(textBoxClone.transform.position.x, textBoxClone.transform.position.y + TxtBoxOffset, 0);
-                var textBoxCloneText = textBoxClone.GetComponentInChildren<Text>();// TODO might be a little to much
+                //var textBoxClone = Instantiate(TextBoxPrefab, TextBoxParantCanvas);
+                //textBoxClone = Instantiate(TextBoxPrefab, TextBoxParantCanvas);
+                textBoxClone = Instantiate(TextBoxPrefab, TESTPNL.transform);
+
+                RectTransform boxTrans = textBoxClone.GetComponent<RectTransform>();
+
+                boxTrans.anchoredPosition = new Vector2(60f,12f);
+
+                // textBoxClone.transform.position = new Vector3(textBoxClone.transform.position.x, textBoxClone.transform.position.y + CurrentOffset, 0);
+
+                //textBoxClone.transform.position = new Vector3(WorldTextPos.x, WorldTextPos.y + CurrentOffset, 0);
+
+                var textBoxCloneText = textBoxClone.GetComponentInChildren<Text>(); //PERFORMANCE Look into maybe storing the text object insted of getting every loop
+
+
+                //var textPos = MainCam.WorldToScreenPoint(NPCObjects[i].NPCOPosition.position);
+                // textBoxClone.transform.position = new Vector3(textPos.x , textPos.y, 0);
+
+                
 
                 foreach (var letters in sentence)
                 {
@@ -175,11 +184,20 @@ public class TESTGroupDialogue : MonoBehaviour
                     yield return new WaitForSeconds(TypeingEffectSpeed);
                 }
 
-                TEXTBOXQUEUE.Add(textBoxClone);
+                NPCObjects[i].activeTextBoxElements.Add(textBoxClone);
 
+                yield return new WaitForSeconds(0.5f); //UNDONE HARDCODED the time after text
+
+                //for (int j = 0; j < NPCObjects.Count; j++)
+                //{
+                //    for (int k = 0; k < NPCObjects[k].activeTextBoxElements.Count; k++)
+                //    {
+
+                //    }
+                //}
             }
 
-             breakCounterFORINFINITLOOPLOL++;
+            breakCounterFORINFINITLOOPLOL++;
         }
 
         yield return null; //DO I NEED TO RETURN THIS 
@@ -203,6 +221,8 @@ public class NPCDialogueData
     public Transform NPCOPosition;
     [SerializeField] private string[] DialogueSentences;
     public Queue<string> sentences = new Queue<string>();
+    public List<GameObject> activeTextBoxElements = new List<GameObject>();
+    public bool isDialogEmpty;
 
 
     public void InitDialogueData() // PUTS the String array into the Queue

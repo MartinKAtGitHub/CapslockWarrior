@@ -16,7 +16,10 @@ public class TESTGroupDialogue : MonoBehaviour
     [Space(10)]
     public GameObject TextBoxPrefab;
 
-    [SerializeField]private Transform TextBoxParantCanvas;
+
+    [SerializeField] private float padding = 5f;
+    [SerializeField] private Transform TextBoxParantCanvas;
+
     private List<GameObject> TextBoxElementPool;
     private List<GameObject> ActiveTextBoxElement;
 
@@ -33,7 +36,7 @@ public class TESTGroupDialogue : MonoBehaviour
 
     void Start()
     {
-        
+        ActiveTextBoxElement = new List<GameObject>();
         //activeTextBoxElements = new List<GameObject>();
 
         for (int i = 0; i < NPCObjects.Count; i++)
@@ -56,7 +59,7 @@ public class TESTGroupDialogue : MonoBehaviour
         CenterPANEL();
     }
 
-    private void CreateTextBoxElements() 
+    private void CreateTextBoxElements()
     {
         for (int i = 0; i < NPCObjects.Count; i++)
         {
@@ -108,15 +111,14 @@ public class TESTGroupDialogue : MonoBehaviour
 
     private void CenterPANEL()
     {
-           var PnlWorld = MainCam.WorldToScreenPoint(transform.position);
-            TESTPNL.transform.position = PnlWorld;
+        var PnlWorld = MainCam.WorldToScreenPoint(transform.position);
+        TESTPNL.transform.position = PnlWorld;
     }
 
     IEnumerator PlayDialogue()
     {
         var breakCounterFORINFINITLOOPLOL = 0;
 
-        var CurrentOffset = 0f;
         while (inDialogue) // maybe use range if the whisper
         {
 
@@ -131,7 +133,7 @@ public class TESTGroupDialogue : MonoBehaviour
                 Debug.Log("NO MORE NPC DIALOG ENDING LOOP");
                 inDialogue = false;
             }
-            
+
             for (int i = 0; i < NPCObjects.Count; i++)
             {
                 var sentence = string.Empty;
@@ -149,52 +151,63 @@ public class TESTGroupDialogue : MonoBehaviour
                     NPCObjects.RemoveAt(i);
                     continue; // This will skip to the next cycle, since we kind of removed this cycle
                 }
+                
+                for (int j = 0; j < ActiveTextBoxElement.Count; j++)
+                {
+                    RectTransform temp = ActiveTextBoxElement[j].GetComponent<RectTransform>();
+                    temp.anchoredPosition = new Vector2(temp.anchoredPosition.x, temp.anchoredPosition.y + (TxtBoxOffset /*+ temp.rect.height*/)); // TODO Need to increase offset with Box size
+                }
 
-                CurrentOffset += TxtBoxOffset;
-
-                //for (int j = 0; j < NPCObjects[i].activeTextBoxElements.Count; j++)
-                //{
-                //    NPCObjects[i].activeTextBoxElements[j].transform.position = new Vector3(NPCObjects[i].activeTextBoxElements[j].transform.position.x, NPCObjects[i].activeTextBoxElements[j].transform.position.y /* + TxtBoxOffset*/, 0);
-                //    // Maybe add to Offset in here ONLY, becuse we need this to be in the update
-                //}
-
-                //var textBoxClone = Instantiate(TextBoxPrefab, TextBoxParantCanvas);
-                //textBoxClone = Instantiate(TextBoxPrefab, TextBoxParantCanvas);
                 textBoxClone = Instantiate(TextBoxPrefab, TESTPNL.transform);
 
+                yield return null; // I need to wait for 1 frame before i can get all the values need, Its like Start() awake() kind of problem
                 RectTransform boxTrans = textBoxClone.GetComponent<RectTransform>();
 
-                boxTrans.anchoredPosition = new Vector2(60f,12f);
 
-                // textBoxClone.transform.position = new Vector3(textBoxClone.transform.position.x, textBoxClone.transform.position.y + CurrentOffset, 0);
+                // IF(NPCObjects is LEFT then)--------------------
 
-                //textBoxClone.transform.position = new Vector3(WorldTextPos.x, WorldTextPos.y + CurrentOffset, 0);
+
+                boxTrans.anchorMin = new Vector2(0, 0.5f); // <---- this will be done in the NPC script so we can choose witch side the message will be shown
+                boxTrans.anchorMax = new Vector2(0, 0.5f); // <---- this will be done in the NPC script so we can choose witch side the message will be shown
+                
+               
+                boxTrans.anchoredPosition = new Vector2(padding + boxTrans.sizeDelta.x/2, 0f);  // boxTrans.anchoredPosition = new Vector2(60f +NPCObjects[i].PIVOT ,12f);       // ADD somthing to make it go BOT LEFT and BOT RIGHT on this line
+
+                //Else
+
+                // Flip Ancors and -1 * X-------------------------
+
 
                 var textBoxCloneText = textBoxClone.GetComponentInChildren<Text>(); //PERFORMANCE Look into maybe storing the text object insted of getting every loop
-
-
-                //var textPos = MainCam.WorldToScreenPoint(NPCObjects[i].NPCOPosition.position);
-                // textBoxClone.transform.position = new Vector3(textPos.x , textPos.y, 0);
-
-                
+                // Need to make a clone of the close TURN it OFF simulate the Text and ALLOCATE SPACE BEFORE typing OR WE DO IT ON LINE BREAKS in the for each
 
                 foreach (var letters in sentence)
                 {
+                    //Debug.Log(150 % textBoxCloneText.preferredWidth);
+
+                    if (textBoxCloneText.preferredWidth % 150 == 0) // TODO HARDCODED value textbox perfferd hight need to be added
+                    {
+                        Debug.Log("RESIZE BOX PLS");
+                    }
+                    /*
+                    if (boxTrans.rect.height > 24f) // TODO HARDCODED value textbox perfferd hight need to be added
+                    {
+                        //MAYBE JUST USE A COUNTER 
+                        Debug.Log("To BIG BOX need EXTRA resize");
+                        for (int j = 0; j < ActiveTextBoxElement.Count; j++)
+                        {
+                            RectTransform temp = ActiveTextBoxElement[j].GetComponent<RectTransform>();
+                            temp.anchoredPosition = new Vector2(temp.anchoredPosition.x, temp.anchoredPosition.y + 1f); // TODO Need to increase offset with Box size
+                        }
+                    }
+                    */
+
                     textBoxCloneText.text += letters;
                     yield return new WaitForSeconds(TypeingEffectSpeed);
                 }
-
-                NPCObjects[i].activeTextBoxElements.Add(textBoxClone);
-
+                ActiveTextBoxElement.Add(textBoxClone);
+            
                 yield return new WaitForSeconds(0.5f); //UNDONE HARDCODED the time after text
-
-                //for (int j = 0; j < NPCObjects.Count; j++)
-                //{
-                //    for (int k = 0; k < NPCObjects[k].activeTextBoxElements.Count; k++)
-                //    {
-
-                //    }
-                //}
             }
 
             breakCounterFORINFINITLOOPLOL++;

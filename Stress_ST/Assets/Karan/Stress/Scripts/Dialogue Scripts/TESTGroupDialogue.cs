@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TESTGroupDialogue : MonoBehaviour
 {
@@ -115,13 +116,48 @@ public class TESTGroupDialogue : MonoBehaviour
         TESTPNL.transform.position = PnlWorld;
     }
 
+
+
+
+    private void LOL()
+    {
+
+        int[] NPC = new int[3];
+
+        List<NPCDialogueData> NPCs = new List<NPCDialogueData>();
+
+        List<string> NPCSenteces = new List<string>();
+ 
+        // 0 Hello
+
+        // 1 hi
+
+        // 0 Whats you name
+
+        // 1 BOB
+
+
+
+
+
+        for (int i = 0; i < NPC.Length; i++)
+        {
+               // NPCs[NPCSenteces[i].Substring(0,1)]
+            
+        }
+
+    }
+
+
+
+
     IEnumerator PlayDialogue()
     {
         var breakCounterFORINFINITLOOPLOL = 0;
+        var oldPrefHight = 0f;
 
-        while (inDialogue) // maybe use range if the whisper
+        while (inDialogue) // maybe use range if the whisper ()
         {
-
             if (breakCounterFORINFINITLOOPLOL == 50)
             {
                 inDialogue = false;
@@ -132,6 +168,7 @@ public class TESTGroupDialogue : MonoBehaviour
             {
                 Debug.Log("NO MORE NPC DIALOG ENDING LOOP");
                 inDialogue = false;
+                //break;
             }
 
             for (int i = 0; i < NPCObjects.Count; i++)
@@ -165,7 +202,7 @@ public class TESTGroupDialogue : MonoBehaviour
 
 
                 // IF(NPCObjects is LEFT then)--------------------
-
+                //If(npc[i])
 
                 boxTrans.anchorMin = new Vector2(0, 0.5f); // <---- this will be done in the NPC script so we can choose witch side the message will be shown
                 boxTrans.anchorMax = new Vector2(0, 0.5f); // <---- this will be done in the NPC script so we can choose witch side the message will be shown
@@ -175,6 +212,7 @@ public class TESTGroupDialogue : MonoBehaviour
 
                 //Else
 
+                
                 // Flip Ancors and -1 * X-------------------------
 
 
@@ -183,28 +221,28 @@ public class TESTGroupDialogue : MonoBehaviour
 
                 foreach (var letters in sentence)
                 {
-                    //Debug.Log(150 % textBoxCloneText.preferredWidth);
 
-                    if (textBoxCloneText.preferredWidth % 150 == 0) // TODO HARDCODED value textbox perfferd hight need to be added
+                    textBoxCloneText.text += letters;
+                    if (textBoxCloneText.preferredHeight > oldPrefHight) // TODO HARDCODED value textbox perfferd hight need to be added
                     {
-                        Debug.Log("RESIZE BOX PLS");
-                    }
-                    /*
-                    if (boxTrans.rect.height > 24f) // TODO HARDCODED value textbox perfferd hight need to be added
-                    {
-                        //MAYBE JUST USE A COUNTER 
-                        Debug.Log("To BIG BOX need EXTRA resize");
+                       
+
                         for (int j = 0; j < ActiveTextBoxElement.Count; j++)
                         {
                             RectTransform temp = ActiveTextBoxElement[j].GetComponent<RectTransform>();
-                            temp.anchoredPosition = new Vector2(temp.anchoredPosition.x, temp.anchoredPosition.y + 1f); // TODO Need to increase offset with Box size
+                            temp.anchoredPosition = new Vector2(temp.anchoredPosition.x, temp.anchoredPosition.y + (textBoxCloneText.preferredHeight - oldPrefHight /*+ temp.rect.height*/)); // TODO Need to increase offset with Box size
+                           
                         }
-                    }
-                    */
+                        Debug.Log("RESIZE BOX PLS");
 
-                    textBoxCloneText.text += letters;
+                        oldPrefHight = textBoxCloneText.preferredHeight;
+                        
+                    }
+
+                    
                     yield return new WaitForSeconds(TypeingEffectSpeed);
                 }
+
                 ActiveTextBoxElement.Add(textBoxClone);
             
                 yield return new WaitForSeconds(0.5f); //UNDONE HARDCODED the time after text

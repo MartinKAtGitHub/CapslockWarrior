@@ -16,12 +16,12 @@ public class NPCGroupDialogue : MonoBehaviour
     [Space(5)]
     public GameObject TextBoxParentPrefab;
     public GameObject TextBoxPrefab;
+    [SerializeField] private GameObject TextBoxElementsParent;
 
     [Space(5)]
     [SerializeField] private float padding = 5f;
-    [SerializeField] private Transform TextBoxParantCanvas;
+    [SerializeField] private Transform GroupDialogueCanvas;
 
-    private GameObject TextBoxElementsParent;
     private List<GameObject> ActiveTextBoxElement;
 
     //private List<GameObject> activeTextBoxElements;
@@ -41,7 +41,11 @@ public class NPCGroupDialogue : MonoBehaviour
     {
         ActiveTextBoxElement = new List<GameObject>();
         playerInDialgueRange = false;
-        spawnTextBoxElementsParent();
+
+        NullCheckTextBoxElementsParent();
+
+        TextBoxElementsParent.SetActive(false);
+        GroupDialogueCanvas.gameObject.SetActive(false);
 
         for (int i = 0; i < NPCObjects.Count; i++)
         {
@@ -65,10 +69,14 @@ public class NPCGroupDialogue : MonoBehaviour
         TextBoxElementsParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y + 100f);
     }
 
-    private void spawnTextBoxElementsParent()
+    private void NullCheckTextBoxElementsParent()
     {
-        TextBoxElementsParent = Instantiate(TextBoxParentPrefab, TextBoxParantCanvas.transform);
-        TextBoxParantCanvas.gameObject.SetActive(false);
+        if(TextBoxElementsParent == null)
+        {
+            Debug.LogWarning("The TextBoxElementsParent_PNL is NULL spawning Pnl prefab");
+            TextBoxElementsParent = Instantiate(TextBoxParentPrefab, GroupDialogueCanvas.transform);
+
+        }
     }
 
 
@@ -107,8 +115,10 @@ public class NPCGroupDialogue : MonoBehaviour
     {
         var oldPrefHight = 0f;
 
-        TextBoxParantCanvas.gameObject.SetActive(true);
+        GroupDialogueCanvas.gameObject.SetActive(true);
+        TextBoxElementsParent.SetActive(true);
         playerInDialgueRange = true;
+       
         // PLAY PNL ANIM
         //WAITFORSEC( anim.lenght )
 

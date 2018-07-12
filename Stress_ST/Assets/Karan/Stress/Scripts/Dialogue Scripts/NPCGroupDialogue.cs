@@ -134,7 +134,7 @@ public class NPCGroupDialogue : MonoBehaviour
             for (int i = 0; i < NPCObjects.Count; i++)
             {
                 var sentence = string.Empty;
-
+               
                 if (NPCObjects[i].sentences.Count != 0)
                 {
                     sentence = NPCObjects[i].sentences.Dequeue();
@@ -148,6 +148,8 @@ public class NPCGroupDialogue : MonoBehaviour
                     NPCObjects.RemoveAt(i);
                     continue; // This will skip to the next cycle, since we kind of removed this cycle
                 }
+
+                NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, true);
                 
                 for (int j = 0; j < ActiveTextBoxElement.Count; j++)
                 {
@@ -182,26 +184,27 @@ public class NPCGroupDialogue : MonoBehaviour
 
                 //textBoxClone.SetActive(true);
 
+                oldPrefHight = 0; // RESET for every new word
                 foreach (var letters in sentence)
                 {
-
                     textBoxCloneText.text += letters;
-                    if (textBoxCloneText.preferredHeight > oldPrefHight) // TODO HARDCODED value textbox perfferd hight need to be added
-                    {
-                       
 
+                    if (textBoxCloneText.preferredHeight > oldPrefHight)
+                    {
                         for (int j = 0; j < ActiveTextBoxElement.Count; j++)
                         {
                             RectTransform temp = ActiveTextBoxElement[j].GetComponent<RectTransform>();
                             temp.anchoredPosition = new Vector2(temp.anchoredPosition.x, temp.anchoredPosition.y + (textBoxCloneText.preferredHeight - oldPrefHight /*+ temp.rect.height*/)); // TODO Need to increase offset with Box size
                            
                         }
+
                         oldPrefHight = textBoxCloneText.preferredHeight;
                     }
-                    
                     yield return new WaitForSeconds(TypeingEffectSpeed);
                 }
                 ActiveTextBoxElement.Add(textBoxClone);
+                NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, false);
+
                 yield return new WaitForSeconds(TimeToNextDialogueBox); //UNDONE HARDCODED the time after text
             }
         }
@@ -222,11 +225,16 @@ public class NPCGroupDialogue : MonoBehaviour
 public class NPCDialogueData
 {
     public Transform NPCPosition;
+    public Animator NPCAnimator;
+    [HideInInspector]public int IsTalkingAnimParameter = Animator.StringToHash("IsTalking");
+
+
     [SerializeField] private string[] DialogueSentences;
     public Queue<string> sentences = new Queue<string>();
     
     public void InitDialogueData() // PUTS the String array into the Queue
     {
+        NullCheckAnimator();
         sentences.Clear();
         foreach (string sentence in DialogueSentences)
         {
@@ -234,4 +242,13 @@ public class NPCDialogueData
         }
     }
 
+
+    private void NullCheckAnimator()
+    {
+        if(NPCAnimator == null)
+        {
+            Debug.LogWarning("Cant find NPC ANIMATOR finding it in children");
+            NPCAnimator = NPCPosition.gameObject.GetComponentInChildren<Animator>();
+        }
+    }
 }

@@ -147,11 +147,13 @@ public class NPCGroupDialogue : MonoBehaviour
 
             for (int i = 0; i < NPCObjects.Count; i++)
             {
+                var dialogData = NPCObjects[i].sentences.Dequeue();
                 var sentence = string.Empty;
 
                 if (NPCObjects[i].sentences.Count != 0)
                 {
-                    sentence = NPCObjects[i].sentences.Dequeue();
+                    sentence = dialogData.DialogueSentences;
+
                     if (sentence == string.Empty)
                     {
                         continue;
@@ -162,9 +164,19 @@ public class NPCGroupDialogue : MonoBehaviour
                     NPCObjects.RemoveAt(i);
                     continue; // This will skip to the next cycle, since we kind of removed this cycle
                 }
+                /*
+                    if(dialogData.AnimationTriggerName == NULL)
+                        1. Do whaveter i had earlier again
+                        2. somhow skip this check or like dont do anything dont 
+                    else
+                        //NPCObjects[i].NPCAnimator.SetBool(dialogData.AnimationTriggerName, true); // <--- this triggers the animation with that connections
+
+                 */
+
 
                 NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, true);
 
+                
                 for (int j = 0; j < ActiveTextBoxElement.Count; j++)
                 {
                     RectTransform temp = ActiveTextBoxElement[j].GetComponent<RectTransform>();
@@ -256,22 +268,28 @@ public class NPCDialogueData
 {
     public Transform NPCPosition;
     public Animator NPCAnimator;
-    [HideInInspector] public int IsTalkingAnimParameter = Animator.StringToHash("IsTalking");
+    [HideInInspector] public int IsTalkingAnimParameter = Animator.StringToHash("IsTalking"); // repalced by STRUCTED
 
+    [SerializeField] private DialogueData[] DialogueSentences;
+    public Queue<DialogueData> sentences = new Queue<DialogueData>();
 
-    [SerializeField] private string[] DialogueSentences;
-    public Queue<string> sentences = new Queue<string>();
+    [System.SerializableAttribute]
+    public struct DialogueData
+    {
+        public string DialogueSentences;
+        public string AnimationTriggerName;
+    }
+
 
     public void InitDialogueData() // PUTS the String array into the Queue
     {
         NullCheckAnimator();
         sentences.Clear();
-        foreach (string sentence in DialogueSentences)
+        foreach (DialogueData sentence in DialogueSentences)
         {
             sentences.Enqueue(sentence);
         }
     }
-
 
     private void NullCheckAnimator()
     {

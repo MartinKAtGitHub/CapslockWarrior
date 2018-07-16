@@ -43,7 +43,7 @@ public class PlayerTyping : MonoBehaviour {
 	void Start (){
 
 		for(int i = 0; i < SentencesToHave; i++){
-			_AllSentences.Add (new List<string>(AllOurWords.sentencetypeone()));
+			_AllSentences.Add (new List<string>(AllOurWords.Sentences()));
 		}
 
 		TheSentence = "";
@@ -81,14 +81,21 @@ public class PlayerTyping : MonoBehaviour {
 			} else {//Any Other Key
 				
 				if (Input.inputString != "") {//Max Input == 5 Letters, And This Remove MouseClick As A Letter
-					for (int i = 0; i < Input.inputString.Length; i++) {
-						if (char.GetNumericValue (Input.inputString [i]) < 0) {//Removing Numbers By Doing This
-							_TypedLetters += Input.inputString [i];
+					if (Input.GetKeyDown(KeyCode.Space)) {
+						SentenceCheck();//WordCheck
+						_TypedLetters = "";
+						SentenceUpdate();//Color Update
+
+					} else {
+						for (int i = 0; i < Input.inputString.Length; i++) {
+							if (char.GetNumericValue(Input.inputString[i]) < 0) {//Removing Numbers By Doing This
+								_TypedLetters += Input.inputString[i];
+							}
 						}
+
+						if (_TypedLetters.Length > 0)
+							SentenceUpdate();//Color Update
 					}
-		
-					if (_TypedLetters.Length > 0)
-						SentenceUpdate ();//Color Update
 				}
 			}
 		}
@@ -103,7 +110,7 @@ public class PlayerTyping : MonoBehaviour {
 			if (_WordIndex >= _AllSentences [0].Count) {
 				_WordIndex = 0;
 				_AllSentences.RemoveAt (0);
-				_AllSentences.Add (new List<string> (AllOurWords.sentencetypeone ()));
+				_AllSentences.Add (new List<string> (AllOurWords.Sentences ()));
 				_TypedLetters = "";
 				SentenceUpdate ();//Color Update
 			}
@@ -259,7 +266,7 @@ public class PlayerTyping : MonoBehaviour {
 					if (CanSentenceChangeAtEnd == true) {
 						_WordIndex = 0;
 						_AllSentences.RemoveAt (0);
-						_AllSentences.Add (new List<string> (AllOurWords.sentencetypeone ()));
+						_AllSentences.Add (new List<string> (AllOurWords.Sentences ()));
 						_TypedLetters = "";
 					} else {
 						_WordIndex = _AllSentences [0].Count;

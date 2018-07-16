@@ -5,8 +5,8 @@ using UnityEngine;
 public class CreatureRoot : MonoBehaviour {
 
 	public CreatureStats Stats;
-
 	public Rigidbody2D MyRigidBody;
+
 
 /*	public virtual void TookDmg(float dmg){
 		
@@ -26,17 +26,17 @@ public class CreatureRoot : MonoBehaviour {
 			Stats.Shield -= dmg;
 
 			if (Stats.Shield < 0) {
-				Stats.Health += Stats.Shield;
+				Stats.Health -= Stats.Shield * -1;
 				Stats.Shield = 0;
 			}
 		} else {
 			Stats.Health -= dmg;
-
-			if (Stats.Health <= 0) {
-				Stats.Health = 0;
-				Destroy (this.gameObject);
-			}
 		}
+
+		if (Stats.Health <= 0) {//
+			Destroy(this.gameObject);
+		}
+
 	}
 
 	public virtual void GainShield(float shield){

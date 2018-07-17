@@ -38,6 +38,8 @@ public class NPCGroupDialogue : MonoBehaviour
     [SerializeField] private Camera MainCam;
     private CircleCollider2D cCollider2D;
 
+    private NPCDialogueData.DialogueData dialogData; // This should be a local variable
+
 
     [Space(10)]
     public List<NPCDialogueData> NPCObjects;
@@ -147,12 +149,13 @@ public class NPCGroupDialogue : MonoBehaviour
 
             for (int i = 0; i < NPCObjects.Count; i++)
             {
-                var dialogData = NPCObjects[i].sentences.Dequeue();
+               // var dialogData; = NPCObjects[i].sentences.Dequeue();
                 var sentence = string.Empty;
 
                 if (NPCObjects[i].sentences.Count != 0)
                 {
-                    sentence = dialogData.DialogueSentences;
+                    dialogData = NPCObjects[i].sentences.Dequeue();
+                    sentence = dialogData.DialogueSentences; // NPCObjects[i].sentences.Dequeue();
 
                     if (sentence == string.Empty)
                     {
@@ -161,9 +164,11 @@ public class NPCGroupDialogue : MonoBehaviour
                 }
                 else
                 {
+                    // UNDONE NPCObjects[i].NPCAnimator.SetBool(DEFAULT ANIM/ Final anim  , true) <--- this is needed so when the talking is done they do the final anim
                     NPCObjects.RemoveAt(i);
                     continue; // This will skip to the next cycle, since we kind of removed this cycle
                 }
+                
                 /*
                     if(dialogData.AnimationTriggerName == NULL)
                         1. Do whaveter i had earlier again
@@ -223,7 +228,6 @@ public class NPCGroupDialogue : MonoBehaviour
                             temp.anchoredPosition = new Vector2(temp.anchoredPosition.x, temp.anchoredPosition.y + (textBoxCloneText.preferredHeight - oldPrefHight /*+ temp.rect.height*/)); // TODO Need to increase offset with Box size
 
                         }
-
                         oldPrefHight = textBoxCloneText.preferredHeight;
                     }
                     yield return new WaitForSeconds(TypeingEffectSpeed);
@@ -268,14 +272,14 @@ public class NPCDialogueData
 {
     public Transform NPCPosition;
     public Animator NPCAnimator;
-    [HideInInspector] public int IsTalkingAnimParameter = Animator.StringToHash("IsTalking"); // repalced by STRUCTED
+    [HideInInspector] public int IsTalkingAnimParameter; // repalced by STRUCTED
 
     [SerializeField] private DialogueData[] DialogueSentences;
     public Queue<DialogueData> sentences = new Queue<DialogueData>();
 
-    [System.SerializableAttribute]
+    [Serializable]//[SerializableAttribute]
     public struct DialogueData
-    {
+    {   [TextArea(1,5)]
         public string DialogueSentences;
         public string AnimationTriggerName;
     }
@@ -285,8 +289,10 @@ public class NPCDialogueData
     {
         NullCheckAnimator();
         sentences.Clear();
+        IsTalkingAnimParameter = Animator.StringToHash("IsTalking");
         foreach (DialogueData sentence in DialogueSentences)
         {
+            //Debug.Log("TEXT     = " + sentence.DialogueSentences);
             sentences.Enqueue(sentence);
         }
     }

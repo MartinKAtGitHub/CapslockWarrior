@@ -175,7 +175,6 @@ public class NPCGroupDialogue : MonoBehaviour
                         2. somhow skip this check or like dont do anything dont 
                     else
                         //NPCObjects[i].NPCAnimator.SetBool(dialogData.AnimationTriggerName, true); // <--- this triggers the animation with that connections
-
                  */
 
 
@@ -194,9 +193,7 @@ public class NPCGroupDialogue : MonoBehaviour
                 //BUG the flicker of the instantiatet object happens beaucse of yeald return null(waits 1 frame)---> fixed with textBoxClone.SetActive(false); ?
                 yield return null; // I need to wait for 1 frame before i can get all the values need, Its like Start() awake() kind of psroblem 
                 RectTransform boxTrans = textBoxClone.GetComponent<RectTransform>();
-
-
-
+                
                 if (NPCObjects[i].NPCPosition.localPosition.x <= 0) // <---- this will be done in the NPC script so we can choose witch side the message will be shown
                 {
                     boxTrans.anchorMin = new Vector2(0f, 0f);

@@ -126,6 +126,8 @@ public class NPCGroupDialogue : MonoBehaviour
     IEnumerator PlayDialogue()
     {
         var oldPrefHight = 0f;
+        var BodyAnimTriggerName = string.Empty;
+        var MouthAnimTriggerName = string.Empty;
 
         GroupDialogueCanvas.gameObject.SetActive(true);
         TextBoxElementsParentPnl.SetActive(true);
@@ -149,13 +151,33 @@ public class NPCGroupDialogue : MonoBehaviour
 
             for (int i = 0; i < NPCObjects.Count; i++)
             {
-               // var dialogData; = NPCObjects[i].sentences.Dequeue();
                 var sentence = string.Empty;
 
                 if (NPCObjects[i].sentences.Count != 0)
                 {
                     dialogData = NPCObjects[i].sentences.Dequeue();
+
                     sentence = dialogData.DialogueSentences; // NPCObjects[i].sentences.Dequeue();
+
+
+                    if(dialogData.AnimationBodyTriggerName != string.Empty) // Not sure if this works or i should use String.Equals
+                    {
+                        BodyAnimTriggerName = dialogData.AnimationBodyTriggerName;
+                        Debug.Log("BODY ANIM NAME SET  = " + BodyAnimTriggerName);
+                    }
+                    else
+                    {
+                        Debug.Log("Playing Last anim  = " + BodyAnimTriggerName);
+                    }
+                    if (dialogData.AnimationMouthTriggerName != string.Empty) // Not sure if this works or i should use String.Equals
+                    {
+                        MouthAnimTriggerName = dialogData.AnimationMouthTriggerName;
+                        Debug.Log("MOUTH ANIM NAME SET  = " + MouthAnimTriggerName);
+                    }
+                    else
+                    {
+                        Debug.Log("Playing last Anim  = " + MouthAnimTriggerName);
+                    }
 
                     if (sentence == string.Empty)
                     {
@@ -168,7 +190,7 @@ public class NPCGroupDialogue : MonoBehaviour
                     NPCObjects.RemoveAt(i);
                     continue; // This will skip to the next cycle, since we kind of removed this cycle
                 }
-                
+
                 /*
                     if(dialogData.AnimationTriggerName == NULL)
                         1. Do whaveter i had earlier again
@@ -178,9 +200,12 @@ public class NPCGroupDialogue : MonoBehaviour
                  */
 
 
-                NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, true);
+                //NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, true);
+                // NPCObjects[i].NPCAnimator.SetTrigger(NPCObjects[i].IsTalkingAnimParameter);
+                 NPCObjects[i].NPCAnimator.SetTrigger(MouthAnimTriggerName);
+                 NPCObjects[i].NPCAnimator.SetTrigger(BodyAnimTriggerName);
 
-                
+
                 for (int j = 0; j < ActiveTextBoxElement.Count; j++)
                 {
                     RectTransform temp = ActiveTextBoxElement[j].GetComponent<RectTransform>();
@@ -230,7 +255,8 @@ public class NPCGroupDialogue : MonoBehaviour
                     yield return new WaitForSeconds(TypeingEffectSpeed);
                 }
                 ActiveTextBoxElement.Add(textBoxClone);
-                NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, false);
+                //NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, false); <--- with the ANY state we cant have a bool or it will just keep calling itself
+                NPCObjects[i].NPCAnimator.SetTrigger("StopTalk");// UNDONE need to make this flow S
                 yield return new WaitForSeconds(TimeToNextDialogueBox); //UNDONE HARDCODED the time after text
             }
         }
@@ -269,6 +295,8 @@ public class NPCDialogueData
 {
     public Transform NPCPosition;
     public Animator NPCAnimator;
+    public string Trigger1;
+
     [HideInInspector] public int IsTalkingAnimParameter; // repalced by STRUCTED
 
     [SerializeField] private DialogueData[] DialogueSentences;
@@ -276,9 +304,12 @@ public class NPCDialogueData
 
     [Serializable]//[SerializableAttribute]
     public struct DialogueData
-    {   [TextArea(1,5)]
+    {
+        public string AnimationBodyTriggerName;
+        public string AnimationMouthTriggerName;
+        [Space( 15)]
+        [TextArea(1,5)]
         public string DialogueSentences;
-        public string AnimationTriggerName;
     }
 
 
@@ -286,7 +317,7 @@ public class NPCDialogueData
     {
         NullCheckAnimator();
         sentences.Clear();
-        IsTalkingAnimParameter = Animator.StringToHash("IsTalking");
+        IsTalkingAnimParameter = Animator.StringToHash(Trigger1);
         foreach (DialogueData sentence in DialogueSentences)
         {
             //Debug.Log("TEXT     = " + sentence.DialogueSentences);

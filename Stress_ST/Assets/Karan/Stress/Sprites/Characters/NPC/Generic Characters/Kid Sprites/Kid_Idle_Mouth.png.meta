@@ -1,13 +1,15 @@
 fileFormatVersion: 2
-guid: 9cea38ee76aae0f4180ce85a8b73e752
+guid: 5322d7c7a9fe413459eca66a87b476d6
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Kid1_NoWay_Mouth_0
-    21300002: Kid1_NoWay_Mouth_1
-    21300004: Kid1_NoWay_Mouth_2
-    21300006: Kid1_NoWay_Mouth_3
-    21300008: Kid1_NoWay_Mouth_4
-    21300010: Kid1_NoWay_Mouth_5
+    21300000: Kid_Idle_Mouth_0
+    21300002: Kid_Idle_Mouth_1
+    21300004: Kid_Idle_Mouth_2
+    21300006: Kid_Idle_Mouth_3
+    21300008: Kid_Idle_Mouth_4
+    21300010: Kid_Idle_Mouth_5
+    21300012: Kid_Idle_Mouth_6
+    21300014: Kid_Idle_Mouth_7
   externalObjects: {}
   serializedVersion: 6
   mipmaps:
@@ -90,7 +92,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Kid1_NoWay_Mouth_0
+      name: Kid_Idle_Mouth_0
       rect:
         serializedVersion: 2
         x: 0
@@ -104,13 +106,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be0237b4d203f3346b38a2ddf2c0597c
+      spriteID: 4f20731fb94662a41b17f1b71791433f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kid1_NoWay_Mouth_1
+      name: Kid_Idle_Mouth_1
       rect:
         serializedVersion: 2
         x: 32
@@ -124,13 +126,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d14c87c4b2b00047a2eec1ee6c98386
+      spriteID: 4a8f8fded665625448e49b1a5182c463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kid1_NoWay_Mouth_2
+      name: Kid_Idle_Mouth_2
       rect:
         serializedVersion: 2
         x: 64
@@ -144,13 +146,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2843037e457d4f242aa505bed7e29805
+      spriteID: 35bb62900d7eae941b96cd324f74563d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kid1_NoWay_Mouth_3
+      name: Kid_Idle_Mouth_3
       rect:
         serializedVersion: 2
         x: 96
@@ -164,13 +166,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79736a834395d1942b7a0773e8d41c30
+      spriteID: 925faee5e78e75541a4ece0c8d4af20c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kid1_NoWay_Mouth_4
+      name: Kid_Idle_Mouth_4
       rect:
         serializedVersion: 2
         x: 128
@@ -184,13 +186,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2967df3ba270631489f81b14e730671b
+      spriteID: 93b3bda99da7cc9478b034f399157e5f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kid1_NoWay_Mouth_5
+      name: Kid_Idle_Mouth_5
       rect:
         serializedVersion: 2
         x: 160
@@ -204,7 +206,47 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4585ceb37fc2303408bbc5ae5b2744de
+      spriteID: 4024f67cd42ea8143abca5f92ff8a90e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kid_Idle_Mouth_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1711c4d1391597c44b5cfde35222a48e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kid_Idle_Mouth_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bedf73c2544accb44b4429f2ca261105
       vertices: []
       indices: 
       edges: []
@@ -212,7 +254,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6f9ae8fe705d46a4bb3dcf6b99b9dc99
+    spriteID: 978dda484a97c0644a12c1c3d76c567f
     vertices: []
     indices: 
     edges: []

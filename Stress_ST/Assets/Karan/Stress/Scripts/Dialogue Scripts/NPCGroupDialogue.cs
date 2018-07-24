@@ -153,11 +153,11 @@ public class NPCGroupDialogue : MonoBehaviour
             {
                 var sentence = string.Empty;
 
-                if (NPCObjects[i].sentences.Count != 0)
+                if (NPCObjects[i].SentencesData.Count != 0)
                 {
-                    dialogData = NPCObjects[i].sentences.Dequeue();
+                    dialogData = NPCObjects[i].SentencesData.Dequeue();
 
-                    sentence = dialogData.DialogueSentences; // NPCObjects[i].sentences.Dequeue();
+                    sentence = dialogData.DialogueSentences;
 
 
                     if(dialogData.AnimationBodyTriggerName != string.Empty) // Not sure if this works or i should use String.Equals
@@ -178,6 +178,7 @@ public class NPCGroupDialogue : MonoBehaviour
                     {
                         Debug.Log("Playing last Anim  = " + MouthAnimTriggerName);
                     }
+
 
                     if (sentence == string.Empty)
                     {
@@ -201,7 +202,7 @@ public class NPCGroupDialogue : MonoBehaviour
 
 
                 //NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, true);
-                // NPCObjects[i].NPCAnimator.SetTrigger(NPCObjects[i].IsTalkingAnimParameter);
+                //NPCObjects[i].NPCAnimator.SetTrigger(NPCObjects[i].IsTalkingAnimParameter);
                  NPCObjects[i].NPCAnimator.SetTrigger(MouthAnimTriggerName);
                  NPCObjects[i].NPCAnimator.SetTrigger(BodyAnimTriggerName);
 
@@ -300,7 +301,7 @@ public class NPCDialogueData
     [HideInInspector] public int IsTalkingAnimParameter; // repalced by STRUCTED
 
     [SerializeField] private DialogueData[] DialogueSentences;
-    public Queue<DialogueData> sentences = new Queue<DialogueData>();
+    public Queue<DialogueData> SentencesData = new Queue<DialogueData>();
 
     [Serializable]//[SerializableAttribute]
     public struct DialogueData
@@ -316,12 +317,12 @@ public class NPCDialogueData
     public void InitDialogueData() // PUTS the String array into the Queue
     {
         NullCheckAnimator();
-        sentences.Clear();
+        SentencesData.Clear();
         IsTalkingAnimParameter = Animator.StringToHash(Trigger1);
         foreach (DialogueData sentence in DialogueSentences)
         {
             //Debug.Log("TEXT     = " + sentence.DialogueSentences);
-            sentences.Enqueue(sentence);
+            SentencesData.Enqueue(sentence);
         }
     }
 

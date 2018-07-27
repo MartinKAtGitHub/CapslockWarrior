@@ -21,6 +21,7 @@ public class ClockTest : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
 		TheTime[0] += Time.deltaTime;
 		TheTimes = TheTime [0];
 	}
@@ -30,4 +31,5 @@ public class ClockTest : MonoBehaviour {
 			TheTime = new float[1];
 		return TheTime;
 	}
+
 }

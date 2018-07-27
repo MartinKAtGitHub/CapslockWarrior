@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "Tile", menuName = "NewTile")]
 public class TileObjects : ScriptableObject {
 
-	[Tooltip("Tile ID:\n 0 - /*TODO All Tile Or Combine All Similar Tiles*/")]
+	[Tooltip("Tile ID:\n 0 - /*TODO All Tiles +1 Or Combine All Similar Tiles*/")]
 	public int TileID = 0;
 	public float TileWalkCost = 1;
 
@@ -27,20 +27,20 @@ public class TileObjects : ScriptableObject {
 
 
 
-	public void OnEnter() {//What Entering A Tile, The Tile Can Have Effects On It, Like Lava -> Burning Spell.    Quicksand -> Slowing Spell.    ......
+	public void OnEnter(TestWalkScript enteringObject) {//What Entering A Tile, The Tile Can Have Effects On It, Like Lava -> Burning Spell.    Quicksand -> Slowing Spell.    ......
 		if (ApplyOnEnter == true) {
 			if (TheSpell != null) {
-				TheSpell.ApplyTileEffect();
+				TheSpell.ApplyTileEffect(enteringObject);
 			} else {
 				Debug.Log("Spell Missing");
 			}
 		}
 	}
 
-	public void OnExit() {//What To Do When Exiting
+	public void OnExit(TestWalkScript exitingObject) {//What To Do When Exiting
 		if (RemoveOnExit == true) {
 			if (TheSpell != null) {
-				TheSpell.ApplyTileEffect();
+				TheSpell.RemoveTileEffect(exitingObject);
 			} else {
 				Debug.Log("Spell Missing");
 			}

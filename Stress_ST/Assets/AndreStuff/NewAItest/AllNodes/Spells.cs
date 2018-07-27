@@ -6,11 +6,14 @@ public class Spells : MonoBehaviour {
 
 	
 
-	public virtual void ApplySpellEffect() {
+	public virtual void ApplySpellEffect(TestWalkScript target) {
 
 	}
 
-	public virtual void ApplyTileEffect() {//Called From The Tile. 'What Does The Spell Do' -> 'Im Applying A Buff' -> 'Apply Buff' 
+	public virtual void ApplyTileEffect(TestWalkScript target) {//Called From The Tile. 'What Does The Spell Do' -> 'Im Applying A Buff' -> 'Apply Buff' 
+	}
+
+	public virtual void RemoveTileEffect(TestWalkScript target) {//Called From The Tile. 'What Does The Spell Do' -> 'Im Applying A Buff' -> 'Apply Buff' 
 	}
 
 }

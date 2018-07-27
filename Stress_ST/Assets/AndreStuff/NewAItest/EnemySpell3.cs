@@ -64,16 +64,18 @@ public class EnemySpell3 : SpellRoot {
 				}
 
 			}
-	
+
 			//Then A Check Needs To Be Made If The Ground Is Walkable Or Not, A Cliff Edge Or A Sea Of Magma ETC..
-			if (objectChecking.GetNodeInfo ().MyAStar._WalkCost.ValidPositions (objectChecking.GetNodeInfo ().MyAStar._WalkCost.GetXPos(Mathf.RoundToInt( test.x / StressCommonlyUsedInfo.DistanceBetweenNodes)), objectChecking.GetNodeInfo ().MyAStar._WalkCost.GetYPos(Mathf.RoundToInt(test.y / StressCommonlyUsedInfo.DistanceBetweenNodes))) == false)
-				return 0;
-		//	if (objectChecking.GetNodeInfo ().MyAStar._WalkCost.ValidPositions (objectChecking.GetObjectNodeInfo ().MyCollisionInfo.XNode, objectChecking.GetObjectNodeInfo ().MyCollisionInfo.YNode) == false)
-		//		return 0;
+//TODO Commented Out This				if (objectChecking.GetNodeInfo ().MyAStar._WalkCost.ValidPositions (objectChecking.GetNodeInfo ().MyAStar._WalkCost.GetXPos(Mathf.RoundToInt( test.x / StressCommonlyUsedInfo.DistanceBetweenNodes)), objectChecking.GetNodeInfo ().MyAStar._WalkCost.GetYPos(Mathf.RoundToInt(test.y / StressCommonlyUsedInfo.DistanceBetweenNodes))) == false)
+//TODO Commented Out This				return 0;
+
+
+			//	if (objectChecking.GetNodeInfo ().MyAStar._WalkCost.ValidPositions (objectChecking.GetObjectNodeInfo ().MyCollisionInfo.XNode, objectChecking.GetObjectNodeInfo ().MyCollisionInfo.YNode) == false)
+			//		return 0;
 
 			//If A Spot Was Found, 
 
-		
+
 			/*
 			//If Nothing Collides With The Object
 
@@ -99,7 +101,7 @@ public class EnemySpell3 : SpellRoot {
 				return 0;
 			*/
 		}
-			
+
 		return 3;//If Nothing Failed, Return 'True'.
 
 	}

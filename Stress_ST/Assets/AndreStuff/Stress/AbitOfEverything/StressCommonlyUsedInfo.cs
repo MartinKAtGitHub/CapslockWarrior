@@ -6,10 +6,14 @@ public class StressCommonlyUsedInfo {
 	public const int NodesInUnityMeter = 20;
 	public const float DistanceBetweenNodes = 0.05f;
 	public const int NodesWidth = (int)(NodesInUnityMeter / DistanceBetweenNodes);
+//TODO Make This Work. A Map Does Not Have To Be A Perfect Square. TBD A Small Train Kinda Map... 	public const int NodesHeight = (int)(NodesInUnityMeter / DistanceBetweenNodes);
 	public const int NodesTotal = NodesWidth * NodesWidth;
 	public const int Nodes3D = 10;
 	public const int AmountOfDifferentNodes = 10;
 	public const int PathCostSize = 3;
+
+	public const float LowestXPos = -1f;//TODO Make This The Bottom Left Of The Map. X Cord
+	public const float LowestYPos = -0.25f;//TODO Make This The Bottom Left Of The Map. Y Cord
 
 
 	public enum BulletStyle {AttachToSender = 0, AttachToTarget = 1, PlaceOnGroundAtVector = 2}

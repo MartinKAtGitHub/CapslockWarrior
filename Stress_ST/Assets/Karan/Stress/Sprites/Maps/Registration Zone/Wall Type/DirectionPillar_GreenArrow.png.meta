@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: a3e6d46bc899c38498c486398791e007
+guid: 55d5b9ec1ff30cc4e9482b7c954b89be
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
-  serializedVersion: 5
+  serializedVersion: 7
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -21,6 +21,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -31,7 +33,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -41,14 +43,14 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 7
+  spritePivot: {x: 0.5, y: 0}
   spritePixelsToUnits: 32
-  spriteBorder: {x: 5, y: 96, z: 5, w: 5}
+  spriteBorder: {x: 0, y: 65, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: 0
+  spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -81,23 +83,17 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline:
-    - - {x: -48, y: 42}
-      - {x: -48, y: -48}
-      - {x: 48, y: -48}
-      - {x: 48, y: 42}
-    physicsShape:
-    - - {x: -48, y: 38}
-      - {x: -48, y: -48}
-      - {x: 48, y: -48}
-      - {x: 48, y: 38}
+    outline: []
+    physicsShape: []
     bones: []
-    spriteID: 507c4ac0469b3564594231e6b103c23c
+    spriteID: 859f19e739f562c4cae0422a1f43711a
     vertices: []
     indices: 
     edges: []
     weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

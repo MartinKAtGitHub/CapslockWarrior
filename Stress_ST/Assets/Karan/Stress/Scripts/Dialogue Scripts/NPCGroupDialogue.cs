@@ -90,34 +90,6 @@ public class NPCGroupDialogue : MonoBehaviour
     }
 
 
-    //private void LOL()
-    //{
-
-    //    int[] NPC = new int[3];
-
-    //    List<NPCDialogueData> NPCs = new List<NPCDialogueData>();
-
-    //    List<string> NPCSenteces = new List<string>();
-
-    //    // 0 Hello
-
-    //    // 1 hi
-
-    //    // 0 Whats you name
-
-    //    // 1 BOB
-
-
-
-
-    //    for (int i = 0; i < NPC.Length; i++)
-    //    {
-    //           // NPCs[NPCSenteces[i].Substring(0,1)]
-
-    //    }
-
-    //}
-
     private bool GetPlayerExitDialogue()
     {
         return playerExitDialogue;

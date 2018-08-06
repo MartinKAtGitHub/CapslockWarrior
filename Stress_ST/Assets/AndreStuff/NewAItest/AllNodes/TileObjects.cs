@@ -23,7 +23,7 @@ public class TileObjects : ScriptableObject {
 
 
 
-
+	public System.Object  testing;
 
 
 
@@ -32,7 +32,7 @@ public class TileObjects : ScriptableObject {
 			if (TheSpell != null) {
 				TheSpell.ApplyTileEffect(enteringObject);
 			} else {
-				Debug.Log("Spell Missing");
+//				Debug.Log("Spell Missing");
 			}
 		}
 	}
@@ -42,7 +42,7 @@ public class TileObjects : ScriptableObject {
 			if (TheSpell != null) {
 				TheSpell.RemoveTileEffect(exitingObject);
 			} else {
-				Debug.Log("Spell Missing");
+//				Debug.Log("Spell Missing");
 			}
 		}
 	}

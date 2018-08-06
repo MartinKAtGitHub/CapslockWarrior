@@ -3,6 +3,10 @@ using System.Collections;
 
 public class StressCommonlyUsedInfo {
 
+	public static NodeWalkcostSetter TheSetter = new NodeWalkcostSetter();
+
+
+
 	public const int NodesInUnityMeter = 20;
 	public const float DistanceBetweenNodes = 0.05f;
 	public const int NodesWidth = (int)(NodesInUnityMeter / DistanceBetweenNodes);

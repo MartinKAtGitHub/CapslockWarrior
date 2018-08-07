@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
 
 public class NPCDialogueOverhear : MonoBehaviour
 {
 
-
+    [SerializeField]
     private float TypeingSpeed;
-
+    [SerializeField]
+    private TextMeshProUGUI textBoxCloneText;
+    
     [SerializeField]
     private SentenceData[] SentenceDatas;
     private Queue<SentenceData> SentenceDataQueue;
@@ -15,6 +19,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     private void Start()
     {
         initializeSentenceDataQueue();
+        StartCoroutine(PlayDialogue());
     }
 
     private void initializeSentenceDataQueue()
@@ -36,7 +41,7 @@ public class NPCDialogueOverhear : MonoBehaviour
         {
             foreach (var letters in SentenceDatas[i].Sentence)
             {
-               // textBoxCloneText.text += letters;
+                textBoxCloneText.text += letters;
                 yield return new WaitForSeconds(TypeingSpeed);
             }
         }

@@ -14,8 +14,13 @@ public class NPCDialogueOverhear : MonoBehaviour
     private float typeingSpeed;
     [SerializeField]
     private float nextMessageSpeed;
+
     [SerializeField]
-    private RectTransform textBox_pnl;
+    private GameObject NPCGroupCanvas;
+    [SerializeField]
+    private GameObject DialogBoxBubblePrefab;
+    [SerializeField]
+    private GameObject DialogueBoxParent;
     [SerializeField]
     private RectTransform DialogueBox;
     [SerializeField]
@@ -36,7 +41,11 @@ public class NPCDialogueOverhear : MonoBehaviour
 
     private void Start()
     {
-        checkPlayerTag();
+      
+        CheckPlayerTag();
+        CheckDialogBox();
+        CheckNPCs();
+        CheckMainCam();
         cCollider2D = GetComponent<CircleCollider2D>();
         // initializeSentenceDataQueue();
         //StartCoroutine(PlayDialogue());
@@ -51,20 +60,91 @@ public class NPCDialogueOverhear : MonoBehaviour
         }
     }
 
-    private void checkPlayerTag()
+    private void CheckPlayerTag()
     {
         if (string.IsNullOrEmpty(playerTag))
         {
             Debug.LogError("Cant Find PlayerTag NPCDialogueOverhear");
-            //playerTag = Gamemanager.PlayerTag
+            //playerTag = Gamemanager.player.PlayerTag
         }
     }
 
+    private void CheckDialogBox()
+    {
+        if (NPCGroupCanvas == null)
+        {
+            Debug.LogError("Connect script with Prefab --> connection has been lost");
+            //this.enabled = false;
+            //gameObject.SetActive(false);
+            //return; break;
+        }
+        else
+        {
+            if (DialogueBoxParent == null)
+            {
+                if (DialogBoxBubblePrefab == null)
+                {
+                    Debug.LogError("DialogueBoxParent & DialogBoxBubblePrefab == NULL |  FIX Gameobject (" + name + ") Turning off NPCDialogueOverhear script");
+                    //this.enabled = false;
+                    //gameObject.SetActive(false);
+                    //return; break;
+                }
+
+                DialogueBoxParent = Instantiate(DialogBoxBubblePrefab, NPCGroupCanvas.transform);
+                DialogueBoxParent.SetActive(false);
+                Debug.LogWarning("DialogueBoxParent = NULL ---> Instantiateing DialogBoxBubblePrefab");
+            }
+            else
+            {
+                DialogueBoxParent.SetActive(false);
+            }
+            if (DialogueBox == null)
+            {
+                DialogueBox = DialogueBoxParent.GetComponentInChildren<RectTransform>();
+                Debug.LogWarning("DialogueBox == NULL Searching..");
+                if (DialogueBox == null)
+                {
+                    Debug.LogError(" DialogueBox == NULL | Cant find DialogBox in DialogueBoxParent Child --> turn of script / OBJ");
+                    //this.enabled = false;
+                    //gameObject.SetActive(false);
+                    //return; break;
+                }
+                else
+                {
+                    Debug.Log("Found --> " + DialogueBox.name);
+                }
+            }
+        }
+    }
+
+    private void CheckNPCs()
+    {
+        for (int i = 0; i < SentenceDatas.Length; i++)
+        {
+            if(SentenceDatas[i].NPC == null)
+            {
+                Debug.LogError("Missing NPC on Sentence | Remeber to Drag NPC(gameobject) on all Sentences");
+                this.enabled = false;
+                gameObject.SetActive(false);
+                return;
+            }
+        }
+    }
+
+    private void CheckMainCam()
+    {
+        if(mainCam == null)
+        {
+
+            // mainCam = GameManager . player . Cam
+            Debug.LogError("Cant Find Main Cam --> look in Game Manager");
+        }
+    }
     private void CenterTextBoxElementsParent()
     {
         Debug.Log("Center CAM");
         var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
-        textBox_pnl.transform.position = new Vector2(PnlWorld.x, PnlWorld.y + 50f);
+        DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y + 50f);
     }
 
     /* private void initializeSentenceDataQueue()
@@ -82,6 +162,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     IEnumerator PlayDialogue()
     {
         playerInDialgueRange = true;
+        DialogueBoxParent.SetActive(true);
 
         for (int i = 0; i < SentenceDatas.Length; i++)
         {
@@ -102,10 +183,12 @@ public class NPCDialogueOverhear : MonoBehaviour
             }
             yield return new WaitForSeconds(nextMessageSpeed);
         }
-        textBox_pnl.gameObject.SetActive(false);
+        
+        NPCGroupCanvas.SetActive(false);
+        //DialogueBoxParent.gameObject.SetActive(false);
         playerInDialgueRange = false;
-
-
+        this.enabled = false;
+        cCollider2D.enabled = false;
     }
 
     void OnTriggerEnter2D(Collider2D col)

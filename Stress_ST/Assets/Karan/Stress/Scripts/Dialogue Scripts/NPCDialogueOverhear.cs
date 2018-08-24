@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -47,10 +48,13 @@ public class NPCDialogueOverhear : MonoBehaviour
         CheckNPCs();
         CheckMainCam();
         cCollider2D = GetComponent<CircleCollider2D>();
+
+        NPCPlayStartAnim();
         // initializeSentenceDataQueue();
         //StartCoroutine(PlayDialogue());
     }
 
+   
 
     void Update()
     {
@@ -59,6 +63,12 @@ public class NPCDialogueOverhear : MonoBehaviour
             CenterTextBoxElementsParent();
         }
     }
+
+    private void NPCPlayStartAnim()
+    {
+        throw new NotImplementedException();
+    }
+
 
     private void CheckPlayerTag()
     {
@@ -168,14 +178,13 @@ public class NPCDialogueOverhear : MonoBehaviour
         {
             dialogueText.text = string.Empty;
 
-            //DialogueBox.position = mainCam.WorldToScreenPoint(SentenceDatas[i].NPC.transform.position); // kind of workd
-            //DialogueBox.transform.localPosition = new Vector2(SentenceDatas[i].NPC.transform.localPosition.x, SentenceDatas[i].NPC.transform.localPosition.y + dialogBoxOffsetY);
-            //DialogueBox.transform.InverseTransformPoint(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y, 0);
             yield return null; // wait 1 frame beacuse rect transform is BrokeBack
 
             DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y + dialogBoxOffsetY));
 
-
+            // Start mouth anim
+            // Start whatever anim you want
+            // Transition --> transition anim(has exit time) --> main Anim
             foreach (var letters in SentenceDatas[i].Sentence)
             {
                 dialogueText.text += letters;
@@ -184,6 +193,8 @@ public class NPCDialogueOverhear : MonoBehaviour
             yield return new WaitForSeconds(nextMessageSpeed);
         }
         
+        // Finish Anim or go back to start anim
+
         NPCGroupCanvas.SetActive(false);
         //DialogueBoxParent.gameObject.SetActive(false);
         playerInDialgueRange = false;

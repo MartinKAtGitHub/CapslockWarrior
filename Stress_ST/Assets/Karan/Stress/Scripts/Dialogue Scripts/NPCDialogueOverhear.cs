@@ -31,7 +31,10 @@ public class NPCDialogueOverhear : MonoBehaviour
     [SerializeField]
     private Camera mainCam;
     [SerializeField]
-    private float dialogBoxOffsetY;
+    private float PlayerDialogBoxOffsetY;
+    [SerializeField]
+    private float DialogueBoxOffsetY;
+
 
     [SerializeField]
     private SentenceData[] SentenceDatas;
@@ -49,7 +52,7 @@ public class NPCDialogueOverhear : MonoBehaviour
         CheckMainCam();
         cCollider2D = GetComponent<CircleCollider2D>();
 
-        NPCPlayStartAnim();
+        //NPCPlayStartAnim();
         // initializeSentenceDataQueue();
         //StartCoroutine(PlayDialogue());
     }
@@ -154,7 +157,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     {
         Debug.Log("Center CAM");
         var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
-        DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y + 50f);
+        DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y + DialogueBoxOffsetY);
     }
 
     /* private void initializeSentenceDataQueue()
@@ -173,6 +176,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     {
         playerInDialgueRange = true;
         DialogueBoxParent.SetActive(true);
+      
 
         for (int i = 0; i < SentenceDatas.Length; i++)
         {
@@ -180,20 +184,26 @@ public class NPCDialogueOverhear : MonoBehaviour
 
             yield return null; // wait 1 frame beacuse rect transform is BrokeBack
 
-            DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y + dialogBoxOffsetY));
+            DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y + PlayerDialogBoxOffsetY));
 
+            SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("StartTalking");
             // Start mouth anim
-            // Start whatever anim you want
             // Transition --> transition anim(has exit time) --> main Anim
+
             foreach (var letters in SentenceDatas[i].Sentence)
             {
                 dialogueText.text += letters;
                 yield return new WaitForSeconds(typeingSpeed);
             }
             yield return new WaitForSeconds(nextMessageSpeed);
+            
+            //if(i == lenght)
+                //then end
+            //else (previous == current)
+                // continue
+            //else end
+            SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
         }
-        
-        // Finish Anim or go back to start anim
 
         NPCGroupCanvas.SetActive(false);
         //DialogueBoxParent.gameObject.SetActive(false);

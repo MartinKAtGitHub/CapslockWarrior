@@ -187,7 +187,8 @@ public class NPCDialogueOverhear : MonoBehaviour
             DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y + PlayerDialogBoxOffsetY));
 
             SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("StartTalking");
-            // Start mouth anim
+            SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("IsTalking");
+            
             // Transition --> transition anim(has exit time) --> main Anim
 
             foreach (var letters in SentenceDatas[i].Sentence)

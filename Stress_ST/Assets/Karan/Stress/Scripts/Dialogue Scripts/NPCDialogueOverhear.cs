@@ -32,8 +32,8 @@ public class NPCDialogueOverhear : MonoBehaviour
     private Camera mainCam;
     [SerializeField]
     private float PlayerDialogBoxOffsetY;
-    [SerializeField]
-    private float DialogueBoxOffsetY;
+   // [SerializeField]
+   // private float DialogueBoxOffsetY;
 
 
     [SerializeField]
@@ -139,6 +139,7 @@ public class NPCDialogueOverhear : MonoBehaviour
                 Debug.LogError("Missing NPC on Sentence | Remeber to Drag NPC(gameobject) on all Sentences");
                 this.enabled = false;
                 gameObject.SetActive(false);
+                // i can also make this.gameobject the parent if we dont want to turn off
                 return;
             }
         }
@@ -157,7 +158,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     {
         Debug.Log("Center CAM");
         var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
-        DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y + DialogueBoxOffsetY);
+        DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
     }
 
     /* private void initializeSentenceDataQueue()

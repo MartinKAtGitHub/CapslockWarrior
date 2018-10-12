@@ -48,6 +48,7 @@ public class GranadeCostumeArc : MonoBehaviour
 
         var nextPos = new Vector3(nextX, baseY + arc, Grenade.position.z);
         var ShadePos = new Vector3(nextX /*+ arc*/, baseY);
+       
         //Rotate to face the next position, and then move there < dont need this as it is this will make the object look the same way it arcs.
         //Grenade.rotation = LookAt2D(nextPos - Grenade.position);
         Grenade.position = nextPos;

@@ -54,15 +54,16 @@ public class ShieldDash : MonoBehaviour {
             StartShieldDash(MaxRangeVector, ChargeSpeedVector);
     }
 
-    private void StartShieldDash(Vector3 maxRangeVec, Vector3 chargeSpeedVec)
+    private void StartShieldDash(Vector3 maxRangeVec, Vector3 chargeSpeedVec)// TODO Add Timer --> if the Boss gets stuck we will have a finale check on TIME so teh boss isent stuck in the charge state
     {
         if(StartCharge == true)
         {
             rb2d.MovePosition(transform.position + chargeSpeedVec * Time.deltaTime);
             
-            var dist = Vector3.Distance(transform.position, StartChargPos + maxRangeVec);
+            var dist = Vector3.Distance(transform.position, StartChargPos + maxRangeVec); 
      
-            if (dist  <= 0.5f)// this is bad 0.5 needs to be 0 bit the distance is not that precise
+            // if(tarnsform == StartCharge + maxRanegVec)
+            if (dist  <= 0.5f)// Switch this to TIMER insted of Position, we dont want him to get stuck in loop
             {
                 Debug.Log("Max Charge Reached");
                 StartCharge = false;
@@ -72,7 +73,7 @@ public class ShieldDash : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player") /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
+        if (collision.gameObject.tag == "Player1") /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
         {
             Debug.Log("Player Hit");
             BossAnimator.SetTrigger("Idle");
@@ -82,6 +83,12 @@ public class ShieldDash : MonoBehaviour {
 
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(finalRange);
         }
+        if(collision.gameObject.tag == "Wall")
+        {
+            Debug.Log("Wall Name = " + collision.gameObject.name);
+            StartCharge = false;
+        }
+        
     }
 
 

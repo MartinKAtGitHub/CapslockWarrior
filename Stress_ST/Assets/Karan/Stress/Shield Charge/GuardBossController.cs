@@ -9,7 +9,7 @@ public class GuardBossController : MonoBehaviour {
 
     public LayerMask LayerMask;
     public Transform Target;
-    RaycastHit2D[] Test;
+    RaycastHit2D[] raycastHit2D;
 
 	void Start ()
     {
@@ -22,7 +22,7 @@ public class GuardBossController : MonoBehaviour {
     {
         Debug.DrawLine(transform.position, Target.position, Color.red);
 
-        Test =  Physics2D.LinecastAll(transform.position, Target.position);
+        raycastHit2D =  Physics2D.LinecastAll(transform.position, Target.position, LayerMask);
 
         //Debug.Log(Test[0].transform.name);
 
@@ -30,13 +30,28 @@ public class GuardBossController : MonoBehaviour {
         {
             Debug.Log(Test[i].transform.name);
         }*/
-		// if Space && LOS clear
+        // if Space && LOS clear
 
         // if G && LOS clear
+        //Debug.Log(LOSCheck());
+        //Debug.Log(raycastHit2D[0].transform.name);
+
+
 	}
     
 
-
+    bool LOSCheck()
+    {
+        if(raycastHit2D.Length >= 0 && raycastHit2D[0].transform.tag == Target.tag)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    
+    }
 
 
 

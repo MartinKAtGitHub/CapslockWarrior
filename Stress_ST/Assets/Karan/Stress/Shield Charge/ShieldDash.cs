@@ -54,6 +54,12 @@ public class ShieldDash : MonoBehaviour {
             StartShieldDash(MaxRangeVector, ChargeSpeedVector);
     }
 
+
+    public void ShieldChargeAttack()
+    {
+
+    }
+
     private void StartShieldDash(Vector3 maxRangeVec, Vector3 chargeSpeedVec)// TODO Add Timer --> if the Boss gets stuck we will have a finale check on TIME so teh boss isent stuck in the charge state
     {
         if(StartCharge == true)
@@ -73,15 +79,15 @@ public class ShieldDash : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player1") /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
+        if (collision.gameObject.tag == target.gameObject.tag) /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
         {
             Debug.Log("Player Hit");
             BossAnimator.SetTrigger("Idle");
             StartCharge = false;
             var targetVector = target.position - transform.position;
-            var finalRange = targetVector.normalized * PushBackForce ;
+            var PushForceVector = targetVector.normalized * PushBackForce ;
 
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(finalRange);
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
         }
         if(collision.gameObject.tag == "Wall")
         {

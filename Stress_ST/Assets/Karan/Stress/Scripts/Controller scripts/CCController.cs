@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CCController : MonoBehaviour {
-    
+
+    public float time;
 
 	// Use this for initialization
 	void Start ()
@@ -17,9 +18,10 @@ public class CCController : MonoBehaviour {
 		
 	}
 
-    public void Slow(float slowAmount, float slowTime )
+    public void Slow(float slowAmount, float slowTime)
     {
-        // slow movement
+        Debug.Log(name + " Has been SLOWED by = " + slowAmount + " For = " + slowTime);
+        time = slowTime;
     }
 
     public void Stun(float stunAmount, float stunTime)

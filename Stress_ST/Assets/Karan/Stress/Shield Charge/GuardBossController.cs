@@ -11,7 +11,14 @@ public class GuardBossController : MonoBehaviour {
     public Transform Target;
     RaycastHit2D[] raycastHit2D;
 
-	void Start ()
+
+    public GameObject Nade;
+    public Transform NadeSpawn;
+
+    public float LOSOffsetY;
+    public float TLOSTOffsetY;
+
+    void Start ()
     {
         flashNade = GetComponent<GranadeCostumeArc>();
         shieldCharge = GetComponent<ShieldDash>();
@@ -20,9 +27,19 @@ public class GuardBossController : MonoBehaviour {
     
     void Update ()
     {
-        Debug.DrawLine(transform.position, Target.position, Color.red);
+        Debug.DrawLine(new Vector3(transform.position.x, transform.position.y + LOSOffsetY),
+                                                new Vector3(Target.position.x, Target.position.y + TLOSTOffsetY), Color.red);
 
-        raycastHit2D =  Physics2D.LinecastAll(transform.position, Target.position, LayerMask);
+        raycastHit2D =  Physics2D.LinecastAll(new Vector3(transform.position.x, transform.position.y + LOSOffsetY),
+                                                new Vector3(Target.position.x, Target.position.y + TLOSTOffsetY), LayerMask);
+
+        Debug.Log(LOSCheck());    
+       
+        GrenadeThrow();
+
+        ShieldCharge();
+
+
 
         //Debug.Log(Test[0].transform.name);
 
@@ -37,12 +54,14 @@ public class GuardBossController : MonoBehaviour {
         //Debug.Log(raycastHit2D[0].transform.name);
 
 
-	}
+    }
     
 
     bool LOSCheck()
     {
-        if(raycastHit2D.Length >= 0 && raycastHit2D[0].transform.tag == Target.tag)
+        
+
+        if(raycastHit2D.Length > 0 && raycastHit2D[0].transform.tag == Target.tag) // TODO need to handel error if 0 elemts in array
         {
             return true;
         }
@@ -53,12 +72,22 @@ public class GuardBossController : MonoBehaviour {
     
     }
 
+    void GrenadeThrow()
+    {
+        if (Input.GetKeyDown(KeyCode.G) && LOSCheck())
+        {
+            var nade = Instantiate(Nade, NadeSpawn.position, Quaternion.identity);
+            nade.SetActive(true);
+        }
+    }
 
-
-
-
-
-
-
-
+    void ShieldCharge()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && LOSCheck())
+        {
+           shieldCharge.StartShieldCharge();
+        }
+        shieldCharge.ShieldChargeMovement();
+    }
+    
 }

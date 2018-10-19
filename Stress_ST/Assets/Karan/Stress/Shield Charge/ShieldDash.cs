@@ -7,103 +7,143 @@ public class ShieldDash : MonoBehaviour {
 
     
     Vector2 ForceAndDirection;
-    [SerializeField]
-    Transform target;
+
+    [SerializeField] Transform target;
+    [SerializeField] float slowAmount;
+    [SerializeField] float slowTime;
 
     public Animator BossAnimator;
     public float PushBackForce;
     public float ChargeSpeed;
     public float ChargeRange;
-    public bool StartCharge;
-    public GameObject Nade;
-    public Transform NadeSpawn;
+    public bool IsChargeing;
+    public LayerMask WallLayer;
 
     Vector3 MaxRangeVector;
-    Vector3 ChargeSpeedVector;
-    Vector3 StartChargPos;
+    Vector3 ChargeDirectionAndSpeed;
+    Vector3 initialChargePos;
     Rigidbody2D rb2d;
-	// Use this for initialization
+    CCController playerCCController;
+    SpriteRenderer bossSprite;
+    
+	
 	void Start ()
     {
         rb2d = GetComponent<Rigidbody2D>();
         BossAnimator = GetComponent<Animator>();
-        StartCharge = false;
+        playerCCController = target.GetComponent<CCController>();
+        bossSprite = GetComponent<SpriteRenderer>();
+
+        IsChargeing = false;
+
+       
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-
-        GrenadeThrow();
-
-
-        if (Input.GetKeyDown(KeyCode.Space))
+       /* if (Input.GetKeyDown(KeyCode.Space))
         {
-
-            BossAnimator.SetTrigger("Charge");
-            Debug.Log("CHARGE");
-            StartCharge = !StartCharge;
-            StartChargPos = transform.position;
-            
-            var targetVector = target.position - transform.position;
-
-            MaxRangeVector = targetVector.normalized * ChargeRange;
-            ChargeSpeedVector = targetVector.normalized * ChargeSpeed;
-            
+            StartShieldCharge();
         }
-            StartShieldDash(MaxRangeVector, ChargeSpeedVector);
-    }
 
-
-    public void ShieldChargeAttack()
-    {
-
-    }
-
-    private void StartShieldDash(Vector3 maxRangeVec, Vector3 chargeSpeedVec)// TODO Add Timer --> if the Boss gets stuck we will have a finale check on TIME so teh boss isent stuck in the charge state
-    {
-        if(StartCharge == true)
+        if (IsChargeing == true)
         {
-            rb2d.MovePosition(transform.position + chargeSpeedVec * Time.deltaTime);
-            
-            var dist = Vector3.Distance(transform.position, StartChargPos + maxRangeVec); 
-     
-            // if(tarnsform == StartCharge + maxRanegVec)
-            if (dist  <= 0.5f)// Switch this to TIMER insted of Position, we dont want him to get stuck in loop
+            ShieldChargeMovement();
+        }*/
+
+    }
+
+    public void ShieldChargeMovement()// TODO Add Timer --> if the Boss gets stuck we will have a finale check on TIME so teh boss isent stuck in the charge state
+    {
+        if(IsChargeing)
+        {
+            rb2d.MovePosition(transform.position + ChargeDirectionAndSpeed * Time.deltaTime);
+            CheckMaxChargeRange();
+        }
+    }
+    private void CheckMaxChargeRange()
+    {
+        var dist = Vector3.Distance(transform.position, initialChargePos + MaxRangeVector);
+
+        if (dist <= 0.5f) // Switch this to TIMER insted of Position, we dont want him to get stuck in loop
+        {
+            Debug.Log("Max Charge Reached");
+            IsChargeing = false;
+        }
+
+    }
+
+
+ 
+
+    private void OnCollisionEnter2D(Collision2D collision) // What collider is this ?
+    {
+        
+
+        if(IsChargeing == true)
+        {
+            if (collision.gameObject.tag == target.gameObject.tag) /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
             {
-                Debug.Log("Max Charge Reached");
-                StartCharge = false;
+                OnPlayerImpact(collision);
             }
-        }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == target.gameObject.tag) /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
-        {
-            Debug.Log("Player Hit");
-            BossAnimator.SetTrigger("Idle");
-            StartCharge = false;
-            var targetVector = target.position - transform.position;
-            var PushForceVector = targetVector.normalized * PushBackForce ;
-
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
-        }
-        if(collision.gameObject.tag == "Wall")
-        {
-            Debug.Log("Wall Name = " + collision.gameObject.name);
-            StartCharge = false;
+            //if (collision.gameObject.tag ==  "Wall") // tags are scary in case we change them
+            //if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
+            if (1<<collision.gameObject.layer ==  WallLayer.value) // SO -> WallLayer.value = 2^ layernum  withc is(13)
+            {
+                Debug.Log("Wall Name = " + collision.gameObject.name);
+                IsChargeing = false;
+            }
         }
         
     }
 
-
-    void GrenadeThrow()
+    public void StartShieldCharge()
     {
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            var nade = Instantiate(Nade, NadeSpawn.position, Quaternion.identity);
-            nade.SetActive(true);
-        }
+        BossAnimator.SetTrigger("Charge");
+        IsChargeing = !IsChargeing;
+        initialChargePos = transform.position;
+
+        var targetVector = target.position - transform.position;
+
+        MaxRangeVector = targetVector.normalized * ChargeRange;
+        ChargeDirectionAndSpeed = targetVector.normalized * ChargeSpeed;
+
+        /* if(targetVector.normalized.x > 0)
+         {
+             // bossSprite.flipX = false;
+             Vector3 theScale = transform.localScale;
+             theScale.x *= -1;
+             transform.localScale = theScale;
+
+         }
+         else
+         {
+             //bossSprite.flipX = true;
+
+             Vector3 theScale = transform.localScale;
+             theScale.x *= -1;
+             transform.localScale = theScale;
+
+         }*/
     }
+
+    public void OnPlayerImpact(Collision2D collision)
+    {
+        Debug.Log("Player Hit");
+        BossAnimator.SetTrigger("Idle"); // After impact anim
+        IsChargeing = false;
+        var targetVector = target.position - transform.position;
+        var PushForceVector = targetVector.normalized * PushBackForce;
+
+        playerCCController.Slow(slowAmount, slowTime);
+
+        collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
+    }
+
+
+
+
+
 }

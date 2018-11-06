@@ -39,21 +39,6 @@ public class GuardBossController : MonoBehaviour {
 
         ShieldCharge();
 
-
-
-        //Debug.Log(Test[0].transform.name);
-
-        /*for (int i = 0; i < Test.Length; i++)
-        {
-            Debug.Log(Test[i].transform.name);
-        }*/
-        // if Space && LOS clear
-
-        // if G && LOS clear
-        //Debug.Log(LOSCheck());
-        //Debug.Log(raycastHit2D[0].transform.name);
-
-
     }
     
 

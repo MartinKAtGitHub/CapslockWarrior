@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿//using UnityEngine;
+//using System.Collections;
 
-public class SlowStatusEffect : StatusEffect
+//[CreateAssetMenu (menuName = "StatusEffect/Slow")]
+public class ShieldSlowStatusEffect : StatusEffect // This dosent really need to be a mono DEV
 {
 
     private static int strongestEffectIdex;
     private static float potancy;
-
+    private PlayerController playerController;
 
     private float InitialSpeed;
+    private float InitialTime;
 
     // private PlayerStatsForTesting playerStatsForTesting;
-
 
     public override float Potancy
     {
@@ -44,27 +44,30 @@ public class SlowStatusEffect : StatusEffect
         }
     }
 
-    private void Start()
-    {
-        //   playerStatsForTesting = Target.GetComponent<PlayerStatsForTesting>(); //TODO What if player Dies While the slow is Starting. NULL ERROR Potential.
-        //InitialSpeed = playerStatsForTesting.CurrentSpeed;
-    }
-
     public override void Effect()
     {
-        //playerStatsForTesting.CurrentSpeed = InitialSpeed - (InitialSpeed * Power);
+       playerController.CurrentSpeed = InitialSpeed - (InitialSpeed * Power);
     }
 
 
     public override void EndEffect()
     {
-        // playerStatsForTesting.CurrentSpeed = playerStatsForTesting.MaxSpeed;
+       playerController.CurrentSpeed = playerController.MaxSpeed;
     }
 
     public override void ResetPotancy()
     {
         Potancy = 0;
-        //StrongestEffectIdex = 0;
+        Time = InitialTime; // Maybe let manager handle this, makea copy of it there and not in here 
+       
+    }
+
+    public void InitialzeShieldSlow()
+    {
+
+        playerController = Target.GetComponent<PlayerController>();
+        InitialSpeed = playerController.CurrentSpeed;
+        InitialTime = Time;
     }
 }
 

@@ -23,37 +23,33 @@ public class ShieldDash : MonoBehaviour {
     Vector3 ChargeDirectionAndSpeed;
     Vector3 initialChargePos;
     Rigidbody2D rb2d;
-    CCController playerCCController;
+   // CCController playerCCController;
     SpriteRenderer bossSprite;
-    
-	
+    StatusEffectManager statusEffectManager;
+    ShieldSlowStatusEffect shieldSlowStatusEffect;
+
 	void Start ()
     {
         rb2d = GetComponent<Rigidbody2D>();
         BossAnimator = GetComponent<Animator>();
-        playerCCController = target.GetComponent<CCController>();
+      //  playerCCController = target.GetComponent<CCController>();
         bossSprite = GetComponent<SpriteRenderer>();
 
         IsChargeing = false;
 
-       
+        statusEffectManager = target.GetComponent<StatusEffectManager>();
+
+        /*slowStatusEffect = new SlowStatusEffect(); // This is intresting, making a instance in the script no need to add as a componant
+        slowStatusEffect.Power = 50;
+        */
+
+        shieldSlowStatusEffect = GetComponent<ShieldSlowStatusEffect>();
+        shieldSlowStatusEffect.Target = target.gameObject;
+
+        shieldSlowStatusEffect.InitialzeShieldSlow();
+
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-       /* if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartShieldCharge();
-        }
-
-        if (IsChargeing == true)
-        {
-            ShieldChargeMovement();
-        }*/
-
-    }
-
     public void ShieldChargeMovement()// TODO Add Timer --> if the Boss gets stuck we will have a finale check on TIME so teh boss isent stuck in the charge state
     {
         if(IsChargeing)
@@ -62,6 +58,7 @@ public class ShieldDash : MonoBehaviour {
             CheckMaxChargeRange();
         }
     }
+
     private void CheckMaxChargeRange()
     {
         var dist = Vector3.Distance(transform.position, initialChargePos + MaxRangeVector);
@@ -74,13 +71,8 @@ public class ShieldDash : MonoBehaviour {
 
     }
 
-
- 
-
     private void OnCollisionEnter2D(Collision2D collision) // What collider is this ?
     {
-        
-
         if(IsChargeing == true)
         {
             if (collision.gameObject.tag == target.gameObject.tag) /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
@@ -96,7 +88,6 @@ public class ShieldDash : MonoBehaviour {
                 IsChargeing = false;
             }
         }
-        
     }
 
     public void StartShieldCharge()
@@ -137,9 +128,10 @@ public class ShieldDash : MonoBehaviour {
         var targetVector = target.position - transform.position;
         var PushForceVector = targetVector.normalized * PushBackForce;
 
-        playerCCController.Slow(slowAmount, slowTime);
-
+        // Add Status effect to list
+        statusEffectManager.StatusEffectList.Add(shieldSlowStatusEffect);
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
+
     }
 
 

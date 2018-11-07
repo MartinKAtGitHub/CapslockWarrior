@@ -26,7 +26,7 @@ public class ShieldDash : MonoBehaviour {
    // CCController playerCCController;
     SpriteRenderer bossSprite;
     StatusEffectManager statusEffectManager;
-    ShieldSlowStatusEffect shieldSlowStatusEffect;
+    SlowStatusEffect shieldSlowStatusEffect;
 
 	void Start ()
     {
@@ -43,10 +43,10 @@ public class ShieldDash : MonoBehaviour {
         slowStatusEffect.Power = 50;
         */
 
-        shieldSlowStatusEffect = GetComponent<ShieldSlowStatusEffect>();
+        shieldSlowStatusEffect = GetComponent<SlowStatusEffect>();
         shieldSlowStatusEffect.Target = target.gameObject;
 
-        shieldSlowStatusEffect.InitialzeShieldSlow();
+        //shieldSlowStatusEffect.InitialzeSlow();
 
 	}
 	

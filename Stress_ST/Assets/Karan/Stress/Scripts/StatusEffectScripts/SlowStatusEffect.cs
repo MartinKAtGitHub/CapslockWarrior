@@ -2,7 +2,7 @@
 //using System.Collections;
 
 //[CreateAssetMenu (menuName = "StatusEffect/Slow")]
-public class ShieldSlowStatusEffect : StatusEffect // This dosent really need to be a mono DEV
+public class SlowStatusEffect : StatusEffect // This dosent really need to be a mono DEV
 {
 
     private static int strongestEffectIdex;
@@ -44,6 +44,10 @@ public class ShieldSlowStatusEffect : StatusEffect // This dosent really need to
         }
     }
 
+    private void Start()
+    {
+        InitialzeSlow();
+    }
     public override void Effect()
     {
        playerController.CurrentSpeed = InitialSpeed - (InitialSpeed * Power);
@@ -62,7 +66,7 @@ public class ShieldSlowStatusEffect : StatusEffect // This dosent really need to
        
     }
 
-    public void InitialzeShieldSlow()
+    public void InitialzeSlow() // IF script ececution is out of order call this in the what ever ability is trying to slow
     {
 
         playerController = Target.GetComponent<PlayerController>();

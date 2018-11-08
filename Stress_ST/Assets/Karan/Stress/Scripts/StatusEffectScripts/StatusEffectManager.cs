@@ -8,27 +8,18 @@ public class StatusEffectManager : MonoBehaviour
 
     public List<StatusEffect> StatusEffectList;
 
-
-    // private List<StatusEffect> ActiveStatusEffectList;
-   
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (StatusEffectList.Count > 0)
         {
-            //SortStrongestEffect();
             ALTSort();
 
             for (int i = 0; i < StatusEffectList.Count; i++)
             {
-                StatusEffectList[i].Time -= Time.deltaTime;
+                var currentStatusEffectTime = StatusEffectList[i].CountDown();
 
-                if (StatusEffectList[i].Time <= 0) // the END effect put in slow class
+                if (currentStatusEffectTime <= 0) // the END effect put in slow class
                 {
                     StatusEffectList[i].EndEffect();
 
@@ -38,13 +29,13 @@ public class StatusEffectManager : MonoBehaviour
                     }
 
                     StatusEffectList.RemoveAt(i);
-                    // SortStrongestEffect(); // PERFORMANCE idk if this should be here but i need to UPDATE the INDEX of all my status effect or they go out of bounds
                     ALTSort();
 
                 }
                 else // this might be longer the the time given bacouse we are calling this for every spell not just the time given to the spell
                 {
                     StatusEffectList[StatusEffectList[i].StrongestEffectIndex].Effect();
+                   // Debug.Log("( " + StatusEffectList[i].name + " "+ i + "|" + currentStatusEffectTime + " )");
                 }
             }
         }

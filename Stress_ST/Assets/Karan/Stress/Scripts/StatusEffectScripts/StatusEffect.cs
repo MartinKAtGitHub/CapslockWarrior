@@ -5,7 +5,7 @@ public abstract class StatusEffect : MonoBehaviour
 { 
 
     public float Power;
-    public float Time;
+    public float BaseTime;
     public GameObject Target; // If we ever want the statuseffect to effect all characters in the scene. we need to get this on hit and not on Start. assigned dynamicly
 
     public abstract float Potancy { get; set; } // this needs to return Stat(class) 
@@ -15,6 +15,7 @@ public abstract class StatusEffect : MonoBehaviour
     public abstract void Effect();
     public abstract void EndEffect();
     public abstract void ResetPotancy();
+    public abstract float CountDown();
 
     /*public void ResetPotancy()
     {

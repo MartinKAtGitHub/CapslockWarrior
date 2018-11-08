@@ -1,4 +1,4 @@
-﻿//using UnityEngine;
+﻿using UnityEngine;
 //using System.Collections;
 
 //[CreateAssetMenu (menuName = "StatusEffect/Slow")]
@@ -52,8 +52,7 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
     {
        playerController.CurrentSpeed = InitialSpeed - (InitialSpeed * Power);
     }
-
-
+    
     public override void EndEffect()
     {
        playerController.CurrentSpeed = playerController.MaxSpeed;
@@ -62,16 +61,18 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
     public override void ResetPotancy()
     {
         Potancy = 0;
-        Time = InitialTime; // Maybe let manager handle this, makea copy of it there and not in here 
-       
     }
 
     public void InitialzeSlow() // IF script ececution is out of order call this in the what ever ability is trying to slow
     {
-
         playerController = Target.GetComponent<PlayerController>();
         InitialSpeed = playerController.CurrentSpeed;
-        InitialTime = Time;
+        InitialTime = BaseTime;
+    }
+
+    public override float CountDown()
+    {
+        return InitialTime -= Time.deltaTime;
     }
 }
 

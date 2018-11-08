@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour{
 //			Debug.Log("TargetSet = start running");
 		}
 		Direction = deltaTargetCurrentPos.normalized;
-		playerRigBdy.velocity = deltaTargetCurrentPos.normalized * currentSpeed;
+		playerRigBdy.AddForce(deltaTargetCurrentPos.normalized * currentSpeed);
 	}
 
 
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour{
 		if(Input.GetMouseButtonDown(1) && MouseControll)
 		{
 			mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		//	Debug.Log("<color=teal>Mouse Click " + mousePos +" </color>");
+			//Debug.Log("<color=teal>Mouse Click " + mousePos +" </color>");
 			targetSet = true;
 			cancelAutoRun = false;
 		}

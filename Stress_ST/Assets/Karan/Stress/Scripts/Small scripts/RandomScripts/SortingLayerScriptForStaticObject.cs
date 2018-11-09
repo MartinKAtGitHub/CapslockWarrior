@@ -3,7 +3,7 @@ using System.Collections;
 
 
 [ExecuteInEditMode]
-public class SortingLayerManagerMapObjects : MonoBehaviour {
+public class SortingLayerScriptForStaticObject : MonoBehaviour {
 
 	Renderer spriteRendrer;
 	// Use this for initialization
@@ -16,9 +16,8 @@ public class SortingLayerManagerMapObjects : MonoBehaviour {
 
 	// 
 	#if UNITY_EDITOR
-	void Update () 
-	{
-		// We want to do this in Start in the final game since thay are static objects that wont move.
+	void Update () //TODO we need 1 script Thats sorts moving objects. We dont want Update in static once 
+    {
 		spriteRendrer.sortingOrder = (int)(transform.position.y * -10);
 		//Debug.Log("TEST in EDITOR");
 	}

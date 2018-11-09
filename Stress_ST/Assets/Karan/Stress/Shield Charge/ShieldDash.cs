@@ -9,8 +9,6 @@ public class ShieldDash : MonoBehaviour {
     Vector2 ForceAndDirection;
 
     [SerializeField] Transform target;
-    [SerializeField] float slowAmount;
-    [SerializeField] float slowTime;
 
     public Animator BossAnimator;
     public float PushBackForce;
@@ -23,19 +21,21 @@ public class ShieldDash : MonoBehaviour {
     Vector3 ChargeDirectionAndSpeed;
     Vector3 initialChargePos;
     Rigidbody2D rb2d;
-   // CCController playerCCController;
     SpriteRenderer bossSprite;
     StatusEffectManager statusEffectManager;
     SlowStatusEffect shieldSlowStatusEffect;
 
-	void Start ()
+    bool facingRigth;
+
+
+    void Start ()
     {
         rb2d = GetComponent<Rigidbody2D>();
         BossAnimator = GetComponent<Animator>();
-      //  playerCCController = target.GetComponent<CCController>();
         bossSprite = GetComponent<SpriteRenderer>();
 
         IsChargeing = false;
+        facingRigth = true;
 
         statusEffectManager = target.GetComponent<StatusEffectManager>();
 
@@ -45,8 +45,6 @@ public class ShieldDash : MonoBehaviour {
 
         shieldSlowStatusEffect = GetComponent<SlowStatusEffect>();
         shieldSlowStatusEffect.Target = target.gameObject;
-
-        //shieldSlowStatusEffect.InitialzeSlow();
 
 	}
 	
@@ -95,29 +93,30 @@ public class ShieldDash : MonoBehaviour {
         BossAnimator.SetTrigger("Charge");
         IsChargeing = !IsChargeing;
         initialChargePos = transform.position;
-
         var targetVector = target.position - transform.position;
-
         MaxRangeVector = targetVector.normalized * ChargeRange;
         ChargeDirectionAndSpeed = targetVector.normalized * ChargeSpeed;
 
-        /* if(targetVector.normalized.x > 0)
-         {
-             // bossSprite.flipX = false;
-             Vector3 theScale = transform.localScale;
-             theScale.x *= -1;
-             transform.localScale = theScale;
+        if (ChargeDirectionAndSpeed.x > 0 && !facingRigth)
+        {
+            //bossSprite.flipX = false;
 
-         }
-         else
-         {
-             //bossSprite.flipX = true;
+            Flip();
+        }
+        else if(ChargeDirectionAndSpeed.x < 0 && facingRigth)
+        {
+            // bossSprite.flipX = true;
+            Flip();
+        }
+    }
 
-             Vector3 theScale = transform.localScale;
-             theScale.x *= -1;
-             transform.localScale = theScale;
 
-         }*/
+    public void Flip() // TODO update Flip() Method to use the sprite flip insted of scale *-1
+    {
+        facingRigth = !facingRigth;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     public void OnPlayerImpact(Collision2D collision)
@@ -129,6 +128,7 @@ public class ShieldDash : MonoBehaviour {
         var PushForceVector = targetVector.normalized * PushBackForce;
 
         // Add Status effect to list
+        Debug.Log(shieldSlowStatusEffect.BaseTime);
         statusEffectManager.StatusEffectList.Add(shieldSlowStatusEffect);
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
 

@@ -4,7 +4,7 @@ public class PlayerController : MonoBehaviour{
 
 
 	[SerializeField]private float currentSpeed;
-	[SerializeField]private float maxSpeed;
+	[SerializeField]private float baseSpeed;
     public Animator heroAnimator;
 	public bool MouseControll;
 	public bool canPlayerMove;
@@ -28,11 +28,11 @@ public class PlayerController : MonoBehaviour{
 		OnlyArrows,
 	};*/
 
-    public float MaxSpeed
+    public float BaseSpeed
     {
         get
         {
-            return maxSpeed;
+            return baseSpeed;
         }
     }
 
@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour{
 		}
 		set
 		{
-			Debug.Log("PlayerController Speed Set To  = " + value);
 			currentSpeed = value;		
 		}
 	}
@@ -88,7 +87,7 @@ public class PlayerController : MonoBehaviour{
 		}
         //Debug.Log(heroAnimator.name);
 
-        CurrentSpeed = MaxSpeed;
+        CurrentSpeed = BaseSpeed;
 	}
 
 

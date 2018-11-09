@@ -16,7 +16,7 @@ public class GuardBossController : MonoBehaviour {
     public Transform NadeSpawn;
 
     public float LOSOffsetY;
-    public float TLOSTOffsetY;
+    public float TargetLOSOffsetY;
 
     void Start ()
     {
@@ -28,10 +28,10 @@ public class GuardBossController : MonoBehaviour {
     void Update ()
     {
         Debug.DrawLine(new Vector3(transform.position.x, transform.position.y + LOSOffsetY),
-                                                new Vector3(Target.position.x, Target.position.y + TLOSTOffsetY), Color.red);
+                                                new Vector3(Target.position.x, Target.position.y + TargetLOSOffsetY), Color.red);
 
         raycastHit2D =  Physics2D.LinecastAll(new Vector3(transform.position.x, transform.position.y + LOSOffsetY),
-                                                new Vector3(Target.position.x, Target.position.y + TLOSTOffsetY), LayerMask);
+                                                new Vector3(Target.position.x, Target.position.y + TargetLOSOffsetY), LayerMask);
 
         Debug.Log("Can i see player = " + LOSCheck());    
        

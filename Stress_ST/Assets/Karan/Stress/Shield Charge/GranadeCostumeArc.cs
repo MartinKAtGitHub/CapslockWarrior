@@ -19,6 +19,8 @@ public class GranadeCostumeArc : MonoBehaviour
 
     [SerializeField] float AirTime;
     [SerializeField] float TimeOnGroundBeforeDetonation;
+    [SerializeField] SpriteRenderer spriteRenderer;
+
 
     Animator nadeAnimator;
     SlowStatusEffect slowStatusEffect;
@@ -26,6 +28,7 @@ public class GranadeCostumeArc : MonoBehaviour
     CircleCollider2D circleCollider2D;
     Vector3 startPos;
     Vector3 targetPos;
+
 
     bool inAir;
 
@@ -44,9 +47,9 @@ public class GranadeCostumeArc : MonoBehaviour
         particleShape.radius = circleCollider2D.radius;
 
         circleCollider2D.enabled = false;
-
         inAir = true;
 
+        SpriteSorting();
     }
 
     void Update()
@@ -136,4 +139,11 @@ public class GranadeCostumeArc : MonoBehaviour
         Target.GetComponent<StatusEffectManager>().StatusEffectList.Add(slowStatusEffect);
     }
 
+
+    private void SpriteSorting()
+    {
+        var sortFromThisPosition = Target.position.y - 0.3;
+        Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
+        spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
+    }
 }

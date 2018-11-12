@@ -38,7 +38,6 @@ public class GuardBossController : MonoBehaviour {
         GrenadeThrow();
 
         ShieldCharge();
-
     }
     
 

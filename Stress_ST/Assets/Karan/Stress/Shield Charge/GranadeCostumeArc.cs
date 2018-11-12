@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class GranadeCostumeArc : MonoBehaviour
 {
-
-
-
     [Tooltip("Position we want to hit")]
     public Transform Target;
     public Transform Grenade;
@@ -49,7 +46,7 @@ public class GranadeCostumeArc : MonoBehaviour
         circleCollider2D.enabled = false;
         inAir = true;
 
-        SpriteSorting();
+        //SpriteSorting();
     }
 
     void Update()
@@ -121,7 +118,6 @@ public class GranadeCostumeArc : MonoBehaviour
        
     }
 
-
     /// 
     /// This is a 2D version of Quaternion.LookAt; it returns a quaternion
     /// that makes the local +X axis point in the given forward direction.
@@ -140,10 +136,28 @@ public class GranadeCostumeArc : MonoBehaviour
     }
 
 
-    private void SpriteSorting()
+    private void SpriteSorting() //TODO sorting bugs at certain angels, the arc / boss postions are the cultprit
     {
-        var sortFromThisPosition = Target.position.y - 0.3;
+        var selecSortOrgin = Target.position.y - transform.position.y;
+        Debug.Log("SORT = " + transform.position.y);
+
+        var sortFromThisPosition = transform.position.y - 0.3;
         Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
         spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
+
+        /*if (selecSortOrgin > 0)
+        {
+            var sortFromThisPosition = Target.position.y - 0.3;
+            Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
+            spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
+        }
+        else
+        {
+            var sortFromThisPosition = transform.position.y;
+            Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
+            spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
+        }
+        */
+
     }
 }

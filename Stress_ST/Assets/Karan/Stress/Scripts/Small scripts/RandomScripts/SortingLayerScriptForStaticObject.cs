@@ -6,7 +6,7 @@ using System.Collections;
 public class SortingLayerScriptForStaticObject : MonoBehaviour {
 
 	Renderer spriteRendrer;
-	// Use this for initialization
+	
 	void Start () 
 	{
 		spriteRendrer = GetComponent<Renderer>();

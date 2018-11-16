@@ -21,15 +21,17 @@ public class GuardEnemy : MonoBehaviour {
 	
 	void Update ()
     {
-		
-
-
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("Input is from GuardEnemy");
+            MeleeAttack();
+        }
+           
 	}
 
     void MeleeAttack()
     {
         guardAnimator.SetTrigger(attackHash);
     }
-
 
 }

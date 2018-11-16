@@ -10,7 +10,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     private CircleCollider2D cCollider2D;
 
     [SerializeField]
-    private string playerTag;
+    private GameObject TargetPlayer;
     [SerializeField]
     private float typeingSpeed;
     [SerializeField]
@@ -75,10 +75,10 @@ public class NPCDialogueOverhear : MonoBehaviour
 
     private void CheckPlayerTag()
     {
-        if (string.IsNullOrEmpty(playerTag))
+        if (TargetPlayer == null)
         {
-            Debug.LogError("Cant Find PlayerTag NPCDialogueOverhear");
-            //playerTag = Gamemanager.player.PlayerTag
+            Debug.LogError(" No Target PLAYER ");
+            //TargetPlayer = Gamemanager.player
         }
     }
 
@@ -216,7 +216,7 @@ public class NPCDialogueOverhear : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == playerTag && playerInDialgueRange == false)
+        if (col.tag == TargetPlayer.tag && playerInDialgueRange == false)
         {
             StartCoroutine(PlayDialogue());
             //cCollider2D.enabled = false;
@@ -225,7 +225,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == playerTag)
+        if (col.tag == TargetPlayer.tag)
         {
             Debug.Log("EXIT Group NPC Dialogue");
             //playerExitDialogue = true;

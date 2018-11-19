@@ -78,7 +78,7 @@ public class NPCDialogueOverhear : MonoBehaviour
         if (TargetPlayer == null)
         {
             Debug.LogError(" No Target PLAYER ");
-            //TargetPlayer = Gamemanager.player
+            // TODO add a way for this NPC dialogue script to get the Player after he is spawned into the scene TargetPlayer = Gamemanager.player
         }
     }
 
@@ -187,9 +187,23 @@ public class NPCDialogueOverhear : MonoBehaviour
 
             DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y + PlayerDialogBoxOffsetY));
 
-            SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("StartTalking");
-            SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("IsTalking");
             
+
+            if(SentenceDatas[i].NPC.GetComponentInChildren<Animator>() != null)
+            {
+                var npcAnimator = SentenceDatas[i].NPC.GetComponentInChildren<Animator>();
+                npcAnimator.SetTrigger("StartTalking");
+                npcAnimator.SetTrigger("IsTalking");
+            }else
+            {
+                Debug.LogWarning("Cant find NPC animator");
+            }
+
+            //SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("StartTalking");
+            //SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("IsTalking");
+            
+
+
             // Transition --> transition anim(has exit time) --> main Anim
 
             foreach (var letters in SentenceDatas[i].Sentence)

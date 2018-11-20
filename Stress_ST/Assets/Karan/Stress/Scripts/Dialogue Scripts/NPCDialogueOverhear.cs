@@ -40,9 +40,6 @@ public class NPCDialogueOverhear : MonoBehaviour
     private SentenceData[] SentenceDatas;
 
     //private Queue<SentenceData> SentenceDataQueue;
-
-
-
     private void Start()
     {
       
@@ -57,13 +54,12 @@ public class NPCDialogueOverhear : MonoBehaviour
         //StartCoroutine(PlayDialogue());
     }
 
-   
 
     void Update()
     {
         if (playerInDialgueRange)
         {
-            CenterTextBoxElementsParent();
+            CenterTextBoxElementsParent(); // So it dosent move around with you
         }
     }
 
@@ -71,7 +67,6 @@ public class NPCDialogueOverhear : MonoBehaviour
     {
         throw new NotImplementedException();
     }
-
 
     private void CheckPlayerTag()
     {
@@ -86,7 +81,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     {
         if (NPCGroupCanvas == null)
         {
-            Debug.LogError("Connect script with Prefab --> connection has been lost");
+            Debug.LogError("Connect script with NPCGroupCanvas Prefab --> drag and drop connection has been lost");
             //this.enabled = false;
             //gameObject.SetActive(false);
             //return; break;
@@ -154,6 +149,7 @@ public class NPCDialogueOverhear : MonoBehaviour
             Debug.LogError("Cant Find Main Cam --> look in Game Manager");
         }
     }
+
     private void CenterTextBoxElementsParent()
     {
         Debug.Log("Center CAM");
@@ -176,7 +172,7 @@ public class NPCDialogueOverhear : MonoBehaviour
     IEnumerator PlayDialogue()
     {
         playerInDialgueRange = true;
-        DialogueBoxParent.SetActive(true);
+        DialogueBoxParent.SetActive(true); // FIXME i think this lags out the game, when player first contacts the trigger (have it ON from the Start lul)
       
 
         for (int i = 0; i < SentenceDatas.Length; i++)
@@ -184,7 +180,8 @@ public class NPCDialogueOverhear : MonoBehaviour
             dialogueText.text = string.Empty;
 
             yield return null; // wait 1 frame beacuse rect transform is BrokeBack
-
+            
+            // Center Dbox ontop of NPC
             DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y + PlayerDialogBoxOffsetY));
 
             
@@ -199,11 +196,7 @@ public class NPCDialogueOverhear : MonoBehaviour
                 Debug.LogWarning("Cant find NPC animator");
             }
 
-            //SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("StartTalking");
-            //SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("IsTalking");
             
-
-
             // Transition --> transition anim(has exit time) --> main Anim
 
             foreach (var letters in SentenceDatas[i].Sentence)

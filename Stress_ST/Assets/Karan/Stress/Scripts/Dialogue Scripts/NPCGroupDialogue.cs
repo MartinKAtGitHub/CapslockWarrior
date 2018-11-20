@@ -171,10 +171,6 @@ public class NPCGroupDialogue : MonoBehaviour
                     else
                         //NPCObjects[i].NPCAnimator.SetBool(dialogData.AnimationTriggerName, true); // <--- this triggers the animation with that connections
                  */
-
-
-                //NPCObjects[i].NPCAnimator.SetBool(NPCObjects[i].IsTalkingAnimParameter, true);
-                //NPCObjects[i].NPCAnimator.SetTrigger(NPCObjects[i].IsTalkingAnimParameter);
                  NPCObjects[i].NPCAnimator.SetTrigger(MouthAnimTriggerName);
                  NPCObjects[i].NPCAnimator.SetTrigger(BodyAnimTriggerName);
 

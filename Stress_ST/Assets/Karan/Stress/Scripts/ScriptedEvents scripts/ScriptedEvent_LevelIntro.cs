@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScriptedEvent_LevelIntro : ScriptedEvent 
 {
 	public Vector3 OldManPosFromPlayer;
-	public DialogueManager DManager;
+	
 
 	public override bool ScriptedEventEnd{get;set;}
 	//[SerializeField] private LevelManager_Master levelManagerMaster;

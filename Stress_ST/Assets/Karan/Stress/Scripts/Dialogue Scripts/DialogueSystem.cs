@@ -10,6 +10,10 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     [SerializeField] protected GameObject TargetPlayer;
     /// <summary>
+    /// The collider which will trigger the dialogue. Can be drag and droped if child
+    /// </summary>
+    [SerializeField] protected Collider2D dialogueTrigger;
+    /// <summary>
     /// The speed at which the letters are beeing displayed 
     /// </summary>
     [SerializeField] private float typeingSpeed;
@@ -46,6 +50,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// The camera the dialogue Box will use to center the Dialogue UI
     /// </summary>
     [SerializeField] private Camera mainCam;
+    
 
     [Space(10)]
     /// <summary>
@@ -53,8 +58,14 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     [SerializeField] protected SentenceData[] sentenceDataArray;
 
-
+    /// <summary>
+    /// Am i currently in a dialogue. Prevents player from running inn and out of trigger starting new dialogue
+    /// </summary>
     protected bool isDialogueActiv;
+    /// <summary>
+    /// Is the main dialogue finished. Used for when we want to start to loop dialogue
+    /// </summary>
+    protected bool isMainDialogueFinished;
 
     void Start()
     {
@@ -144,5 +155,33 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// Add this to when you want to end the dialogue. Signaling end of dialogue sequence
     /// </summary>
     public abstract void EndDialouge();
+
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == TargetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == false)
+        {
+            StartCoroutine(StartMainDialogue());
+            //cCollider2D.enabled = false;
+            Debug.Log("START NPC MAIN Dialogue");
+        }
+        else if(col.tag == TargetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == true)
+        {
+            StartCoroutine(StartLoopDialogue());
+            Debug.Log("START NPC LOOP Dialogue");
+        }
+
+        // If(Dialogue is over) -> StartLoopDialogue
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == TargetPlayer.tag)
+        {
+            Debug.Log("EXIT Dialogue Range");
+            //playerExitDialogue = true;
+            // cCollider2D.enabled = false;
+        }
+    }
+
 
 }

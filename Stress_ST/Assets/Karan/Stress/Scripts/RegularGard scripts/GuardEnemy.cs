@@ -8,7 +8,7 @@ public class GuardEnemy : MonoBehaviour {
 
     [SerializeField] private Animator guardAnimator;
 
-    private int attackHash = Animator.StringToHash("Attack"); // this seemses so bad this HardCoded trigger
+    private  readonly int attackHash = Animator.StringToHash("Attack"); // this seemses so bad this HardCoded trigger
 
 	
     

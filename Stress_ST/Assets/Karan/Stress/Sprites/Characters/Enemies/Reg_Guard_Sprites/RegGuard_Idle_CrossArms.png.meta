@@ -1,17 +1,13 @@
 fileFormatVersion: 2
-guid: 0247e0cb5b790424982b1b44193b5e7c
+guid: 10b765b7ce7153e408fc769841ae0068
 TextureImporter:
   fileIDToRecycleName:
-    21300000: RegGuard_Idle_Sprites_0
-    21300002: RegGuard_Idle_Sprites_1
-    21300004: RegGuard_Idle_Sprites_2
-    21300006: RegGuard_Idle_Sprites_3
-    21300008: RegGuard_Idle_Sprites_4
-    21300010: RegGuard_Idle_Sprites_5
-    21300012: RegGuard_Idle_Sprites_6
-    21300014: RegGuard_Idle_Sprites_7
+    21300000: RegGuard_Idle_CrossArms_0
+    21300002: RegGuard_Idle_CrossArms_1
+    21300004: RegGuard_Idle_CrossArms_2
+    21300006: RegGuard_Idle_CrossArms_3
   externalObjects: {}
-  serializedVersion: 6
+  serializedVersion: 7
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -92,7 +88,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_0
+      name: RegGuard_Idle_CrossArms_0
       rect:
         serializedVersion: 2
         x: 0
@@ -106,13 +102,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7afbd716afc316449677b23f4f66969
+      spriteID: 71ccf3fc144fcfa4aa9fc22b940dd7e1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_1
+      name: RegGuard_Idle_CrossArms_1
       rect:
         serializedVersion: 2
         x: 32
@@ -126,13 +122,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8d5b6a308f64564a8b298629d5c914a
+      spriteID: 7242b8ec6d659d641aa49e2f07fca454
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_2
+      name: RegGuard_Idle_CrossArms_2
       rect:
         serializedVersion: 2
         x: 64
@@ -146,13 +142,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0351ad47ab7824047be319a423993332
+      spriteID: beb9b79fc2c767248a720c4c8f145224
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_3
+      name: RegGuard_Idle_CrossArms_3
       rect:
         serializedVersion: 2
         x: 96
@@ -166,87 +162,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85c32b8a8f7b0864c8125a430e5d2574
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0286ad3e402d1b94583aedd5c97272b6
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a1c9f1411884fe449a0126ed3bd4b71e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8dfa1e189a6fb474db5ecf3d352d57fe
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RegGuard_Idle_Sprites_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 584c254ef0bd7a64798c85cb94b22235
+      spriteID: 11374f3f33d816648b409b244d64140d
       vertices: []
       indices: 
       edges: []
@@ -254,12 +170,14 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6b405b4ed62bc2f4baccc8d53a7566cc
+    spriteID: 6bf072a0beb8ed3469454abc66658e8d
     vertices: []
     indices: 
     edges: []
     weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

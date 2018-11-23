@@ -4,7 +4,22 @@ using UnityEngine;
 
 public class RandomDialogueRespons : DialogueSystem
 {
-    
+    [SerializeField] Animator guardAnimator;
+    /// <summary>
+    /// Used to crate a short delay before Animation starts or els all anims would be in sync and make it look Robotic
+    /// </summary>
+    [SerializeField] float RandomDelay;
+
+    readonly int idlelookOut = Animator.StringToHash("Idle1");
+    readonly int idleFlipStick = Animator.StringToHash("Idle2");
+    readonly int idleCrossArms = Animator.StringToHash("Idle3");
+   
+    private void Start()
+    {
+       
+    }
+
+
     public override IEnumerator StartLoopDialogue()
     {
         Debug.Log("Looping Dialogue");
@@ -42,5 +57,9 @@ public class RandomDialogueRespons : DialogueSystem
         Debug.Log("Dialogue End");
     }
  
+    IEnumerator PlayerRandomIdleAnim()
+    {
+        yield return new WaitForSeconds(RandomDelay);
+    }
 
 }

@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class RandomDialogueRespons : DialogueSystem
 {
+    [Space(10)]
     [SerializeField] Animator guardAnimator;
     /// <summary>
     /// Used to crate a short delay before Animation starts or els all anims would be in sync and make it look Robotic
     /// </summary>
-    [SerializeField] float RandomDelay;
+    [SerializeField] Vector2 RandomDelay;
 
     readonly int idlelookOut = Animator.StringToHash("Idle1");
     readonly int idleFlipStick = Animator.StringToHash("Idle2");
     readonly int idleCrossArms = Animator.StringToHash("Idle3");
    
-    private void Start()
+    private new void Start()
     {
-       
+        
+        base.Start();
+        StartCoroutine(PlayerRandomIdleAnim());
     }
 
 
@@ -59,7 +62,28 @@ public class RandomDialogueRespons : DialogueSystem
  
     IEnumerator PlayerRandomIdleAnim()
     {
-        yield return new WaitForSeconds(RandomDelay);
+        var randTime = Random.Range(RandomDelay.x, RandomDelay.y);
+
+        Debug.Log(randTime +" < -TIME | Name ->" + name);
+        yield return new WaitForSeconds(randTime);
+
+        var idleAnimValue = Random.Range(0 , 3); // 3 dosent exist cuz Computers
+        Debug.Log("Guard Anim = " + idleAnimValue);
+        switch (idleAnimValue)
+        {
+            case 0:
+                guardAnimator.SetTrigger(idlelookOut);
+                break;
+            case 1:
+                guardAnimator.SetTrigger(idleFlipStick);
+                break;
+            case 2:
+                guardAnimator.SetTrigger(idleCrossArms);
+                break;
+            default:
+                Debug.Log(" PlayerRandomIdleAnim() Switch faild Default set --> no anim ");
+                break;
+        }
     }
 
 }

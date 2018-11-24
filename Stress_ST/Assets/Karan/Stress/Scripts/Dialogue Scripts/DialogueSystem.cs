@@ -67,8 +67,9 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     protected bool isMainDialogueFinished;
 
-    void Start()
+    protected void Start()
     {
+        
         CheckMainCam();
         CheckSentenceDataNull();
     }
@@ -90,6 +91,7 @@ public abstract class  DialogueSystem : MonoBehaviour
 
             // mainCam = GameManager . player . Cam
             Debug.LogError("Cant Find Main Cam --> look in Game Manager and set the main Cam");
+            
         }
     }
     private void CheckSentenceDataNull()

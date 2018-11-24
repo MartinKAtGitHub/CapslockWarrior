@@ -16,6 +16,11 @@ public class GuardEnemy : MonoBehaviour {
 	void Start ()
     {
 		// Connect with all my scripts and out going scripts
+        if(guardAnimator == null)
+        {
+            Debug.LogWarning("LOST DRAG DROP CONNECTION");
+            guardAnimator = GetComponentInChildren<Animator>();
+        }
 	}
 	
 	

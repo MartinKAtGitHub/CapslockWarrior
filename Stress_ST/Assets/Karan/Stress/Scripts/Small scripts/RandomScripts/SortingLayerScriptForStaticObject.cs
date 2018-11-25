@@ -15,8 +15,8 @@ public class SortingLayerScriptForStaticObject : MonoBehaviour {
 
 
 	// 
-	#if UNITY_EDITOR
-	void Update () //TODO we need 1 script Thats sorts moving objects. We dont want Update in static once 
+	#if UNITY_EDITOR // This code will only run when in editor
+	void Update ()
     {
 		spriteRendrer.sortingOrder = (int)(transform.position.y * -10);
 		//Debug.Log("TEST in EDITOR");

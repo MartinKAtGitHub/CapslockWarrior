@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerController : MonoBehaviour{
 
 
-	[SerializeField]private float maxSpeed = 10f;
-	public Animator heroAnimator;
+	[SerializeField]private float currentSpeed;
+	[SerializeField]private float baseSpeed;
+    public Animator heroAnimator;
 	public bool MouseControll;
 	public bool canPlayerMove;
 	bool AutoRun;
@@ -21,24 +21,31 @@ public class PlayerController : MonoBehaviour{
 	Transform heroGraphics;
 	Vector3 mousePos;
 
-	/*public ControllerType SelectedControllerType;
+    /*public ControllerType SelectedControllerType;
 	public enum ControllerType
 	{
 		MouseAndArrows,
 		OnlyArrows,
 	};*/
 
+    public float BaseSpeed
+    {
+        get
+        {
+            return baseSpeed;
+        }
+    }
 
-	public float MaxSpeed
+    public float CurrentSpeed
 	{
 		get
 		{
-			return maxSpeed;	
+            
+			return currentSpeed;	
 		}
 		set
 		{
-			Debug.Log("PlayerController Speed Set To  = " + value);
-			maxSpeed = value;		
+			currentSpeed = value;		
 		}
 	}
 
@@ -78,7 +85,9 @@ public class PlayerController : MonoBehaviour{
 			//heroAnimator = heroGraphics.GetComponent<Animator>();
 			heroAnimator = GetComponent<Animator>();
 		}
-		//Debug.Log(heroAnimator.name);
+        //Debug.Log(heroAnimator.name);
+
+        CurrentSpeed = BaseSpeed;
 	}
 
 
@@ -158,16 +167,15 @@ public class PlayerController : MonoBehaviour{
 	private void ArrowsRun()
 	{
 		Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-		playerRigBdy.velocity = new Vector2 (Direction.x * MaxSpeed, Direction.y * MaxSpeed);
+		playerRigBdy.velocity = new Vector2 (Direction.x * CurrentSpeed, Direction.y * CurrentSpeed);
 	}
-	public void ScriptedEventMove(Transform actorPos, Transform targetPos ) // iknow this is redundant but easier to understand
+	public void ScriptedEventMove(Transform actorPos, Transform targetPos )
 	{
 		Vector2 deltaVec = targetPos.position - actorPos.position;
 		Direction = deltaVec.normalized;
-		playerRigBdy.velocity = deltaVec.normalized * maxSpeed;
+		playerRigBdy.velocity = deltaVec.normalized * currentSpeed;
 	}
-
-
+    
 
 	private void MouseAutoRun()
 	{
@@ -177,7 +185,7 @@ public class PlayerController : MonoBehaviour{
 //			Debug.Log("TargetSet = start running");
 		}
 		Direction = deltaTargetCurrentPos.normalized;
-		playerRigBdy.velocity = deltaTargetCurrentPos.normalized * maxSpeed;
+		playerRigBdy.AddForce(deltaTargetCurrentPos.normalized * currentSpeed);
 	}
 
 
@@ -195,7 +203,7 @@ public class PlayerController : MonoBehaviour{
 			if(InputRecived) // TODO GetKeyDown --> creats a bug where you need to Re-press buttons if you hold opposit buttons Not really a bug but
 			{
 				Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));// <-- This is in FIXEDUPDATE() might lose input
-				playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
+				playerRigBdy.velocity = new Vector2(Direction.x * CurrentSpeed, Direction.y * CurrentSpeed);
 				InputRecived = false;
 				Debug.Log("DIR = " + Direction );
 			}
@@ -203,7 +211,8 @@ public class PlayerController : MonoBehaviour{
 		else
 		{
 			Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-			playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
+            //playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
+            playerRigBdy.AddForce(new Vector2(Direction.x * CurrentSpeed, Direction.y * CurrentSpeed));
 		}
 
 
@@ -292,7 +301,7 @@ public class PlayerController : MonoBehaviour{
 		if(Input.GetMouseButtonDown(1) && MouseControll)
 		{
 			mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		//	Debug.Log("<color=teal>Mouse Click " + mousePos +" </color>");
+			//Debug.Log("<color=teal>Mouse Click " + mousePos +" </color>");
 			targetSet = true;
 			cancelAutoRun = false;
 		}

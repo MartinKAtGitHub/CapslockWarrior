@@ -16,7 +16,7 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	public GameObject IntroCam;
 
 	public Vector3 OldManPosFromPlayer;
-	public DialogueManager DManager;
+	//public DialogueManager DManager;
 
 	private Animator HeroAnimator;
 	private Rigidbody2D playerRigBdy;
@@ -109,7 +109,8 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 	private void StartDialog(GameObject character)
 	{
 		// enable dialog box
-		character.GetComponent<DialogueTrigger>().TriggerDialouge();
+		//character.GetComponent<DialogueTrigger>().TriggerDialouge();
+        //TODO Fix Dialogue in ScriptedMomentsANimations
 	}
 
 	private void PanCamToShowBoss()
@@ -132,8 +133,10 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 
 	private bool IsDialogueFinished()// This checks to see if the Chasracter talking has ended the Dialogue he has.
 	{
-		return DManager.isDialogueEnd;
-	}
+        //return DManager.isDialogueEnd;
+        Debug.LogError("NEED TO ADD NEW DILOGUE SYSTEM");
+        return false;
+    }
 
 	private void RefSetup()
 	{

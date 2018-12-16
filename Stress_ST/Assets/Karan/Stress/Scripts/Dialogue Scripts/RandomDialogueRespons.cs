@@ -62,7 +62,8 @@ public class RandomDialogueRespons : DialogueSystem
  
     IEnumerator PlayerRandomIdleAnim()
     {
-        var randTime = Random.Range(RandomDelay.x, RandomDelay.y);
+      
+        var randTime = Random.Range(RandomDelay.x, RandomDelay.y); //TODO Get the the 12(sample) frames and choose a random time from that
 
         Debug.Log(randTime +" < -TIME | Name ->" + name);
         yield return new WaitForSeconds(randTime);

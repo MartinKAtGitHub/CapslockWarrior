@@ -22,4 +22,5 @@ public class SortingLayerScriptForStaticObject : MonoBehaviour {
 		//Debug.Log("TEST in EDITOR");
 	}
 	#endif
+
 }

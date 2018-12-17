@@ -2,7 +2,7 @@
 //using System.Collections;
 
 //[CreateAssetMenu (menuName = "StatusEffect/Slow")]
-public class SlowStatusEffect : StatusEffect // This dosent really need to be a mono DEV
+public class SlowStatusEffect : StatusEffect // This dosent really need to be a mono DEV can be changed to scripable object
 {
 
     private static int strongestEffectIdex;

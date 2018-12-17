@@ -12,7 +12,8 @@ public class PlayerManager : CreatureRoot {
 	public ObjectNodeInfo Node;
 	const int _NewMapCenter = -100;//Previour Center Was 0,0. That Caused Some Problems When The Player Was On A 0 Value. -0.9 == 0. 0.9 = 0. So That Fixed It But That Means That You Cant Go Below -100xy. Change This To Change The Center
 	const float _NodeDimentions = 0.08f;
-	/*
+	
+    /*
 	public float HealthPoints = 100;
 	public float CurrentMana = 100;
 	public float MaxMana = 100;
@@ -186,7 +187,8 @@ public class PlayerManager : CreatureRoot {
 			ClampMana();
 		}
 	}
-	public void AbilityManaGain(int amountGain)
+
+    public void AbilityManaGain(int amountGain)
 	{
 		for (int i = 0; i < amountGain; i++) 
 		{

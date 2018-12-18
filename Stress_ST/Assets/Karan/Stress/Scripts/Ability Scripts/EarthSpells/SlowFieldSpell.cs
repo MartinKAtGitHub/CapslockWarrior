@@ -132,7 +132,7 @@ public class SlowFieldSpell : Ability {
 		{
 			slowFieldDurationCounDown = slowFieldDuration;
 			Destroy(this.gameObject);
-			Debug.Log("SlowField ---> Destroyed BUT PEOPLE STILL SLOWED SINCE ONTRIGGEREXIT()");
+			Debug.Log("SlowField ---> Destroyed BUT PEOPLE STILL SLOWED SINCE ONTRIGGEREXIT(FIX in COMMENTS -->)"); // Save Ref from all Effected Enemis. OnEffectEnd Release them from slow or have a CD that will time it out
 		}
 	}
 	// TODO Ask how this works little confused dose how the trigger retains info on what speeds to give back to the enemy

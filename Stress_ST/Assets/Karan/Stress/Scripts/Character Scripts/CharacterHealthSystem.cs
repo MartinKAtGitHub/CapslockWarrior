@@ -2,17 +2,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterHealthSystem : MonoBehaviour
+public abstract class CharacterHealthSystem : MonoBehaviour
 {
     private Character character;
     private const int HealthPointsPerContainer = 4;
-    [SerializeField] private Image[] HeartContainer_Imgs;
+    [SerializeField] protected Image[] HeartContainer_Imgs; // Maybe make a list and sorting by number so that the Containers arent random
 
     public Character Character
     {
         get
         {
-            
+
             return character;
         }
 
@@ -40,18 +40,18 @@ public class CharacterHealthSystem : MonoBehaviour
         currentPoints = maxPoints;
     }
 
-    private void ClampHealth()
+    protected void ClampHealth()
     {
         character.Stats.Health = Mathf.Clamp(character.Stats.Health, 0, character.Stats.BaseHealth);
-        OnHealthOrManaChanged(character.Stats.Health, HeartContainer_Imgs);
+        //OnHealthOrManaChanged(character.Stats.Health, HeartContainer_Imgs);
     }
 
 
-    private void OnHealthOrManaChanged(int currentValue, Image[] container)
+    protected void OnHealthOrManaChanged(int currentHealth, Image[] container)
     {
-        int containerIndex = currentValue / HealthPointsPerContainer;
+        int containerIndex = currentHealth / HealthPointsPerContainer;
         //Debug.Log("Current Container (" + containerIndex + ")");
-        int fill = currentValue % HealthPointsPerContainer;
+        int fill = currentHealth % HealthPointsPerContainer;
         //Debug.Log("Current Fill (" + fill + ")");
 
 
@@ -59,11 +59,13 @@ public class CharacterHealthSystem : MonoBehaviour
         {
             if (containerIndex == container.Length)//indicates full HP
             {
+              
                 container[containerIndex - 1].fillAmount = 1;
-                return;
+                return; // This breaks the Rest But mayeb ElseIf would fix issue
             }
             if (containerIndex > 0)// indicates anything but 0 health where there are only whole wearts or empty hearts
             {
+              
                 container[containerIndex].fillAmount = 0;
                 container[containerIndex - 1].fillAmount = 1;
 
@@ -77,25 +79,25 @@ public class CharacterHealthSystem : MonoBehaviour
         container[containerIndex].fillAmount = fill / (float)HealthPointsPerContainer;
     }
 
-    private bool IsCharacterAlive(string name)
+    protected void IsCharacterDead()
     {
-        if (character.Stats.Health <= 0)
+        if (Character.Stats.Health <= 0)
         {
             Debug.Log("<color=blue>" + name + " Is Dead</color>:");
-            return true;
-        }
-        else
-        {
-            return false;
+            OnCharacterDeath();          
         }
     }
-
-    public void TakeDamage(int dmg)
+    protected abstract void OnCharacterDeath(); //Maybe make Abstarct and let the player/enemy handle its Death
+    
+    public abstract void TakeDamage(int dmg);
+   /* public void TakeDamage(int dmg) //Original
     {
+        Debug.Log("Player Taking Damage!");
         for (int i = 0; i < (Mathf.FloorToInt(dmg)); i++) //PERFORMANCE the system only works for 1 dmg(value)... so i need to calulate for every instance of dmg
         {
-            character.Stats.Health -= 1;
+            Character.Stats.Health -= 1;
             ClampHealth();
         }
-    }
+    }*/
 }
+    

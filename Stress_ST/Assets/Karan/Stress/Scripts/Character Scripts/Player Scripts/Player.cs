@@ -6,26 +6,6 @@ using UnityEngine;
 public class Player : Character
 {
 
-    [SerializeField]private PlayerStats stats;
-
-    public PlayerStats PlayerStats
-    {
-        get
-        {
-            return stats;
-        }
-
-        set
-        {
-            stats = value;
-        }
-    }
-
-    private void Awake()
-    {
-        GetStats();
-
-    }
     void Start()
     {
 
@@ -38,15 +18,13 @@ public class Player : Character
     }
 
     // This is Automaticly being called in Parent script Awake() There is another way See PlayerStats InitMethod
-    protected override void GetStats()
-    {
-        PlayerStats = GetComponent<PlayerStats>();
-    }
+   
 
     protected override void OnCharacterDeath()
     {
         throw new System.NotImplementedException();
     }
+
 
 
 }

@@ -6,7 +6,7 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
 {
 
     private static int strongestEffectIdex;
-    private static float potancy;
+    private static float potancy;// Cant have this because it will also register Enemis getting slowed
     private PlayerController playerController;
 
     private float InitialSpeed;

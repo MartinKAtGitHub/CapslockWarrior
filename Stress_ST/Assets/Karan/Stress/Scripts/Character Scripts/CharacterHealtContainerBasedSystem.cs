@@ -68,7 +68,7 @@ public abstract class CharacterHealtContainerBasedSystem : MonoBehaviour
     {
         int containerIndex = currentHealth / HealthPointsPerContainer;
         //Debug.Log("Current Container (" + containerIndex + ")");
-        int fill = currentHealth % HealthPointsPerContainer;
+        float fill = currentHealth % HealthPointsPerContainer;
         //Debug.Log("Current Fill (" + fill + ")");
 
 
@@ -113,7 +113,7 @@ public abstract class CharacterHealtContainerBasedSystem : MonoBehaviour
         {
             Character.Stats.Health -= 1;
             ClampHealth();
-            OnHealthOrManaChanged(Character.Stats.Health, HeartContainer_Imgs);
+            OnHealthOrManaChanged((int)Character.Stats.Health, HeartContainer_Imgs);
         }
     }
 }

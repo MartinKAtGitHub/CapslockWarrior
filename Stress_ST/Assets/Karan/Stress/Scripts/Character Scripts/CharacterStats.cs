@@ -9,11 +9,11 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The Characters Base/Max Health. Base/Max Health Determins how much HP the character starts with or goes back to. Think of it as a limit or range 
     /// </summary>
-    [SerializeField] private int baseHealth;
+    [SerializeField] private float baseHealth;
     /// <summary>
     /// The Characters Base/Max Mana. Base/Max Mana Determins how much Mana the character starts with or goes back to. Think of it as a limit or range 
     /// </summary>
-    [SerializeField] private int baseMana;
+    [SerializeField] private float baseMana;
     /// <summary>
     /// The Characters Base/Max Movespeed. Base/Max Movespeed Determins how much MoveSpeed the character starts with or goes back to. Think of it as a limit or range 
     /// </summary>
@@ -21,18 +21,18 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The Characters Base/Max Damage. Base/Max Damage Determins how much Damage the character starts with or goes back to. Think of it as a limit or range 
     /// </summary>
-    [SerializeField] private int baseDamage;
+    [SerializeField] private float baseDamage;
 
     [Space(10f)]
 
     /// <summary>
     /// The current health of the Character. healt is the variabel which will be in constant change from dmg or healing. 
     /// </summary>
-    [SerializeField] private int health;
+    [SerializeField] private float health;
     /// <summary>
     /// The current Mana of the Character. Mana is the variabel which will be in constant change. 
     /// </summary>
-    [SerializeField] private int mana;
+    [SerializeField] private float mana;
     /// <summary>
     /// The current movementSpeed of the Character. movementSpeed is the variabel which will be in constant change from Slows or boosts. 
     /// </summary>
@@ -40,14 +40,13 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The current damage of the Character. damage is the variabel which will be in constant change from Buffs or DeBuffs. 
     /// </summary>
-    [SerializeField] private int damage;
-
+    [SerializeField] private float damage;
 
 
     /// <summary>
     /// The Characters Base/Max Health. Base/Max Health Determins how much HP the character starts with or goes back to. Think of it as a limit or range 
     /// </summary>
-    public int BaseHealth
+    public float BaseHealth
     {
         get
         {
@@ -63,7 +62,7 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The current health of the Character. healt is the variabel which will be in constant change from dmg or healing. 
     /// </summary>
-    public int Health
+    public float Health
     {
         get
         {
@@ -111,7 +110,7 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The Characters Base/Max Damage. Base/Max Damage Determins how much Damage the character starts with or goes back to. Think of it as a limit or range 
     /// </summary>
-    public int BaseDamage
+    public float BaseDamage
     {
         get
         {
@@ -127,7 +126,7 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The current damage of the Character. damage is the variabel which will be in constant change from Buffs or DeBuffs. 
     /// </summary>
-    public int Damage
+    public float Damage
     {
         get
         {
@@ -143,7 +142,7 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The Characters Base/Max Mana. Base/Max Mana Determins how much Mana the character starts with or goes back to. Think of it as a limit or range 
     /// </summary>
-    public int BaseMana
+    public float BaseMana
     {
         get
         {
@@ -159,7 +158,7 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The current Mana of the Character. Mana is the variabel which will be in constant change. 
     /// </summary>
-    public int Mana
+    public float Mana
     {
         get
         {
@@ -170,6 +169,12 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
         {
             mana = value;
         }
+    }
+
+
+    private void Awake()
+    {
+        InitStats();
     }
 
     protected virtual void InitStats()

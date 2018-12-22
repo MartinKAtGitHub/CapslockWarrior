@@ -6,39 +6,43 @@ public class PlayerHealthSystem : CharacterHealthSystem
     /// <summary>
     /// Its the img behind the HP Bar. So everything will be ontop of this element / this is parent OBJ
     /// </summary>
-    [SerializeField] private RectTransform healtBackground;
+    [SerializeField] private RectTransform healthBackground;
     /// <summary>
     /// The Main Healt bar, will be instantly changed on DMG. Top most element
     /// </summary>
-    [SerializeField] private RectTransform healthBar_Foreground;
+    [SerializeField] private Slider healthBar_Foreground_slider;
     /// <summary>
     /// The secondery healthbar, slowly change to the correct value. The middel element
     /// </summary>
-    [SerializeField] private RectTransform healthBar_Background;
+    [SerializeField] private Slider healthBar_Background_slider;
+
 
     Vector2 healthBarsMinMax;
-   
-
+   // int dmgTaken;
     private void Awake()
     {
-        Character = GetComponent<Player>();
-        SetMaxHealthToHealthBar();
-
-
-        //healthBarsMinMax = new Vector2(healtBackground.sizeDelta.x - healthBar_Foreground.rect.xMin, healthBar_Foreground.rect.xMax);
-
-        // healthBarsMinMax = healthBar_Foreground.sizeDelta.normalized;
-        // Debug.Log((healthBarsMinMax.x * 0.5)  );
-
-        TakeDamage(30);
-
-       
+        GetCharacterComponant();
     }
 
     // If i need to override somthing player spesific do it here. Dont make checks to see what system is beeing used just override the call
 
-    
-     
+    private void Start()
+    {
+        SetHealthBarToMaxHP();
+        SetInitialHP();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            TakeDamage(10);
+        }
+    }
+
+
+
+
 
     protected override void OnCharacterDeath()
     {
@@ -47,29 +51,50 @@ public class PlayerHealthSystem : CharacterHealthSystem
 
     public override void TakeDamage(int dmg)
     {
-        Debug.Log("DMG = " + dmg);
         Character.Stats.Health -= dmg;
+        ChangeForegroundHPBar();
 
-        Debug.Log("CHAR HP = "+ Character.Stats.Health);
 
-        SetForegroundHPBar(Character.Stats.Health);
+        if (Character.Stats.Health <= 0)
+        {
+            OnCharacterDeath();
+        }
+
     }
 
 
-    void SetMaxHealthToHealthBar()
+
+    private void ChangeForegroundHPBar() // Insatnt
     {
-        healtBackground.sizeDelta = new Vector2(Character.Stats.BaseHealth, healtBackground.sizeDelta.y);
+        var test = CalculateHealthPercentage();
+        Debug.Log("TEST = " + test);
+        healthBar_Foreground_slider.value = test;
     }
 
+    private void ChangeBackgroundHPBar()// over time
+    {
+        //healthBar_Foreground_slider.value = CalculateHealthPercentage();
+    }
+
+    float CalculateHealthPercentage()
+    {
+        return Character.Stats.Health / Character.Stats.BaseHealth; // I think the Slider comp Clamps teh value so we cant go below 0
+    }
     
-    void SetForegroundHPBar(int currentHealth)
+    protected override void GetCharacterComponant()
     {
-        currentHealth =  Mathf.Clamp(currentHealth, (int)healthBar_Foreground.offsetMax.x /* 0 */, Character.Stats.BaseHealth); //Character.Stats.BaseHealth = healtBackground.sizeDelta.x
+        Character = GetComponent<Player>();
+    }
 
-        currentHealth *= -1; // Convert
+    protected override void SetInitialHP()
+    {
+        healthBar_Foreground_slider.value = CalculateHealthPercentage();
+        healthBar_Background_slider.value = CalculateHealthPercentage();
+    }
 
-        Debug.Log(currentHealth);
-
-        healthBar_Foreground.sizeDelta = new Vector2(currentHealth , healthBar_Foreground.sizeDelta.y);
+    private void SetHealthBarToMaxHP()
+    {
+        healthBackground.sizeDelta = new Vector2(Character.Stats.BaseHealth, healthBackground.sizeDelta.y);
+            
     }
 }

@@ -30,9 +30,11 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected  void GetStats()
     {
+        Debug.Log("Getting Stats");
         Stats.GetComponent<CharacterStats>();
     }
-    protected abstract void OnCharacterDeath();
+   // protected abstract void OnCharacterDeath();
 
+    
     //public abstract void TakeDamage();
 }

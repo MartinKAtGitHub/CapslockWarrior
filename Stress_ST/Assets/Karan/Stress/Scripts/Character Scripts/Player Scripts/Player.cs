@@ -20,11 +20,5 @@ public class Player : Character
     // This is Automaticly being called in Parent script Awake() There is another way See PlayerStats InitMethod
    
 
-    protected override void OnCharacterDeath()
-    {
-        throw new System.NotImplementedException();
-    }
-
-
 
 }

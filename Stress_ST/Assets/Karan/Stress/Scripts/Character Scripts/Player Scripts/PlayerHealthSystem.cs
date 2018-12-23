@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealthSystem : CharacterHealthSystem
@@ -16,8 +17,13 @@ public class PlayerHealthSystem : CharacterHealthSystem
     /// </summary>
     [SerializeField] private Slider healthBar_Background_slider;
 
+    [SerializeField]private float HPBarChangeRate;
 
+    [Range(0,1)]
+    public float TEST;
     Vector2 healthBarsMinMax;
+
+    float t;
    // int dmgTaken;
     private void Awake()
     {
@@ -28,16 +34,23 @@ public class PlayerHealthSystem : CharacterHealthSystem
 
     private void Start()
     {
-        SetHealthBarToMaxHP();
-        SetInitialHP();
+     //   SetHealthBarToMaxHP();
+      //  SetInitialHP();
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.K))
         {
-            TakeDamage(10);
+            // TakeDamage(10);
+           // healthBar_Background_slider.value = Mathf.Lerp(1f, 0.1f, Time.deltaTime *5f);
         }
+
+        //Debug.Log(Mathf.Lerp(1f, TEST, Time.deltaTime * 0.1f));
+         t += Time.deltaTime *0.1f;
+
+        healthBar_Background_slider.value = Mathf.Lerp(1f, TEST , t);
+
     }
 
 
@@ -53,13 +66,14 @@ public class PlayerHealthSystem : CharacterHealthSystem
     {
         Character.Stats.Health -= dmg;
         ChangeForegroundHPBar();
-
+        StartCoroutine(ChangeBackgroundHPBar());
 
         if (Character.Stats.Health <= 0)
         {
             OnCharacterDeath();
         }
 
+       
     }
 
 
@@ -71,9 +85,24 @@ public class PlayerHealthSystem : CharacterHealthSystem
         healthBar_Foreground_slider.value = test;
     }
 
-    private void ChangeBackgroundHPBar()// over time
+    private IEnumerator ChangeBackgroundHPBar()// over time
     {
         //healthBar_Foreground_slider.value = CalculateHealthPercentage();
+      
+        var lerpValue = 0f;
+        var currentHPPrecent = CalculateHealthPercentage();
+
+       Debug.Log("LerpValu = " + lerpValue + "HP PERCENT = " + currentHPPrecent + "BOOL = " + (currentHPPrecent >= lerpValue));
+
+       /* while (currentHPPrecent >= lerpValue )
+        {
+            lerpValue = Mathf.Lerp(healthBar_Background_slider.value, currentHPPrecent, Time.deltaTime * HPBarChangeRate);
+            healthBar_Background_slider.value = lerpValue;
+            Debug.Log("Lval = " + lerpValue + "HP p = " + currentHPPrecent);
+        }*/
+
+
+        yield return null;
     }
 
     float CalculateHealthPercentage()

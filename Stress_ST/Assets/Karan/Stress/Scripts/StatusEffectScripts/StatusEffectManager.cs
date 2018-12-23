@@ -41,7 +41,7 @@ public class StatusEffectManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player Is Not Slowed");
+          //  Debug.Log("Player Is Not Slowed");
         }
     }
 

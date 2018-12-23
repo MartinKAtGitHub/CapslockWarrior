@@ -69,7 +69,7 @@ public class RandomDialogueRespons : DialogueSystem
         yield return new WaitForSeconds(randTime);
 
         var idleAnimValue = Random.Range(0 , 3); // 3 dosent exist cuz Computers
-        Debug.Log("Guard Anim = " + idleAnimValue);
+        //Debug.Log("Guard Anim = " + idleAnimValue);
         switch (idleAnimValue)
         {
             case 0:

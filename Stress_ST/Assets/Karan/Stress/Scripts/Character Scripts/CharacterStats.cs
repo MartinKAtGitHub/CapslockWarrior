@@ -71,7 +71,8 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
 
         set
         {
-            health = value;
+
+            health = Mathf.Clamp(value, 0, baseHealth);
         }
     }
 

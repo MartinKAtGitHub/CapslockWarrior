@@ -29,7 +29,7 @@ public abstract class CharacterHealthSystem : MonoBehaviour
     
     protected abstract void OnCharacterDeath(); //Maybe make Abstarct and let the player/enemy handle its Death
     protected abstract void GetCharacterComponant();
-    protected abstract void SetInitialHP();
+   // protected abstract void SetInitialHP();
 
 }
 

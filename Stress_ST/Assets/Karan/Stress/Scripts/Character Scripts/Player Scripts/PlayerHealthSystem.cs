@@ -24,10 +24,12 @@ public class PlayerHealthSystem : CharacterHealthSystem
     private float startTimer; // used if we want correct lerp calc
     //private float InitialtHP;
     private float onDmgBackgroundHPBarValue;
-  //  public float startPoint;
+    //  public float startPoint;
 
     private float lerpCounter;
     // int dmgTaken;
+
+
     private void Awake()
     {
         GetCharacterComponant();
@@ -37,22 +39,16 @@ public class PlayerHealthSystem : CharacterHealthSystem
 
     private void Start()
     {
+
         SetHPBackgroundToMaxHP();
         SetHPBarsToMax();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(10);
-            // healthBar_Background_slider.value = Mathf.Lerp(1f, 0.1f, Time.deltaTime *5f);
-        }
-
-        if(OnHealthChange)
+        if (OnHealthChange)
         {
             ChangeBackgroundHPBar();
-            Debug.Log("LUL " +  OnHealthChange);
         }
         //Debug.Log(Mathf.Lerp(1f, TEST, Time.deltaTime * 0.1f));
     }
@@ -68,10 +64,10 @@ public class PlayerHealthSystem : CharacterHealthSystem
 
         startTimer = Time.time;
         onDmgBackgroundHPBarValue = healthBar_Background_slider.value;
-    
+
 
         lerpCounter = 0;
-        
+
 
         Character.Stats.Health -= dmg;
         ChangeForegroundHPBar();
@@ -84,8 +80,7 @@ public class PlayerHealthSystem : CharacterHealthSystem
             OnCharacterDeath();
         }
     }
-
-
+    
 
     private void ChangeForegroundHPBar() // Insatnt
     {
@@ -99,7 +94,7 @@ public class PlayerHealthSystem : CharacterHealthSystem
         lerpCounter += Time.deltaTime * healthBarChangeDuration; // This increases ler value incorrect but creates a smooth end
         healthBar_Background_slider.value = Mathf.Lerp(onDmgBackgroundHPBarValue, healthBar_Foreground_slider.value, lerpCounter);
 
-        if(healthBar_Background_slider.value <= healthBar_Foreground_slider.value)
+        if (healthBar_Background_slider.value <= healthBar_Foreground_slider.value)
         {
             OnHealthChange = false;
         }

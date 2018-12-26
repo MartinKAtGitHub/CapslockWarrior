@@ -23,9 +23,7 @@ public abstract class CharacterHealtContainerBasedSystem : MonoBehaviour
             character = value;
         }
     }
-
-
-
+    
 
     /* void Start()
 	{		

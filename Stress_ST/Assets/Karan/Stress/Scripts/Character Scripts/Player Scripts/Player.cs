@@ -5,20 +5,18 @@ using UnityEngine;
 
 public class Player : Character
 {
-
-    void Start()
+    public override CharacterStats Stats
     {
+        get
+        {
+            Debug.Log("Getting player Stats");
+            return stats;
+        }
 
+        set
+        {
+            Debug.Log("Set player Stats");
+            stats = value;
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    // This is Automaticly being called in Parent script Awake() There is another way See PlayerStats InitMethod
-   
-
-
 }

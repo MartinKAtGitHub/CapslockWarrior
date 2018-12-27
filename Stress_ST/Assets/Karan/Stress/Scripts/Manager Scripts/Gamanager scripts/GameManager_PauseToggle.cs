@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager_PauseToggle : MonoBehaviour 
 {
 
-	private GameManager_Master gameManagerMaster;
+	private GameManager gameManagerMaster;
 
 	[SerializeField] private bool isPaused;
 
@@ -24,7 +24,7 @@ public class GameManager_PauseToggle : MonoBehaviour
 
 	void SetInitialRefs()
 	{
-		gameManagerMaster = GetComponent<GameManager_Master>(); // On the same GameObject
+		gameManagerMaster = GetComponent<GameManager>(); // On the same GameObject
 		//gameManagerMaster = GameManager_Master.instance; // I do have a static/ Singolton. Maybe it is wrong to use it here
 	}
 

@@ -218,10 +218,10 @@ public class PlayerManager : CreatureRoot {
 
 		if (totalmovementdecrease < 0) {
 		//	Stats.Speed = 0.1f;
-			GetComponent<PlayerController> ().CurrentSpeed = 0.1f;
+			//GetComponent<PlayerController> ().CurrentSpeed = 0.1f;
 		} else {
 			//	Stats.Speed = totalmovementdecrease;
-			GetComponent<PlayerController> ().CurrentSpeed = totalmovementdecrease;
+			//GetComponent<PlayerController> ().CurrentSpeed = totalmovementdecrease;
 		}
 
 	}

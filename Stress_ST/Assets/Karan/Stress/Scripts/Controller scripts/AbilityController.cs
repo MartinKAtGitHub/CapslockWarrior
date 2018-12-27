@@ -57,7 +57,7 @@ public class AbilityController : MonoBehaviour {
 	private Ability abilityKey3;
 	private Ability abilityKey4;
 
-	private PlayerManager playerManager;
+	private Character player;
 
 	//private float imageAplhaTimer = 0;
 
@@ -67,7 +67,7 @@ public class AbilityController : MonoBehaviour {
 
 	void Start () 
 	{
-		playerManager = GetComponent<PlayerManager>();
+		player = GetComponent<Player>();
 
 		//TODO Check save(Player prefs) data, restore preveious Abilitys
 		AbilityNullCheck(ref AbilityObjectKey1, defaultAbility1 ,"Key 1");
@@ -145,13 +145,13 @@ public class AbilityController : MonoBehaviour {
 	{
 		bool coolDownComplet = (Time.time > nextReadyTime);
 	
-		if(coolDownComplet) // TODO PERFORMANCE ability.ManaCost every frame maybe chache ?
+		if(coolDownComplet)
 		{
 			AbilityReady(ref abilityIconText, ref abilityIconMask);
 
 			if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
 			{
-				if(playerManager.CurrentManaPoints >= ability.ManaCost)
+				if(player.Stats.Mana >= ability.ManaCost)
 				{
 					Debug.Log("Casting ability on " + keyID);
 					bool isCastSuccsesful = ability.Cast();
@@ -160,7 +160,7 @@ public class AbilityController : MonoBehaviour {
 					{
 						//RestartCD
 						AbilityCastSuccsesful(abilityCoolDown, ref nextReadyTime, ref coolDownTimeLeft, ref abilityIconMask, ref abilityIconText);
-						playerManager.AbilityManaCost(ability.ManaCost);
+						player.Stats.Mana -=  ability.ManaCost;
 						//Debug.Log("CAST =  Succsesfull");
 					}
 				}

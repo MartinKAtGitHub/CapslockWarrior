@@ -16,7 +16,7 @@ public class GameManagerSpellDistributer : MonoBehaviour {
 
 	void Start()
 	{
-		MainHero = GameManager_Master.instance.PlayerPrefab.GetComponent<AbilityController>();
+		MainHero = GameManager.instance.PlayerPrefab.GetComponent<AbilityController>();
 	}
 	/// <summary>
 	/// Loads spells Data to the MAIN HERO when hero spawns so put this method when you want the hero to spawn and have the new spells selected

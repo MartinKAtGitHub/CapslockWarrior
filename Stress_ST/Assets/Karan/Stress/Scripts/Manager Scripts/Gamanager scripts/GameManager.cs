@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager_Master : MonoBehaviour {
+public class GameManager : MonoBehaviour {
 
 	/// <summary>
 	/// The nummber of keys the player has from beating the main boss.  
@@ -10,7 +10,7 @@ public class GameManager_Master : MonoBehaviour {
 	public int BossKeys; 
 	public GameObject PlayerPrefab;
 	public GameObject PlayerObject;
-	public static GameManager_Master instance = null;
+	public static GameManager instance = null;
 
 
 	public delegate void GameManagerEventHandler();

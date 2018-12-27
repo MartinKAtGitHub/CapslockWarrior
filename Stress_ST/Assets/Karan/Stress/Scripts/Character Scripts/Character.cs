@@ -26,4 +26,6 @@ public abstract class Character : MonoBehaviour
     }
     // protected abstract void OnCharacterDeath();
     //public abstract void TakeDamage();
+
+
 }

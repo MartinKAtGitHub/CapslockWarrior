@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class GameManager_ToggleMenu : MonoBehaviour
 {
-	private GameManager_Master gameManagerMaster;
+	private GameManager gameManagerMaster;
 	public GameObject menu;
 	private Animator pauseAnimator;
 
@@ -71,7 +71,7 @@ public class GameManager_ToggleMenu : MonoBehaviour
 
 	void SetInitialRefs()
 	{
-		gameManagerMaster = GetComponent<GameManager_Master>();
+		gameManagerMaster = GetComponent<GameManager>();
 		pauseAnimator = menu.GetComponent<Animator>();
 	}
 

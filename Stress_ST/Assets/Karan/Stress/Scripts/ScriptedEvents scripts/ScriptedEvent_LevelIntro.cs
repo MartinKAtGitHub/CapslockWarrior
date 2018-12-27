@@ -182,7 +182,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 
 	private void GetPlayerDataForCutscene()
 	{
-		player = GameManager_Master.instance.PlayerObject; // FindTag(Player1) // levelManagerMaster.player
+		player = GameManager.instance.PlayerObject; // FindTag(Player1) // levelManagerMaster.player
 		playerRigBdy = player.GetComponent<Rigidbody2D>();
 		playerAnimator = player.GetComponentInChildren<Animator>();
 	}

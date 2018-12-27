@@ -46,6 +46,7 @@ public class PlayerHealthSystem : CharacterHealthSystem
 
     private void Update()
     {
+
         if (OnHealthChange)
         {
             ChangeBackgroundHPBar();

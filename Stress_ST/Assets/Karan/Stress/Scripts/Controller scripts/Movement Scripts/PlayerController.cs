@@ -2,121 +2,59 @@
 
 public class PlayerController : MonoBehaviour{
 
-
-	[SerializeField]private float currentSpeed;
-	[SerializeField]private float baseSpeed;
-    public Animator heroAnimator;
-	public bool MouseControll;
 	public bool canPlayerMove;
-	bool AutoRun;
-	bool InputRecived; 
-	bool KeyLock;
+    
+    [SerializeField] private Animator heroAnimator;
+	[SerializeField]private Transform heroGraphics;
+	
+	private Rigidbody2D playerRigBdy;
+    private PlayerInputManager inputManager;
+    private Player player;
+	private bool facingRigth;
 
-	bool facingRigth;
-	bool cancelAutoRun;
-	bool targetSet;
-	Vector2 deltaTargetCurrentPos; // ugly solution
-	Vector2 direction;
-	Rigidbody2D playerRigBdy;
-	Transform heroGraphics;
-	Vector3 mousePos;
-
-    /*public ControllerType SelectedControllerType;
-	public enum ControllerType
+    public Vector2 Direction
 	{
-		MouseAndArrows,
-		OnlyArrows,
-	};*/
-
-    public float BaseSpeed
-    {
-        get
-        {
-            return baseSpeed;
-        }
-    }
-
-    public float CurrentSpeed
-	{
-		get
-		{
-            
-			return currentSpeed;	
-		}
-		set
-		{
-			currentSpeed = value;		
-		}
+        get;
+        set;
 	}
 
-	public Vector2 Direction
-	{
-		get
-		{
-			return direction;
-		}
-		set
-		{
-			direction = value;
-		}
-	}
-
-	// Use this for initialization
 	void Awake () 
 	{
-		canPlayerMove = true;
-		AutoRun = false;
-		InputRecived = false;
-		KeyLock = false;
-		
-		cancelAutoRun = true;
-		facingRigth = true;
-		targetSet = false;
-		deltaTargetCurrentPos = new Vector2(0,0);
-
+        inputManager = GetComponent<PlayerInputManager>();
+        player = GetComponent<Player>();
 		playerRigBdy = GetComponent<Rigidbody2D>();
-		mousePos = Vector3.zero;
 
-		heroGraphics = transform.Find("GFX");
-
-		// heroAnimator = GetComponent<Animator>();
+        if (heroGraphics == null)
+        {
+            heroGraphics = transform.Find("GFX");
+        }
+        
 		if(heroAnimator == null)
 		{
 			//heroAnimator = heroGraphics.GetComponent<Animator>();
-			heroAnimator = GetComponent<Animator>();
+			heroAnimator = GetComponentInChildren<Animator>();
 		}
         //Debug.Log(heroAnimator.name);
-
-        CurrentSpeed = BaseSpeed;
+       
 	}
 
 
-	void FixedUpdate()
+    private void Start()
+    {
+        facingRigth = true;
+        canPlayerMove = true;
+        //inputManager = GameManager.instance.InputManager
+
+    }
+
+    void FixedUpdate()
 	{
 
-		//IF(!cutscene && CC)
-		if(canPlayerMove)
-		{
-			Movement();
-		}
+        //IF(!cutscene && CC)
 
-		/*switch (SelectedControllerType) 
-		{
-		case ControllerType.MouseAndArrows:
-			Movement();
-			break;
-		
-		case ControllerType.OnlyArrows:
-			ArrowsAutoRun(KeyCode.LeftControl, KeyCode.RightControl);
-			break;
-
-		default:
-			Debug.LogError("No Controller Type Selected");
-			break;
-		}*/
-
-
-
+        MovementLogic();
+        PlayerRunningAnims();
+        
 		if(Direction.x > 0 && !facingRigth)
 		{
 			Flip();
@@ -125,13 +63,6 @@ public class PlayerController : MonoBehaviour{
 		{
 			Flip();
 		}
-
-	}
-
-	// Update is called once per frame
-	void Update () 
-	{
-		PlayerInputs(KeyCode.LeftArrow,KeyCode.RightArrow,KeyCode.UpArrow,KeyCode.DownArrow,KeyCode.LeftControl,KeyCode.RightControl); // TODO Dose not work on MAC KeyCode.Command lel
 	}
 
 	public void Flip() // TODO update Flip() Method to use the sprite flip insted of scale *-1
@@ -141,173 +72,15 @@ public class PlayerController : MonoBehaviour{
 		theScale.x *= -1;
 		heroGraphics.localScale = theScale;
 	}
-
-	private void  Movement() // MainMovement
-	{
-		//ArrowsRun();
-		ArrowsAutoRun();
-
-
-		if(Mathf.Abs(Direction.x) > 0 || Mathf.Abs(Direction.y) > 0) 
-		{
-			cancelAutoRun = true;
-		}
-
-
-		if(!cancelAutoRun)
-		{
-			MouseAutoRun();
-			targetSet = false;
-			mousePos = Vector3.zero;
-		}
-
-		IsPlayerRunning();
-	}
-
-	private void ArrowsRun()
-	{
-		Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-		playerRigBdy.velocity = new Vector2 (Direction.x * CurrentSpeed, Direction.y * CurrentSpeed);
-	}
+    
 	public void ScriptedEventMove(Transform actorPos, Transform targetPos )
 	{
 		Vector2 deltaVec = targetPos.position - actorPos.position;
 		Direction = deltaVec.normalized;
-		playerRigBdy.velocity = deltaVec.normalized * currentSpeed;
+		playerRigBdy.velocity = deltaVec.normalized * player.Stats.MovementSpeed;
 	}
     
-
-	private void MouseAutoRun()
-	{
-		if(targetSet)
-		{
-			deltaTargetCurrentPos = mousePos - transform.position;
-//			Debug.Log("TargetSet = start running");
-		}
-		Direction = deltaTargetCurrentPos.normalized;
-		playerRigBdy.AddForce(deltaTargetCurrentPos.normalized * currentSpeed);
-	}
-
-
-	private void ArrowsAutoRun() // UNDONE ArrowsAutoRun() GetKeyDown --> creats a bug where you need to Re-press buttons if you hold opposit buttons Not really a bug but
-	{
-		if(KeyLock) // when i press this
-		{
-			AutoRun = !AutoRun;
-			Debug.Log("AutoRun = " + AutoRun);
-			KeyLock = false;
-		}
-
-		if(AutoRun)
-		{
-			if(InputRecived) // TODO GetKeyDown --> creats a bug where you need to Re-press buttons if you hold opposit buttons Not really a bug but
-			{
-				Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));// <-- This is in FIXEDUPDATE() might lose input
-				playerRigBdy.velocity = new Vector2(Direction.x * CurrentSpeed, Direction.y * CurrentSpeed);
-				InputRecived = false;
-				Debug.Log("DIR = " + Direction );
-			}
-		}
-		else
-		{
-			Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-            //playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
-            playerRigBdy.AddForce(new Vector2(Direction.x * CurrentSpeed, Direction.y * CurrentSpeed));
-		}
-
-
-		/*
-		bool keyLock = false;
-		Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-
-		if((Input.GetKey(primaryButtonToHold) || Input.GetKey(SeconderyButtonToHold))) // when i press this
-		{
-			keyLock = true;
-			autoRunDir = Direction;
-
-			if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow))
-			{
-				AutoRun = true;
-				Debug.Log("AutoRun = " + AutoRun + ") --- AutoDir = (" + autoRunDir + ") ---- Dir = ( " + Direction + ")");
-			}
-		}
-
-		if(((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow)) && !keyLock))
-		{
-			AutoRun = false;
-			Debug.Log("AutoRun = " + AutoRun + ") --- AutoDir = (" + autoRunDir + ") ---- Dir = ( " + Direction + ")");
-		}
-
-
-
-		playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
-
-		*/
-
-
-
-	/*	Vector2 currentDir = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-
-		if((Input.GetKey(primaryButtonToHold) || Input.GetKey(SeconderyButtonToHold))) // when i press this
-		{
-			if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow))
-			{
-				//Debug.Log("Same Diraction");
-				AutoRun = true;
-				//Debug.Log("AutoRun = " + AutoRun);
-			}
-		}
-		else if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow))
-		{
-			if(Direction.x != Input.GetAxisRaw("MouseAndArrowsX"))
-			{
-				AutoRun = false;
-				Debug.Log("ONLY RIGHT IS CHEKCKED");
-			}
-		}
-
-
-		if(AutoRun)
-		{
-			playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
-		}
-		else
-		{
-			Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-			playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
-		}
-
-*/
-
-
-		/*else if(AutoRun = false) // dont do this
-		{
-			//Direction = new Vector2(Input.GetAxisRaw("MouseAndArrowsX"), Input.GetAxisRaw("MouseAndArrowsY"));
-			Debug.Log("AutoRun --> " + AutoRun);
-		}*/
-
-		//playerRigBdy.velocity = new Vector2(Direction.x * MaxSpeed, Direction.y * MaxSpeed);
-	}
-	private void PlayerInputs(KeyCode L, KeyCode R, KeyCode U, KeyCode D , KeyCode primaryButtonToHold, KeyCode SeconderyButtonToHold)
-	{
-		if(Input.GetKeyDown(L) || Input.GetKeyDown(R) || Input.GetKeyDown(D) || Input.GetKeyDown(U))
-		{
-			InputRecived = true;
-		}
-		if((Input.GetKeyDown(primaryButtonToHold) || Input.GetKeyDown(SeconderyButtonToHold)))
-		{
-			KeyLock = true;
-		}
-		if(Input.GetMouseButtonDown(1) && MouseControll)
-		{
-			mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			//Debug.Log("<color=teal>Mouse Click " + mousePos +" </color>");
-			targetSet = true;
-			cancelAutoRun = false;
-		}
-	}
-
-	private void IsPlayerRunning()
+	private void PlayerRunningAnims() // Move all player anims to its own script
 	{
 		if(Mathf.Abs(Direction.x)> 0 || Mathf.Abs(Direction.y) > 0)
 		{
@@ -321,4 +94,10 @@ public class PlayerController : MonoBehaviour{
 		}
 
 	}
+    
+    void MovementLogic()
+    {
+        Direction = inputManager.MovementInputValues;
+        playerRigBdy.AddForce(new Vector2(Direction.x * player.Stats.MovementSpeed, Direction.y * player.Stats.MovementSpeed));
+    }
 }

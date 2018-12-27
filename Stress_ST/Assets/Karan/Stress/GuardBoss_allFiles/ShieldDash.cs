@@ -128,7 +128,7 @@ public class ShieldDash : MonoBehaviour {
         var PushForceVector = targetVector.normalized * PushBackForce;
 
         // Add Status effect to list
-        Debug.Log(shieldSlowStatusEffect.BaseTime);
+        Debug.Log(shieldSlowStatusEffect.BaseActiveTime);
         statusEffectManager.StatusEffectList.Add(shieldSlowStatusEffect);
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
 

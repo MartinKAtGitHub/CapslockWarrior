@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameManager_PauseMenuTab : MonoBehaviour {
 
-	private GameManager_Master gM_Master; 
+	private GameManager gM_Master; 
 	private GameManager_ToggleMenu gM_ToggleMenu;
 
 	public GameObject MenuTab;

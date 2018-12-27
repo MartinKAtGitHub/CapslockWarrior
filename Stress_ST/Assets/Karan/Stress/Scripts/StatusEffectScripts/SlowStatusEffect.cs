@@ -7,10 +7,10 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
 
     private static int strongestEffectIdex;
     private static float potancy;// Cant have this because it will also register Enemis getting slowed
-    private PlayerController playerController;
+    private Character character;
 
     private float InitialSpeed;
-    private float InitialTime;
+    private float activeTime;
 
     // private PlayerStatsForTesting playerStatsForTesting;
 
@@ -51,21 +51,21 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
 
     public void InitialzeSlow() // IF script ececution is out of order call this in the what ever ability is trying to slow
     {
-        playerController = Target.GetComponent<PlayerController>();
-        InitialSpeed = playerController.BaseSpeed;
-        InitialTime = BaseTime;
+        character = Target.GetComponent<Character>();
+        InitialSpeed = character.Stats.BaseMovementSpeed;
+        activeTime = BaseActiveTime;
     }
 
 
     public override void Effect()
     {
-       playerController.CurrentSpeed = InitialSpeed - (InitialSpeed * Power);
+        character.Stats.MovementSpeed = InitialSpeed - (InitialSpeed * Power);
     }
     
     public override void EndEffect()
     {
-        InitialTime = BaseTime;
-        playerController.CurrentSpeed = playerController.BaseSpeed;
+        activeTime = BaseActiveTime;
+        character.Stats.MovementSpeed = character.Stats.BaseMovementSpeed;
     }
 
     public override void ResetPotancy()
@@ -76,7 +76,7 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
    
     public override float CountDown()
     {
-        return InitialTime -= Time.deltaTime;
+        return activeTime -= Time.deltaTime;
     }
 }
 

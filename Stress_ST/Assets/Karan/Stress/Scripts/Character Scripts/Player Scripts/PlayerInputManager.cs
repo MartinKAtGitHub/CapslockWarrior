@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,21 +23,32 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] KeyCode altMoveDown;
 
     [Space(10)]
-    [Header("Movement Keys")]
+    [Header("Ability Keys")]
     [SerializeField] KeyCode ability1;
     [SerializeField] KeyCode ability2;
     [SerializeField] KeyCode ability3;
     [SerializeField] KeyCode ability4;
 
+    [SerializeField] KeyCode altAbility1;
+    [SerializeField] KeyCode altAbility2;
+    [SerializeField] KeyCode altAbility3;
+    [SerializeField] KeyCode altAbility4;
+
+
     [Header("Other keys")]
     [SerializeField] KeyCode reload;
     [SerializeField] KeyCode interact;
+
+    public event Action OnAbilityKey1Down; 
+    public event Action OnAbilityKey2Down; 
+    public event Action OnAbilityKey3Down; 
+    public event Action OnAbilityKey4Down;
+
 
     /// <summary>
     /// Holds a value from -1 to 1 which translates to moveing left/right or up/down or 0 standing still
     /// </summary>
     private Vector2 movementInputValues;
-
     public Vector2 MovementInputValues { get => movementInputValues; } //c#6 ???????????
 
     void Start()
@@ -48,8 +60,12 @@ public class PlayerInputManager : MonoBehaviour
     // What happens if i press buttons when Loading if this goes GameManager
     void Update()
     {
+        // TODO ad relaode mode an limit inputs when in this mode
+
         HorizontalMovementInputs();
         VerticalMovemetnInputs();
+
+        abilityInputs(ability1, altAbility1, OnAbilityKey1Down);
     }
 
     //TODO double check to see if If else() dosent interfare with inputs
@@ -85,13 +101,18 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void abilityInputs(KeyCode abilityKey, KeyCode altAbilityKey)
+    private void abilityInputs(KeyCode abilityKey, KeyCode altAbilityKey, Action action)
     {
-        if(Input.GetKey(abilityKey) || Input.GetKey(altAbilityKey))
+        if(Input.GetKeyDown(abilityKey) || Input.GetKeyDown(altAbilityKey))
         {
-            // Pass Event and trigger it here
+            action?.Invoke();
         }
     }
+
+    /*private bool ReloadMode()
+    {
+        if()
+    }*/
 
     public void DuplicatedKeyAssignmentCheck() // Maybe do this in its own class in Game manager perhapes. MOve this whole class to game manager
     {

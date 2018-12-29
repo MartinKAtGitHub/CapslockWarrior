@@ -7,10 +7,13 @@ public class GameManager : MonoBehaviour {
 	/// <summary>
 	/// The nummber of keys the player has from beating the main boss.  
 	/// </summary>
-	public int BossKeys; 
+	//public int BossKeys; 
 	public GameObject PlayerPrefab;
 	public GameObject PlayerObject;
-	public static GameManager instance = null;
+
+    public PlayerInputManager PlayerInputManager;
+
+	public static GameManager Instance = null;
 
 
 	public delegate void GameManagerEventHandler();
@@ -22,24 +25,24 @@ public class GameManager : MonoBehaviour {
 
 	public bool IsGameOver;
 	public bool IsMenuOn;
-
-
-
+    
 
 	void Awake()
 	{
 		SingeltonCheck();
 		DontDestroyOnLoad(gameObject); // This keeps the GM alive in all scenes;
+
+        PlayerInputManager = GetComponent<PlayerInputManager>();
 	}
 
 	private void SingeltonCheck() // TODO check if Gamemanger_master script Singelton is correctly done
 	{
-		if(instance == null)
+		if(Instance == null)
 		{
 			Debug.Log("GM is NULL");
-			instance = this;
+			Instance = this;
 		}
-		else if(instance != this)
+		else if(Instance != this)
 		{
 			Debug.LogError("GM Duplicate, destroying ");
 			Destroy(gameObject);

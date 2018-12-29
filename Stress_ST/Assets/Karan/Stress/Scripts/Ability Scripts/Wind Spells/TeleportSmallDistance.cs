@@ -91,7 +91,6 @@ public class TeleportSmallDistance : Ability {
 
 	public override bool Cast ()
 	{
-
 		if(PlayerGameObject.GetComponent<PlayerController>().enabled)
 		{
 			MoveData = PlayerGameObject.GetComponent<PlayerController>();

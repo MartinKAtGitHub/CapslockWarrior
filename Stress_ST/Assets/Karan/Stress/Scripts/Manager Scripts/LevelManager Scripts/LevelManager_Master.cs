@@ -65,7 +65,7 @@ public class LevelManager_Master : MonoBehaviour {
 	public void StartLevel()
 	{
 		Debug.Log("Starting Level....");
-		GameManager.instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
+		GameManager.Instance.GetComponent<GameManager_PlayerSpawner>().SpawnPlayer(PlayerSpawnPosition.position);
 		StartScriptedEvent.Invoke(); // TODO make sure Cutscene works on all Resolution, spawnpoint out of can view
 		StartScriptedEvent.RemoveAllListeners();
 	}
@@ -77,7 +77,7 @@ public class LevelManager_Master : MonoBehaviour {
 	{
 		Vector3 orgin = Vector3.zero;
 		PlayerCam = (GameObject)Instantiate(PlayerCam, orgin , Quaternion.identity);
-		PlayerCam.GetComponent<CameraSmoothMotion>().SetPlayer = GameManager.instance.PlayerObject.transform;
+		PlayerCam.GetComponent<CameraSmoothMotion>().SetPlayer = GameManager.Instance.PlayerObject.transform;
 		PlayerCam.SetActive(false);
 	}
 

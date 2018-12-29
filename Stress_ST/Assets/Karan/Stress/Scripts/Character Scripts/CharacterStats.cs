@@ -28,19 +28,19 @@ public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable O
     /// <summary>
     /// The current health of the Character. healt is the variabel which will be in constant change from dmg or healing. 
     /// </summary>
-    [SerializeField] private float health;
+    private float health;
     /// <summary>
     /// The current Mana of the Character. Mana is the variabel which will be in constant change. 
     /// </summary>
-    [SerializeField] private float mana;
+     private float mana;
     /// <summary>
     /// The current movementSpeed of the Character. movementSpeed is the variabel which will be in constant change from Slows or boosts. 
     /// </summary>
-    [SerializeField] private float movementSpeed;
+    private float movementSpeed;
     /// <summary>
     /// The current damage of the Character. damage is the variabel which will be in constant change from Buffs or DeBuffs. 
     /// </summary>
-    [SerializeField] private float damage;
+    private float damage;
 
 
     /// <summary>

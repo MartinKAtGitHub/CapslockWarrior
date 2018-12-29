@@ -140,7 +140,7 @@ public class ScriptedMomentsAnimations : MonoBehaviour {
 
 	private void RefSetup()
 	{
-		PlayerObject = Instantiate(GameManager.instance.PlayerPrefab, PlayerSpawnPoint.transform.position ,Quaternion.identity);
+		PlayerObject = Instantiate(GameManager.Instance.PlayerPrefab, PlayerSpawnPoint.transform.position ,Quaternion.identity);
 		//Instantiate(BossObject, ActorSpawnPoint.transform.position, Quaternion.identity);
 
 		playerRigBdy = PlayerObject.GetComponent<Rigidbody2D>();

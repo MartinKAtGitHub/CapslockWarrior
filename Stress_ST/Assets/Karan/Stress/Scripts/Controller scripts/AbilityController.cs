@@ -59,6 +59,7 @@ public class AbilityController : MonoBehaviour {
 
 	private Character player;
 
+  //  private PlayerInputManager playerInputManager;
 	//private float imageAplhaTimer = 0;
 
 	[Space (10)]
@@ -68,6 +69,9 @@ public class AbilityController : MonoBehaviour {
 	void Start () 
 	{
 		player = GetComponent<Player>();
+
+
+      //GameManager.Instance.PlayerInputManager.OnAbilityKey1Down += IsAbilityPassiv;
 
 		//TODO Check save(Player prefs) data, restore preveious Abilitys
 		AbilityNullCheck(ref AbilityObjectKey1, defaultAbility1 ,"Key 1");
@@ -119,10 +123,10 @@ public class AbilityController : MonoBehaviour {
 	void Update () 
 	{
 		//CheckKeyPress();
-		OnAbilityTrigger(abilityKey1, KeyCode.Alpha1, KeyCode.Keypad1, "Key 1", ability1Cooldown, ref nextReadyTimeKey1, ref coolDownTimeLeftKey1, ref Ability1Txt, ref ability1IconMask);
-		OnAbilityTrigger(abilityKey2, KeyCode.Alpha2, KeyCode.Keypad2, "Key 2", ability2Cooldown, ref nextReadyTimeKey2, ref coolDownTimeLeftKey2, ref Ability2Txt, ref ability2IconMask);
-		OnAbilityTrigger(abilityKey3, KeyCode.Alpha3, KeyCode.Keypad3, "Key 3", ability3Cooldown, ref nextReadyTimeKey3, ref coolDownTimeLeftKey3, ref Ability3Txt, ref ability3IconMask);
-		OnAbilityTrigger(abilityKey4, KeyCode.Alpha4, KeyCode.Keypad4, "Key 4", ability4Cooldown, ref nextReadyTimeKey4, ref coolDownTimeLeftKey4, ref Ability4Txt, ref ability4IconMask);
+		//OnAbilityTrigger(abilityKey1, KeyCode.Alpha1, KeyCode.Keypad1, "Key 1", ability1Cooldown, ref nextReadyTimeKey1, ref coolDownTimeLeftKey1, ref Ability1Txt, ref ability1IconMask);
+		//OnAbilityTrigger(abilityKey2, KeyCode.Alpha2, KeyCode.Keypad2, "Key 2", ability2Cooldown, ref nextReadyTimeKey2, ref coolDownTimeLeftKey2, ref Ability2Txt, ref ability2IconMask);
+		//OnAbilityTrigger(abilityKey3, KeyCode.Alpha3, KeyCode.Keypad3, "Key 3", ability3Cooldown, ref nextReadyTimeKey3, ref coolDownTimeLeftKey3, ref Ability3Txt, ref ability3IconMask);
+		//OnAbilityTrigger(abilityKey4, KeyCode.Alpha4, KeyCode.Keypad4, "Key 4", ability4Cooldown, ref nextReadyTimeKey4, ref coolDownTimeLeftKey4, ref Ability4Txt, ref ability4IconMask);
 
 	}
 
@@ -149,8 +153,8 @@ public class AbilityController : MonoBehaviour {
 		{
 			AbilityReady(ref abilityIconText, ref abilityIconMask);
 
-			if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
-			{
+			//if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
+			//{
 				if(player.Stats.Mana >= ability.ManaCost)
 				{
 					Debug.Log("Casting ability on " + keyID);
@@ -168,7 +172,7 @@ public class AbilityController : MonoBehaviour {
 				{
 					Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
 				}
-			}
+			//}
 		}
 		else
 		{
@@ -206,10 +210,18 @@ public class AbilityController : MonoBehaviour {
 
     private void IsAbilityPassiv()
     {
-    	// If(isAbilityPassiv)
-    		// Start passivAbility
-    		//Else dont do anythig
+        // If(isAbilityPassiv)
+        // Start passivAbility
+        //Else dont do anythig
+      //  OnAbilityTrigger(abilityKey4, KeyCode.Alpha4, KeyCode.Keypad4, "Key 4", ability4Cooldown, ref nextReadyTimeKey4, ref coolDownTimeLeftKey4, ref Ability4Txt, ref ability4IconMask);
+
+        Debug.Log("ABILITY IS PASSIV");
     }
-	
+
+
+    private void OnDisable()
+    {
+        // unsub from events
+    }
 }
 

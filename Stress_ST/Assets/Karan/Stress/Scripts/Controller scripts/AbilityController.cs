@@ -4,7 +4,7 @@ using System.Collections;
 
 public class AbilityController : MonoBehaviour {
 
-
+   // public AbilityActivation Test;
 
 	//Kit class -->Ability 1,2,3
 
@@ -57,7 +57,7 @@ public class AbilityController : MonoBehaviour {
 	private Ability abilityKey3;
 	private Ability abilityKey4;
 
-	private Character player;
+	private Player player;
 
   //  private PlayerInputManager playerInputManager;
 	//private float imageAplhaTimer = 0;
@@ -69,7 +69,7 @@ public class AbilityController : MonoBehaviour {
 	void Start () 
 	{
 		player = GetComponent<Player>();
-
+        //Test.InitializeAbility(player);
 
       //GameManager.Instance.PlayerInputManager.OnAbilityKey1Down += IsAbilityPassiv;
 
@@ -143,40 +143,35 @@ public class AbilityController : MonoBehaviour {
 		}
 	}
 
-	private void OnAbilityTrigger(Ability ability, KeyCode key, KeyCode altKey,
-								 string keyID, float abilityCoolDown, ref float nextReadyTime, ref float coolDownTimeLeft,
-								 ref Text abilityIconText, ref Image abilityIconMask )
+	private void OnAbilityTrigger(Ability ability, float abilityCoolDown, ref float nextReadyTime, ref float coolDownTimeLeft, ref Text abilityIconText, ref Image abilityIconMask )
 	{
-		bool coolDownComplet = (Time.time > nextReadyTime);
+		bool coolDownComplet = (Time.time > nextReadyTime);//Scrubed
 	
 		if(coolDownComplet)
 		{
 			AbilityReady(ref abilityIconText, ref abilityIconMask);
 
-			//if(Input.GetKeyDown(key) || Input.GetKeyDown(altKey))
-			//{
-				if(player.Stats.Mana >= ability.ManaCost)
-				{
-					Debug.Log("Casting ability on " + keyID);
-					bool isCastSuccsesful = ability.Cast();
+			if(player.Stats.Mana >= ability.ManaCost)
+			{
 					
-					if(isCastSuccsesful)
-					{
-						//RestartCD
-						AbilityCastSuccsesful(abilityCoolDown, ref nextReadyTime, ref coolDownTimeLeft, ref abilityIconMask, ref abilityIconText);
-						player.Stats.Mana -=  ability.ManaCost;
-						//Debug.Log("CAST =  Succsesfull");
-					}
-				}
-				else
+				bool isCastSuccsesful = ability.Cast();
+					
+				if(isCastSuccsesful)
 				{
-					Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
+					//RestartCD
+					AbilityCastSuccsesful(abilityCoolDown, ref nextReadyTime, ref coolDownTimeLeft, ref abilityIconMask, ref abilityIconText);
+					player.Stats.Mana -=  ability.ManaCost;
+					//Debug.Log("CAST =  Succsesfull");
 				}
-			//}
-		}
+			}
+			else
+			{
+				Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
+			}
+	}
 		else
 		{
-			CoolDown(ref coolDownTimeLeft, ref abilityIconText, ref abilityIconMask, ref abilityCoolDown);
+			CoolDownImgEffect(ref coolDownTimeLeft, ref abilityIconText, ref abilityIconMask, ref abilityCoolDown);
 		}
 	} 
 
@@ -193,7 +188,7 @@ public class AbilityController : MonoBehaviour {
         //ability.TriggerAbility ();
 	}
 
-	private void CoolDown(ref float coolDownTimeLeft, ref Text abilityIconText, ref Image abilityIconMask, ref float abilityCoolDown )
+	private void CoolDownImgEffect(ref float coolDownTimeLeft, ref Text abilityIconText, ref Image abilityIconMask, ref float abilityCoolDown )//Scrubed
 	{
 		coolDownTimeLeft -= Time.deltaTime;
 		float roundedCd = Mathf.Round (coolDownTimeLeft);
@@ -223,5 +218,6 @@ public class AbilityController : MonoBehaviour {
     {
         // unsub from events
     }
+
 }
 

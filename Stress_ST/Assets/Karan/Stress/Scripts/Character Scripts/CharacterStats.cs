@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable Object. But it will require some extra knowlage on how to generate a Stats object; 
+public class CharacterStats : MonoBehaviour// NOTE -> This can be a Scriptable Object. So the idea is that you create stats obj for enemies and asign them; 
 {
     
     /// <summary>

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthSystem : CharacterHealthSystem
+public class PlayerHealthSystem : CharacterHealthSystem // I coudl take teh HP bar logic and leav teh DMg logic here and connect them
 {
     /// <summary>
     /// Its the img behind the HP Bar. So everything will be ontop of this element / this is parent OBJ

@@ -4,7 +4,10 @@ using System.Collections;
 
 public class AbilityController : MonoBehaviour {
 
-   // public AbilityActivation Test;
+    public AbilityActivation AbilityOnKey1;
+    public AbilityActivation AbilityOnKey2;
+    public AbilityActivation AbilityOnKey3;
+    public AbilityActivation AbilityOnKey4;
 
 	//Kit class -->Ability 1,2,3
 
@@ -69,12 +72,17 @@ public class AbilityController : MonoBehaviour {
 	void Start () 
 	{
 		player = GetComponent<Player>();
-        //Test.InitializeAbility(player);
 
-      //GameManager.Instance.PlayerInputManager.OnAbilityKey1Down += IsAbilityPassiv;
+        AbilityOnKey1.InitializeAbility(player);
+       // AbilityOnKey2.InitializeAbility(player);
+       // AbilityOnKey3.InitializeAbility(player);
+       // AbilityOnKey4.InitializeAbility(player);
 
-		//TODO Check save(Player prefs) data, restore preveious Abilitys
-		AbilityNullCheck(ref AbilityObjectKey1, defaultAbility1 ,"Key 1");
+        GameManager.Instance.PlayerInputManager.OnAbilityKey1Down += OnAbilityKey1Press;
+        //GameManager.Instance.PlayerInputManager.OnAbilityKey1Down += IsAbilityPassiv;
+        #region Old
+        //TODO Check save(Player prefs) data, restore preveious Abilitys
+        AbilityNullCheck(ref AbilityObjectKey1, defaultAbility1 ,"Key 1");
 		AbilityNullCheck(ref AbilityObjectKey2, defaultAbility2 ,"Key 2");
 		AbilityNullCheck(ref AbilityObjectKey3, defaultAbility3 ,"Key 3");
 		AbilityNullCheck(ref AbilityObjectKey4, defaultAbility4 ,"Key 4");
@@ -116,11 +124,11 @@ public class AbilityController : MonoBehaviour {
 		AbilityReady(ref Ability2Txt, ref ability2IconMask);
 		AbilityReady(ref Ability3Txt, ref ability3IconMask);
 		AbilityReady(ref Ability4Txt, ref ability4IconMask);
+        #endregion
+    }
 
-	}	
-	
-	// Update is called once per frame
-	void Update () 
+    // Update is called once per frame
+    void Update () 
 	{
 		//CheckKeyPress();
 		//OnAbilityTrigger(abilityKey1, KeyCode.Alpha1, KeyCode.Keypad1, "Key 1", ability1Cooldown, ref nextReadyTimeKey1, ref coolDownTimeLeftKey1, ref Ability1Txt, ref ability1IconMask);
@@ -216,8 +224,42 @@ public class AbilityController : MonoBehaviour {
 
     private void OnDisable()
     {
-        // unsub from events
+        GameManager.Instance.PlayerInputManager.OnAbilityKey1Down -= OnAbilityKey1Press;
     }
 
+    private void CastAbility(AbilityActivation ability)
+    {
+        var abilityName = ability.name;
+        if (ability.IsAbilityOnCooldown())
+        {
+            if(ability.CanPayManaCost())
+            {
+                var castStatus = ability.Cast();
+
+                if(castStatus)
+                {
+                    Debug.Log(abilityName + " <= Cast Succsesful");
+                }
+                else
+                {
+                    Debug.Log(abilityName + " <= Cast Failed");
+                }
+
+            }else
+            {
+                Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
+            }
+        }
+        else
+        {
+            Debug.Log(abilityName + " <color=darkblue>On CD</color>");
+        }
+
+    }
+
+    private void OnAbilityKey1Press() // Mayeb change The Event to handle Parameters
+    {
+        CastAbility(AbilityOnKey1);
+    }
 }
 

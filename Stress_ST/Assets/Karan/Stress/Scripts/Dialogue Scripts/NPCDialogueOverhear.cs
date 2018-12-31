@@ -152,7 +152,7 @@ public class NPCDialogueOverhear : MonoBehaviour
 
     private void CenterTextBoxElementsParent()
     {
-        Debug.Log("Center CAM");
+        //Debug.Log("Center CAM");
         var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
         DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
     }

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public abstract class AbilityActivation : ScriptableObject
 {
-    [SerializeField] protected Player player; // This Is the Stats BUT now i need to make a Getcomp to connect the player. If i had a scriptableObject i could just drag it in here and we would be good 
-   
+    protected Player player; // This Is the Stats BUT now i need to make a Getcomp to connect the player. If i had a scriptableObject i could just drag it in here and we would be good 
+    [SerializeField] protected float manaCost;
     [SerializeField]protected float cooldownTime; // put in Active ?
     
     [SerializeField]protected Image abilityIcon;
@@ -28,21 +28,30 @@ public abstract class AbilityActivation : ScriptableObject
     /// </summary>
     protected float cooldownEffectTimer;// put in Active ?
 
-    public abstract void Cast();
+    public abstract bool Cast();
 
     public abstract bool IsAbilityOnCooldown(); // What if its a Passiv ability
 
     public abstract bool CanPayManaCost(); // What if its a Passiv ability
 
-    /// <summary>
-    /// Needs an update loop, This methods will allow for Img cd Effect.
-    /// </summary>
     public abstract void CoolDownImgEffect();
-    
-    protected abstract void RestCoolDownImgEffect();
 
     public void InitializeAbility(Player player)
     {
         this.player = player;
+
+        TimeWhenAbilityIsReady = 0f; // So the ability is ready to go immediately after spawn;
     }
+
+    /// <summary>
+    /// Needs an update loop, This methods will allow for Img cd Effect.
+    /// </summary>
+    
+    protected abstract void RestCoolDownImgEffect();
+
+    protected void PayManaCost()
+    {
+        player.Stats.Mana -= manaCost;
+    }
+    
 }

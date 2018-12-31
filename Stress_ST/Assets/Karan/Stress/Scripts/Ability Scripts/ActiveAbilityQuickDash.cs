@@ -6,26 +6,30 @@ using UnityEngine;
 public class ActiveAbilityQuickDash : ActiveAbilityActivation
 {
 
-    private float dashRange;
+    [SerializeField]private float dashRange;
     private Vector2 dashDirection;
-    private ParticleSystem dashParticalSystem;
+    [SerializeField]private ParticleSystem dashParticalSystem;
 
     private Vector2 NoDirection = new Vector2(0, 0);
 
-    public override void Cast()
+    public override bool Cast()
     {
-        var playerController = player.PlayerController;
-        if (playerController!= null)
+        var playerController = player?.PlayerController;
+       
+        if(playerController.Direction != NoDirection)
         {
-            if(playerController.Direction != NoDirection) // If the player is not standing still
-            {
-                var playerRigidbody2D = player.PlayerRigidbody2D;
-                playerRigidbody2D.position += playerController.Direction * dashRange;
-            }
+            var playerRigidbody2D = player.PlayerRigidbody2D;
+            playerRigidbody2D.position += playerController.Direction * dashRange;
 
-        }else
+            PayManaCost();
+
+            return true;
+        }
+        else
         {
-            Debug.LogError("Player controller Null");
+            Debug.Log("Can cast Ability = " + nameof(ActiveAbilityQuickDash));
+            return false;
         }
     }
+
 }

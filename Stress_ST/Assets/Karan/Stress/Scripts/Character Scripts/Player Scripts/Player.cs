@@ -25,13 +25,13 @@ public class Player : Character
     {
         get
         {
-            Debug.Log("Getting player Stats");
+            //Debug.Log("Getting player Stats");
             return stats;
         }
 
         set
         {
-            Debug.Log("Set player Stats");
+          //  Debug.Log("Set player Stats");
             stats = value;
         }
     }

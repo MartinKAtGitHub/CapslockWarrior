@@ -9,9 +9,7 @@ public abstract class ActiveAbilityActivation : AbilityActivation
     /// The prefab that holds the main logic for the Ability
     /// </summary>
     [SerializeField] protected Ability abilityPrefab;
-    [SerializeField] protected float Mana;
-
-
+    
     public override bool IsAbilityOnCooldown() // What if its a Passiv ability
     {
         if (Time.time > TimeWhenAbilityIsReady)
@@ -29,7 +27,7 @@ public abstract class ActiveAbilityActivation : AbilityActivation
 
     public override bool CanPayManaCost() // What if its a Passiv ability
     {
-        if (player.Stats.Mana >= abilityPrefab.ManaCost)
+        if (player.Stats.Mana >= manaCost)
         {
             return true;
         }

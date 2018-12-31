@@ -7,9 +7,10 @@ public class ActiveAbilityActivationHotShot : ActiveAbilityActivation
 
     private float DetectionRange;
 
-    public override void  Cast()
+    public override bool Cast()
     {
         Debug.Log(" CHECK to see if Enemy is in range --> Insta ( hot shot )");
+        return true;
     }
 
     private void SpawnHotShot()

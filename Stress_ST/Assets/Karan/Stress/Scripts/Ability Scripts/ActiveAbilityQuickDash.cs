@@ -22,6 +22,9 @@ public class ActiveAbilityQuickDash : ActiveAbilityActivation
             playerRigidbody2D.position += playerController.Direction * dashRange;
 
             PayManaCost();
+            SetNewTimeWhenAbilityIsReadyOnSuccsefulcast();
+            RestCoolDownImgEffect();
+            IsAbilityOnCD(true, true);
 
             return true;
         }

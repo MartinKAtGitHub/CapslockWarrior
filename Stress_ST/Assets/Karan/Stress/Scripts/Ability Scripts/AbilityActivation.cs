@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class AbilityActivation : ScriptableObject
+public abstract class AbilityActivation : ScriptableObject // TODO change the name to Ability
 {
     
     protected Player player; // This Is the Stats BUT now i need to make a Getcomp to connect the player. If i had a scriptableObject i could just drag it in here and we would be good 
@@ -28,13 +28,16 @@ public abstract class AbilityActivation : ScriptableObject
     /// </summary>
     protected float cooldownEffectTimer;// put in Active ?
 
+    //DISCRIPTION() Somthing to tell the user what this ability is aboutMaybe take a Discr SO
+
+
     public abstract bool Cast();
 
-    public abstract bool IsAbilityOnCooldown(); // What if its a Passiv ability
+    public abstract bool IsAbilityOnCooldown(); // What if its a Passiv ability --> overider to do nothing
 
-    public abstract bool CanPayManaCost(); // What if its a Passiv ability
+    public abstract bool CanPayManaCost(); // What if its a Passiv ability --> overider to do nothing
 
-    public abstract void CoolDownImgEffect();
+    public abstract void CoolDownImgEffect(); // What if its a Passiv ability --> overider to do nothing
 
     public virtual void InitializeAbility(Player player, Image uIElement_Icon, Image uIElement_IconMask, Text uIElement_cooldownNumText)
     {
@@ -42,6 +45,7 @@ public abstract class AbilityActivation : ScriptableObject
         UIElement_Icon = uIElement_Icon;
         UIElement_IconMask = uIElement_IconMask;
         UIElement_cooldownNumText = uIElement_cooldownNumText;
+
         SetSpriteToAbilityUIElements();
 
         Debug.Log("INIT Base Ability");

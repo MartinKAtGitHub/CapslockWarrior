@@ -71,10 +71,10 @@ public class SpawnPlayerSinglePlayer : MonoBehaviour {
 		// we chnage the prefab
 		Instantiate(MainHero,Vector3.zero, Quaternion.identity); // we spawn the defaul hero first. Sould have deafult spells. OR we can send it before we spawn and the prefab wil change.
 
-		spellsController.AbilityObjectKey1 = GMSpellDist.SpellOnKeyOne;
-		spellsController.AbilityObjectKey2 = GMSpellDist.SpellOnKeyTwo;
-		spellsController.AbilityObjectKey3 = GMSpellDist.SpellOnKeyThree;
-		spellsController.AbilityObjectKey4 = GMSpellDist.SpellOnKeyFour;
+	//	spellsController.AbilityObjectKey1 = GMSpellDist.SpellOnKeyOne;
+	//	spellsController.AbilityObjectKey2 = GMSpellDist.SpellOnKeyTwo;
+	//	spellsController.AbilityObjectKey3 = GMSpellDist.SpellOnKeyThree;
+	//	spellsController.AbilityObjectKey4 = GMSpellDist.SpellOnKeyFour;
 
 		// we change the clone
 		/*HeroClone =	(GameObject)Instantiate(MainHero,Vector3.zero, Quaternion.identity);  

@@ -24,32 +24,47 @@ public class PlayerInputManager : MonoBehaviour
 
     [Space(10)]
     [Header("Ability Keys")]
-    [SerializeField] KeyCode ability1;
-    [SerializeField] KeyCode ability2;
-    [SerializeField] KeyCode ability3;
-    [SerializeField] KeyCode ability4;
+    [SerializeField] KeyCode ability1KeyCode;
+    //[SerializeField] KeyCode ability2KeyCode;
+    //[SerializeField] KeyCode ability3KeyCode;
+    //[SerializeField] KeyCode ability4KeyCode;
 
-    [SerializeField] KeyCode altAbility1;
-    [SerializeField] KeyCode altAbility2;
-    [SerializeField] KeyCode altAbility3;
-    [SerializeField] KeyCode altAbility4;
+    [SerializeField] KeyCode altAbility1KeyCode;
+    //[SerializeField] KeyCode altAbility2KeyCode;
+    //[SerializeField] KeyCode altAbility3KeyCode;
+    //[SerializeField] KeyCode altAbility4KeyCode;
 
 
-    [Header("Other keys")]
-    [SerializeField] KeyCode reload;
-    [SerializeField] KeyCode interact;
+    //[Header("Other keys")]
+    //[SerializeField] KeyCode reload;
+    //[SerializeField] KeyCode interact;
 
     public event Action OnAbilityKey1Down; 
-    public event Action OnAbilityKey2Down; 
-    public event Action OnAbilityKey3Down; 
-    public event Action OnAbilityKey4Down;
+    //public event Action OnAbilityKey2Down; 
+    //public event Action OnAbilityKey3Down; 
+    //public event Action OnAbilityKey4Down;
 
 
     /// <summary>
     /// Holds a value from -1 to 1 which translates to moveing left/right or up/down or 0 standing still
     /// </summary>
     private Vector2 movementInputValues;
-    public Vector2 MovementInputValues { get => movementInputValues; } //c#6 ???????????
+    public Vector2 MovementInputValues { get => movementInputValues; }
+
+    public KeyCode Ability1KeyCode
+    {
+        get => ability1KeyCode;
+        set
+        {
+            // Check to see if the key is not taken before you can set it
+            // If(value == ActiveKetsList loop )
+            //      KeyisTaken()
+            //else
+            //   Add to activeKeysList
+            //     ability1 = value;
+            ability1KeyCode = value;
+        }
+    }
 
     void Start()
     {
@@ -65,7 +80,7 @@ public class PlayerInputManager : MonoBehaviour
         HorizontalMovementInputs();
         VerticalMovemetnInputs();
 
-        abilityInputs(ability1, altAbility1, OnAbilityKey1Down);
+        abilityInputs(ability1KeyCode, altAbility1KeyCode, OnAbilityKey1Down);
     }
 
     //TODO double check to see if If else() dosent interfare with inputs

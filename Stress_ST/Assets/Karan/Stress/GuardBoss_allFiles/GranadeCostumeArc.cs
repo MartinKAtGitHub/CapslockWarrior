@@ -145,6 +145,16 @@ public class GranadeCostumeArc : MonoBehaviour
         Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
         spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
 
+
+        /*
+         if target.y is > transform.y
+            Sort from my pos
+            else if(target.y > transform.y)
+            sort from target pos
+         
+         */
+
+
         /*if (selecSortOrgin > 0)
         {
             var sortFromThisPosition = Target.position.y - 0.3;

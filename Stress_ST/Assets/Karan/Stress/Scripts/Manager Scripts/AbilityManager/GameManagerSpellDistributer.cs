@@ -26,10 +26,10 @@ public class GameManagerSpellDistributer : MonoBehaviour {
 
 		//MainHero = GameObject.FindGameObjectWithTag("Player1").GetComponent<AbilityController>();
 
-		MainHero.AbilityObjectKey1= SpellOnKeyOne;
-		MainHero.AbilityObjectKey2 = SpellOnKeyTwo;
-		MainHero.AbilityObjectKey3 = SpellOnKeyThree;
-		MainHero.AbilityObjectKey4 = SpellOnKeyFour;
+	//	MainHero.AbilityObjectKey1= SpellOnKeyOne;
+	//	MainHero.AbilityObjectKey2 = SpellOnKeyTwo;
+	//	MainHero.AbilityObjectKey3 = SpellOnKeyThree;
+	//	MainHero.AbilityObjectKey4 = SpellOnKeyFour;
 
 		// Note If spell is NULL we set default spell in SpellsController. Maybe do it here ?
 	}

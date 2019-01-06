@@ -1,30 +1,34 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class AbilityKeyDropZone : MonoBehaviour, IDropHandler
+public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHandler, IPointerExitHandler
 {
-    //bool isKeyoccupied;
+   public bool IsKeyoccupied;
     Draggable curretnDraggable;
+
+
+
+
 
     public void OnDrop(PointerEventData eventData)
     {
-        //If isKeyoccupied swap
+        Debug.Log("ON DROP ZONE");
 
-        if (curretnDraggable == null)
+        if(!IsKeyoccupied)
         {
             curretnDraggable = eventData.pointerDrag.GetComponent<Draggable>();
             if (curretnDraggable != null)
             {
-                curretnDraggable.ParentDropZone = transform;
+                curretnDraggable.ResetDropZone = transform;
+                curretnDraggable.OnDropZone = true;
+                curretnDraggable.keyDropZone = this;
+                IsKeyoccupied = true;
+                
                 // curretnDraggable.transform.position = transform.position;
             }
-        }
-        else
+        }else
         {
-            /*curretnDraggable.transform.SetParent(curretnDraggable.PlaceHolder.transform.parent);
-            curretnDraggable.transform.SetSiblingIndex(curretnDraggable.PlaceHolder.transform.GetSiblingIndex());
-            Destroy(curretnDraggable.PlaceHolder);
-            curretnDraggable = eventData.pointerDrag.GetComponent<Draggable>();*/
+            Debug.Log("Ability Key is occupied ");
         }
     }
 }

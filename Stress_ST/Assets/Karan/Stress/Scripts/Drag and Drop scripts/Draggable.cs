@@ -9,7 +9,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     /// <summary>
     /// This is the area/pnl the Ability will be childed to. we store it so we can use it to go back in case the Drop point is invalid Or assign it as a New Pos for Draggable
     /// </summary>
-    public Transform ParentDropZone = null;
+    public Transform ResetDropZone = null;
     public Transform OriginalParent = null; // If i cant drop in valid spot go back to this
 
     /// <summary>
@@ -28,6 +28,9 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
      public GameObject PlaceHolder;
 
+    public bool OnDropZone;
+
+    public AbilityKeyDropZone keyDropZone;
 
     private void Awake()
     {
@@ -35,27 +38,38 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         layoutElement = GetComponent<LayoutElement>();
         rectTransform = GetComponent<RectTransform>();
 
+        OriginalParent = transform.parent;
+       
         //You need to this before Play anyways so LUL
-       /* layoutElement.preferredWidth = rectTransform.sizeDelta.x;
-        layoutElement.preferredHeight = rectTransform.sizeDelta.y;
-        layoutElement.flexibleWidth = 0;
-        layoutElement.flexibleHeight = 0;
-        */
+        /* layoutElement.preferredWidth = rectTransform.sizeDelta.x;
+         layoutElement.preferredHeight = rectTransform.sizeDelta.y;
+         layoutElement.flexibleWidth = 0;
+         layoutElement.flexibleHeight = 0;
+         */
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-
-        CreatePlaceHolderObj();
-
-        ParentDropZone = transform.parent;
+        if(!OnDropZone)
+        {
+            CreatePlaceHolderObj();
+        }
+       
+        ResetDropZone = transform.parent;
         transform.SetParent(freeMotionParent); // This takes us out of the Pnl(layout group) so we can freely move the UI element
         canvasGroup.blocksRaycasts = false; // after pick up we turn this off to allow PointerEventData to go through the draggable obj
 
         startPos = eventData.position;
         offset = (Vector2)transform.position - startPos;
-        
+
+        OnDropZone = false;
+        if(keyDropZone != null)
+        {
+            keyDropZone.IsKeyoccupied = false;
+            keyDropZone = null;
+        }
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -65,11 +79,22 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(ParentDropZone);
-        transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
-        canvasGroup.blocksRaycasts = true; // after pick up we turn this off to allow PointerEventData to go through the draggable obj
+        if(OnDropZone)
+        {
+            transform.SetParent(ResetDropZone);
+        }else
+        {
+            transform.SetParent(OriginalParent);
+            transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+            Destroy(PlaceHolder);
+        }
 
-        Destroy(PlaceHolder);
+        
+
+        //transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+        //Destroy(PlaceHolder);
+
+        canvasGroup.blocksRaycasts = true; // after pick up we turn this off to allow PointerEventData to go through the draggable obj
     }
 
 

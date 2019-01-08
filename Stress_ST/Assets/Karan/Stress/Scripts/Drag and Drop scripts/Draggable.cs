@@ -6,6 +6,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(LayoutElement))]
 public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+
+    
+
     /// <summary>
     /// This is the area/pnl the Ability will be childed to. we store it so we can use it to go back in case the Drop point is invalid Or assign it as a New Pos for Draggable
     /// </summary>
@@ -17,6 +20,9 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     /// </summary>
     [SerializeField] private Transform freeMotionParent;
 
+    /// <summary>
+    /// Used to calculate drag point. This allows you to drag from anywhere on the img. If we didnt use this it would snap to center of img
+    /// </summary>
     Vector3 offset;
     Vector2 startPos;
     /// <summary>
@@ -26,11 +32,13 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     LayoutElement layoutElement;
     RectTransform rectTransform;
 
-     public GameObject PlaceHolder;
+    public GameObject PlaceHolder;
 
     public bool OnDropZone;
 
     public AbilityKeyDropZone keyDropZone;
+
+    
 
     private void Awake()
     {
@@ -40,6 +48,9 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
         OriginalParent = transform.parent;
        
+
+
+
         //You need to this before Play anyways so LUL
         /* layoutElement.preferredWidth = rectTransform.sizeDelta.x;
          layoutElement.preferredHeight = rectTransform.sizeDelta.y;
@@ -51,25 +62,33 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(!OnDropZone)
-        {
-            CreatePlaceHolderObj();
-        }
-       
-        ResetDropZone = transform.parent;
-        transform.SetParent(freeMotionParent); // This takes us out of the Pnl(layout group) so we can freely move the UI element
-        canvasGroup.blocksRaycasts = false; // after pick up we turn this off to allow PointerEventData to go through the draggable obj
-
         startPos = eventData.position;
         offset = (Vector2)transform.position - startPos;
 
-        OnDropZone = false;
-        if(keyDropZone != null)
+        if (!OnDropZone)
         {
-            keyDropZone.IsKeyoccupied = false;
-            keyDropZone = null;
+            CreatePlaceHolderObj();
         }
 
+        ResetDropZone = transform.parent; // Only realy relavent if on dropzone
+
+        FreeDragMode();
+
+        if (keyDropZone != null)
+        {
+            keyDropZone.IsKeyOccupied = false;
+            keyDropZone = null;
+            // Disconnect AB from KEY
+        }
+
+    }
+
+    private void FreeDragMode()
+    {
+        transform.SetParent(freeMotionParent); // This takes us out of the Pnl(layout group) so we can freely move the UI element
+        canvasGroup.blocksRaycasts = false; // after pick up we turn this off to allow PointerEventData to go through the draggable obj
+
+        OnDropZone = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -77,16 +96,15 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         transform.position = eventData.position + (Vector2)offset;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnEndDrag(PointerEventData eventData) // THIS FIRES AFTER ONDROP () in AbilityKeyDropZone
     {
-        if(OnDropZone)
+        if(OnDropZone) // If i am on a dropZone
         {
+            Debug.Log("OnEndDrag -> Drop zone TRUE REST TO -> " + ResetDropZone.name);
             transform.SetParent(ResetDropZone);
         }else
         {
-            transform.SetParent(OriginalParent);
-            transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
-            Destroy(PlaceHolder);
+            RestBackToOriginalPosition();
         }
 
         
@@ -111,4 +129,13 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
         PlaceHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
     }
+
+
+    private void RestBackToOriginalPosition()
+    {
+        transform.SetParent(OriginalParent);
+        transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+        Destroy(PlaceHolder);
+    }
+
 }

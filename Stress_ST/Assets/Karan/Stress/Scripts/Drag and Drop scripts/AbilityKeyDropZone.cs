@@ -3,18 +3,18 @@ using UnityEngine.EventSystems;
 
 public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHandler, IPointerExitHandler
 {
-   public bool IsKeyoccupied;
-    Draggable curretnDraggable;
+    public bool IsKeyOccupied;
 
+    private Draggable curretnDraggable;
 
-
+    private AbilityActivation onKeyAbility;
 
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("ON DROP ZONE");
+        // Debug.Log("ON DROP ZONE");
 
-        if(!IsKeyoccupied)
+        if (!IsKeyOccupied)
         {
             curretnDraggable = eventData.pointerDrag.GetComponent<Draggable>();
             if (curretnDraggable != null)
@@ -22,13 +22,24 @@ public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHa
                 curretnDraggable.ResetDropZone = transform;
                 curretnDraggable.OnDropZone = true;
                 curretnDraggable.keyDropZone = this;
-                IsKeyoccupied = true;
-                
+                IsKeyOccupied = true;
+
+               // SetAbilityToKey();
+
                 // curretnDraggable.transform.position = transform.position;
             }
-        }else
-        {
-            Debug.Log("Ability Key is occupied ");
         }
+        else
+        {
+            Debug.Log("Ability Key is occupied  = " + name);
+        }
+    }
+
+
+    private void SetAbilityToKey()
+    {
+      //  onKeyAbility = curretnDraggable.Ability;
+        // Set img icon
+        // Send to AB controller 
     }
 }

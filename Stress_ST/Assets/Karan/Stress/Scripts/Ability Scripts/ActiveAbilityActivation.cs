@@ -61,7 +61,7 @@ public abstract class ActiveAbilityActivation : AbilityActivation
             float roundedCd = Mathf.Round(cooldownEffectTimer);
             UIElement_cooldownNumText.text = roundedCd.ToString();
 
-            UIElement_IconMask.fillAmount = (cooldownEffectTimer / cooldownTime);
+            uIElement_IconMask.fillAmount = (cooldownEffectTimer / cooldownTime);
         }
         else
         {
@@ -89,7 +89,7 @@ public abstract class ActiveAbilityActivation : AbilityActivation
     /// <param name="cooldownNumTextStatus">UI Element which reperesents the cooldown num text</param>
     protected void IsAbilityOnCD(bool iconMaskStatus, bool cooldownNumTextStatus)
     {
-        UIElement_IconMask.enabled = iconMaskStatus;
+        uIElement_IconMask.enabled = iconMaskStatus;
         UIElement_cooldownNumText.enabled = cooldownNumTextStatus;
     }
 }

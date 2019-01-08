@@ -10,13 +10,13 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     [SerializeField] protected Sprite AbilityIcon;
     [SerializeField] protected float manaCost;
     [SerializeField] protected float cooldownTime; // put in Active ?
-    
 
-    protected Image UIElement_Icon;
+
+    protected Image uIElement_Icon;
     /// <summary>
     /// To crate the Cooldown effect you need somthign to cover the Main ability icon and gradually removed over time
     /// </summary>
-    protected Image UIElement_IconMask;
+    protected Image uIElement_IconMask;
     /// <summary>
     /// The text used to display the current cooldown value
     /// </summary>
@@ -27,6 +27,8 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     /// Only purpose of this Timer is to be used for the the CD img effect.
     /// </summary>
     protected float cooldownEffectTimer;// put in Active ?
+
+    public Image UIElement_Icon { get => uIElement_Icon;}
 
     //DISCRIPTION() Somthing to tell the user what this ability is aboutMaybe take a Discr SO
 
@@ -42,8 +44,8 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     public virtual void InitializeAbility(Player player, Image uIElement_Icon, Image uIElement_IconMask, Text uIElement_cooldownNumText)
     {
         this.player = player;
-        UIElement_Icon = uIElement_Icon;
-        UIElement_IconMask = uIElement_IconMask;
+        this.uIElement_Icon = uIElement_Icon;
+        this.uIElement_IconMask = uIElement_IconMask;
         UIElement_cooldownNumText = uIElement_cooldownNumText;
 
         SetSpriteToAbilityUIElements();
@@ -64,7 +66,7 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     
     private void SetSpriteToAbilityUIElements()
     {
-        UIElement_Icon.sprite = AbilityIcon;
-        UIElement_IconMask.sprite = AbilityIcon;
+        uIElement_Icon.sprite = AbilityIcon;
+        uIElement_IconMask.sprite = AbilityIcon;
     }
 }

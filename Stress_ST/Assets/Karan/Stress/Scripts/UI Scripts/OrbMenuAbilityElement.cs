@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[ExecuteInEditMode]
 public class OrbMenuAbilityElement : MonoBehaviour
 {
 
@@ -15,15 +16,6 @@ public class OrbMenuAbilityElement : MonoBehaviour
     {
         abilityIconImg = GetComponent<Image>();
 
-        Debug.Log(ability.UIElement_Icon.sprite.name);
-
-        //abilityIconImg.sprite = ability.UIElement_Icon.sprite;
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        abilityIconImg.sprite = ability.AbilityIcon;
     }
 }

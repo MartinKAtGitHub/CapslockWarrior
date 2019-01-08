@@ -7,7 +7,7 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     
     protected Player player; // This Is the Stats BUT now i need to make a Getcomp to connect the player. If i had a scriptableObject i could just drag it in here and we would be good 
 
-    [SerializeField] protected Sprite AbilityIcon;
+    [SerializeField] protected Sprite abilityIcon;
     [SerializeField] protected float manaCost;
     [SerializeField] protected float cooldownTime; // put in Active ?
 
@@ -29,6 +29,7 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     protected float cooldownEffectTimer;// put in Active ?
 
     public Image UIElement_Icon { get => uIElement_Icon;}
+    public Sprite AbilityIcon { get => abilityIcon; }
 
     //DISCRIPTION() Somthing to tell the user what this ability is aboutMaybe take a Discr SO
 
@@ -66,7 +67,7 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     
     private void SetSpriteToAbilityUIElements()
     {
-        uIElement_Icon.sprite = AbilityIcon;
-        uIElement_IconMask.sprite = AbilityIcon;
+        uIElement_Icon.sprite = abilityIcon;
+        uIElement_IconMask.sprite = abilityIcon;
     }
 }

@@ -6,9 +6,8 @@ public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHa
     public bool IsKeyOccupied;
 
     private Draggable curretnDraggable;
-
-    private AbilityActivation onKeyAbility;
-
+    private OrbMenuAbilityElement orbMenuAbilityElement;
+    private AbilityActivation ability;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -17,6 +16,8 @@ public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHa
         if (!IsKeyOccupied)
         {
             curretnDraggable = eventData.pointerDrag.GetComponent<Draggable>();
+            orbMenuAbilityElement = eventData.pointerDrag.GetComponent<OrbMenuAbilityElement>();
+
             if (curretnDraggable != null)
             {
                 curretnDraggable.ResetDropZone = transform;
@@ -28,6 +29,11 @@ public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHa
 
                 // curretnDraggable.transform.position = transform.position;
             }
+            if (orbMenuAbilityElement != null)
+            {
+                ability = orbMenuAbilityElement.Ability;
+            }
+
         }
         else
         {

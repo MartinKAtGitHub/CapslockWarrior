@@ -41,9 +41,12 @@ public class AbilityController : MonoBehaviour
 
     void Start()
     {
+        // GET ALL MY ABILITES FROM ORBMENU(GameManger) --here
+
+
         player = GetComponent<Player>();
 
-       // InitializeAbility(AbilityOnKey1,player, ability1_UI_Icon, ability1_UI_IconMask, Ability1_UI_Txt);
+       InitializeAbility(AbilityOnKey1,player, ability1_UI_Icon, ability1_UI_IconMask, Ability1_UI_Txt);
         //InitializeAbility(AbilityOnKey2,player, ability2_UI_Icon, ability2_UI_IconMask, Ability2_UI_Txt);
         //InitializeAbility(AbilityOnKey3,player, ability3_UI_Icon, ability3_UI_IconMask, Ability3_UI_Txt);
         //InitializeAbility(AbilityOnKey4,player, ability4_UI_Icon, ability4_UI_IconMask, Ability4_UI_Txt);

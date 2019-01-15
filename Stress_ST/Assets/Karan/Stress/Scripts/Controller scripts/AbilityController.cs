@@ -1,122 +1,76 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class AbilityController : MonoBehaviour
 {
+    public Sprite ErrorAbilitySprite;
 
-    public AbilityActivation AbilityOnKey1;
-   
-    //public AbilityActivation AbilityOnKey2;
-    //public AbilityActivation AbilityOnKey3;
-    //public AbilityActivation AbilityOnKey4;
-
-    #region Ability UI CD BOX
-    [Space(10)]
-    [SerializeField] private Image ability1_UI_Icon;
-    //[SerializeField] private Image ability2_UI_Icon;
-    //[SerializeField] private Image ability3_UI_Icon;
-    //[SerializeField] private Image ability4_UI_Icon;
-
-    [Space(10)]
-    [SerializeField] private Image ability1_UI_IconMask;
-    //[SerializeField] private Image ability2_UI_IconMask;
-    //[SerializeField] private Image ability3_UI_IconMask;
-    //[SerializeField] private Image ability4_UI_IconMask;
-
-    [Space(10)]
-    [SerializeField] private Text Ability1_UI_Txt;
-    //[SerializeField] private Text Ability2_UI_Txt;
-    //[SerializeField] private Text Ability3_UI_Txt;
-    //[SerializeField] private Text Ability4_UI_Txt;
-
-    #endregion
-
+    public AbilityIconUI[] AbilityIcons;
 
     private Player player;
-    //private PlayerInputManager playerInputManager;
-    //private float imageAplhaTimer = 0;
+    private PlayerInputManager playerInputManager;
+
     [Space(10)]
     [SerializeField] private Transform abilitySpawnPoint;
-    
 
+    public bool testboolTRIGGERICONGEN;
     void Start()
     {
-        // GET ALL MY ABILITES FROM ORBMENU(GameManger) --here
+           playerInputManager = GameManager.Instance.PlayerInputManager;
 
+        // GET ALL MY ABILITES FROM ORBMENU(GameManger) --here
+        // Generate AB UI ICONS
 
         player = GetComponent<Player>();
+        GenerateActiveAbilitesUIICons();
 
-       InitializeAbility(AbilityOnKey1,player, ability1_UI_Icon, ability1_UI_IconMask, Ability1_UI_Txt);
-        //InitializeAbility(AbilityOnKey2,player, ability2_UI_Icon, ability2_UI_IconMask, Ability2_UI_Txt);
-        //InitializeAbility(AbilityOnKey3,player, ability3_UI_Icon, ability3_UI_IconMask, Ability3_UI_Txt);
-        //InitializeAbility(AbilityOnKey4,player, ability4_UI_Icon, ability4_UI_IconMask, Ability4_UI_Txt);
-
-        // AbilityOnKey2.InitializeAbility(player);
-        // AbilityOnKey3.InitializeAbility(player);
-        // AbilityOnKey4.InitializeAbility(player);
-
-       
-        //GameManager.Instance.PlayerInputManager.OnAbilityKey1Down += IsAbilityPassiv;
-
+        for (int i = 0; i < playerInputManager.AbilityKeyCodes.Length; i++)
+        {
+            playerInputManager.AbilityKeyDownAction[i] += AbilityIcons[i].CastAbility;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        AbilityOnKey1.CoolDownImgEffect();
+        if (testboolTRIGGERICONGEN)
+        {
+            GenerateActiveAbilitesUIICons();
+            testboolTRIGGERICONGEN = false;
+        }
+
+        for (int i = 0; i < 10/*ActiveAbilitesList.count*/; i++)
+        {
+            AbilityIcons[i].AbilityOnIcon?.CoolDownImgEffect();
+        }
+    }
+       
+    private void OnDisable()
+    {
+        for (int i = 0; i < playerInputManager.AbilityKeyCodes.Length; i++)
+        {
+            playerInputManager.AbilityKeyDownAction[i] -= AbilityIcons[i].CastAbility;
+        };
     }
 
-  
-    private void CastAbility(AbilityActivation ability)
+    private void GenerateActiveAbilitesUIICons()
     {
-        var abilityName = ability.name;
-
-        if (ability.IsAbilityOnCooldown())
+        for (int i = 0; i <  GameManager.Instance.OrbSystemMenuManager.abilityKeyDropZones.Length; i++)
         {
-            if (ability.CanPayManaCost())
+            var OrbMenuAbility = GameManager.Instance.OrbSystemMenuManager.abilityKeyDropZones[i].orbMenuAbility;
+            if (OrbMenuAbility != null)
             {
+                AbilityIcons[i].gameObject.SetActive(true); // Maybe just Intantiante becaouse it will only happen in start()
+                AbilityIcons[i].InitializeAbilityIcon(OrbMenuAbility.Ability, player);
                 
-                var castStatus = ability.Cast();
-
-                if (castStatus)
-                {
-                    Debug.Log(abilityName + " <= Cast Succsesful");
-                }
-                else
-                {
-                    Debug.Log(abilityName + " <= Cast Failed");
-                }
-
             }
             else
             {
-                Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
+                AbilityIcons[i].gameObject.SetActive(false);
             }
         }
-        else
-        {
-            Debug.Log(abilityName + " <color=darkblue>On CD</color>");
-        }
-
-    }
-
-    private void OnAbilityKey1Press() // Mayeb change The Event to handle Parameters
-    {
-        CastAbility(AbilityOnKey1);
-    }
-
-    private void InitializeAbility(AbilityActivation ability, Player player, Image uIElement_Icon, Image uIElement_IconMask, Text uIElement_cooldownNumText)
-    {
-        if(ability != null)
-        {
-            AbilityOnKey1.InitializeAbility(player, uIElement_Icon, uIElement_IconMask, uIElement_cooldownNumText);
-            GameManager.Instance.PlayerInputManager.OnAbilityKey1Down += OnAbilityKey1Press;
-        }
-    }
-    
-    private void OnDisable()
-    {
-        GameManager.Instance.PlayerInputManager.OnAbilityKey1Down -= OnAbilityKey1Press;
     }
 }
+
 

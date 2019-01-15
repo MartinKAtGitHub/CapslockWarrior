@@ -3,11 +3,11 @@ using UnityEngine.EventSystems;
 
 public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHandler, IPointerExitHandler
 {
+    //Key ID so i can sort it in a list maybe
     public bool IsKeyOccupied;
 
     private Draggable curretnDraggable;
-    private OrbMenuAbilityElement orbMenuAbilityElement;
-    private AbilityActivation ability;
+    public OrbSystemAbilityIcon orbMenuAbility;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -16,7 +16,7 @@ public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHa
         if (!IsKeyOccupied)
         {
             curretnDraggable = eventData.pointerDrag.GetComponent<Draggable>();
-            orbMenuAbilityElement = eventData.pointerDrag.GetComponent<OrbMenuAbilityElement>();
+            orbMenuAbility = eventData.pointerDrag.GetComponent<OrbSystemAbilityIcon>();
 
             if (curretnDraggable != null)
             {
@@ -29,23 +29,10 @@ public class AbilityKeyDropZone : MonoBehaviour, IDropHandler//, IPointerEnterHa
 
                 // curretnDraggable.transform.position = transform.position;
             }
-            if (orbMenuAbilityElement != null)
-            {
-                ability = orbMenuAbilityElement.Ability;
-            }
-
         }
         else
         {
             Debug.Log("Ability Key is occupied  = " + name);
         }
-    }
-
-
-    private void SetAbilityToKey()
-    {
-      //  onKeyAbility = curretnDraggable.Ability;
-        // Set img icon
-        // Send to AB controller 
     }
 }

@@ -77,7 +77,10 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         if (keyDropZone != null)
         {
             keyDropZone.IsKeyOccupied = false;
+            keyDropZone.orbMenuAbility = null;
+
             keyDropZone = null;
+            
             // Disconnect AB from KEY
         }
 

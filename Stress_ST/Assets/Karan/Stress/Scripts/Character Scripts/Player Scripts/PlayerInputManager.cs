@@ -24,24 +24,22 @@ public class PlayerInputManager : MonoBehaviour
 
     [Space(10)]
     [Header("Ability Keys")]
-    [SerializeField] KeyCode ability1KeyCode;
-    //[SerializeField] KeyCode ability2KeyCode;
-    //[SerializeField] KeyCode ability3KeyCode;
-    //[SerializeField] KeyCode ability4KeyCode;
+    [SerializeField] private KeyCode[] abilityKeyCodes;
+    [Space(10)]
+    [SerializeField] private KeyCode[] altAbilityKeyCodes;
 
-    [SerializeField] KeyCode altAbility1KeyCode;
-    //[SerializeField] KeyCode altAbility2KeyCode;
-    //[SerializeField] KeyCode altAbility3KeyCode;
-    //[SerializeField] KeyCode altAbility4KeyCode;
+    [Header("Other keys")]
+    [SerializeField] KeyCode reload;
+    [SerializeField] KeyCode interact;
 
+    public delegate void Test(AbilityActivation ab);
+    public Test test;
 
-    //[Header("Other keys")]
-    //[SerializeField] KeyCode reload;
-    //[SerializeField] KeyCode interact;
+    public Action[] AbilityKeyDownAction;
 
-    public event Action OnAbilityKey1Down; 
-    //public event Action OnAbilityKey2Down; 
-    //public event Action OnAbilityKey3Down; 
+    //public event Action OnAbilityKey1Down;
+    //public event Action OnAbilityKey2Down;
+    //public event Action OnAbilityKey3Down;
     //public event Action OnAbilityKey4Down;
 
 
@@ -51,20 +49,30 @@ public class PlayerInputManager : MonoBehaviour
     private Vector2 movementInputValues;
     public Vector2 MovementInputValues { get => movementInputValues; }
 
-    public KeyCode Ability1KeyCode
+    public KeyCode[] AbilityKeyCodes { get => abilityKeyCodes; }
+
+
+
+    private void Awake()
     {
-        get => ability1KeyCode;
-        set
-        {
-            // Check to see if the key is not taken before you can set it
-            // If(value == ActiveKetsList loop )
-            //      KeyisTaken()
-            //else
-            //   Add to activeKeysList
-            //     ability1 = value;
-            ability1KeyCode = value;
-        }
+        AbilityKeyDownAction = new Action [abilityKeyCodes.Length];
     }
+
+
+    //public KeyCode Ability1KeyCode
+    //{
+    //    get => ability1KeyCode;
+    //    set
+    //    {
+    //        // Check to see if the key is not taken before you can set it
+    //        // If(value == ActiveKetsList loop )
+    //        //      KeyisTaken()
+    //        //else
+    //        //   Add to activeKeysList
+    //        //     ability1 = value;
+    //        ability1KeyCode = value;
+    //    }
+    //}
 
     void Start()
     {
@@ -80,7 +88,10 @@ public class PlayerInputManager : MonoBehaviour
         HorizontalMovementInputs();
         VerticalMovemetnInputs();
 
-        abilityInputs(ability1KeyCode, altAbility1KeyCode, OnAbilityKey1Down);
+        for (int i = 0; i < abilityKeyCodes.Length; i++)
+        {
+            AbilityInputs(abilityKeyCodes[i], altAbilityKeyCodes[i], AbilityKeyDownAction[i]);
+        }
     }
 
     //TODO double check to see if If else() dosent interfare with inputs
@@ -116,7 +127,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void abilityInputs(KeyCode abilityKey, KeyCode altAbilityKey, Action action)
+    private void AbilityInputs(KeyCode abilityKey, KeyCode altAbilityKey, Action action)
     {
         if(Input.GetKeyDown(abilityKey) || Input.GetKeyDown(altAbilityKey))
         {

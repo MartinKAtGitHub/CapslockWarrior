@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	/// <summary>
-	/// The nummber of keys the player has from beating the main boss.  
-	/// </summary>
-	//public int BossKeys; 
-	public GameObject PlayerPrefab;
+	public static GameManager Instance = null;
+
+    public GameObject PlayerPrefab;
 	public GameObject PlayerObject;
 
     public PlayerInputManager PlayerInputManager;
+    public OrbSystemMenuManager OrbSystemMenuManager;
 
-	public static GameManager Instance = null;
 
 
 	public delegate void GameManagerEventHandler();
@@ -33,7 +31,9 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject); // This keeps the GM alive in all scenes;
 
         PlayerInputManager = GetComponent<PlayerInputManager>();
-	}
+        OrbSystemMenuManager = GetComponent<OrbSystemMenuManager>();
+
+    }
 
 	private void SingeltonCheck() // TODO check if Gamemanger_master script Singelton is correctly done
 	{

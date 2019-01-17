@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class OrbSystemAbilityIcon : MonoBehaviour
 {
 
@@ -14,7 +14,31 @@ public class OrbSystemAbilityIcon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        abilityIconImg = GetComponent<Image>();
-        abilityIconImg.sprite = ability.AbilityIcon;
+        if(ability!=null)
+        {
+           // abilityIconImg = GetComponentInChildren<Image>(); dosent work
+            abilityIconImg.sprite = ability.AbilityIcon;
+        }else
+        {
+            Debug.LogWarning("No ABILITY SET, Cant Find Img for Ability Drag obj");
+        }
     }
+
+
+/*#if UNITY_EDITOR
+    private void Update()
+    {
+        if (ability != null)
+        {
+            abilityIconImg = GetComponent<Image>();
+            abilityIconImg.sprite = ability.AbilityIcon;
+        }
+        else
+        {
+            Debug.LogWarning("No ABILITY SET, Cant Find Img for Ability Drag obj");
+        }
+
+        Debug.Log("Asdjahdkjashdkjashdkjashdkas");
+    }
+#endif*/
 }

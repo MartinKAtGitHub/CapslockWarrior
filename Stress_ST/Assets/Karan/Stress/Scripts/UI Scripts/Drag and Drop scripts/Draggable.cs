@@ -103,9 +103,10 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         if(OnDropZone) // If i am on a dropZone
         {
-            Debug.Log("OnEndDrag -> Drop zone TRUE REST TO -> " + ResetDropZone.name);
             transform.SetParent(ResetDropZone);
-        }else
+            rectTransform.localPosition = Vector2.zero;
+        }
+        else
         {
             RestBackToOriginalPosition();
         }
@@ -133,11 +134,17 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         PlaceHolder.transform.SetSiblingIndex(transform.GetSiblingIndex());
     }
 
-
+    /// <summary>
+    /// So what is happning here is simply childing to a parent OBJ. HOWEVER for the snap back action to happen the parant needs a Layoutgroup(vertical/horizontal)
+    /// Even if the paranet only has 1 Element inside of it. Check performance of this. becoause it might be more benificial to just reset pos insted leaning on Layoutgroup to snap
+    /// </summary>
     private void RestBackToOriginalPosition()
     {
         transform.SetParent(OriginalParent);
         transform.SetSiblingIndex(PlaceHolder.transform.GetSiblingIndex());
+
+        rectTransform.localPosition = Vector2.zero; // This works if you turn of VerticalLayoutGroup But not on Drop
+
         Destroy(PlaceHolder);
     }
 

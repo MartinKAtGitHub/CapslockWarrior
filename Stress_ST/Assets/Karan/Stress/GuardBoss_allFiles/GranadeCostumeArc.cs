@@ -45,7 +45,7 @@ public class GranadeCostumeArc : MonoBehaviour
 
         circleCollider2D.enabled = false;
         inAir = true;
-
+        
         //SpriteSorting();
     }
 

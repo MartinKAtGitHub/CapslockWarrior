@@ -32,8 +32,10 @@ public class NPCDialogueOverhear : MonoBehaviour
     private Camera mainCam;
     [SerializeField]
     private float PlayerDialogBoxOffsetY;
-   // [SerializeField]
-   // private float DialogueBoxOffsetY;
+
+  
+    // [SerializeField]
+    // private float DialogueBoxOffsetY;
 
 
     [SerializeField]
@@ -146,7 +148,8 @@ public class NPCDialogueOverhear : MonoBehaviour
         {
 
             // mainCam = GameManager . player . Cam
-            Debug.LogError("Cant Find Main Cam --> look in Game Manager");
+            mainCam = Camera.main;
+            Debug.LogError("Cant Find Main Cam --> look in Game Manager --> Setting MainCam ffrom Camera.main = " + mainCam.gameObject.name);
         }
     }
 

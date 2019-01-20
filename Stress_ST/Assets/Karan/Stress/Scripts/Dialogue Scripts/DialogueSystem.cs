@@ -1,10 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 
 public abstract class  DialogueSystem : MonoBehaviour
 {
+
+    [SerializeField]
+    protected CinemachineVirtualCamera VRCam_TESTING;
+
     /// <summary>
     /// The Character that triggers the dialogue
     /// </summary>
@@ -67,9 +71,9 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     protected bool isMainDialogueFinished;
 
+
     protected void Start()
     {
-        
         CheckMainCam();
         CheckSentenceDataNull();
     }
@@ -81,6 +85,7 @@ public abstract class  DialogueSystem : MonoBehaviour
 
     private void AnchorDialogueBoxContainer() // If we dont do this the panel will move with the player because its screen UI not in-game
     {
+        //if(!inDeadZone)
         var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
         DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
     }
@@ -88,7 +93,6 @@ public abstract class  DialogueSystem : MonoBehaviour
     {
         if (mainCam == null)
         {
-
             // mainCam = GameManager . player . Cam
             Debug.LogError("Cant Find Main Cam --> look in Game Manager and set the main Cam");
             

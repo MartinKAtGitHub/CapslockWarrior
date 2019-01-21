@@ -49,7 +49,7 @@ public class PixelSnap : MonoBehaviour
         if (!cam)
             return;
 
-        PixelPerfectCamera pixelPerfectCamera = cam.GetComponent<PixelPerfectCamera>();
+        PixelPerfectCameraCustome pixelPerfectCamera = cam.GetComponent<PixelPerfectCameraCustome>();
         bool retroSnap = (pixelPerfectCamera == null) ? false : pixelPerfectCamera.retroSnap;
 
 #if !REDUCE_JITTER

@@ -15,7 +15,7 @@ using System.Collections;
 public class CanvasScreenSpaceScaler : MonoBehaviour {
 
 	Canvas _canvas;
-	PixelPerfectCamera _pixelPerfectCamera;
+	PixelPerfectCameraCustome _pixelPerfectCamera;
 
     bool _isInitialized;
 
@@ -35,7 +35,7 @@ public class CanvasScreenSpaceScaler : MonoBehaviour {
 			
 		Camera uiCamera = GetComponent<Canvas> ().worldCamera;
 
-		_pixelPerfectCamera = uiCamera.GetComponent<PixelPerfectCamera> ();
+		_pixelPerfectCamera = uiCamera.GetComponent<PixelPerfectCameraCustome> ();
 
         if (_pixelPerfectCamera == null)
         {

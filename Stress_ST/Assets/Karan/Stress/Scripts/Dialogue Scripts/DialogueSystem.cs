@@ -8,6 +8,7 @@ public abstract class  DialogueSystem : MonoBehaviour
 
     [SerializeField]
     protected CinemachineVirtualCamera VRCam_TESTING;
+    private Vector3 temp;
 
     /// <summary>
     /// The Character that triggers the dialogue
@@ -85,9 +86,27 @@ public abstract class  DialogueSystem : MonoBehaviour
 
     private void AnchorDialogueBoxContainer() // If we dont do this the panel will move with the player because its screen UI not in-game
     {
-        //if(!inDeadZone)
+       // //if(!inDeadZone)
+
+       //// Debug.Log(VRCam_TESTING.name);
+       // if (temp != VRCam_TESTING.gameObject.transform.position)
+       // {
+       //     temp = VRCam_TESTING.gameObject.transform.position;
+
+       //     var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
+       //     DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
+
+       //     Debug.Log("CAM IS MOVING");
+       // }
+       // else
+       // {
+       //     Debug.Log("CAM IS NOT MOVING");
+       // }
+
+
         var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
         DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
+
     }
     private void CheckMainCam()
     {

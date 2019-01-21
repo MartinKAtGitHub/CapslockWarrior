@@ -19,7 +19,7 @@ public class CanvasWorldScaler : MonoBehaviour {
     [Tooltip("A camera that uses the PixelPerfectCamera script")]
     public Camera uiCamera;
 
-    PixelPerfectCamera _pixelPerfectCamera;
+    PixelPerfectCameraCustome _pixelPerfectCamera;
     Vector2 _cameraSize;
     float _assetsPixelsPerUnit;
 
@@ -48,7 +48,7 @@ public class CanvasWorldScaler : MonoBehaviour {
 			return;
 		}
 
-		_pixelPerfectCamera = uiCamera.GetComponent<PixelPerfectCamera> ();
+		_pixelPerfectCamera = uiCamera.GetComponent<PixelPerfectCameraCustome> ();
 
         if (_pixelPerfectCamera == null)
         {

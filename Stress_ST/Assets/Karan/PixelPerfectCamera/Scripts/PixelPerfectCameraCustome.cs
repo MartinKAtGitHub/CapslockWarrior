@@ -16,7 +16,7 @@ using UnityEditor;
  */
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
-public class PixelPerfectCamera : MonoBehaviour {
+public class PixelPerfectCameraCustome : MonoBehaviour {
 
     public static int PIXELS_PER_UNIT = 100;
 
@@ -227,7 +227,7 @@ public class PixelPerfectCamera : MonoBehaviour {
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(PixelPerfectCamera))]
+[CustomEditor(typeof(PixelPerfectCameraCustome))]
 [CanEditMultipleObjects]
 public class PixelPerfectCameraEditor : Editor
 {
@@ -263,9 +263,9 @@ public class PixelPerfectCameraEditor : Editor
         serializedObject.Update();
 
         // Targeted Size
-        PixelPerfectCamera.Dimension dimensionType = (PixelPerfectCamera.Dimension)Enum.GetValues(typeof(PixelPerfectCamera.Dimension)).GetValue(targetDimension.enumValueIndex);
-        targetDimension.enumValueIndex = (int)(PixelPerfectCamera.Dimension)EditorGUILayout.EnumPopup("Target size", dimensionType);
-        if (targetDimension.enumValueIndex == (int)PixelPerfectCamera.Dimension.Width)
+        PixelPerfectCameraCustome.Dimension dimensionType = (PixelPerfectCameraCustome.Dimension)Enum.GetValues(typeof(PixelPerfectCameraCustome.Dimension)).GetValue(targetDimension.enumValueIndex);
+        targetDimension.enumValueIndex = (int)(PixelPerfectCameraCustome.Dimension)EditorGUILayout.EnumPopup("Target size", dimensionType);
+        if (targetDimension.enumValueIndex == (int)PixelPerfectCameraCustome.Dimension.Width)
         {
             EditorGUILayout.PropertyField(targetCameraHalfWidth, new GUIContent("Width", "The targetted half width of the camera."));
         }
@@ -303,7 +303,7 @@ public class PixelPerfectCameraEditor : Editor
         serializedObject.ApplyModifiedProperties();
 
         // Show results
-        if (!((PixelPerfectCamera)target).isInitialized)
+        if (!((PixelPerfectCameraCustome)target).isInitialized)
             return;
         GUILayout.BeginVertical();
         GUILayout.Space(5);
@@ -313,7 +313,7 @@ public class PixelPerfectCameraEditor : Editor
 
     private void DrawSizeStats()
     {
-        PixelPerfectCamera myCamera = (PixelPerfectCamera)target;
+        PixelPerfectCameraCustome myCamera = (PixelPerfectCameraCustome)target;
         EditorGUI.BeginDisabledGroup(true);
 
         // Size
@@ -322,11 +322,11 @@ public class PixelPerfectCameraEditor : Editor
             style.richText = true;
             string width = string.Format("{0:0.00}", myCamera.cameraSize.x);
             string height = string.Format("{0:0.00}", myCamera.cameraSize.y);
-            if (myCamera.contraintUsed == PixelPerfectCamera.ConstraintType.Horizontal)
+            if (myCamera.contraintUsed == PixelPerfectCameraCustome.ConstraintType.Horizontal)
             {
                 width = makeBold(width);
             }
-            else if (myCamera.contraintUsed == PixelPerfectCamera.ConstraintType.Vertical)
+            else if (myCamera.contraintUsed == PixelPerfectCameraCustome.ConstraintType.Vertical)
             {
                 height = makeBold(height);
             }

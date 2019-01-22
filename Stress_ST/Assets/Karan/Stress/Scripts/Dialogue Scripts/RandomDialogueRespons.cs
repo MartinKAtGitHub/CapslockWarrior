@@ -26,7 +26,7 @@ public class RandomDialogueRespons : DialogueSystem
     public override IEnumerator StartLoopDialogue()
     {
         Debug.Log("Looping Dialogue");
-       yield return StartCoroutine(StartMainDialogue());
+       yield return StartCoroutine(StartMainDialogue()); // The guard only has a Loop so we just call the Loop  as the main dialogue
     }
 
     public override IEnumerator StartMainDialogue()
@@ -40,7 +40,7 @@ public class RandomDialogueRespons : DialogueSystem
         dialogueText.text = string.Empty;
         yield return null;
 
-        AnchorDialogueBoxToNPC(sentenceDataArray[0].NPC.transform);
+        CenterDialogueBoxToNPC(sentenceDataArray[0].DialoguePivotCenterPoint.transform);
         // ANIM START ?
 
          yield return StartCoroutine( TypeWriterEffect(sentenceDataArray[Random.Range(0, sentenceDataArray.Length)].Sentence) );

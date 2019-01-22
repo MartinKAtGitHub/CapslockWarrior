@@ -5,50 +5,35 @@ using TMPro;
 using UnityEngine;
 
 
-public class NPCDialogueOverhear : MonoBehaviour
+public class NPCDialogueOverhear : DialogueSystem
 {
     private CircleCollider2D cCollider2D;
-
-    [SerializeField]
-    private GameObject TargetPlayer;
-    [SerializeField]
-    private float typeingSpeed;
-    [SerializeField]
-    private float nextMessageSpeed;
-
+   
     [SerializeField]
     private GameObject NPCGroupCanvas;
     [SerializeField]
     private GameObject DialogBoxBubblePrefab;
     [SerializeField]
     private GameObject DialogueBoxParent;
-    [SerializeField]
-    private RectTransform DialogueBox;
-    [SerializeField]
-    private TextMeshProUGUI dialogueText;
+
     [SerializeField]
     private bool playerInDialgueRange;
-    [SerializeField]
-    private Camera mainCam;
+
     [SerializeField]
     private float PlayerDialogBoxOffsetY;
 
   
     // [SerializeField]
     // private float DialogueBoxOffsetY;
-
-
-    [SerializeField]
-    private SentenceData[] SentenceDatas;
-
+    
     //private Queue<SentenceData> SentenceDataQueue;
-    private void Start()
+    protected override void Start()
     {
-      
+        base.Start();
         CheckPlayerTag();
         CheckDialogBox();
-        CheckNPCs();
-        CheckMainCam();
+    
+       // CheckMainCam();
         cCollider2D = GetComponent<CircleCollider2D>();
 
         //NPCPlayStartAnim();
@@ -57,19 +42,15 @@ public class NPCDialogueOverhear : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        if (playerInDialgueRange)
-        {
-            CenterTextBoxElementsParent(); // So it dosent move around with you
-        }
-    }
+    //void Update()
+    //{
+    //    //if (playerInDialgueRange)
+    //    //{
+    //    //    CenterTextBoxElementsParent(); // So it dosent move around with you
+    //    //}
+    //}
 
-    private void NPCPlayStartAnim()
-    {
-        throw new NotImplementedException();
-    }
-
+  
     private void CheckPlayerTag()
     {
         if (TargetPlayer == null)
@@ -123,98 +104,76 @@ public class NPCDialogueOverhear : MonoBehaviour
                 {
                     Debug.Log("Found --> " + DialogueBox.name);
                 }
+
             }
         }
     }
 
-    private void CheckNPCs()
-    {
-        for (int i = 0; i < SentenceDatas.Length; i++)
-        {
-            if(SentenceDatas[i].NPC == null)
-            {
-                Debug.LogError("Missing NPC on Sentence | Remeber to Drag NPC(gameobject) on all Sentences");
-                this.enabled = false;
-                gameObject.SetActive(false);
-                // i can also make this.gameobject the parent if we dont want to turn off
-                return;
-            }
-        }
-    }
 
-    private void CheckMainCam()
-    {
-        if(mainCam == null)
-        {
+    //private void CheckMainCam()
+    //{
+    //    if (mainCam == null)
+    //    {
 
-            // mainCam = GameManager . player . Cam
-            mainCam = Camera.main;
-            Debug.LogError("Cant Find Main Cam --> look in Game Manager --> Setting MainCam ffrom Camera.main = " + mainCam.gameObject.name);
-        }
-    }
+    //      Need Gamemnager ref -> mainCam = GameManager.player.Cam
+    //        mainCam = Camera.main;
+    //        Debug.LogError("Cant Find Main Cam --> look in Game Manager --> Setting MainCam ffrom Camera.main = " + mainCam.gameObject.name);
+    //    }
+    //}
 
-    private void CenterTextBoxElementsParent()
-    {
-        //Debug.Log("Center CAM");
-        var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
-        DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
-    }
+    //private void CenterTextBoxElementsParent()
+    //{
+    //    //Debug.Log("Center CAM");
+    //    var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
+    //    DialogueBoxParent.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
+    //}
 
     /* private void initializeSentenceDataQueue()
      {
          SentenceDataQueue = new Queue<SentenceData>();
          //SentenceDataQueue.Clear();
 
-         foreach (SentenceData sentence in SentenceDatas)
+         foreach (SentenceData sentence in sentenceDataArray)
          {
              //Debug.Log("TEXT     = " + sentence.DialogueSentences);
              SentenceDataQueue.Enqueue(sentence);
          }
      }*/
 
-    IEnumerator PlayDialogue()
+    public override IEnumerator StartMainDialogue()
     {
         playerInDialgueRange = true;
         DialogueBoxParent.SetActive(true); // FIXME i think this lags out the game, when player first contacts the trigger (have it ON from the Start lul)
-      
 
-        for (int i = 0; i < SentenceDatas.Length; i++)
+        for (int i = 0; i < sentenceDataArray.Length; i++)
         {
             dialogueText.text = string.Empty;
 
-            yield return null; // wait 1 frame beacuse rect transform is BrokeBack
-            
-            // Center Dbox ontop of NPC
-            DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(SentenceDatas[i].NPC.transform.position.x, SentenceDatas[i].NPC.transform.position.y + PlayerDialogBoxOffsetY));
+            yield return null; // wait 1 frame things dosent get Connected properly with rect if e dont wait
 
-            
+            // Center Spech bubble on top of Speaking NPC/obj
+            // DialogueBox.transform.position = mainCam.WorldToScreenPoint(new Vector2(sentenceDataArray[i].NPC.transform.position.x, sentenceDataArray[i].NPC.transform.position.y + PlayerDialogBoxOffsetY));
+            CenterDialogueBoxToNPC(sentenceDataArray[i].DialoguePivotCenterPoint.transform);
 
-            if(SentenceDatas[i].NPC.GetComponentInChildren<Animator>() != null)
+            if (sentenceDataArray[i].DialoguePivotCenterPoint.GetComponentInChildren<Animator>() != null)
             {
-                var npcAnimator = SentenceDatas[i].NPC.GetComponentInChildren<Animator>();
+                var npcAnimator = sentenceDataArray[i].DialoguePivotCenterPoint.GetComponentInChildren<Animator>();
                 npcAnimator.SetTrigger("StartTalking");
                 npcAnimator.SetTrigger("IsTalking");
-            }else
-            {
-                Debug.LogWarning("Cant find NPC animator");
             }
-
-            
-            // Transition --> transition anim(has exit time) --> main Anim
-
-            foreach (var letters in SentenceDatas[i].Sentence)
+            else
             {
-                dialogueText.text += letters;
-                yield return new WaitForSeconds(typeingSpeed);
+                Debug.LogError("Cant find NPC animator, Cant play Talking Anim");
             }
-            yield return new WaitForSeconds(nextMessageSpeed);
-            
+   
+            yield return StartCoroutine(TypeWriterEffect(sentenceDataArray[i].Sentence));
+
             //if(i == lenght)
-                //then end
+            //then end
             //else (previous == current)
-                // continue
+            // continue
             //else end
-            SentenceDatas[i].NPC.GetComponentInChildren<Animator>().SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
+            sentenceDataArray[i].DialoguePivotCenterPoint.GetComponentInChildren<Animator>().SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
         }
 
         NPCGroupCanvas.SetActive(false);
@@ -222,26 +181,45 @@ public class NPCDialogueOverhear : MonoBehaviour
         playerInDialgueRange = false;
         this.enabled = false;
         cCollider2D.enabled = false;
+
+        EndDialouge();
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    public override IEnumerator StartLoopDialogue()
     {
-        if (col.tag == TargetPlayer.tag && playerInDialgueRange == false)
-        {
-            StartCoroutine(PlayDialogue());
-            //cCollider2D.enabled = false;
-            Debug.Log("Starting Group NPC Dialogue");
-        }
+        Debug.Log("NO LOOPING");
+        yield return null;
     }
-    void OnTriggerExit2D(Collider2D col)
+
+    public override void EndDialouge()
     {
-        if (col.tag == TargetPlayer.tag)
-        {
-            Debug.Log("EXIT Group NPC Dialogue");
-            //playerExitDialogue = true;
-            // cCollider2D.enabled = false;
-        }
+        isDialogueActiv = false;
+        isMainDialogueFinished = true;
+
+        DialogueBoxContainer.SetActive(false); // TODO Add an animation to fade out dialogue text insted of setActiv
+        // maybe add an event to signale end 
+        Debug.Log("Dialogue End = " + name);
+
     }
+
+    //void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    if (col.tag == TargetPlayer.tag && playerInDialgueRange == false)
+    //    {
+    //        StartCoroutine(PlayDialogue());
+    //        //cCollider2D.enabled = false;
+    //        Debug.Log("Starting Group NPC Dialogue");
+    //    }
+    //}
+    //void OnTriggerExit2D(Collider2D col)
+    //{
+    //    if (col.tag == TargetPlayer.tag)
+    //    {
+    //        Debug.Log("EXIT Group NPC Dialogue");
+    //        //playerExitDialogue = true;
+    //        // cCollider2D.enabled = false;
+    //    }
+    //}
 
 
     //private void lol()

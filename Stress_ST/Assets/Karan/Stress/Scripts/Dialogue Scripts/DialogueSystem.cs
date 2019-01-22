@@ -6,9 +6,9 @@ using UnityEngine;
 public abstract class  DialogueSystem : MonoBehaviour
 {
 
-    [SerializeField]
-    protected CinemachineVirtualCamera VRCam_TESTING;
-    private Vector3 temp;
+    //[SerializeField]
+    //protected CinemachineVirtualCamera VRCam_TESTING;
+    //private Vector3 temp;
 
     /// <summary>
     /// The Character that triggers the dialogue
@@ -30,7 +30,6 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// When centring on a NPC we dont want the box to be inside of NPC so we add a offset (The center is the pivot point located on the edge)
     /// </summary>
     [SerializeField] private Vector2 DialogueBoxOffset;
-
 
     [Space(10)]
     /// <summary>
@@ -56,13 +55,14 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     [SerializeField] private Camera mainCam;
     
-
     [Space(10)]
     /// <summary>
     /// Assign sentnce and corresponding NPC to the sentence
     /// </summary>
-    [SerializeField] protected SentenceData[] sentenceDataArray;
-
+    [SerializeField] protected SentenceData[] sentenceDataArray; // Make into ScriptOBJ
+   
+    
+    
     /// <summary>
     /// Am i currently in a dialogue. Prevents player from running inn and out of trigger starting new dialogue
     /// </summary>
@@ -73,7 +73,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     protected bool isMainDialogueFinished;
 
 
-    protected void Start()
+    protected virtual void Start()
     {
         CheckMainCam();
         CheckSentenceDataNull();
@@ -81,31 +81,18 @@ public abstract class  DialogueSystem : MonoBehaviour
 
     void Update()
     {
-        AnchorDialogueBoxContainer();
+        MakeDialogueBoxParentStationaryAboveTarget(); //PERFORMANCE Check to see if in range/indialogue 
     }
 
-    private void AnchorDialogueBoxContainer() // If we dont do this the panel will move with the player because its screen UI not in-game
+    private void MakeDialogueBoxParentStationaryAboveTarget() // If we dont do this the panel will move with the player because its screen UI not in-game
     {
-       // //if(!inDeadZone)
-
-       //// Debug.Log(VRCam_TESTING.name);
-       // if (temp != VRCam_TESTING.gameObject.transform.position)
+      
+       //if(isDialogueActiv)
        // {
-       //     temp = VRCam_TESTING.gameObject.transform.position;
+            var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
+            DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
 
-       //     var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
-       //     DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
-
-       //     Debug.Log("CAM IS MOVING");
-       // }
-       // else
-       // {
-       //     Debug.Log("CAM IS NOT MOVING");
-       // }
-
-
-        var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
-        DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
+        //}
 
     }
     private void CheckMainCam()
@@ -113,8 +100,8 @@ public abstract class  DialogueSystem : MonoBehaviour
         if (mainCam == null)
         {
             // mainCam = GameManager . player . Cam
+            mainCam = Camera.main; // This is a direct ref to cam with the MainCamera Tag on
             Debug.LogError("Cant Find Main Cam --> look in Game Manager and set the main Cam");
-            
         }
     }
     private void CheckSentenceDataNull()
@@ -123,17 +110,16 @@ public abstract class  DialogueSystem : MonoBehaviour
         {
             for (int i = 0; i < sentenceDataArray.Length; i++)
             {
-                if(sentenceDataArray[i].NPC == null)
+                if(sentenceDataArray[i].DialoguePivotCenterPoint == null)
                 {
                     Debug.Log(name + " | Missing (NPC) To Sentance");
                     return;
                 }
-
             }
         }
         else
         {
-            Debug.LogError( name + " | Dialogue dose not have any Data to print");
+            Debug.LogError( name + " | Dialogue dose not have any Sentence Data to print");
             return;
         }
     }
@@ -142,7 +128,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// Centers the DialogueBox on the NPC(imagin a speech bubble)
     /// </summary>
     /// <param name="NPC"></param>
-    protected void AnchorDialogueBoxToNPC(Transform NPC)
+    protected void CenterDialogueBoxToNPC(Transform NPC)
     {
         DialogueBox.transform.position = mainCam.WorldToScreenPoint(
             new Vector2(NPC.transform.position.x + DialogueBoxOffset.x , NPC.transform.position.y + DialogueBoxOffset.y));
@@ -180,7 +166,6 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// Add this to when you want to end the dialogue. Signaling end of dialogue sequence
     /// </summary>
     public abstract void EndDialouge();
-
 
     void OnTriggerEnter2D(Collider2D col)
     {

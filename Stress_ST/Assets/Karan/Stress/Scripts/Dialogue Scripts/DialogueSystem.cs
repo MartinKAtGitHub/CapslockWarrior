@@ -1,23 +1,29 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 using TMPro;
 using UnityEngine;
 
 public abstract class  DialogueSystem : MonoBehaviour
 {
+    /// <summary>
+    /// The Data Needed to determin DialogBox Position, Animator and ID. The order of the List will be the ID of the NPC(who says what)
+    /// </summary>
+    [SerializeField] protected List<NPCData> actors; //NOTE -> i could just add a ID variabel in the NPCData and compair the ID in the StartDialogue loop
+    
+    [Space(10)]
+    /// <summary>
+    /// The Conversation beteween NPCs. This is a Scripable object
+    /// </summary>
+    [SerializeField] protected FullConversationData ConversationData;
 
-    //[SerializeField]
-    //protected CinemachineVirtualCamera VRCam_TESTING;
-    //private Vector3 temp;
 
+    [Space(15)]
     /// <summary>
     /// The Character that triggers the dialogue
     /// </summary>
     [SerializeField] protected GameObject TargetPlayer;
-    /// <summary>
-    /// The collider which will trigger the dialogue. Can be drag and droped if child
-    /// </summary>
-    [SerializeField] protected Collider2D dialogueTrigger;
+   
     /// <summary>
     /// The speed at which the letters are beeing displayed 
     /// </summary>
@@ -54,15 +60,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// The camera the dialogue Box will use to center the Dialogue UI
     /// </summary>
     [SerializeField] private Camera mainCam;
-    
-    [Space(10)]
-    /// <summary>
-    /// Assign sentnce and corresponding NPC to the sentence
-    /// </summary>
-    [SerializeField] protected SentenceData[] sentenceDataArray; // Make into ScriptOBJ
-   
-    
-    
+
     /// <summary>
     /// Am i currently in a dialogue. Prevents player from running inn and out of trigger starting new dialogue
     /// </summary>
@@ -76,7 +74,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     protected virtual void Start()
     {
         CheckMainCam();
-        CheckSentenceDataNull();
+        //CheckSentenceDataNull();
     }
 
     void Update()
@@ -87,13 +85,11 @@ public abstract class  DialogueSystem : MonoBehaviour
     private void MakeDialogueBoxParentStationaryAboveTarget() // If we dont do this the panel will move with the player because its screen UI not in-game
     {
       
-       //if(isDialogueActiv)
-       // {
+       if(isDialogueActiv)
+       {
             var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
             DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
-
-        //}
-
+       }
     }
     private void CheckMainCam()
     {
@@ -104,25 +100,25 @@ public abstract class  DialogueSystem : MonoBehaviour
             Debug.LogError("Cant Find Main Cam --> look in Game Manager and set the main Cam");
         }
     }
-    private void CheckSentenceDataNull()
-    {
-        if(sentenceDataArray.Length != 0)
-        {
-            for (int i = 0; i < sentenceDataArray.Length; i++)
-            {
-                if(sentenceDataArray[i].DialoguePivotCenterPoint == null)
-                {
-                    Debug.Log(name + " | Missing (NPC) To Sentance");
-                    return;
-                }
-            }
-        }
-        else
-        {
-            Debug.LogError( name + " | Dialogue dose not have any Sentence Data to print");
-            return;
-        }
-    }
+    //private void CheckSentenceDataNull()
+    //{
+    //    if(sentenceDataArray.Length != 0)
+    //    {
+    //        for (int i = 0; i < sentenceDataArray.Length; i++)
+    //        {
+    //            if(sentenceDataArray[i].DialoguePivotCenterPoint == null)
+    //            {
+    //                Debug.Log(name + " | Missing (NPC) To Sentance");
+    //                return;
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError( name + " | Dialogue dose not have any Sentence Data to print");
+    //        return;
+    //    }
+    //}
 
     /// <summary>
     /// Centers the DialogueBox on the NPC(imagin a speech bubble)

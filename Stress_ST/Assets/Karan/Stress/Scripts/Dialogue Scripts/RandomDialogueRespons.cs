@@ -40,10 +40,10 @@ public class RandomDialogueRespons : DialogueSystem
         dialogueText.text = string.Empty;
         yield return null;
 
-        CenterDialogueBoxToNPC(sentenceDataArray[0].DialoguePivotCenterPoint.transform);
+     //  CenterDialogueBoxToNPC(sentenceDataArray[0].DialoguePivotCenterPoint.transform);
         // ANIM START ?
 
-         yield return StartCoroutine( TypeWriterEffect(sentenceDataArray[Random.Range(0, sentenceDataArray.Length)].Sentence) );
+         yield return StartCoroutine(TypeWriterEffect(ConversationData.Sentences[Random.Range(0, ConversationData.Sentences.Length)].Sentence) );
         // Anim END ?
         
        EndDialouge();

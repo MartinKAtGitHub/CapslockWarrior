@@ -9,21 +9,26 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// <summary>
     /// The Data Needed to determin DialogBox Position, Animator and ID. The order of the List will be the ID of the NPC(who says what)
     /// </summary>
-    [SerializeField] protected List<NPCData> actors; //NOTE -> i could just add a ID variabel in the NPCData and compair the ID in the StartDialogue loop
-    
+    [SerializeField] protected NPCData[] actors;
+    //[SerializeField] protected List<NPCData> actors;// ont be adding in runtime so this is not needed
+
     [Space(10)]
     /// <summary>
     /// The Conversation beteween NPCs. This is a Scripable object
     /// </summary>
-    [SerializeField] protected FullConversationData ConversationData;
-
+    [SerializeField] protected FullConversationData conversationData;
 
     [Space(15)]
     /// <summary>
     /// The Character that triggers the dialogue
     /// </summary>
-    [SerializeField] protected GameObject TargetPlayer;
-   
+    [SerializeField] protected GameObject targetPlayer;
+    /// <summary>
+    /// The camera the dialogue Box will use to center the Dialogue UI
+    /// </summary>
+    [SerializeField] private Camera mainCam;
+
+    [Space(10)]
     /// <summary>
     /// The speed at which the letters are beeing displayed 
     /// </summary>
@@ -35,31 +40,26 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// <summary>
     /// When centring on a NPC we dont want the box to be inside of NPC so we add a offset (The center is the pivot point located on the edge)
     /// </summary>
-    [SerializeField] private Vector2 DialogueBoxOffset;
+   // [SerializeField] private Vector2 DialogueBoxOffset;
 
     [Space(10)]
     /// <summary>
     /// The canavs witch holds the Dialogue box of the currant instance
     /// </summary>
-    [SerializeField] protected GameObject DialogueCanvas;
+  //  [SerializeField] protected GameObject dialogueCanvas;
     /// <summary>
     /// Holds the DialogueBox so we can use local space to move DialogueBox around
     /// </summary>
-    [SerializeField] protected GameObject DialogueBoxContainer;
+    [SerializeField] protected GameObject dialogueBoxContainer;
     /// <summary>
     /// the Actual bubble witch holds the Text
     /// </summary>
-    [SerializeField] protected RectTransform DialogueBox;
+    [SerializeField] protected RectTransform dialogueBox;
     /// <summary>
     /// The text element in the DialogueBox
     /// </summary>
     [SerializeField] protected TextMeshProUGUI dialogueText;
 
-    [Space(10)]
-    /// <summary>
-    /// The camera the dialogue Box will use to center the Dialogue UI
-    /// </summary>
-    [SerializeField] private Camera mainCam;
 
     /// <summary>
     /// Am i currently in a dialogue. Prevents player from running inn and out of trigger starting new dialogue
@@ -70,6 +70,13 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     protected bool isMainDialogueFinished;
 
+
+    protected void Awake()
+    {
+        FindNPCs();
+        CheckPlayer();
+        CheckConversationHasSpeakersAssigned();
+    }
 
     protected virtual void Start()
     {
@@ -84,11 +91,10 @@ public abstract class  DialogueSystem : MonoBehaviour
 
     private void MakeDialogueBoxParentStationaryAboveTarget() // If we dont do this the panel will move with the player because its screen UI not in-game
     {
-      
        if(isDialogueActiv)
        {
             var PnlWorld = mainCam.WorldToScreenPoint(transform.position);
-            DialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
+            dialogueBoxContainer.transform.position = new Vector2(PnlWorld.x, PnlWorld.y /*+ DialogueBoxOffsetY*/);
        }
     }
     private void CheckMainCam()
@@ -100,34 +106,62 @@ public abstract class  DialogueSystem : MonoBehaviour
             Debug.LogError("Cant Find Main Cam --> look in Game Manager and set the main Cam");
         }
     }
-    //private void CheckSentenceDataNull()
-    //{
-    //    if(sentenceDataArray.Length != 0)
-    //    {
-    //        for (int i = 0; i < sentenceDataArray.Length; i++)
-    //        {
-    //            if(sentenceDataArray[i].DialoguePivotCenterPoint == null)
-    //            {
-    //                Debug.Log(name + " | Missing (NPC) To Sentance");
-    //                return;
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError( name + " | Dialogue dose not have any Sentence Data to print");
-    //        return;
-    //    }
-    //}
 
+    private void FindNPCs()
+    {
+        actors =  GetComponentsInChildren<NPCData>();
+        if(actors == null)
+        {
+            Debug.LogError("NO NPC FOUND, Dialogue system needs NPCs(NPCData) to connect the dialogue to");
+        }
+    }
+
+    private void CheckConversationHasSpeakersAssigned()
+    {
+        if(conversationData != null)
+        {
+
+            for (int i = 0; i < conversationData.Sentences.Length; i++)
+            {
+                var counter = 0;
+
+                for (int j = 0; j < actors.Length; j++)
+                {
+                    if(conversationData.Sentences[i].SpeakerID == actors[j].SpeakerID)
+                    {
+                        break;
+                    }
+                    counter++;
+                }
+
+                if(counter >= actors.Length)
+                {
+                    Debug.LogError("Sentences in >(" + name + " )Has SpeakerID (" + conversationData.Sentences[i].SpeakerID + ") But NO NPC has this ID" );
+                }
+            }
+        }else
+        {
+            Debug.LogError(name +" Has no Conversation Data Assigned");
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void CheckPlayer()
+    {
+        if(targetPlayer == null)
+        {
+            Debug.LogError("Player not Assigned to Dialog trigger  --> find with TAG");
+            targetPlayer = GameObject.FindGameObjectWithTag("Player");
+        }
+    }
     /// <summary>
     /// Centers the DialogueBox on the NPC(imagin a speech bubble)
     /// </summary>
     /// <param name="NPC"></param>
     protected void CenterDialogueBoxToNPC(Transform NPC)
     {
-        DialogueBox.transform.position = mainCam.WorldToScreenPoint(
-            new Vector2(NPC.transform.position.x + DialogueBoxOffset.x , NPC.transform.position.y + DialogueBoxOffset.y));
+        dialogueBox.transform.position = mainCam.WorldToScreenPoint(
+            new Vector2(NPC.transform.position.x/* + DialogueBoxOffset.x*/ , NPC.transform.position.y /*+ DialogueBoxOffset.y*/));
     }
 
     /// <summary>
@@ -165,13 +199,13 @@ public abstract class  DialogueSystem : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == TargetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == false)
+        if (col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == false)
         {
             StartCoroutine(StartMainDialogue());
             //cCollider2D.enabled = false;
             Debug.Log("START NPC MAIN Dialogue");
         }
-        else if(col.tag == TargetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == true)
+        else if(col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == true)
         {
             StartCoroutine(StartLoopDialogue());
             Debug.Log("START NPC LOOP Dialogue");
@@ -181,7 +215,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == TargetPlayer.tag)
+        if (col.tag == targetPlayer.tag)
         {
             Debug.Log("EXIT Dialogue Range");
             //playerExitDialogue = true;

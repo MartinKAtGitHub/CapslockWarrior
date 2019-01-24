@@ -35,7 +35,7 @@ public class RandomDialogueRespons : DialogueSystem
  
         //dialogueTrigger.enabled = false;
         isDialogueActiv = true;
-        DialogueBoxContainer.SetActive(true);
+        dialogueBoxContainer.SetActive(true);
 
         dialogueText.text = string.Empty;
         yield return null;
@@ -43,7 +43,7 @@ public class RandomDialogueRespons : DialogueSystem
      //  CenterDialogueBoxToNPC(sentenceDataArray[0].DialoguePivotCenterPoint.transform);
         // ANIM START ?
 
-         yield return StartCoroutine(TypeWriterEffect(ConversationData.Sentences[Random.Range(0, ConversationData.Sentences.Length)].Sentence) );
+         yield return StartCoroutine(TypeWriterEffect(conversationData.Sentences[Random.Range(0, conversationData.Sentences.Length)].Sentence) );
         // Anim END ?
         
        EndDialouge();
@@ -55,7 +55,7 @@ public class RandomDialogueRespons : DialogueSystem
         isDialogueActiv = false;
         isMainDialogueFinished = true;
         
-        DialogueBoxContainer.SetActive(false); // TODO Add an animation to fade out dialogue text insted of setActiv
+        dialogueBoxContainer.SetActive(false); // TODO Add an animation to fade out dialogue text insted of setActiv
         // maybe add an event to signale end 
         Debug.Log("Dialogue End");
     }

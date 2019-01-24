@@ -14,21 +14,9 @@ public class NPCDialogueOverhear : DialogueSystem
     protected override void Start()
     {
         base.Start();
-        CheckPlayerTag();
        // CheckDialogBox();
-    
-
     }
 
-  
-    private void CheckPlayerTag()
-    {
-        if (TargetPlayer == null)
-        {
-            Debug.LogError(" No Target PLAYER ");
-            // TODO add a way for this NPC dialogue script to get the Player after he is spawned into the scene TargetPlayer = Gamemanager.player
-        }
-    }
 
     //private void CheckDialogBox()
     //{
@@ -82,17 +70,17 @@ public class NPCDialogueOverhear : DialogueSystem
     public override IEnumerator StartMainDialogue()
     {
         isDialogueActiv = true;
-        DialogueBoxContainer.SetActive(true); // FIXME i think this lags out the game, when player first contacts the trigger (have it ON from the Start lul)
+        dialogueBoxContainer.SetActive(true); // FIXME i think this lags out the game, when player first contacts the trigger (have it ON from the Start lul)
 
-        for (int i = 0; i < ConversationData.Sentences.Length; i++)
+        for (int i = 0; i < conversationData.Sentences.Length; i++)
         {
             dialogueText.text = string.Empty;
 
             yield return null; // wait 1 frame things dosent get Connected properly with rect if e dont wait
 
-            for (int j = 0; j < actors.Count; j++)
+            for (int j = 0; j < actors.Length; j++)
             {
-                if(ConversationData.Sentences[i].SpeakerID == actors[j].SpeakerID)
+                if(conversationData.Sentences[i].SpeakerID == actors[j].SpeakerID)
                 {
                     CenterDialogueBoxToNPC(actors[j].DialogueBoxPositionTransform);
 
@@ -103,7 +91,7 @@ public class NPCDialogueOverhear : DialogueSystem
                         npcAnimator.SetTrigger("StartTalking");
                         npcAnimator.SetTrigger("IsTalking");
 
-                        yield return StartCoroutine(TypeWriterEffect(ConversationData.Sentences[i].Sentence));
+                        yield return StartCoroutine(TypeWriterEffect(conversationData.Sentences[i].Sentence));
 
                         actors[j].Animator.SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
 
@@ -127,11 +115,11 @@ public class NPCDialogueOverhear : DialogueSystem
 
     public override void EndDialouge()
     {
-        DialogueCanvas.SetActive(false);
+      //  dialogueCanvas.SetActive(false);
         this.enabled = false;
         isDialogueActiv = false;
         isMainDialogueFinished = true;
-        DialogueBoxContainer.SetActive(false); // TODO Add an animation to fade out dialogue text insted of setActiv
+        dialogueBoxContainer.SetActive(false); // TODO Add an animation to fade out dialogue text insted of setActiv
         // maybe add an event to signale end 
         Debug.Log("Dialogue End = " + name);
 

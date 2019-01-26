@@ -45,7 +45,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 
 	void Start()
 	{
-		LevelManager_Master.instance.StartScriptedEvent.AddListener(StartScriptedEvent);
+		LevelManager_Master.instance.StartScriptedEvent.AddListener(TriggerScriptedEvent);
 	}
 
 	void FixedUpdate()
@@ -71,7 +71,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		//StartRun = false; // This is buged
 	}
 
-	public override IEnumerator ScriptedEventScene() // TODO change this to scriptable object så we can swape cutscenes
+	public override IEnumerator ScriptedEventScene()
 	{
 		//Debug.Log("Scripted event Started....");
 		AreComponentActiv(player, false);
@@ -81,6 +81,7 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 		yield return new WaitForSeconds(1f);
 
 		StartIntroBox();
+
 		yield return new WaitUntil(IsPlayerReady);
 
 		EndintroBox();
@@ -164,10 +165,10 @@ public class ScriptedEvent_LevelIntro : ScriptedEvent
 
 	void OnDisable()
 	{
-		LevelManager_Master.instance.StartScriptedEvent.RemoveListener(StartScriptedEvent);      
+		LevelManager_Master.instance.StartScriptedEvent.RemoveListener(TriggerScriptedEvent);      
     }
 
-	public override void StartScriptedEvent()
+	public override void TriggerScriptedEvent()
 	{
 		GetPlayerDataForCutscene();
 		StartCoroutine(ScriptedEvent);

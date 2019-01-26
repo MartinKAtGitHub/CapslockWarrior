@@ -2,7 +2,7 @@
 
 public abstract class Character : MonoBehaviour
 {
-    [SerializeField] protected CharacterStats stats; // Current Limit for simplicity(have in inspector) will be to give all characters the same Stats even if they dont use them
+    protected CharacterStats stats; // Current Limit for simplicity(have in inspector) will be to give all characters the same Stats even if they dont use them
 
     public abstract CharacterStats Stats
     {
@@ -10,10 +10,6 @@ public abstract class Character : MonoBehaviour
         set;
     }
 
-    private void Awake()
-    {
-        GetStats();
-    }
 
     /// <summary>
     /// Gets the stats that are on the spesific gameobject, Implementation will be diffrent on every type of character

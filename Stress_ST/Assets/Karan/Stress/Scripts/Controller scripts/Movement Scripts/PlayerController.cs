@@ -12,10 +12,11 @@ public class PlayerController : MonoBehaviour{
     private Player player;
 	private bool facingRigth;
 
+    private Vector2 direction;
     public Vector2 Direction
 	{
-        get;
-        set;
+        get => direction;
+        set => direction = value;
 	}
 
 	void Awake () 
@@ -36,16 +37,24 @@ public class PlayerController : MonoBehaviour{
 			heroAnimator = GetComponentInChildren<Animator>();
 		}
         //Debug.Log(heroAnimator.name);
-       
-	}
+
+        inputManager.MoveHorizontalRight += MoveRight;
+        inputManager.MoveHorizontalLeft += MoveLeft;
+        inputManager.MoveHorizontalNeutral += XNeutral;
+
+        inputManager.MoveVerticalUp += MoveUp;
+        inputManager.MoveVerticalDown += MoveDown;
+        inputManager.MoveVerticalNeutral += YNeutral;
+
+
+    }
 
 
     private void Start()
     {
         facingRigth = true;
         canPlayerMove = true;
-        //inputManager = GameManager.instance.InputManager
-
+      
     }
 
     void FixedUpdate()
@@ -95,10 +104,39 @@ public class PlayerController : MonoBehaviour{
 		}
 
 	}
-    
+
+
+    #region InputEventMethods
+    void MoveRight()
+    {
+        direction.x = 1;
+    }
+    void MoveLeft()
+    {
+        direction.x = -1;
+    }
+    void XNeutral()
+    {
+        direction.x = 0;
+    }
+
+    void MoveUp()
+    {
+        direction.y = 1;
+    }
+    void MoveDown()
+    {
+        direction.y = -1;
+    }
+    void YNeutral()
+    {
+        direction.y = 0;
+    }
+    #endregion
+
     void MovementLogic()
     {
-        Direction = inputManager.MovementInputValues;
+       /// Direction = inputManager.MovementInputValues;
         playerRigBdy.AddForce(new Vector2(Direction.x * player.Stats.MovementSpeed, Direction.y * player.Stats.MovementSpeed));
     }
 }

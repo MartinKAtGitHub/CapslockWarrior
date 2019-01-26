@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class PlayerInputManager : MonoBehaviour
 {
+    /// <summary>
+    /// A Bool used to determin if player is in a ScriptedEvent and we want to remove certain controls from player
+    /// </summary>
+    public bool ScriptedEventActive;
     //Maybe use dictionary --> this will allow us to loop trhough and check for double keys
     public Dictionary<string, KeyCode> ActiveKeys = new Dictionary<string, KeyCode>();
 
@@ -32,30 +35,29 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] KeyCode reload;
     [SerializeField] KeyCode interact;
 
-    public delegate void Test(AbilityActivation ab);
-    public Test test;
-
     public Action[] AbilityKeyDownAction;
 
-    //public event Action OnAbilityKey1Down;
-    //public event Action OnAbilityKey2Down;
-    //public event Action OnAbilityKey3Down;
-    //public event Action OnAbilityKey4Down;
 
 
     /// <summary>
     /// Holds a value from -1 to 1 which translates to moveing left/right or up/down or 0 standing still
     /// </summary>
-    private Vector2 movementInputValues;
-    public Vector2 MovementInputValues { get => movementInputValues; }
+    //private Vector2 movementInputValues;
+    //public Vector2 MovementInputValues { get => movementInputValues; }
+
+    public Action MoveHorizontalRight;
+    public Action MoveHorizontalLeft;
+    public Action MoveHorizontalNeutral;
+
+    public Action MoveVerticalUp;
+    public Action MoveVerticalDown;
+    public Action MoveVerticalNeutral;
 
     public KeyCode[] AbilityKeyCodes { get => abilityKeyCodes; }
 
-
-
     private void Awake()
     {
-        AbilityKeyDownAction = new Action [abilityKeyCodes.Length];
+        AbilityKeyDownAction = new Action[abilityKeyCodes.Length];
     }
 
 
@@ -84,13 +86,16 @@ public class PlayerInputManager : MonoBehaviour
     void Update()
     {
         // TODO ad relaode mode an limit inputs when in this mode
-
-        HorizontalMovementInputs();
-        VerticalMovemetnInputs();
-
-        for (int i = 0; i < abilityKeyCodes.Length; i++)
+        if (ScriptedEventActive != true)
         {
-            AbilityInputs(abilityKeyCodes[i], altAbilityKeyCodes[i], AbilityKeyDownAction[i]);
+            HorizontalMovementInputs();
+            VerticalMovemetnInputs();
+
+            for (int i = 0; i < abilityKeyCodes.Length; i++)
+            {
+                AbilityInputs(abilityKeyCodes[i], altAbilityKeyCodes[i], AbilityKeyDownAction[i]);
+            }
+
         }
     }
 
@@ -99,15 +104,18 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (Input.GetKey(moveLeft) || Input.GetKey(altMoveLeft))
         {
-            movementInputValues.x = -1f;
+            // movementInputValues.x = -1f;
+            MoveHorizontalLeft?.Invoke();
         }
         else if (Input.GetKey(moveRight) || Input.GetKey(altMoveRight))
         {
-            movementInputValues.x = 1f;
+            //movementInputValues.x = 1f;
+            MoveHorizontalRight?.Invoke();
         }
         else
         {
-            movementInputValues.x = 0f;
+            //movementInputValues.x = 0f;
+            MoveHorizontalNeutral?.Invoke();
         }
     }
 
@@ -115,21 +123,25 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (Input.GetKey(moveDown) || Input.GetKey(altMoveDown))
         {
-            movementInputValues.y = -1f;
+            //movementInputValues.y = -1f;
+            MoveVerticalDown?.Invoke();
         }
         else if (Input.GetKey(moveUp) || Input.GetKey(altMoveUp))
         {
-            movementInputValues.y = 1f;
+            //movementInputValues.y = 1f;
+            MoveVerticalUp?.Invoke();
+
         }
         else
         {
-            movementInputValues.y = 0f;
+            //movementInputValues.y = 0f;
+            MoveVerticalNeutral?.Invoke();
         }
     }
 
     private void AbilityInputs(KeyCode abilityKey, KeyCode altAbilityKey, Action action)
     {
-        if(Input.GetKeyDown(abilityKey) || Input.GetKeyDown(altAbilityKey))
+        if (Input.GetKeyDown(abilityKey) || Input.GetKeyDown(altAbilityKey))
         {
             action?.Invoke();
         }
@@ -146,12 +158,12 @@ public class PlayerInputManager : MonoBehaviour
         // Like assign all the Active keys into a dictionary and loop, if any key is teh same error out
 
         // for
-            // for
-                
-            //if(name i == j)
-                // continue / skip
-               // if(key i == j)
-                // Bool duplicate
+        // for
+
+        //if(name i == j)
+        // continue / skip
+        // if(key i == j)
+        // Bool duplicate
     }
 
     public void DefaultSettings()

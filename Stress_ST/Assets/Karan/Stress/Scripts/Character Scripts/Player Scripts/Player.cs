@@ -15,6 +15,7 @@ public class Player : Character
 
     private void Awake()
     {
+        stats = GetComponent<CharacterStats>();
         playerHealthSystem = GetComponent<PlayerHealthSystem>();
         playerController = GetComponent<PlayerController>();
         abilityController = GetComponent<AbilityController>();

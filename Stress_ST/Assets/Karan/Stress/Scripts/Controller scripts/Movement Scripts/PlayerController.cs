@@ -15,8 +15,14 @@ public class PlayerController : MonoBehaviour{
     private Vector2 direction;
     public Vector2 Direction
 	{
-        get => direction;
-        set => direction = value;
+        get
+        {
+            return direction;
+        }
+        set
+        {
+            direction = value;
+        }
 	}
 
 	void Awake () 

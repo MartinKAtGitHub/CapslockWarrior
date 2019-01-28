@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ScriptedEventRegZoneIntro : ScriptedEvent
 {
-    // Start is called before the first frame update
+
+    [SerializeField] private Transform introSceneStartPointPlayer;
+    
     void Start()
     {
         TriggerScriptedEvent(); //Maybe let Gamemanager decide when the game starts. Attach to LevelStart Evenet 
@@ -14,7 +16,24 @@ public class ScriptedEventRegZoneIntro : ScriptedEvent
 
     public override IEnumerator ScriptedEventScene()
     {
-        throw new System.NotImplementedException();
+        player.transform.position = introSceneStartPointPlayer.position;
+        var pDir = player.PlayerController.Direction;
+
+
+        pDir.y = 0.5f;
+        player.PlayerController.Direction = pDir;
+        // Zoom cam
+        yield return new WaitForSeconds(2f);
+        pDir.y = 0;
+        player.PlayerController.Direction = pDir;
+
+        // Dialogu Loop
+            // Message
+            // Wait for btn press
+
+        // return player controll
+
+        yield return null;
     }
 
     protected override void SetInitalRefs()

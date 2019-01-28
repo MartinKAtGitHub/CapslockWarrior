@@ -38,7 +38,7 @@ public class Player : Character
     }
 
     public PlayerHealthSystem PlayerHealthSystem { get => playerHealthSystem;  }
-    public PlayerController PlayerController { get => playerController;  }
+    public PlayerController PlayerController { get => playerController; }
     public AbilityController AbilityController { get => abilityController;  }
     public Rigidbody2D PlayerRigidbody2D { get => playerRigidbody2D; }
 }

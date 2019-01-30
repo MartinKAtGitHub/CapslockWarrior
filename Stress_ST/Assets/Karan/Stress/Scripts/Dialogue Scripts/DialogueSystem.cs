@@ -89,6 +89,18 @@ public abstract class  DialogueSystem : MonoBehaviour
         MakeDialogueBoxParentStationaryAboveTarget(); //PERFORMANCE Check to see if in range/indialogue 
     }
 
+    public  virtual void TriggerDialogue()
+    {
+        StartCoroutine(StartMainDialogue());
+    }
+
+    public virtual void TriggerDialogueLoop()
+    {
+        StartCoroutine(StartLoopDialogue());
+    }
+
+
+
     private void MakeDialogueBoxParentStationaryAboveTarget() // If we dont do this the panel will move with the player because its screen UI not in-game
     {
        if(isDialogueActiv)
@@ -197,17 +209,20 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     public abstract void EndDialouge();
 
+
+    //TODO Move Trigger Dialogue on Collistion trigger to the overhear script.
+    
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == false)
         {
-            StartCoroutine(StartMainDialogue());
+            TriggerDialogue();
             //cCollider2D.enabled = false;
             Debug.Log("START NPC MAIN Dialogue");
         }
         else if(col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == true)
         {
-            StartCoroutine(StartLoopDialogue());
+            TriggerDialogueLoop();
             Debug.Log("START NPC LOOP Dialogue");
         }
 

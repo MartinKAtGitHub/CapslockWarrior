@@ -32,15 +32,16 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// <summary>
     /// The speed at which the letters are beeing displayed 
     /// </summary>
-    [SerializeField] private float typeingSpeed;
+    [SerializeField] protected float typeingSpeed;
     /// <summary>
     /// Time the sentence will stay on screen before next sentence will start
     /// </summary>
-    [SerializeField] private float nextMessageSpeed;
+    [SerializeField] protected float nextMessageSpeed;
     /// <summary>
-    /// When centring on a NPC we dont want the box to be inside of NPC so we add a offset (The center is the pivot point located on the edge)
+    /// The speed the dialogue text will go when you want to skip the dialogue
     /// </summary>
-   // [SerializeField] private Vector2 DialogueBoxOffset;
+    [SerializeField] protected float skipTypeingSpeed;
+
 
     [Space(10)]
     /// <summary>
@@ -69,6 +70,10 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// Is the main dialogue finished. Used for when we want to start to loop dialogue
     /// </summary>
     protected bool isMainDialogueFinished;
+    /// <summary>
+    /// If true dialogue is beeing skiped
+    /// </summary>
+    protected bool skipDialogue;
 
 
     protected void Awake()
@@ -186,7 +191,14 @@ public abstract class  DialogueSystem : MonoBehaviour
         foreach (var letters in sentence)
         {
             dialogueText.text += letters;
-            yield return new WaitForSeconds(typeingSpeed);
+            if(!skipDialogue)
+            {
+                yield return new WaitForSeconds(typeingSpeed);
+            }
+            else
+            {
+                yield return new WaitForSeconds(skipTypeingSpeed);
+            }
         }
         yield return new WaitForSeconds(nextMessageSpeed);  
     }
@@ -212,31 +224,6 @@ public abstract class  DialogueSystem : MonoBehaviour
 
     //TODO Move Trigger Dialogue on Collistion trigger to the overhear script.
     
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == false)
-        {
-            TriggerDialogue();
-            //cCollider2D.enabled = false;
-            Debug.Log("START NPC MAIN Dialogue");
-        }
-        else if(col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == true)
-        {
-            TriggerDialogueLoop();
-            Debug.Log("START NPC LOOP Dialogue");
-        }
-
-        // If(Dialogue is over) -> StartLoopDialogue
-    }
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.tag == targetPlayer.tag)
-        {
-            Debug.Log("EXIT Dialogue Range");
-            //playerExitDialogue = true;
-            // cCollider2D.enabled = false;
-        }
-    }
-
+   
 
 }

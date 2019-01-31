@@ -124,4 +124,33 @@ public class NPCDialogueOverhear : DialogueSystem
         Debug.Log("Dialogue End = " + name);
 
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == false)
+        {
+            TriggerDialogue();
+            //cCollider2D.enabled = false;
+            Debug.Log("START NPC MAIN Dialogue");
+        }
+        else if (col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == true)
+        {
+            TriggerDialogueLoop();
+            Debug.Log("START NPC LOOP Dialogue");
+        }
+
+        // If(Dialogue is over) -> StartLoopDialogue
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == targetPlayer.tag)
+        {
+            Debug.Log("EXIT Dialogue Range");
+            //playerExitDialogue = true;
+            // cCollider2D.enabled = false;
+        }
+    }
+
+
+
 }

@@ -33,17 +33,11 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Other keys")]
     [SerializeField] KeyCode reload;
-    [SerializeField] KeyCode interact;
+    [SerializeField] KeyCode actionKey;
+
+    public KeyCode[] AbilityKeyCodes { get => abilityKeyCodes; }
 
     public Action[] AbilityKeyDownAction;
-
-
-
-    /// <summary>
-    /// Holds a value from -1 to 1 which translates to moveing left/right or up/down or 0 standing still
-    /// </summary>
-    //private Vector2 movementInputValues;
-    //public Vector2 MovementInputValues { get => movementInputValues; }
 
     public Action MoveHorizontalRight;
     public Action MoveHorizontalLeft;
@@ -53,7 +47,8 @@ public class PlayerInputManager : MonoBehaviour
     public Action MoveVerticalDown;
     public Action MoveVerticalNeutral;
 
-    public KeyCode[] AbilityKeyCodes { get => abilityKeyCodes; }
+    public Action OnActionKeyDown;
+
 
     private void Awake()
     {
@@ -85,7 +80,8 @@ public class PlayerInputManager : MonoBehaviour
     // What happens if i press buttons when Loading if this goes GameManager
     void Update()
     {
-        // TODO ad relaode mode an limit inputs when in this mode
+        ActionKeyInput();
+
         if (ScriptedEventActive != true)
         {
             HorizontalMovementInputs();
@@ -97,6 +93,7 @@ public class PlayerInputManager : MonoBehaviour
             }
 
         }
+
     }
 
     //TODO double check to see if If else() dosent interfare with inputs
@@ -147,10 +144,13 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    /*private bool ReloadMode()
+    private void ActionKeyInput()
     {
-        if()
-    }*/
+        if(Input.GetKeyDown(actionKey))
+        {
+            OnActionKeyDown?.Invoke();
+        }
+    }
 
     public void DuplicatedKeyAssignmentCheck() // Maybe do this in its own class in Game manager perhapes. MOve this whole class to game manager
     {

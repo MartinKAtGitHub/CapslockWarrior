@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CutSceneDialogue : DialogueSystem
 {
     [SerializeField] private bool displayNextSentence;
     [SerializeField] private bool readyForNextSentence;
+
+    [SerializeField] private PlayableDirector playableDirector;
+
 
 
     protected override void Start()
@@ -13,7 +17,7 @@ public class CutSceneDialogue : DialogueSystem
 
         nextMessageSpeed = 0;
 
-        TriggerDialogue();
+       // TriggerDialogue();
         GameManager.Instance.PlayerInputManager.OnActionKeyDown += NextDialogueFlag;
     }
 
@@ -37,6 +41,7 @@ public class CutSceneDialogue : DialogueSystem
 
     public override IEnumerator StartMainDialogue()
     {
+        playableDirector.Pause();
         isDialogueActiv = true;
         dialogueBoxContainer.SetActive(true); // FIXME i think this lags out the game, when player first contacts the trigger (have it ON from the Start lul)
 
@@ -72,12 +77,16 @@ public class CutSceneDialogue : DialogueSystem
                     readyForNextSentence = true;
 
                     yield return new WaitUntil(() => displayNextSentence == true);
+
                     displayNextSentence = false;
                     readyForNextSentence = false;
+
                 }
             }
         }
+        playableDirector.Resume();
         EndDialouge();
+
     }
 
 
@@ -85,11 +94,16 @@ public class CutSceneDialogue : DialogueSystem
     private void NextDialogueFlag()
     {
         Debug.Log("CLICKING ENETER");
+
         if(readyForNextSentence)
         {
             displayNextSentence = !displayNextSentence;
             Debug.Log("BOOL IS = " + displayNextSentence);
-        }else
+
+         
+
+        }
+        else
         {
             skipDialogue = true;
         }

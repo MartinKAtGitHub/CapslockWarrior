@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 
     public PlayerInputManager PlayerInputManager;
     public OrbSystemMenuManager OrbSystemMenuManager;
+    public CutSceneManager CutSceneManager;
 
 
 
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour {
 
         PlayerInputManager = GetComponent<PlayerInputManager>();
         OrbSystemMenuManager = GetComponent<OrbSystemMenuManager>();
-
+        CutSceneManager = GetComponent<CutSceneManager>();
     }
 
 	private void SingeltonCheck() // TODO check if Gamemanger_master script Singelton is correctly done

@@ -31,7 +31,6 @@ public class CutSceneOnTrigger : CutScene
     public override void TriggerCutScene()
     {
         OnCutSceneStart();
-
     }
 
    

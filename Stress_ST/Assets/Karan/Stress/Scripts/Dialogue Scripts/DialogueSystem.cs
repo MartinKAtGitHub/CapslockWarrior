@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
 using TMPro;
 using UnityEngine;
 
@@ -22,7 +20,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// <summary>
     /// The Character that triggers the dialogue
     /// </summary>
-    [SerializeField] protected GameObject targetPlayer;
+    [SerializeField] protected GameObject targetPlayer; //TODO targetPlayer is in base of dialogue system, it dose nto need to be put it in the overhear script where the collison is dedteced
     /// <summary>
     /// The camera the dialogue Box will use to center the Dialogue UI
     /// </summary>

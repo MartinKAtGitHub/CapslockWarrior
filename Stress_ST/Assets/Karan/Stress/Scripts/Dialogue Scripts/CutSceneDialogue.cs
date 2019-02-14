@@ -18,7 +18,7 @@ public class CutSceneDialogue : DialogueSystem
         nextMessageSpeed = 0;
 
        // TriggerDialogue();
-        GameManager.Instance.PlayerInputManager.OnActionKeyDown += NextDialogueFlag;
+        //GameManager.Instance.PlayerInputManager.OnActionKeyDown += NextDialogueFlag;
     }
 
 
@@ -41,7 +41,9 @@ public class CutSceneDialogue : DialogueSystem
 
     public override IEnumerator StartMainDialogue()
     {
-        playableDirector.Pause();
+        // playableDirector.Pause();
+        playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(0);
+
         isDialogueActiv = true;
         dialogueBoxContainer.SetActive(true); // FIXME i think this lags out the game, when player first contacts the trigger (have it ON from the Start lul)
 
@@ -84,7 +86,9 @@ public class CutSceneDialogue : DialogueSystem
                 }
             }
         }
-        playableDirector.Resume();
+        //  playableDirector.Resume();
+        playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
+
         EndDialouge();
 
     }
@@ -112,5 +116,9 @@ public class CutSceneDialogue : DialogueSystem
     private void OnDisable()
     {
         GameManager.Instance.PlayerInputManager.OnActionKeyDown -= NextDialogueFlag;
+    }
+    private void OnEnable()
+    {
+        GameManager.Instance.PlayerInputManager.OnActionKeyDown += NextDialogueFlag;
     }
 }

@@ -8,20 +8,14 @@ public class CutSceneDialogue : DialogueSystem
     [SerializeField] private bool readyForNextSentence;
 
     [SerializeField] private PlayableDirector playableDirector;
-
-
-
+    
     protected override void Start()
     {
         base.Start();
 
         nextMessageSpeed = 0;
-
-       // TriggerDialogue();
-        //GameManager.Instance.PlayerInputManager.OnActionKeyDown += NextDialogueFlag;
     }
-
-
+    
     public override void EndDialouge()
     {
         //  dialogueCanvas.SetActive(false);
@@ -60,29 +54,30 @@ public class CutSceneDialogue : DialogueSystem
                 {
                     CenterDialogueBoxToNPC(actors[j].DialogueBoxPositionTransform);
 
-                    if (actors[j].Animator != null)
-                    {
-                        var npcAnimator = actors[j].Animator;
+                    yield return StartCoroutine(PlayActorTalkingAnims(actors[j].Animator, conversationData.Sentences[i].Sentence));
+                         //if (actors[j].Animator != null)
+                    //{
+                    //    var npcAnimator = actors[j].Animator;
 
-                        npcAnimator.SetTrigger("StartTalking");
-                        npcAnimator.SetTrigger("IsTalking");
+                    //    npcAnimator.SetTrigger("StartTalking");
+                    //    npcAnimator.SetTrigger("IsTalking");
 
-                        yield return StartCoroutine(TypeWriterEffect(conversationData.Sentences[i].Sentence));
+                    //    yield return StartCoroutine(TypeWriterEffect(conversationData.Sentences[i].Sentence));
 
-                        actors[j].Animator.SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
+                    //    actors[j].Animator.SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
 
-                    }
-                    else
-                    {
-                        Debug.LogError("Cant find NPC animator, Cant play Talking Anim");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    Debug.LogError("Cant find NPC animator, Cant play Talking Anim");
+                    //}
+
                     readyForNextSentence = true;
 
                     yield return new WaitUntil(() => displayNextSentence == true);
 
                     displayNextSentence = false;
                     readyForNextSentence = false;
-
                 }
             }
         }

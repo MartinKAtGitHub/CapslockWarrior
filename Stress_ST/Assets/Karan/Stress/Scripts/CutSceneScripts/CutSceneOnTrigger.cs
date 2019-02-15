@@ -8,7 +8,7 @@ public class CutSceneOnTrigger : CutScene
 
     private void Start()
     {
-        TriggerCutScene();
+        //TriggerCutScene();
     }
 
     public override void OnCutSceneEnd()// I mayabe need to create a custome Track to place at the end of the Timeline since the Timeline system dose not have Action for timline end
@@ -32,6 +32,4 @@ public class CutSceneOnTrigger : CutScene
     {
         OnCutSceneStart();
     }
-
-   
 }

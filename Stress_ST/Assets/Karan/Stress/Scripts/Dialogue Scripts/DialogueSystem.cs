@@ -17,10 +17,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     [SerializeField] protected FullConversationData conversationData;
 
     [Space(15)]
-    /// <summary>
-    /// The Character that triggers the dialogue
-    /// </summary>
-    [SerializeField] protected GameObject targetPlayer; //TODO targetPlayer is in base of dialogue system, it dose nto need to be put it in the overhear script where the collison is dedteced
+    
     /// <summary>
     /// The camera the dialogue Box will use to center the Dialogue UI
     /// </summary>
@@ -74,10 +71,9 @@ public abstract class  DialogueSystem : MonoBehaviour
     protected bool skipDialogue;
 
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         FindNPCs();
-        CheckPlayer();
         CheckConversationHasSpeakersAssigned();
     }
 
@@ -92,7 +88,7 @@ public abstract class  DialogueSystem : MonoBehaviour
         MakeDialogueBoxParentStationaryAboveTarget(); //PERFORMANCE Check to see if in range/indialogue 
     }
 
-    public  virtual void TriggerDialogue()
+    public virtual void TriggerDialogue()
     {
         StartCoroutine(StartMainDialogue());
     }
@@ -101,7 +97,6 @@ public abstract class  DialogueSystem : MonoBehaviour
     {
         StartCoroutine(StartLoopDialogue());
     }
-
 
 
     private void MakeDialogueBoxParentStationaryAboveTarget() // If we dont do this the panel will move with the player because its screen UI not in-game
@@ -121,7 +116,6 @@ public abstract class  DialogueSystem : MonoBehaviour
             Debug.LogError("Cant Find Main Cam --> look in Game Manager and set the main Cam");
         }
     }
-
     private void FindNPCs()
     {
         actors =  GetComponentsInChildren<NPCData>();
@@ -130,7 +124,6 @@ public abstract class  DialogueSystem : MonoBehaviour
             Debug.LogError("NO NPC FOUND, Dialogue system needs NPCs(NPCData) to connect the dialogue to");
         }
     }
-
     private void CheckConversationHasSpeakersAssigned()
     {
         if(conversationData != null)
@@ -161,14 +154,7 @@ public abstract class  DialogueSystem : MonoBehaviour
         }
     }
 
-    private void CheckPlayer()
-    {
-        if(targetPlayer == null)
-        {
-            Debug.LogError("Player not Assigned to Dialog trigger  --> find with TAG");
-            targetPlayer = GameObject.FindGameObjectWithTag("Player");
-        }
-    }
+   
     /// <summary>
     /// Centers the DialogueBox on the NPC(imagin a speech bubble)
     /// </summary>
@@ -178,6 +164,28 @@ public abstract class  DialogueSystem : MonoBehaviour
         dialogueBox.transform.position = mainCam.WorldToScreenPoint(
             new Vector2(NPC.transform.position.x/* + DialogueBoxOffset.x*/ , NPC.transform.position.y /*+ DialogueBoxOffset.y*/));
     }
+
+    //WARNING The type worter effect gets skiped
+    protected IEnumerator PlayActorTalkingAnims(Animator actorAnimator, string Sentence)
+    {
+        if (actorAnimator != null)
+        {
+            var npcAnimator = actorAnimator;
+
+            npcAnimator.SetTrigger("StartTalking");
+            npcAnimator.SetTrigger("IsTalking");
+
+            yield return StartCoroutine(TypeWriterEffect(Sentence));
+
+            npcAnimator.SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
+
+        }
+        else
+        {
+            Debug.LogError("Cant find NPC animator, Cant play Talking Anim");
+        }
+    }
+
 
     /// <summary>
     /// Feed a string into this and it will write the string into the textbox like a Typewriter
@@ -201,9 +209,6 @@ public abstract class  DialogueSystem : MonoBehaviour
         yield return new WaitForSeconds(nextMessageSpeed);  
     }
 
-    // Maybe add like an automated way so the stuff you need spawns in, like NPC object
-    // Eks group dialuge -> add NPC list drag stuff in and spawn it
-    
     /// <summary>
     /// Use this to Start the dialogue from some place
     /// </summary>

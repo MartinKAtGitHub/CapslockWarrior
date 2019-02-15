@@ -1,20 +1,27 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections;
 using UnityEngine;
 
 
 public class NPCDialogueOverhear : DialogueSystem
 {
-    // [SerializeField]
-    // private float DialogueBoxOffsetY;
-    
-    //private Queue<SentenceData> SentenceDataQueue;
+
+
+    [Space(15)]
+    [Tooltip("The Character that triggers the dialogue")]
+    /// <summary>
+    /// The Character that triggers the dialogue
+    /// </summary>
+    [SerializeField] private GameObject playerTrigger;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        CheckPlayer();
+    }
     protected override void Start()
     {
         base.Start();
-       // CheckDialogBox();
+        // CheckDialogBox();
     }
 
 
@@ -80,27 +87,26 @@ public class NPCDialogueOverhear : DialogueSystem
 
             for (int j = 0; j < actors.Length; j++)
             {
-                if(conversationData.Sentences[i].SpeakerID == actors[j].SpeakerID)
+                if (conversationData.Sentences[i].SpeakerID == actors[j].SpeakerID)
                 {
                     CenterDialogueBoxToNPC(actors[j].DialogueBoxPositionTransform);
+                   yield return StartCoroutine ( PlayActorTalkingAnims(actors[j].Animator, conversationData.Sentences[i].Sentence));
+                    //if (actors[j].Animator != null)
+                    //{
+                    //    var npcAnimator = actors[j].Animator;
 
-                    if (actors[j].Animator != null)
-                    {
-                        var npcAnimator = actors[j].Animator;
+                    //    npcAnimator.SetTrigger("StartTalking");
+                    //    npcAnimator.SetTrigger("IsTalking");
 
-                        npcAnimator.SetTrigger("StartTalking");
-                        npcAnimator.SetTrigger("IsTalking");
+                    //    yield return StartCoroutine(TypeWriterEffect(conversationData.Sentences[i].Sentence));
 
-                        yield return StartCoroutine(TypeWriterEffect(conversationData.Sentences[i].Sentence));
+                    //    actors[j].Animator.SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
 
-                        actors[j].Animator.SetTrigger("EndTalking"); // I need a check to se if i can continue if the next NPC is the same as this one
-
-                    }
-                    else
-                    {
-                        Debug.LogError("Cant find NPC animator, Cant play Talking Anim");
-                    }
-                    
+                    //}
+                    //else
+                    //{
+                    //    Debug.LogError("Cant find NPC animator, Cant play Talking Anim");
+                    //}
                 }
             }
         }
@@ -115,7 +121,7 @@ public class NPCDialogueOverhear : DialogueSystem
 
     public override void EndDialouge()
     {
-      //  dialogueCanvas.SetActive(false);
+        //  dialogueCanvas.SetActive(false);
         this.enabled = false;
         isDialogueActiv = false;
         isMainDialogueFinished = true;
@@ -125,15 +131,25 @@ public class NPCDialogueOverhear : DialogueSystem
 
     }
 
+
+    private void CheckPlayer()
+    {
+        if (playerTrigger == null)
+        {
+            Debug.LogError(name + " Dose not have a Player To trigger Dialogue");
+            gameObject.SetActive(false);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == false)
+        if (col.tag == playerTrigger.tag && isDialogueActiv == false && isMainDialogueFinished == false)
         {
             TriggerDialogue();
             //cCollider2D.enabled = false;
             Debug.Log("START NPC MAIN Dialogue");
         }
-        else if (col.tag == targetPlayer.tag && isDialogueActiv == false && isMainDialogueFinished == true)
+        else if (col.tag == playerTrigger.tag && isDialogueActiv == false && isMainDialogueFinished == true)
         {
             TriggerDialogueLoop();
             Debug.Log("START NPC LOOP Dialogue");
@@ -143,7 +159,7 @@ public class NPCDialogueOverhear : DialogueSystem
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == targetPlayer.tag)
+        if (col.tag == playerTrigger.tag)
         {
             Debug.Log("EXIT Dialogue Range");
             //playerExitDialogue = true;

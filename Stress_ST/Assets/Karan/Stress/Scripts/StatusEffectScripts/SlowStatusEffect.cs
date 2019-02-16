@@ -6,11 +6,12 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
 {
 
     private static int strongestEffectIdex;
-    private static float potancy;// Cant have this because it will also register Enemis getting slowed
+    private static float potancy;// Cant have STACTIC because it will also register Enemis getting slowed stacking with their effect
     private Character character;
 
     private float InitialSpeed;
-    private float activeTime;
+   
+
 
     // private PlayerStatsForTesting playerStatsForTesting;
 
@@ -49,7 +50,7 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
         InitialzeSlow();
     }
 
-    public void InitialzeSlow() // IF script ececution is out of order call this in the what ever ability is trying to slow
+    public void InitialzeSlow()
     {
         character = Target.GetComponent<Character>();
         InitialSpeed = character.Stats.BaseMovementSpeed;
@@ -74,9 +75,9 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
     }
 
    
-    public override float CountDown()
-    {
-        return activeTime -= Time.deltaTime;
-    }
+    //public override float CountDown()
+    //{
+    //    return activeTime -= Time.deltaTime;
+    //}
 }
 

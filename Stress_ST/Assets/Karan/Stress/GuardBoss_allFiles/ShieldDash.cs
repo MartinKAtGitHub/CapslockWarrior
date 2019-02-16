@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ShieldDash : MonoBehaviour {
+public class ShieldDash : MonoBehaviour
+{
 
-    
+
     Vector2 ForceAndDirection;
 
     [SerializeField] Transform target;
@@ -20,15 +18,19 @@ public class ShieldDash : MonoBehaviour {
     Vector3 MaxRangeVector;
     Vector3 ChargeDirectionAndSpeed;
     Vector3 initialChargePos;
+
     Rigidbody2D rb2d;
+
     SpriteRenderer bossSprite;
+
     StatusEffectManager statusEffectManager;
+
     SlowStatusEffect shieldSlowStatusEffect;
 
     bool facingRigth;
 
 
-    void Start ()
+    void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         BossAnimator = GetComponent<Animator>();
@@ -46,11 +48,11 @@ public class ShieldDash : MonoBehaviour {
         shieldSlowStatusEffect = GetComponent<SlowStatusEffect>();
         shieldSlowStatusEffect.Target = target.gameObject;
 
-	}
-	
+    }
+
     public void ShieldChargeMovement()// TODO Add Timer --> if the Boss gets stuck we will have a finale check on TIME so teh boss isent stuck in the charge state
     {
-        if(IsChargeing)
+        if (IsChargeing)
         {
             rb2d.MovePosition(transform.position + ChargeDirectionAndSpeed * Time.deltaTime);
             CheckMaxChargeRange();
@@ -69,18 +71,18 @@ public class ShieldDash : MonoBehaviour {
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) // What collider is this ?
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(IsChargeing == true)
+        if (IsChargeing == true)
         {
-            if (collision.gameObject.tag == target.gameObject.tag) /// Tag needs to be handeld --> gameManger.getplayerTAG cant hard code
+            if (collision.gameObject.tag == target.gameObject.tag) /// TAG is not safe, maybe find player script
             {
                 OnPlayerImpact(collision);
             }
 
             //if (collision.gameObject.tag ==  "Wall") // tags are scary in case we change them
             //if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
-            if (1<<collision.gameObject.layer ==  WallLayer.value) // SO -> WallLayer.value = 2^ layernum  withc is(13)
+            if (1 << collision.gameObject.layer == WallLayer.value) // SO -> WallLayer.value = 2^ layernum  = (13)
             {
                 Debug.Log("Wall Name = " + collision.gameObject.name);
                 IsChargeing = false;
@@ -91,27 +93,32 @@ public class ShieldDash : MonoBehaviour {
     public void StartShieldCharge()
     {
         BossAnimator.SetTrigger("Charge");
+
         IsChargeing = !IsChargeing;
+
         initialChargePos = transform.position;
+
         var targetVector = target.position - transform.position;
-        MaxRangeVector = targetVector.normalized * ChargeRange;
-        ChargeDirectionAndSpeed = targetVector.normalized * ChargeSpeed;
+        var targetVectorNorm = targetVector.normalized;
+
+        MaxRangeVector = targetVectorNorm * ChargeRange;
+        ChargeDirectionAndSpeed = targetVectorNorm * ChargeSpeed;
 
         if (ChargeDirectionAndSpeed.x > 0 && !facingRigth)
         {
             //bossSprite.flipX = false;
 
-            Flip();
+            FlipScale();
         }
-        else if(ChargeDirectionAndSpeed.x < 0 && facingRigth)
+        else if (ChargeDirectionAndSpeed.x < 0 && facingRigth)
         {
             // bossSprite.flipX = true;
-            Flip();
+            FlipScale();
         }
     }
 
 
-    public void Flip() // TODO update Flip() Method to use the sprite flip insted of scale *-1
+    public void FlipScale()
     {
         facingRigth = !facingRigth;
         Vector3 theScale = transform.localScale;
@@ -128,8 +135,10 @@ public class ShieldDash : MonoBehaviour {
         var PushForceVector = targetVector.normalized * PushBackForce;
 
         // Add Status effect to list
-        Debug.Log(shieldSlowStatusEffect.BaseActiveTime);
+        //Debug.Log(shieldSlowStatusEffect.BaseActiveTime);
+
         statusEffectManager.StatusEffectList.Add(shieldSlowStatusEffect);
+
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
 
     }

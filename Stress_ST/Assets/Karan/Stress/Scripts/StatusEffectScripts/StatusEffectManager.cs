@@ -8,6 +8,9 @@ public class StatusEffectManager : MonoBehaviour
 
     public List<StatusEffect> StatusEffectList;
 
+    private float strongestEffect; // What if its a stun or a confuse or whatever. Cant have 1 variable for them all it will just keep overriding this
+    private int strongestEffectIndex;
+
     // Update is called once per frame
     void Update()
     {
@@ -17,9 +20,9 @@ public class StatusEffectManager : MonoBehaviour
 
             for (int i = 0; i < StatusEffectList.Count; i++)
             {
-                var currentStatusEffectTime = StatusEffectList[i].CountDown();
+                var activeStatusEffectTimer = StatusEffectList[i].ActiveCountDown(); 
 
-                if (currentStatusEffectTime <= 0) // the END effect put in slow class
+                if (activeStatusEffectTimer <= 0)
                 {
                     StatusEffectList[i].EndEffect();
 
@@ -54,6 +57,19 @@ public class StatusEffectManager : MonoBehaviour
             {
                 StatusEffectList[i].Potancy = StatusEffectList[i].Power;
                 StatusEffectList[i].StrongestEffectIndex = i;
+            }
+        }
+    }
+
+
+    private void SortStrongestStatusEffect()
+    {
+        for (int i = 0; i < StatusEffectList.Count; i++)
+        {
+            if (StatusEffectList[i].Power > strongestEffect)
+            {
+                strongestEffect = StatusEffectList[i].Power;
+                strongestEffectIndex = i;
             }
         }
     }

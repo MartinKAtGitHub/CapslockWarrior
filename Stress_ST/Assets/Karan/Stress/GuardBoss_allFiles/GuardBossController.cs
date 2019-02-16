@@ -33,7 +33,7 @@ public class GuardBossController : MonoBehaviour {
         raycastHit2D =  Physics2D.LinecastAll(new Vector3(transform.position.x, transform.position.y + LOSOffsetY),
                                                 new Vector3(Target.position.x, Target.position.y + TargetLOSOffsetY), LayerMask);
 
-        Debug.Log("Can i see player = " + LOSCheck());    
+       // Debug.Log("Can i see player = " + LOSCheck());    
        
         GrenadeThrow();
 

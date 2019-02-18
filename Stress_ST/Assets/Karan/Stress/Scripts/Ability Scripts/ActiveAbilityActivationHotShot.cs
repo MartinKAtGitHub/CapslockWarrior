@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveAbilityActivationHotShot : ActiveAbilityActivation
+public class ActiveAbilityActivationHotShot : ActiveAbility
 {
 
     private float DetectionRange;
@@ -15,6 +15,6 @@ public class ActiveAbilityActivationHotShot : ActiveAbilityActivation
 
     private void SpawnHotShot()
     {
-        Instantiate(abilityPrefab);
+      //  Instantiate(abilityPrefab);
     }
 }

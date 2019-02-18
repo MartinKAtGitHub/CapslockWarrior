@@ -14,7 +14,7 @@ public class AbilityController : MonoBehaviour
     [Space(10)]
     [SerializeField] private Transform abilitySpawnPoint;
 
-    public bool testboolTRIGGERICONGEN;
+    //public bool testboolTRIGGERICONGEN;
     void Start()
     {
            playerInputManager = GameManager.Instance.PlayerInputManager;
@@ -34,11 +34,11 @@ public class AbilityController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (testboolTRIGGERICONGEN)
-        {
-            GenerateActiveAbilitesUIICons();
-            testboolTRIGGERICONGEN = false;
-        }
+        //if (testboolTRIGGERICONGEN)
+        //{
+        //    GenerateActiveAbilitesUIICons();
+        //    testboolTRIGGERICONGEN = false;
+        //}
 
         for (int i = 0; i < 10/*ActiveAbilitesList.count*/; i++)
         {

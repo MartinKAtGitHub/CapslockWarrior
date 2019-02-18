@@ -1,13 +1,9 @@
 ﻿
 using UnityEngine;
 using UnityEngine.UI;
-public abstract class ActiveAbilityActivation : AbilityActivation
+public abstract class ActiveAbility : Ability
 {
 
-    /// <summary>
-    /// The prefab that holds the main logic for the Ability
-    /// </summary>
-    [SerializeField] protected Ability abilityPrefab;
 
     /// <summary>
     /// The target Time.Time when the ability will be ready to be cast. So at the start it will be 0 But when cast The curretn time will be saved and added whith the cooldown time -> TimeWhenAbilityIsReady = Time.time + CooldownTime
@@ -51,7 +47,7 @@ public abstract class ActiveAbilityActivation : AbilityActivation
     }
     
     /// <summary>
-    /// Needs an update loop, This methods will allow for Img cd Effect.
+    /// This methods will allow for Img cd Effect.
     /// </summary>
     public override void CoolDownImgEffect() // Do somthing els for passiv ab
     {

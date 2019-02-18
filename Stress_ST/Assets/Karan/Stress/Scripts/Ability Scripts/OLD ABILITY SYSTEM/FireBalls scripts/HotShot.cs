@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using OldScript;
 
-public class HotShot : Ability {
+public class HotShot : OldScript.Ability
+{
 
 	public float speed;
 	public float DetectionRange;

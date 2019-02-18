@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using OldScript;
 
-public class TeleportSmallDistance : Ability {
+public class TeleportSmallDistance : OldScript.Ability {
 
 
 	PlayerController MoveData;

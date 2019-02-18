@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class AbilityActivation : ScriptableObject // TODO change the name to Ability
+public abstract class Ability : ScriptableObject // TODO change the name to Ability
 {
     
-    protected Player player; // This Is the Stats BUT now i need to make a Getcomp to connect the player. If i had a scriptableObject i could just drag it in here and we would be good 
+    protected Player player; //I need a direct ref to this using Getcomponant, If the Player was a SO the referance would be the object which is in the Folders
 
     [SerializeField] protected Sprite abilityIcon;
     [SerializeField] protected float manaCost;
@@ -14,7 +14,7 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
 
     protected Image uIElement_Icon;
     /// <summary>
-    /// To crate the Cooldown effect you need somthign to cover the Main ability icon and gradually removed over time
+    /// The Dark mask on top of the Icon, used to create CD effect
     /// </summary>
     protected Image uIElement_IconMask;
     /// <summary>
@@ -26,7 +26,7 @@ public abstract class AbilityActivation : ScriptableObject // TODO change the na
     /// <summary>
     /// Only purpose of this Timer is to be used for the the CD img effect.
     /// </summary>
-    protected float cooldownEffectTimer;// put in Active ?
+    protected float cooldownEffectTimer; // put in Active ?
 
     public Image UIElement_Icon { get => uIElement_Icon;}
     public Sprite AbilityIcon { get => abilityIcon; }

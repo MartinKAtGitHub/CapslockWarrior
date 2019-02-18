@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using OldScript;
 
-public class SlowFieldSpell : Ability {
+public class SlowFieldSpell : OldScript.Ability
+{
 
 
 

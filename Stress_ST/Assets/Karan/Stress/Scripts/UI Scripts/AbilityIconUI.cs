@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class AbilityIconUI : MonoBehaviour
 {
 
-    private AbilityActivation abilityOnIcon;
+    private Ability abilityOnIcon;
 
     public Image Icon;
     public Image IconMask;
     public Text CoolDownNumsTxt;
 
-    public AbilityActivation AbilityOnIcon { get => abilityOnIcon; }
+    public Ability AbilityOnIcon { get => abilityOnIcon; }
 
     void Start()
     {
@@ -31,13 +31,13 @@ public class AbilityIconUI : MonoBehaviour
         }
 
     }
-    public void InitializeAbilityIcon(AbilityActivation ability,Player player)
+    public void InitializeAbilityIcon(Ability ability,Player player)
     {
         abilityOnIcon = ability;
         abilityOnIcon.InitializeAbility(player, Icon, IconMask, CoolDownNumsTxt);
     }
 
-    private void CastAbilityProcess(AbilityActivation ability)
+    private void CastAbilityProcess(Ability ability)
     {
         if (ability != null)
         {

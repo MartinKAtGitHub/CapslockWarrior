@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName =("Abilities/ActiveAbilities/QuickDash"))]
-public class ActiveAbilityQuickDash : ActiveAbilityActivation
+public class ActiveAbilityQuickDash : ActiveAbility
 {
 
     [SerializeField]private float dashRange;

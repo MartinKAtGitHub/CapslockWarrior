@@ -53,7 +53,7 @@ public class StatusEffectManager : MonoBehaviour
         for (int i = 0; i < StatusEffectList.Count; i++)
         {
             //if (StatusEffectList[i].Power > StatusEffectList[i].GetPotancy())
-            if (StatusEffectList[i].Power > StatusEffectList[i].Potancy)
+            if (StatusEffectList[i].Power >= StatusEffectList[i].Potancy)
             {
                 StatusEffectList[i].Potancy = StatusEffectList[i].Power;
                 StatusEffectList[i].StrongestEffectIndex = i;

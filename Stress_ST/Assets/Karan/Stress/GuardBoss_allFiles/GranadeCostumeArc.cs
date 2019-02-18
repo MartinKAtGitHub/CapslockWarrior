@@ -8,7 +8,7 @@ public class GranadeCostumeArc : MonoBehaviour
     public Transform Target;
     public Transform Grenade;
     public Transform Shadow;
-    public GameObject ParticalSystemObj;
+    public GameObject ParticalSystemObj; // Needs to be its own thing
     float speed;
 
     [Tooltip("How high the arc should be, in units")]
@@ -136,38 +136,5 @@ public class GranadeCostumeArc : MonoBehaviour
     }
 
 
-    private void SpriteSorting() //TODO sorting bugs at certain angels, the arc / boss postions are the cultprit
-    {
-        var selecSortOrgin = Target.position.y - transform.position.y;
-        Debug.Log("SORT = " + transform.position.y);
-
-        var sortFromThisPosition = transform.position.y - 0.3;
-        Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
-        spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
-
-
-        /*
-         if target.y is > transform.y
-            Sort from my pos
-            else if(target.y > transform.y)
-            sort from target pos
-         
-         */
-
-
-        /*if (selecSortOrgin > 0)
-        {
-            var sortFromThisPosition = Target.position.y - 0.3;
-            Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
-            spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
-        }
-        else
-        {
-            var sortFromThisPosition = transform.position.y;
-            Debug.Log("Sorting Nade From  = " + (int)sortFromThisPosition);
-            spriteRenderer.sortingOrder = (int)sortFromThisPosition * -10;
-        }
-        */
-
-    }
+   
 }

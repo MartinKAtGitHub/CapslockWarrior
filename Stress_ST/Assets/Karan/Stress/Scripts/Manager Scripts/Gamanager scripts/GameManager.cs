@@ -12,10 +12,11 @@ public class GameManager : MonoBehaviour {
     public PlayerInputManager PlayerInputManager;
     public OrbSystemMenuManager OrbSystemMenuManager;
     public CutSceneManager CutSceneManager;
+    public GameManager_LoadLevel Manager_LoadLevel;
 
 
 
-	public delegate void GameManagerEventHandler();
+    public delegate void GameManagerEventHandler();
 	public event GameManagerEventHandler MenuToggleEvent;
 	/*public event GameManagerEventHandler PauseEvent;
 	public event GameManagerEventHandler RestartLevelEvent;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour {
         PlayerInputManager = GetComponent<PlayerInputManager>();
         OrbSystemMenuManager = GetComponent<OrbSystemMenuManager>();
         CutSceneManager = GetComponent<CutSceneManager>();
+        Manager_LoadLevel = GetComponent<GameManager_LoadLevel>();
     }
 
 	private void SingeltonCheck() // TODO check if Gamemanger_master script Singelton is correctly done
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour {
 		}
 		else if(Instance != this)
 		{
-			Debug.LogError("GM Duplicate, destroying ");
+			Debug.LogWarning("GM Duplicate, destroying in Scene");
 			Destroy(gameObject);
 		}
 	}

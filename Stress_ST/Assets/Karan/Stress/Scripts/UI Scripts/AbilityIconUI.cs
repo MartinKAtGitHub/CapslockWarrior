@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This should only be assgining Icons BUT its actuly casting the ability and Initializeing them
+/// </summary>
 public class AbilityIconUI : MonoBehaviour
 {
 

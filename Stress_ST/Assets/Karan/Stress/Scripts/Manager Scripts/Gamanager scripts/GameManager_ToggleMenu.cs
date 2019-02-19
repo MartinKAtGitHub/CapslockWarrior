@@ -61,12 +61,12 @@ public class GameManager_ToggleMenu : MonoBehaviour
 	{
 		//TODO Add check for in MainMenu(start of game)
 		//TODO Add check for in cutscene maybe? 
-		if(Input.GetKeyUp(KeyCode.Escape) && !gameManagerMaster.IsGameOver)
+	/*	if(Input.GetKeyUp(KeyCode.Escape) && !gameManagerMaster.IsGameOver)
 		{
 			ToggleMenu();
 			Debug.Log("I CAN STILL PAUSE IN DIALOG + NO RETURN ANIM");
 		}
-
+        */
 	}
 
 	void SetInitialRefs()

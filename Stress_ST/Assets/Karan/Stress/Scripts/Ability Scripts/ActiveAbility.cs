@@ -3,13 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public abstract class ActiveAbility : Ability
 {
-
-
     /// <summary>
     /// The target Time.Time when the ability will be ready to be cast. So at the start it will be 0 But when cast The curretn time will be saved and added whith the cooldown time -> TimeWhenAbilityIsReady = Time.time + CooldownTime
     /// </summary>
     protected float TimeWhenAbilityIsReady;
-
 
     public override void InitializeAbility(Player player, Image uIElement_Icon, Image uIElement_IconMask, Text uIElement_cooldownNumText)
     {
@@ -20,12 +17,11 @@ public abstract class ActiveAbility : Ability
 
         Debug.Log("INIT Active Ability");
     }
-       
+
     public override bool IsAbilityOnCooldown() // What if its a Passiv ability
     {
         if (Time.time > TimeWhenAbilityIsReady)
         {
-            //IsAbilityOnCD(false,false); // This needs to be in a updated loop
             return true;
         }
         else
@@ -45,7 +41,7 @@ public abstract class ActiveAbility : Ability
             return false;
         }
     }
-    
+
     /// <summary>
     /// This methods will allow for Img cd Effect.
     /// </summary>
@@ -61,7 +57,7 @@ public abstract class ActiveAbility : Ability
         }
         else
         {
-            IsAbilityOnCD(false,false);
+            IsAbilityOnCD(false, false);
             return;
         }
     }
@@ -88,4 +84,37 @@ public abstract class ActiveAbility : Ability
         uIElement_IconMask.enabled = iconMaskStatus;
         UIElement_cooldownNumText.enabled = cooldownNumTextStatus;
     }
+
+
+    //public void ActiveAbilityCasty()
+    //{ 
+    //    var abilityName = name;
+
+    //    if (IsAbilityOnCooldown())
+    //    {
+    //        if (CanPayManaCost())
+    //        {
+
+    //            var castStatus = Cast();
+
+    //            if (castStatus)
+    //            {
+    //                Debug.Log(abilityName + " <= Cast Succsesful");
+    //            }
+    //            else
+    //            {
+    //                Debug.Log(abilityName + " <= Cast Failed");
+    //            }
+
+    //        }
+    //        else
+    //        {
+    //            Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log(abilityName + " <color=darkblue>On CD</color>");
+    //    }
+    //}
 }

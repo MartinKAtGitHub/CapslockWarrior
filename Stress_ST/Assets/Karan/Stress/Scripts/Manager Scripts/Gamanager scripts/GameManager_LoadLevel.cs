@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameManager_LoadLevel : MonoBehaviour 
+public class GameManager_LoadLevel : MonoBehaviour
 {
-	// So I place this on a button ... Prefab / In scene it works but not sure if this will cause problems down the line
-	public void LoadeNewLevel(string levelName) 
+    public int SceneIndex;
+
+	public void LoadeNewLevel() 
 	{
-		SceneManager.LoadScene(levelName);
+        // Mayabe add a on scene loade EVENT and close everything i dont need
+        // SceneChange.Invoke()
+
+		SceneManager.LoadSceneAsync(SceneIndex);
 	}
 }

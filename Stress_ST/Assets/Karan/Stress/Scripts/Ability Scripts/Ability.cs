@@ -50,14 +50,11 @@ public abstract class Ability : ScriptableObject // TODO change the name to Abil
         UIElement_cooldownNumText = uIElement_cooldownNumText;
 
         SetSpriteToAbilityUIElements();
-
-        Debug.Log("INIT Base Ability");
     }
 
     /// <summary>
     /// Needs an update loop, This methods will allow for Img cd Effect.
     /// </summary>
-    
     protected abstract void RestCoolDownImgEffect();
 
     protected void PayManaCost()

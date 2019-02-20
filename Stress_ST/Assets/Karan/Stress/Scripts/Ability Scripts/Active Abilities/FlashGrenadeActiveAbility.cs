@@ -9,7 +9,7 @@ public class FlashGrenadeActiveAbility : ActiveAbility
     // air time
 
         // If its for player we need to override target to be mouse or somthing for AI its the player
-    public override bool Cast()
+    protected override bool AbilityLogic()
     {
         // Set up Nade data > target
         //insta Nade prefabe

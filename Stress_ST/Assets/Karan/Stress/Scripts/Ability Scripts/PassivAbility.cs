@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PassivAbility : Ability
+public abstract class PassivAbility : Ability
 {
 
     public override void InitializeAbility(Player player, Image uIElement_Icon, Image uIElement_IconMask, Text uIElement_cooldownNumText)
@@ -13,12 +13,12 @@ public class PassivAbility : Ability
         //Maybe have a custome Passiv Activation in here
     }
 
-    public override bool CanPayManaCost()
+    protected override bool CanPayManaCost()
     {
         throw new System.NotImplementedException();
     }
 
-    public override bool Cast()
+    protected override bool AbilityLogic()
     {
         // We dont want anything to happen on cast. 
         throw new System.NotImplementedException();
@@ -29,7 +29,7 @@ public class PassivAbility : Ability
         throw new System.NotImplementedException();
     }
 
-    public override bool IsAbilityOnCooldown()
+    protected override bool IsAbilityOnCooldown()
     {
         throw new System.NotImplementedException();
     }
@@ -38,5 +38,6 @@ public class PassivAbility : Ability
     {
         throw new System.NotImplementedException();
     }
-    
+
+    public abstract void ActivatePassivAbility();
 }

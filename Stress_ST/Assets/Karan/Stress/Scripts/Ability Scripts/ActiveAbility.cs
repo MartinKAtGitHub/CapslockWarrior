@@ -15,10 +15,10 @@ public abstract class ActiveAbility : Ability
         TimeWhenAbilityIsReady = 0f; // So the ability is ready to go immediately after spawn;
         IsAbilityOnCD(false, false);
 
-        Debug.Log("INIT Active Ability");
+       // Debug.Log("INIT Active Ability");
     }
 
-    public override bool IsAbilityOnCooldown() // What if its a Passiv ability
+    protected override bool IsAbilityOnCooldown() // What if its a Passiv ability
     {
         if (Time.time > TimeWhenAbilityIsReady)
         {
@@ -30,7 +30,7 @@ public abstract class ActiveAbility : Ability
         }
     }
 
-    public override bool CanPayManaCost() // What if its a Passiv ability
+    protected override bool CanPayManaCost() // What if its a Passiv ability
     {
         if (player.Stats.Mana >= manaCost)
         {
@@ -51,7 +51,7 @@ public abstract class ActiveAbility : Ability
         {
             cooldownEffectTimer -= Time.deltaTime;
             float roundedCd = Mathf.Round(cooldownEffectTimer);
-            UIElement_cooldownNumText.text = roundedCd.ToString();
+            uIElement_cooldownNumText.text = roundedCd.ToString();
 
             uIElement_IconMask.fillAmount = (cooldownEffectTimer / cooldownTime);
         }
@@ -82,39 +82,54 @@ public abstract class ActiveAbility : Ability
     protected void IsAbilityOnCD(bool iconMaskStatus, bool cooldownNumTextStatus)
     {
         uIElement_IconMask.enabled = iconMaskStatus;
-        UIElement_cooldownNumText.enabled = cooldownNumTextStatus;
+        uIElement_cooldownNumText.enabled = cooldownNumTextStatus;
     }
 
+    /// <summary>
+    /// Dose all the checks before calling AbilityLogic() then 
+    /// </summary>
+    public void CastAbility()
+    {
+        var abilityName = name;
+        if(player != null)
+        {
+            if (IsAbilityOnCooldown())
+            {
+                if (CanPayManaCost())
+                {
 
-    //public void ActiveAbilityCasty()
-    //{ 
-    //    var abilityName = name;
+                    var abilityStatus = AbilityLogic();
 
-    //    if (IsAbilityOnCooldown())
-    //    {
-    //        if (CanPayManaCost())
-    //        {
+                    if (abilityStatus)
+                    {
+                        Debug.Log(abilityName + " <= Cast Succsesful");
 
-    //            var castStatus = Cast();
+                        PayManaCost();
+                        SetNewTimeWhenAbilityIsReadyOnSuccsefulcast();
+                        RestCoolDownImgEffect();
+                        IsAbilityOnCD(true, true);
+                    }
+                    else
+                    {
+                        Debug.Log(abilityName + " <= Cast Failed");
+                    }
 
-    //            if (castStatus)
-    //            {
-    //                Debug.Log(abilityName + " <= Cast Succsesful");
-    //            }
-    //            else
-    //            {
-    //                Debug.Log(abilityName + " <= Cast Failed");
-    //            }
+                }
+                else
+                {
+                    Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
+                }
+            }
+            else
+            {
+                Debug.Log("<color=darkblue> "+ abilityName + " On CD</color>");
+            }
+        }
+        else
+        {
+            Debug.LogError(abilityName + " Dose not have a Payer Have you Initialized the Ability");
+        }
+    }
 
-    //        }
-    //        else
-    //        {
-    //            Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log(abilityName + " <color=darkblue>On CD</color>");
-    //    }
-    //}
+  
 }

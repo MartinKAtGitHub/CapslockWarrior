@@ -20,7 +20,7 @@ public abstract class Ability : ScriptableObject // TODO change the name to Abil
     /// <summary>
     /// The text used to display the current cooldown value
     /// </summary>
-    [SerializeField]protected Text UIElement_cooldownNumText;
+    [SerializeField]protected Text uIElement_cooldownNumText;
 
    
     /// <summary>
@@ -33,12 +33,15 @@ public abstract class Ability : ScriptableObject // TODO change the name to Abil
 
     //DISCRIPTION() Somthing to tell the user what this ability is aboutMaybe take a Discr SO
 
+    /// <summary>
+    /// The actual logic of the Ability
+    /// </summary>
+    /// <returns>If the ability was succesesfully cast</returns>
+    protected abstract bool AbilityLogic();
 
-    public abstract bool Cast();
+    protected abstract bool IsAbilityOnCooldown(); // What if its a Passiv ability --> overider to do nothing
 
-    public abstract bool IsAbilityOnCooldown(); // What if its a Passiv ability --> overider to do nothing
-
-    public abstract bool CanPayManaCost(); // What if its a Passiv ability --> overider to do nothing
+    protected abstract bool CanPayManaCost(); // What if its a Passiv ability --> overider to do nothing
 
     public abstract void CoolDownImgEffect(); // What if its a Passiv ability --> overider to do nothing
 
@@ -47,7 +50,7 @@ public abstract class Ability : ScriptableObject // TODO change the name to Abil
         this.player = player;
         this.uIElement_Icon = uIElement_Icon;
         this.uIElement_IconMask = uIElement_IconMask;
-        UIElement_cooldownNumText = uIElement_cooldownNumText;
+        this.uIElement_cooldownNumText = uIElement_cooldownNumText;
 
         SetSpriteToAbilityUIElements();
     }
@@ -67,4 +70,8 @@ public abstract class Ability : ScriptableObject // TODO change the name to Abil
         uIElement_Icon.sprite = abilityIcon;
         uIElement_IconMask.sprite = abilityIcon;
     }
+
+
+
+
 }

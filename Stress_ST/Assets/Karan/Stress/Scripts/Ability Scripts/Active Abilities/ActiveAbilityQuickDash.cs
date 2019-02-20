@@ -12,7 +12,7 @@ public class ActiveAbilityQuickDash : ActiveAbility
 
     private Vector2 NoDirection = new Vector2(0, 0);
 
-    public override bool Cast()
+    protected override bool AbilityLogic() // TODO QUICKDASH --> Dash over/thorugh walls
     {
         var playerController = player?.PlayerController;
        
@@ -20,19 +20,13 @@ public class ActiveAbilityQuickDash : ActiveAbility
         {
             var playerRigidbody2D = player.PlayerRigidbody2D;
             playerRigidbody2D.position += playerController.Direction * dashRange;
-
-            PayManaCost();
-            SetNewTimeWhenAbilityIsReadyOnSuccsefulcast();
-            RestCoolDownImgEffect();
-            IsAbilityOnCD(true, true);
-
+            
             return true;
         }
         else
         {
-            Debug.Log("Can cast Ability = " + nameof(ActiveAbilityQuickDash));
+            Debug.Log(name + " Failed = Player standing still or wall is blocking");
             return false;
         }
     }
-
 }

@@ -15,37 +15,10 @@ public abstract class ActiveAbility : Ability
         TimeWhenAbilityIsReady = 0f; // So the ability is ready to go immediately after spawn;
         IsAbilityOnCD(false, false);
 
-       // Debug.Log("INIT Active Ability");
+        // Debug.Log("INIT Active Ability");
     }
 
-    protected override bool IsAbilityOnCooldown() // What if its a Passiv ability
-    {
-        if (Time.time > TimeWhenAbilityIsReady)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    protected override bool CanPayManaCost() // What if its a Passiv ability
-    {
-        if (player.Stats.Mana >= manaCost)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// This methods will allow for Img cd Effect.
-    /// </summary>
-    public override void CoolDownImgEffect() // Do somthing els for passiv ab
+    public void CoolDownImgEffect() // Do somthing els for passiv ab
     {
         if (cooldownEffectTimer > 0)
         {
@@ -62,7 +35,83 @@ public abstract class ActiveAbility : Ability
         }
     }
 
-    protected override void RestCoolDownImgEffect()
+    /// <summary>
+    /// Dose all the checks before calling AbilityLogic().
+    /// </summary>
+    public void CastAbility()
+    {
+        var abilityName = name;
+        if (player != null)
+        {
+            if (IsAbilityOnCooldown())
+            {
+                if (CanPayManaCost())
+                {
+
+                    var abilityStatus = AbilityLogic();
+
+                    if (abilityStatus)
+                    {
+                        Debug.Log(abilityName + " <= Cast Succsesful");
+
+                        PayManaCost();
+                        SetNewTimeWhenAbilityIsReadyOnSuccsefulcast();
+                        RestCoolDownImgEffect();
+                        IsAbilityOnCD(true, true);
+                    }
+                    else
+                    {
+                        Debug.Log(abilityName + " <= Cast Failed");
+                    }
+                }
+                else
+                {
+                    Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
+                }
+            }
+            else
+            {
+                Debug.Log("<color=darkblue> " + abilityName + " On CD</color>");
+            }
+        }
+        else
+        {
+            Debug.LogError(abilityName + " Dose not have a Payer Have you Initialized the Ability");
+        }
+    }
+
+
+
+    private bool IsAbilityOnCooldown()
+    {
+        if (Time.time > TimeWhenAbilityIsReady)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool CanPayManaCost()
+    {
+        if (player.Stats.Mana >= manaCost)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void PayManaCost()
+    {
+        player.Stats.Mana -= manaCost;
+    }
+
+    private void RestCoolDownImgEffect()
     {
         cooldownEffectTimer = cooldownTime;
     }
@@ -86,50 +135,8 @@ public abstract class ActiveAbility : Ability
     }
 
     /// <summary>
-    /// Dose all the checks before calling AbilityLogic() then 
+    /// This methods will allow for Img cd Effect.
     /// </summary>
-    public void CastAbility()
-    {
-        var abilityName = name;
-        if(player != null)
-        {
-            if (IsAbilityOnCooldown())
-            {
-                if (CanPayManaCost())
-                {
 
-                    var abilityStatus = AbilityLogic();
 
-                    if (abilityStatus)
-                    {
-                        Debug.Log(abilityName + " <= Cast Succsesful");
-
-                        PayManaCost();
-                        SetNewTimeWhenAbilityIsReadyOnSuccsefulcast();
-                        RestCoolDownImgEffect();
-                        IsAbilityOnCD(true, true);
-                    }
-                    else
-                    {
-                        Debug.Log(abilityName + " <= Cast Failed");
-                    }
-
-                }
-                else
-                {
-                    Debug.Log(" <color=blue>NO MANA BZZZZZZ MAKE SOUND OR ICON TO INDICATE THIS</color>");
-                }
-            }
-            else
-            {
-                Debug.Log("<color=darkblue> "+ abilityName + " On CD</color>");
-            }
-        }
-        else
-        {
-            Debug.LogError(abilityName + " Dose not have a Payer Have you Initialized the Ability");
-        }
-    }
-
-  
 }

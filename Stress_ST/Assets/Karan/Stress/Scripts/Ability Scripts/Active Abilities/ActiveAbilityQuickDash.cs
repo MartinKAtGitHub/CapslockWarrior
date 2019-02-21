@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName =("Abilities/ActiveAbilities/QuickDash"))]
+[CreateAssetMenu(menuName ="Abilities/ActiveAbilities/QuickDash")]
 public class ActiveAbilityQuickDash : ActiveAbility
 {
 

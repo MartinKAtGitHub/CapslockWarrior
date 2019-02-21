@@ -27,29 +27,18 @@ public class AbilityController : MonoBehaviour
         abilityIcons = GetComponentsInChildren<AbilityIconUI>(true); // Find inactive objects = true    
         player = GetComponent<Player>();
      
-        InitializeAbilieties();
-
-       // for (int i = 0; i < playerInputManager.AbilityKeyCodes.Length; i++) //TODO create a message for the Keys that dont have a ABility on them but are active
-        for (int i = 0; i < abilities.Length; i++)
-        {
-            if (abilities[i] is ActiveAbility)
-            {
-                var activeAbility = abilities[i] as ActiveAbility;
-                playerInputManager.AbilityKeyDownAction[i] += activeAbility.CastAbility;
-            }
-            else
-            {
-                var passivAbility = abilities[i] as PassivAbility;
-                passivAbility.ActivatePassivAbility();
-            }
-        }
+        InitializeAbilites();
+        EnableActiveAndPassiveAbilites();
     }
 
     void Update()
     {
         for (int i = 0; i < abilities.Length; i++)
         {
-            abilities[i].CoolDownImgEffect();
+            //abilities[i].CoolDownImgEffect();
+
+            var activeAbilitiy = abilities[i] as ActiveAbility;
+            activeAbilitiy.CoolDownImgEffect();
         }
     }
 
@@ -65,12 +54,14 @@ public class AbilityController : MonoBehaviour
     /// <summary>
     /// Connects the Selecetd abilties from the OrbMenu to the player UI ICONS and INPUTKEYS
     /// </summary>
-    private void InitializeAbilieties()
+    private void InitializeAbilites()
     {
         var abilitieCount = GameManager.Instance.OrbSystemMenuManager.abilityKeyDropZones.Length; // All the abilites you have selected in th OrbMenu
-
+     
+        #region Ability Debug Code
         if (DebugAbilities)
         {
+            Debug.Log(" <color=Orange> Ability Controller ability Debug is ON !!! </color>");
             for (int i = 0; i < abilities.Length; i++)
             {
                 abilities[i].InitializeAbility(player, abilityIcons[i].Icon, abilityIcons[i].IconMask, abilityIcons[i].CoolDownNumsTxt);
@@ -81,6 +72,9 @@ public class AbilityController : MonoBehaviour
         {
             abilities = new Ability[abilitieCount];
         }
+        #endregion
+      
+        //abilities = new Ability[abilitieCount]; // Actual code from before debug code
 
         for (int i = 0; i < abilitieCount; i++)
         {
@@ -97,6 +91,24 @@ public class AbilityController : MonoBehaviour
             else
             {
                 abilityIcons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void EnableActiveAndPassiveAbilites()
+    {
+        // for (int i = 0; i < playerInputManager.AbilityKeyCodes.Length; i++) //TODO create a message for the Keys that dont have a ABility on them but are active
+        for (int i = 0; i < abilities.Length; i++)
+        {
+            if (abilities[i] is ActiveAbility)
+            {
+                var activeAbility = abilities[i] as ActiveAbility;
+                playerInputManager.AbilityKeyDownAction[i] += activeAbility.CastAbility;
+            }
+            else
+            {
+                var passivAbility = abilities[i] as PassivAbility;
+                passivAbility.ActivatePassivAbility();
             }
         }
     }

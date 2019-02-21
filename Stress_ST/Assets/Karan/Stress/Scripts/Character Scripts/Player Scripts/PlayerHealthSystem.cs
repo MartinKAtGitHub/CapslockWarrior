@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthSystem : CharacterHealthSystem // I coudl take teh HP bar logic and leav teh DMg logic here and connect them
+public class PlayerHealthSystem : CharacterHealthSystem
 {
     /// <summary>
     /// Its the img behind the HP Bar. So everything will be ontop of this element / this is parent OBJ
@@ -22,26 +22,27 @@ public class PlayerHealthSystem : CharacterHealthSystem // I coudl take teh HP b
     public bool OnHealthChange { get; private set; }
 
     private float startTimer; // used if we want correct lerp calc
-    //private float InitialtHP;
+                              //private float InitialtHP;
     private float onDmgBackgroundHPBarValue;
-    //  public float startPoint;
+    // public float startPoint;
 
     private float lerpCounter;
     // int dmgTaken;
 
 
-    private void Awake()
-    {
-        GetCharacterComponant();
-    }
+    //private void Awake()
+    //{
+    //    GetCharacterComponant();
+    //}
 
     // If i need to override somthing player spesific do it here. Dont make checks to see what system is beeing used just override the call
 
     private void Start()
     {
-
         SetHPBackgroundToMaxHP();
         SetHPBarsToMax();
+
+        InvokeRepeating("RegenerationSystem", 1f, 1f);
     }
 
     private void Update()
@@ -61,27 +62,20 @@ public class PlayerHealthSystem : CharacterHealthSystem // I coudl take teh HP b
 
     public override void TakeDamage(int dmg)
     {
-        OnHealthChange = true;
-
         startTimer = Time.time;
+        OnHealthChange = true;
         onDmgBackgroundHPBarValue = healthBar_Background_slider.value;
-
 
         lerpCounter = 0;
 
-
         Character.Stats.Health -= dmg;
         ChangeForegroundHPBar();
-
-        //StopCoroutine(ChangeBackgroundHPBar());
-        //StartCoroutine(ChangeBackgroundHPBar());
 
         if (Character.Stats.Health <= 0)
         {
             OnCharacterDeath();
         }
     }
-    
 
     private void ChangeForegroundHPBar() // Insatnt
     {
@@ -154,6 +148,12 @@ public class PlayerHealthSystem : CharacterHealthSystem // I coudl take teh HP b
     private void SetHPBackgroundToMaxHP()
     {
         healthBackground.sizeDelta = new Vector2(Character.Stats.BaseHealth, healthBackground.sizeDelta.y);
+    }
 
+
+    private void RegenerationSystem()
+    {
+        Character.Stats.Health += HealthRegenAmount;
+        Debug.Log("REGEN");
     }
 }

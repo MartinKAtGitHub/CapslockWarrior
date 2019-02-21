@@ -39,11 +39,14 @@ public abstract class Ability : ScriptableObject // TODO change the name to Abil
     /// <returns>If the ability was succesesfully cast</returns>
     protected abstract bool AbilityLogic();
 
-    protected abstract bool IsAbilityOnCooldown(); // What if its a Passiv ability --> overider to do nothing
-
-    protected abstract bool CanPayManaCost(); // What if its a Passiv ability --> overider to do nothing
-
-    public abstract void CoolDownImgEffect(); // What if its a Passiv ability --> overider to do nothing
+    //protected void PayManaCost()
+    //{
+    //    player.Stats.Mana -= manaCost;
+    //}
+    //protected abstract void RestCoolDownImgEffect();
+    //protected abstract bool IsAbilityOnCooldown(); // What if its a Passiv ability --> overider to do nothing
+    //protected abstract bool CanPayManaCost(); // What if its a Passiv ability --> overider to do nothing
+    //public abstract void CoolDownImgEffect(); // What if its a Passiv ability --> overider to do nothing
 
     public virtual void InitializeAbility(Player player, Image uIElement_Icon, Image uIElement_IconMask, Text uIElement_cooldownNumText)
     {
@@ -55,15 +58,7 @@ public abstract class Ability : ScriptableObject // TODO change the name to Abil
         SetSpriteToAbilityUIElements();
     }
 
-    /// <summary>
-    /// Needs an update loop, This methods will allow for Img cd Effect.
-    /// </summary>
-    protected abstract void RestCoolDownImgEffect();
 
-    protected void PayManaCost()
-    {
-        player.Stats.Mana -= manaCost;
-    }
     
     private void SetSpriteToAbilityUIElements()
     {

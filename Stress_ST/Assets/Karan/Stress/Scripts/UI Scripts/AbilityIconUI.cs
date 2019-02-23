@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// This should only be assgining Icons BUT its actuly casting the ability and Initializeing them
@@ -12,11 +13,11 @@ public class AbilityIconUI : MonoBehaviour
 
     public Image Icon;
     public Image IconMask;
-    public Text CoolDownNumsTxt;
+    public TextMeshProUGUI CoolDownNumsTxt;
 
     public Ability AbilityOnIcon { get => abilityOnIcon; }
 
-    void Start()
+    void Awake()
     {
         if (Icon == null)
         {
@@ -29,9 +30,8 @@ public class AbilityIconUI : MonoBehaviour
         }
         if (CoolDownNumsTxt == null)
         {
-            CoolDownNumsTxt = GetComponentInChildren<Text>();
+            CoolDownNumsTxt = GetComponentInChildren<TextMeshProUGUI>();
 
         }
-
     }
 }

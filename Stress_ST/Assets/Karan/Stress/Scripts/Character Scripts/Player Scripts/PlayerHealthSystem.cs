@@ -154,6 +154,5 @@ public class PlayerHealthSystem : CharacterHealthSystem
     private void RegenerationSystem()
     {
         Character.Stats.Health += HealthRegenAmount;
-        Debug.Log("REGEN");
     }
 }

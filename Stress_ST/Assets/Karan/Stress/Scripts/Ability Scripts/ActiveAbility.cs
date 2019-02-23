@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public abstract class ActiveAbility : Ability
 {
     /// <summary>
@@ -8,7 +9,7 @@ public abstract class ActiveAbility : Ability
     /// </summary>
     protected float TimeWhenAbilityIsReady;
 
-    public override void InitializeAbility(Player player, Image uIElement_Icon, Image uIElement_IconMask, Text uIElement_cooldownNumText)
+    public override void InitializeAbility(Player player, Image uIElement_Icon, Image uIElement_IconMask, TextMeshProUGUI uIElement_cooldownNumText)
     {
         base.InitializeAbility(player, uIElement_Icon, uIElement_IconMask, uIElement_cooldownNumText);
 

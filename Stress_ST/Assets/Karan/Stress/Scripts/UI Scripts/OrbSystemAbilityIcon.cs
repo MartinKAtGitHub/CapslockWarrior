@@ -14,7 +14,7 @@ public class OrbSystemAbilityIcon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(ability!=null)
+        if(ability!= null)
         {
            // abilityIconImg = GetComponentInChildren<Image>(); dosent work
             abilityIconImg.sprite = ability.AbilityIcon;

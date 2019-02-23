@@ -14,14 +14,15 @@ public class OrbSystemMenuManager : MonoBehaviour
 
     public GameObject OrbMenuPnl { get => orbMenuPnl;}
 
-    private void Awake()
+    private void Start()
     {
-        abilityKeyDropZones = GetComponentsInChildren<AbilityKeyDropZone>();
-        
+        Debug.Log("TEST");
+        abilityKeyDropZones = orbMenuPnl.GetComponentsInChildren<AbilityKeyDropZone>();
     }
 
     private void OnEnable()
     {
+       // abilityKeyDropZones = GetComponentsInChildren<AbilityKeyDropZone>();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -29,5 +30,11 @@ public class OrbSystemMenuManager : MonoBehaviour
     {
         Debug.Log("OrbMenu - OnSceneLoaded - " + scene.name);
         orbMenuPnl.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
     }
 }

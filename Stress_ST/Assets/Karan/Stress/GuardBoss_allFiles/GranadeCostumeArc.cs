@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GranadeCostumeArc : MonoBehaviour
@@ -45,43 +44,43 @@ public class GranadeCostumeArc : MonoBehaviour
 
         circleCollider2D.enabled = false;
         inAir = true;
-        
+
         //SpriteSorting();
     }
 
     void Update()
     {
-        if(inAir)
+        if (inAir)
         {
             var dist = targetPos.x - startPos.x;
-      
+
             speed = dist / AirTime;
             speed = Mathf.Abs(speed);
-       
+
             float nextX = Mathf.MoveTowards(Grenade.position.x, targetPos.x, speed * Time.deltaTime);
 
             float baseY = Mathf.Lerp(startPos.y, /*Target.position.y*/ targetPos.y, (nextX - startPos.x) / dist);
             float arc = arcHeight * (nextX - startPos.x) * (nextX - targetPos.x) / (-0.25f * dist * dist);
 
-       
-           // gameObject.transform.localScale = Vector3.one * (baseY + arc);
+
+            // gameObject.transform.localScale = Vector3.one * (baseY + arc);
 
             var nextPos = new Vector3(nextX, baseY + arc, Grenade.position.z);
             var ShadePos = new Vector3(nextX /*+ arc*/, baseY);
-       
+
             //Rotate to face the next position, and then move there < dont need this as it is this will make the object look the same way it arcs.
             //Grenade.rotation = LookAt2D(nextPos - Grenade.position);
             Grenade.position = nextPos;
             Shadow.position = ShadePos;
-            
+
             // Do something when we reach the target
             if (nextPos == targetPos)
             {
                 Arrived();
             }
         }
-       
-       
+
+
 
     }
 
@@ -89,8 +88,8 @@ public class GranadeCostumeArc : MonoBehaviour
     {
         Debug.Log("Nade Reached Target");
         inAir = false;
-       // ParticalSystem.GetComponent<ParticleSystem>().Play();
-       // enabled = false;
+        // ParticalSystem.GetComponent<ParticleSystem>().Play();
+        // enabled = false;
 
         StartCoroutine(GranadeOnGroundEffect());
     }
@@ -98,7 +97,7 @@ public class GranadeCostumeArc : MonoBehaviour
     IEnumerator GranadeOnGroundEffect()
     {
         nadeAnimator.enabled = false;
-        
+
         yield return new WaitForSeconds(TimeOnGroundBeforeDetonation);
         circleCollider2D.enabled = true;
 
@@ -115,7 +114,7 @@ public class GranadeCostumeArc : MonoBehaviour
         // I need to Normelize the arc from 1 -> 2 right now by grenade is at 0 at start and 4 at the highest point and back too 0
 
         //Debug.Log("Y + ARC  == " + (baseY + arc));
-       
+
     }
 
     /// 
@@ -136,5 +135,4 @@ public class GranadeCostumeArc : MonoBehaviour
     }
 
 
-   
 }

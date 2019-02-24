@@ -19,7 +19,7 @@ public class GranadeCostumeArc : MonoBehaviour
 
 
     Animator nadeAnimator;
-    SlowStatusEffect slowStatusEffect;
+    [SerializeField]SlowStatusEffect slowStatusEffect;
     ParticleSystem particleSystem;
     CircleCollider2D circleCollider2D;
     Vector3 startPos;
@@ -35,7 +35,6 @@ public class GranadeCostumeArc : MonoBehaviour
         startPos = Grenade.position;
         targetPos = Target.position;
         nadeAnimator = GetComponent<Animator>();
-        slowStatusEffect = GetComponent<SlowStatusEffect>();
         particleSystem = ParticalSystemObj.GetComponent<ParticleSystem>();
         circleCollider2D = GetComponent<CircleCollider2D>();
 
@@ -131,8 +130,7 @@ public class GranadeCostumeArc : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Target.GetComponent<StatusEffectManager>().StatusEffectList.Add(slowStatusEffect);
+        // This will Effect Target no matter who the Nade hits
+        //Target.GetComponent<StatusEffectManager>().StatusEffectList.Add(slowStatusEffect);
     }
-
-
 }

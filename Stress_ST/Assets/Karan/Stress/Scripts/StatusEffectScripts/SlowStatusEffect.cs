@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 //using System.Collections;
 
-//[CreateAssetMenu (menuName = "StatusEffect/Slow")]
+[CreateAssetMenu (menuName = "StatusEffect/Slow")]
 public class SlowStatusEffect : StatusEffect // This dosent really need to be a mono DEV can be changed to scripable object
 {
 
@@ -9,10 +9,8 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
     private static float potancy;// Cant have STACTIC because it will also register Enemis getting slowed stacking with their effect
     private Character character;
 
-    private float InitialSpeed;
+    private float origianlCharacterSpeed;
    
-
-
     // private PlayerStatsForTesting playerStatsForTesting;
 
     public override float Potancy
@@ -29,7 +27,6 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
             potancy = value;
         }
     }
-
     public override int StrongestEffectIndex
     {
         get
@@ -45,27 +42,14 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
         }
     }
 
-    private void Start()
-    {
-        InitialzeSlow();
-    }
-
-    public void InitialzeSlow()
-    {
-        character = Target.GetComponent<Character>();
-        InitialSpeed = character.Stats.BaseMovementSpeed;
-        activeTime = BaseActiveTime;
-    }
-
-
     public override void Effect()
     {
-        character.Stats.MovementSpeed = InitialSpeed - (InitialSpeed * Power);
+        character.Stats.MovementSpeed = origianlCharacterSpeed - (origianlCharacterSpeed * Power);
     }
     
     public override void EndEffect()
     {
-        activeTime = BaseActiveTime;
+        effectDuration = DurationTime;
         character.Stats.MovementSpeed = character.Stats.BaseMovementSpeed;
     }
 
@@ -74,10 +58,11 @@ public class SlowStatusEffect : StatusEffect // This dosent really need to be a 
         Potancy = 0;
     }
 
-   
-    //public override float CountDown()
-    //{
-    //    return activeTime -= Time.deltaTime;
-    //}
+    public override void InitializeStatusEffect(Character character)
+    {
+        this.character = character; /*Target.GetComponent<Character>();*/
+        origianlCharacterSpeed = character.Stats.BaseMovementSpeed;
+        effectDuration = DurationTime;
+    }
 }
 

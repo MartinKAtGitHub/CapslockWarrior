@@ -25,7 +25,7 @@ public class ShieldDash : MonoBehaviour
 
     StatusEffectManager statusEffectManager;
 
-    SlowStatusEffect shieldSlowStatusEffect;
+    [SerializeField] SlowStatusEffect slowEffect;
 
     bool facingRigth;
 
@@ -45,8 +45,7 @@ public class ShieldDash : MonoBehaviour
         slowStatusEffect.Power = 50;
         */
 
-        shieldSlowStatusEffect = GetComponent<SlowStatusEffect>();
-        shieldSlowStatusEffect.Target = target.gameObject;
+        // shieldSlowStatusEffect.Target = target.gameObject;
 
     }
 
@@ -71,24 +70,7 @@ public class ShieldDash : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (IsChargeing == true)
-        {
-            if (collision.gameObject.tag == target.gameObject.tag) /// TAG is not safe, maybe find player script
-            {
-                OnPlayerImpact(collision);
-            }
 
-            //if (collision.gameObject.tag ==  "Wall") // tags are scary in case we change them
-            //if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
-            if (1 << collision.gameObject.layer == WallLayer.value) // SO -> WallLayer.value = 2^ layernum  = (13)
-            {
-                Debug.Log("Wall Name = " + collision.gameObject.name);
-                IsChargeing = false;
-            }
-        }
-    }
 
     public void StartShieldCharge()
     {
@@ -128,16 +110,20 @@ public class ShieldDash : MonoBehaviour
 
     public void OnPlayerImpact(Collision2D collision)
     {
-        Debug.Log("Player Hit");
         BossAnimator.SetTrigger("Idle"); // After impact anim
+
         IsChargeing = false;
+
         var targetVector = target.position - transform.position;
         var PushForceVector = targetVector.normalized * PushBackForce;
 
-        // Add Status effect to list
-        //Debug.Log(shieldSlowStatusEffect.BaseActiveTime);
-
-        statusEffectManager.StatusEffectList.Add(shieldSlowStatusEffect);
+        // slowEffect.initializeStatusEffect(target.GetComponent<Character>());
+        var character = collision.gameObject.GetComponent<Character>();
+        if (character != null)
+        {
+            slowEffect.InitializeStatusEffect(character);
+            statusEffectManager.ActiveStatusEffectList.Add(slowEffect);
+        }
 
         collision.gameObject.GetComponent<Rigidbody2D>().AddForce(PushForceVector);
 
@@ -145,6 +131,23 @@ public class ShieldDash : MonoBehaviour
 
 
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (IsChargeing == true)
+        {
+            if (collision.gameObject.tag == target.gameObject.tag) /// TAG is not safe, maybe find player script
+            {
+                OnPlayerImpact(collision);
+            }
 
+            //if (collision.gameObject.tag ==  "Wall") // tags are scary in case we change them
+            //if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Walls"))
+            if (1 << collision.gameObject.layer == WallLayer.value) // SO -> WallLayer.value = 2^ layernum  = (13)
+            {
+                Debug.Log("Wall Name = " + collision.gameObject.name);
+                IsChargeing = false;
+            }
+        }
+    }
 
 }

@@ -1,23 +1,21 @@
 ﻿
 using UnityEngine;
 
-public abstract class StatusEffect : MonoBehaviour // Change to scriptable obj no need to make this MONO
+public abstract class StatusEffect : ScriptableObject
 { 
 
-    public GameObject Target; // If we ever want the statuseffect to effect all characters in the scene. we need to get this on hit and not on Start. assigned dynamicly
     public float Power;
-    
     [Tooltip("Determins how long the Statuseffect will be effecting the target > ReadOnly")]
-    [SerializeField] private float baseActiveTime;
+    [SerializeField] private float durationTime;
     /// <summary>
     /// Determins how long the Statuseffect will be effecting the target BUT can be modified incase resistances or buffs
     /// </summary>
-    protected float activeTime;
+    protected float effectDuration;
 
     /// <summary>
     /// Determins how long the Statuseffect will be effecting the target > ReadOnly
     /// </summary>
-    public float BaseActiveTime { get => baseActiveTime; }
+    public float DurationTime { get => durationTime; }
 
 
     public abstract float Potancy { get; set; }
@@ -35,7 +33,11 @@ public abstract class StatusEffect : MonoBehaviour // Change to scriptable obj n
     /// <returns></returns>
     public float ActiveCountDown()
     {
-        return activeTime -= Time.deltaTime;
+        return effectDuration -= Time.deltaTime;
     }
-    
+
+    /// <summary>
+    /// Used to Enable the statuseffect. So right before you add the Effect
+    /// </summary>
+    public abstract void InitializeStatusEffect(Character character);
 }

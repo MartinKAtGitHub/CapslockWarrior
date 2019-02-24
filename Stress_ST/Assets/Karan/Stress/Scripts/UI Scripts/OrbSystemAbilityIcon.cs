@@ -20,7 +20,8 @@ public class OrbSystemAbilityIcon : MonoBehaviour
             abilityIconImg.sprite = ability.AbilityIcon;
         }else
         {
-            Debug.LogWarning("No ABILITY SET, Cant Find Img for Ability Drag obj");
+            Debug.LogError("No ABILITY SET, Disabled Drag");
+            GetComponent<Draggable>().enabled = false;
         }
     }
 

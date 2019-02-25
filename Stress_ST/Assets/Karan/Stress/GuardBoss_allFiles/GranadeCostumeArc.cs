@@ -78,9 +78,6 @@ public class GranadeCostumeArc : MonoBehaviour
                 Arrived();
             }
         }
-
-
-
     }
 
     void Arrived()

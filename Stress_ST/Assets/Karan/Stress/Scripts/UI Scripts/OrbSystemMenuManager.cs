@@ -15,11 +15,11 @@ public class OrbSystemMenuManager : MonoBehaviour
     public GameObject OrbMenuPnl { get => orbMenuPnl;}
 
     private void Start()
-    {
-        Debug.Log("TEST");
+    { 
         abilityKeyDropZones = orbMenuPnl.GetComponentsInChildren<AbilityKeyDropZone>();
     }
 
+    
     private void OnEnable()
     {
        // abilityKeyDropZones = GetComponentsInChildren<AbilityKeyDropZone>();

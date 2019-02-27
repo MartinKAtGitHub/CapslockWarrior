@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomDialogueRespons : DialogueSystem
@@ -11,17 +10,17 @@ public class RandomDialogueRespons : DialogueSystem
     /// </summary>
     [SerializeField] Vector2 RandomDelay;
 
+    [SerializeField] private GameObject playerTrigger;
+
     readonly int idlelookOut = Animator.StringToHash("Idle1");
     readonly int idleFlipStick = Animator.StringToHash("Idle2");
     readonly int idleCrossArms = Animator.StringToHash("Idle3");
    
     private new void Start()
     {
-        
         base.Start();
         StartCoroutine(PlayerRandomIdleAnim());
     }
-
 
     public override IEnumerator StartLoopDialogue()
     {
@@ -31,22 +30,22 @@ public class RandomDialogueRespons : DialogueSystem
 
     public override IEnumerator StartMainDialogue()
     {
-        Debug.Log("Start Main Dialogue");
- 
-        //dialogueTrigger.enabled = false;
         isDialogueActiv = true;
         dialogueBoxContainer.SetActive(true);
 
         dialogueText.text = string.Empty;
         yield return null;
 
-     //  CenterDialogueBoxToNPC(sentenceDataArray[0].DialoguePivotCenterPoint.transform);
-        // ANIM START ?
+        for (int i = 0; i < actors.Length; i++)// There will most liky only be 1 BUT if we every want a groupe to have Random coversation we can
+        {
+            if (conversationData.Sentences[i].SpeakerID == actors[i].SpeakerID)
+            {
+                CenterDialogueBoxToNPC(actors[i].DialogueBoxPositionTransform);
+                yield return StartCoroutine(PlayActorTalkingAnims(actors[i].Animator, conversationData.Sentences[Random.Range(0, conversationData.Sentences.Length)].Sentence));
+            }
+        }
 
-         yield return StartCoroutine(TypeWriterEffect(conversationData.Sentences[Random.Range(0, conversationData.Sentences.Length)].Sentence) );
-        // Anim END ?
-        
-       EndDialouge();
+        EndDialouge();
     }
 
 
@@ -62,10 +61,7 @@ public class RandomDialogueRespons : DialogueSystem
  
     IEnumerator PlayerRandomIdleAnim()
     {
-      
         var randTime = Random.Range(RandomDelay.x, RandomDelay.y); //TODO Get the the 12(sample) frames and choose a random time from that
-
-      //  Debug.Log(randTime +" < -TIME | Name ->" + name);
         yield return new WaitForSeconds(randTime);
 
         var idleAnimValue = Random.Range(0 , 3); // 3 dosent exist cuz Computers
@@ -86,5 +82,38 @@ public class RandomDialogueRespons : DialogueSystem
                 break;
         }
     }
+
+    // --------------------------------------- CRATE PARENT Class (Contect Trigger dialogue) -----------------------------------
+
+    private void CheckPlayer()
+    {
+        if (playerTrigger == null)
+        {
+            Debug.LogError(name + " Dose not have a Player To trigger Dialogue");
+            gameObject.SetActive(false);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == playerTrigger.tag && isDialogueActiv == false && isMainDialogueFinished == false)
+        {
+            TriggerDialogue();
+        }
+        else if (col.tag == playerTrigger.tag && isDialogueActiv == false && isMainDialogueFinished == true)
+        {
+            TriggerDialogueLoop();
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == playerTrigger.tag)
+        {
+            //playerExitDialogue = true;
+            // cCollider2D.enabled = false;
+        }
+    }
+    // --------------------------------------------------------------------------
+
 
 }

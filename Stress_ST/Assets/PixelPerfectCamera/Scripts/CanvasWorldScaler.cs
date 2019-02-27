@@ -12,7 +12,7 @@ using System.Collections;
 /// pixel perfect canvas under "World Space" mode. However, the size of the UI camera will not be the same as the camera's size. So, use this 
 /// script to match the UI camera's size.
 /// </remarks>
-[ExecuteInEditMode]
+[ExecuteAlways]
 [RequireComponent(typeof(Canvas))]
 public class CanvasWorldScaler : MonoBehaviour {
 
@@ -29,10 +29,11 @@ public class CanvasWorldScaler : MonoBehaviour {
 
 	void Initialize(bool warn)
     {
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         if (!gameObject.activeInHierarchy)
             return;
-#endif
+        #endif
+
         _canvas = GetComponent<Canvas> ();
 
 		if (_canvas.renderMode != RenderMode.WorldSpace)

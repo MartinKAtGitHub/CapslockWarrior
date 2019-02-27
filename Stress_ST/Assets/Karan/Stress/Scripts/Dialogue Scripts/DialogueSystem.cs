@@ -128,7 +128,6 @@ public abstract class  DialogueSystem : MonoBehaviour
     {
         if(conversationData != null)
         {
-
             for (int i = 0; i < conversationData.Sentences.Length; i++)
             {
                 var counter = 0;
@@ -148,9 +147,10 @@ public abstract class  DialogueSystem : MonoBehaviour
                 }
             }
         }else
-        {
-            Debug.LogError(name +" Has no Conversation Data Assigned");
-            gameObject.SetActive(false);
+        { 
+            Debug.LogWarning(name +" Has no Conversation Data Assigned");
+            //gameObject.SetActive(false);
+            //enabled = false;
         }
     }
 
@@ -158,11 +158,11 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// <summary>
     /// Centers the DialogueBox on the NPC(imagin a speech bubble)
     /// </summary>
-    /// <param name="NPC"></param>
-    protected void CenterDialogueBoxToNPC(Transform NPC)
+    /// <param name="dialogueBoxPosition"></param>
+    protected void CenterDialogueBoxToNPC(Vector3 dialogueBoxPosition)
     {
         dialogueBox.transform.position = mainCam.WorldToScreenPoint(
-            new Vector2(NPC.transform.position.x/* + DialogueBoxOffset.x*/ , NPC.transform.position.y /*+ DialogueBoxOffset.y*/));
+            new Vector2(dialogueBoxPosition.x, dialogueBoxPosition.y));
     }
 
     //WARNING The type worter effect gets skiped
@@ -192,7 +192,7 @@ public abstract class  DialogueSystem : MonoBehaviour
     /// </summary>
     /// <param name="sentence"></param>
     /// <returns></returns>
-    protected IEnumerator TypeWriterEffect(string sentence)
+    private IEnumerator TypeWriterEffect(string sentence)
     {
         foreach (var letters in sentence)
         {

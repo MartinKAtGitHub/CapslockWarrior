@@ -82,7 +82,6 @@ public class NPCDialogueOverhear : DialogueSystem
         for (int i = 0; i < conversationData.Sentences.Length; i++)
         {
             dialogueText.text = string.Empty;
-
             yield return null; // wait 1 frame things dosent get Connected properly with rect if e dont wait
 
             for (int j = 0; j < actors.Length; j++)
@@ -131,7 +130,7 @@ public class NPCDialogueOverhear : DialogueSystem
 
     }
 
-
+    // --------------------------------------- CRATE PARENT Class (Contect Trigger dialogue) -----------------------------------
     private void CheckPlayer()
     {
         if (playerTrigger == null)
@@ -166,6 +165,7 @@ public class NPCDialogueOverhear : DialogueSystem
             // cCollider2D.enabled = false;
         }
     }
+    // ---------------------------------------  -----------------------------------
 
 
 
